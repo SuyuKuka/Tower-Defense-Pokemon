@@ -1,6 +1,12 @@
 package main;
 
+
 import javax.swing.JFrame;
+
+import config.Map;
+import graphique.GameScreen;
+
+
 
 public class Game extends JFrame{
 
@@ -17,6 +23,8 @@ public class Game extends JFrame{
         add(gameScreen);
     }
     public static void main(String[] args) throws Exception {
-        Game game=new Game();
+        Map m=new Map(20, 20);
+        m.mapBuilding();
+        System.out.println(m);
     }
 }
