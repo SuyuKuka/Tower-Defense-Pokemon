@@ -86,25 +86,6 @@ public class Map {
         }
     }
 
-    public boolean droite (int[] map, int index){
-        for (int i = index; i < map.length; i++) {
-            if(map[index]!=0){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean gauche (int[] map, int index){
-        for (int i = index; i >=0; i--) {
-            if(map[index]!=0){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-
     public String toString(){
         String res="";
         for (int i = 0; i < map.length; i++) {
