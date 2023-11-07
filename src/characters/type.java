@@ -1,7 +1,0 @@
-package characters;
-
-public enum Type {
-    NONE, EAU, FEU, SOL, VOL,
-    POISON, NORMAL, SPECTRE, TENEBRE,
-    ELECTIK, ACIER, ROCHE, DRAGON, COMBAT
-}
