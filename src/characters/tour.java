@@ -1,11 +1,23 @@
 package characters;
 
-public class tour extends character{
-    public enum rayon{
-        SMALL, 
+public class Tour extends Characters {
+
+    public enum Rayon {
+        NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
-    public tour(String name, int value, type type1, type type2){
-        super(name, value, type1, type2);
+    private Rayon rayon;
+
+    public Tour(String name, int value, Type type1, Type type2) {
+        super(name, value, type1, type2, true);
+        this.rayon = Rayon.MEDIUM;
+    }
+
+    public void setRayon(Rayon r) {
+        this.rayon = r;
+    }
+
+    public Rayon getRayon() {
+        return rayon;
     }
 }

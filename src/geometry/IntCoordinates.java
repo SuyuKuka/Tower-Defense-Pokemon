@@ -1,13 +1,12 @@
-package config.geometry;
+package geometry;
 
 public record IntCoordinates(int x, int y) {
 
-    
-    public int x(){
+    public int x() {
         return x;
     }
 
-     public int y(){
+    public int y() {
         return y;
     }
 }
