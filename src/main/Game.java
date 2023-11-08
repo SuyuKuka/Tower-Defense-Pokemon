@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import config.Map;
 import graphics.GameScreen;
+import model.MapState;
 
 public class Game extends JFrame {
 
@@ -25,5 +26,8 @@ public class Game extends JFrame {
         m.mapBuilding();
 
         m.affiche();
+
+        MapState a = new MapState(m);
+        MapState b = new MapState(m);
     }
 }
