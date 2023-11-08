@@ -3,7 +3,7 @@ package main;
 import javax.swing.JFrame;
 
 import config.Map;
-import graphique.GameScreen;
+import graphics.GameScreen;
 
 public class Game extends JFrame {
 
