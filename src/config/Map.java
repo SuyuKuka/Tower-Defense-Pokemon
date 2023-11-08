@@ -56,8 +56,8 @@ public class Map {
     public void wayBuilderH() {
         int posPrec = 0;
         int posHead = 0;
-        for (int i = 1; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 1; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 // Set le précédent, celui qui est à la case i-1
                 if (map[i - 1][j] != 0) {
                     posPrec = j;
@@ -169,11 +169,35 @@ public class Map {
     }
 
     public void affiche() {
-        for (int i = 0; i < map.length; i++) {
-            System.out.println();
-            for (int j = 0; j < map[0].length; j++) {
-                System.out.print(intToChar(map)[i][j] + " ");
+        System.out.print("   ");
+        for(int j=1; j < map[0].length+1; j=j+1){
+            if(j<10){
+                System.out.print("0" + j + " ");
+            }else{
+                System.out.print(j + " ");
             }
+        }
+        System.out.println();
+        System.out.print("   ");
+        for(int j=1; j < map[0].length+1; j=j+1){
+            if(j<10){
+                System.out.print("==");
+            }else{
+                System.out.print("==");
+            }
+            if(j!=map.length){
+                System.out.print("=");
+            }
+        }
+        System.out.println();
+
+        for (int i = 0; i < map.length; i++) {
+            System.out.print((char) ('A' + i) + "|| ");
+            for (int j = 0; j < map[0].length; j++) {
+                System.out.print(intToChar(map)[i][j] + "  ");
+            }
+    
+            System.out.println();
         }
     }
 
