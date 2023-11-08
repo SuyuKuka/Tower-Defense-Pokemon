@@ -24,9 +24,14 @@ public class Map {
     }
 
     public void mapBuilding() {
+        // POUR FAIRE LE CHEMINS
         wayFinder();
         wayBuilderV();
         wayBuilderH();
+
+        // AJOUTE DES OBSTACLES
+        addObstacles();
+        deployObstacles();
     }
 
     public void wayFinder() {
@@ -78,6 +83,86 @@ public class Map {
                     for (int j = posHead; j <= posPrec; j = j + 1) {
                         if (map[i][j] != map[exit.x()][exit.y()]) {
                             map[i][j] = 3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void addObstacles() {
+        for (int i = 0; i < 15; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+            int x = rand.nextInt(map.length);
+            int y = rand.nextInt(map[0].length);
+            if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
+                i--;
+            } else {
+                map[x][y] = 6;
+            }
+        }
+    }
+
+    public void deployObstacles() {
+        for (int i = 0; i < map.length; i++) {
+            int rayon = rand.nextInt(4);
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 6) {
+                    if (rayon == 3) {
+                        try {
+                            if (map[i][j] != 3 && map[i][j] != 4 && map[i][j] != 5) {
+                                map[i][j] = 9;
+                            }
+                            if (map[i + 1][j + 1] != 3 && map[i + 1][j + 1] != 4 && map[i + 1][j + 1] != 5) {
+                                map[i + 1][j + 1] = 9;
+                            }
+                            if (map[i - 1][j - 1] != 3 && map[i - 1][j - 1] != 4 && map[i - 1][j - 1] != 5) {
+                                map[i - 1][j - 1] = 9;
+                            }
+                            if (map[i - 1][j + 1] != 3 && map[i - 1][j + 1] != 4 && map[i - 1][j + 1] != 5) {
+                                map[i - 1][j + 1] = 9;
+                            }
+                            if (map[i + 1][j - 1] != 3 && map[i + 1][j - 1] != 4 && map[i + 1][j - 1] != 5) {
+                                map[i + 1][j - 1] = 9;
+                            }
+                            if (map[i - 1][j] != 3 && map[i - 1][j] != 4 && map[i - 1][j] != 5) {
+                                map[i - 1][j] = 9;
+                            }
+                            if (map[i][j - 1] != 3 && map[i][j - 1] != 4 && map[i][j - 1] != 5) {
+                                map[i][j - 1] = 9;
+                            }
+                            if (map[i + 1][j] != 3 && map[i + 1][j] != 4 && map[i + 1][j] != 5) {
+                                map[i + 1][j] = 9;
+                            }
+                            if (map[i][j + 1] != 3 && map[i][j + 1] != 4 && map[i][j + 1] != 5) {
+                                map[i][j + 1] = 9;
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    } else {
+                        try {
+                            for (int j2 = 0; j2 < rayon; j2++) {
+                                if (map[i + j2][j] != 3 && map[i + j2][j] != 4 && map[i + j2][j] != 5) {
+                                    map[i + j2][j] = 9;
+                                }
+                            }
+                            for (int j2 = 0; j2 < rayon; j2++) {
+                                if (map[i][j + j2] != 3 && map[i][j + j2] != 4 && map[i][j + j2] != 5) {
+                                    map[i][j + j2] = 9;
+                                }
+                            }
+                            for (int j2 = 0; j2 < rayon; j2++) {
+                                if (map[i - j2][j] != 3 && map[i - j2][j] != 4 && map[i - j2][j] != 5) {
+                                    map[i - j2][j] = 9;
+                                }
+                            }
+                            for (int j2 = 0; j2 < rayon; j2++) {
+                                if (map[i][j - j2] != 3 && map[i][j - j2] != 4 && map[i][j - j2] != 5) {
+                                    map[i][j - j2] = 9;
+                                }
+                            }
+                        } catch (Exception e) {
+
                         }
                     }
                 }
