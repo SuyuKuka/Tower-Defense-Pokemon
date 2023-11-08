@@ -1,16 +1,30 @@
 package characters;
 
-public class Tour extends Characters {
+public class Tour extends Pokemon {
 
     public enum Rayon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
     private Rayon rayon;
+    private Bad target;
+    private double exp;
 
     public Tour(String name, int value, Type type1, Type type2) {
         super(name, value, type1, type2, true);
         this.rayon = Rayon.MEDIUM;
+        target = null;
+        exp = 0;
+    }
+
+    public String toString() {
+        return "NOM: " + getName()
+                + "\nEXP: " + exp
+                + " \nATK: " + getValue()
+                + " \nTYPE: " + getType()[0] + " et " + getType()[1]
+                + " \nVITESSE: " + getSpeed()
+                + " \nPORTEE " + rayon
+                + "\nGENTIL\n";
     }
 
     public void setRayon(Rayon r) {
@@ -19,5 +33,9 @@ public class Tour extends Characters {
 
     public Rayon getRayon() {
         return rayon;
+    }
+
+    public void setTarget(Bad b) {
+        target = b;
     }
 }
