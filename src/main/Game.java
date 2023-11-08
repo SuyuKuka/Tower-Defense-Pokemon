@@ -23,6 +23,7 @@ public class Game extends JFrame {
     public static void main(String[] args) throws Exception {
         Map m = new Map(20, 20);
         m.mapBuilding();
-        System.out.println(m);
+
+        m.affiche();
     }
 }

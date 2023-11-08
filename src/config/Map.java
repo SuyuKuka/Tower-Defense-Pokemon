@@ -91,7 +91,7 @@ public class Map {
     }
 
     public void addObstacles() {
-        for (int i = 0; i < 15; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+        for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
             if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
@@ -135,6 +135,50 @@ public class Map {
                 }
             }
         }
+    }
+
+    public static char[][] intToChar(int[][] map) {
+        char[][] plateau = new char[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                switch (map[i][j]) {
+                    case 0:
+                        plateau[i][j] = '+';
+                        break;
+                    case 3:
+                        plateau[i][j] = ' ';
+                        break;
+                    case 4:
+                        plateau[i][j] = 'E';
+                        break;
+                    case 5:
+                        plateau[i][j] = 'S';
+                        break;
+                    case 6:
+                        plateau[i][j] = '/';
+                        break;
+                    case 9:
+                        plateau[i][j] = '/';
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return plateau;
+    }
+
+    public void affiche() {
+        for (int i = 0; i < map.length; i++) {
+            System.out.println();
+            for (int j = 0; j < map[0].length; j++) {
+                System.out.print(intToChar(map)[i][j] + " ");
+            }
+        }
+    }
+
+    public int[][] getConfig() {
+        return map;
     }
 
     public String toString() {
