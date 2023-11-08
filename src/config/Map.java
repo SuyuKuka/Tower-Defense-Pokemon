@@ -24,9 +24,14 @@ public class Map {
     }
 
     public void mapBuilding() {
+        // POUR FAIRE LE CHEMINS
         wayFinder();
         wayBuilderV();
         wayBuilderH();
+
+        // AJOUTE DES OBSTACLES
+        addObstacles();
+        deployObstacles();
     }
 
     public void wayFinder() {
@@ -51,8 +56,8 @@ public class Map {
     public void wayBuilderH() {
         int posPrec = 0;
         int posHead = 0;
-        for (int i = 1; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 1; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 // Set le précédent, celui qui est à la case i-1
                 if (map[i - 1][j] != 0) {
                     posPrec = j;
@@ -83,6 +88,121 @@ public class Map {
                 }
             }
         }
+    }
+
+    public void addObstacles() {
+        for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+            int x = rand.nextInt(map.length);
+            int y = rand.nextInt(map[0].length);
+            if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
+                i--;
+            } else {
+                map[x][y] = 6;
+            }
+        }
+    }
+
+    public void deployObstacles() {
+        for (int i = 0; i < map.length; i++) {
+            int rayon = 2;
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 6) {
+                    try {
+                        for (int j2 = 0; j2 < rayon; j2++) {
+                            if (map[i + j2][j] != 3 && map[i + j2][j] != 4 && map[i + j2][j] != 5) {
+                                map[i + j2][j] = 9;
+                            }
+                        }
+                        for (int j2 = 0; j2 < rayon; j2++) {
+                            if (map[i][j + j2] != 3 && map[i][j + j2] != 4 && map[i][j + j2] != 5) {
+                                map[i][j + j2] = 9;
+                            }
+                        }
+                        for (int j2 = 0; j2 < rayon; j2++) {
+                            if (map[i - j2][j] != 3 && map[i - j2][j] != 4 && map[i - j2][j] != 5) {
+                                map[i - j2][j] = 9;
+                            }
+                        }
+                        for (int j2 = 0; j2 < rayon; j2++) {
+                            if (map[i][j - j2] != 3 && map[i][j - j2] != 4 && map[i][j - j2] != 5) {
+                                map[i][j - j2] = 9;
+                            }
+                        }
+                    } catch (Exception e) {
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    public static char[][] intToChar(int[][] map) {
+        char[][] plateau = new char[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                switch (map[i][j]) {
+                    case 0:
+                        plateau[i][j] = '+';
+                        break;
+                    case 3:
+                        plateau[i][j] = ' ';
+                        break;
+                    case 4:
+                        plateau[i][j] = 'E';
+                        break;
+                    case 5:
+                        plateau[i][j] = 'S';
+                        break;
+                    case 6:
+                        plateau[i][j] = '/';
+                        break;
+                    case 9:
+                        plateau[i][j] = '/';
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return plateau;
+    }
+
+    public void affiche() {
+        System.out.print("   ");
+        for(int j=1; j < map[0].length+1; j=j+1){
+            if(j<10){
+                System.out.print("0" + j + " ");
+            }else{
+                System.out.print(j + " ");
+            }
+        }
+        System.out.println();
+        System.out.print("   ");
+        for(int j=1; j < map[0].length+1; j=j+1){
+            if(j<10){
+                System.out.print("==");
+            }else{
+                System.out.print("==");
+            }
+            if(j!=map.length){
+                System.out.print("=");
+            }
+        }
+        System.out.println();
+
+        for (int i = 0; i < map.length; i++) {
+            System.out.print((char) ('A' + i) + "|| ");
+            for (int j = 0; j < map[0].length; j++) {
+                System.out.print(intToChar(map)[i][j] + "  ");
+            }
+    
+            System.out.println();
+        }
+    }
+
+    public int[][] getConfig() {
+        return map;
     }
 
     public String toString() {
