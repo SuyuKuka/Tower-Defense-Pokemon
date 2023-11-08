@@ -1,5 +1,6 @@
-import javax.swing.JFrame;
+package main;
 
+import javax.swing.JFrame;
 import characters.Ennemi;
 import characters.Pokemon;
 import characters.Tower;
@@ -40,5 +41,6 @@ public class Game extends JFrame {
             System.out.println(M);
             System.out.println(pika);
         }
+        
     }
 }
