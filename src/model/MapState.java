@@ -14,7 +14,7 @@ public class MapState {
 
     public static void timer() {
         while (true) {
-            if (System.currentTimeMillis() - lastUpdate >= 1000) {
+            if (System.currentTimeMillis() - lastUpdate >= 1000) { // 1000 = 1s a changer si nécessaire
                 lastUpdate = System.currentTimeMillis();
                 System.out.println(lastUpdate);
             }

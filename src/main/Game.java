@@ -29,6 +29,8 @@ public class Game extends JFrame {
             m.mapBuilding();
 
             m.affiche();
+
+            MapState a = new MapState(m);
         }
     }
 }
