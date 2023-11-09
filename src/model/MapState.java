@@ -9,7 +9,7 @@ public class MapState {
 
     public MapState(Map map) {
         config = map.getConfig();
-        timer();
+        // timer();
     }
 
     public void timer() {
@@ -23,5 +23,17 @@ public class MapState {
 
         }
     }
+
+    public void setTower(int[] posTower) {
+        if (posTower[0] == -1 || posTower[1] == -1) {
+            return;
+        } else {
+            int posX = posTower[0];
+            int posY = posTower[1];
+
+            if (config[posX][posY] == 0) {
+                config[posX][posY] = 2;
+            }
+        }
+    }
 }
-// 3 = chemin

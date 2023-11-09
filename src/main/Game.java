@@ -30,7 +30,8 @@ public class Game extends JFrame {
     public static void main(String[] args) throws Exception {
         Map m = new Map(20, 20);
         m.mapBuilding();
-
+        System.out.println(m);
+        MapState a = new MapState(m);
         m.affiche();
 
         System.out.println(
@@ -41,13 +42,17 @@ public class Game extends JFrame {
 
         Tower tower = new Tower("terminal", ABORT, characters.Type.NONE, characters.Type.NONE);
         String st = sc.nextLine();
-        tower.putTower(st);
+        int[] posTower = tower.putTower(st);
+        a.setTower(posTower);
+        m.affiche();
 
         while (gameStart) {
             st = sc.nextLine();
-            tower.putTower(st);
-
+            posTower = tower.putTower(st);
+            a.setTower(posTower);
+            m.affiche();
         }
+        sc.close();
         // MapState a = new MapState(m);
 
         // Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL,

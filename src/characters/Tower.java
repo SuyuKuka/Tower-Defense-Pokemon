@@ -17,26 +17,33 @@ public class Tower extends Pokemon {
         exp = 0;
     }
 
-    public void putTower(String st) {
+    public int[] putTower(String st) {
         try {
             String alphaPart = st.replaceAll("[^A-Z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
 
             int posX;
-            if (!numPart.isEmpty()) {
-                posX = Integer.parseInt(numPart) - 1;
+            int posY;
+
+            if (!st.matches("[A-Z]\\d+")) {
+                posX = -1;
             } else {
-                posX = 0; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
+                posX = alphaPart.charAt(0) - 'A';
             }
 
-            int posY = alphaPart.charAt(0) - 'A';
+            if (!numPart.isEmpty()) {
+                posY = Integer.parseInt(numPart) - 1;
+            } else {
+                posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
+            }
 
-            System.out.println(posX);
-            System.out.println(posY);
+            int[] tab = { posX, posY };
+            System.out.println(posX + " " + posY);
+            return tab;
         } catch (Exception e) {
-            // Continue
+            int[] tab = { -1, -1 };
+            return tab;
         }
-
     }
 
     public String toString() {
