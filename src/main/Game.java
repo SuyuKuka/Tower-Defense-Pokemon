@@ -2,10 +2,10 @@ package main;
 
 import javax.swing.JFrame;
 
-import characters.Bad;
+import characters.Ennemi;
 import characters.Pokemon;
-import characters.Tour;
-
+import characters.Tower;
+import characters.Tower;
 import graphique.GameScreen;
 
 public class Game extends JFrame {
@@ -24,8 +24,8 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        Bad M = new Bad("Miaouss", 29, characters.Type.NORMAL, characters.Type.NONE);
-        Tour pika = new Tour("Pikachu", 256, characters.Type.ELECTIK, characters.Type.NONE);
+        Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL, characters.Type.NONE);
+        Tower pika = new Tower("Pikachu", 256, characters.Type.ELECTIK, characters.Type.NONE);
 
         pika.setSpeed(Pokemon.Speed.FAST);
         System.out.println(M);

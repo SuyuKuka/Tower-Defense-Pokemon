@@ -1,17 +1,17 @@
 package characters;
 
-public class Tour extends Pokemon {
+public class Tower extends Pokemon {
 
     public enum Rayon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
     private Rayon rayon;
-    private Bad target;
+    private Ennemi target;
     private double exp;
 
-    public Tour(String name, int value, Type type1, Type type2) {
-        super(name, value, type1, type2, true);
+    public Tower(String name, int atk, Type type1, Type type2) {
+        super(name, atk, type1, type2, true);
         this.rayon = Rayon.MEDIUM;
         target = null;
         exp = 0;
@@ -35,7 +35,7 @@ public class Tour extends Pokemon {
         return rayon;
     }
 
-    public void setTarget(Bad b) {
+    public void setTarget(Ennemi b) {
         target = b;
     }
 }

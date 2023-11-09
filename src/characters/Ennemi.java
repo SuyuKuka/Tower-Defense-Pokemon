@@ -1,9 +1,9 @@
 package characters;
 
-public class Bad extends Pokemon {
+public class Ennemi extends Pokemon {
 
-    public Bad(String name, int value, Type type1, Type type2) {
-        super(name, value, type1, type2, false);
+    public Ennemi(String name, int pv, Type type1, Type type2) {
+        super(name, pv, type1, type2, false);
     }
 
     public String toString() {
