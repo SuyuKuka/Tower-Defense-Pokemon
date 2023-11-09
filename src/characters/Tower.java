@@ -61,13 +61,13 @@ public class Tower extends Pokemon {
         if (rayon == Rayon.NONE) {
             return 0;
         } else if (rayon == Rayon.SMALL) {
-            return 1;
-        } else if (rayon == Rayon.MEDIUM) {
             return 3;
-        } else if (rayon == Rayon.LARGE) {
+        } else if (rayon == Rayon.MEDIUM) {
             return 5;
+        } else if (rayon == Rayon.LARGE) {
+            return 7;
         } else {
-            return -1; // Global?
+            return 1000; // Global?
         }
     }
 
