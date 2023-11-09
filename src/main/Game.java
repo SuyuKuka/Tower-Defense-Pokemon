@@ -22,12 +22,13 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        Map m = new Map(20, 20);
-        m.mapBuilding();
+        if (args[0].length() == 0) {
+            System.out.println("Graphics");
+        } else if (args[0].equals("[terminal]")) {
+            Map m = new Map(20, 20);
+            m.mapBuilding();
 
-        m.affiche();
-
-        MapState a = new MapState(m);
-        MapState b = new MapState(m);
+            m.affiche();
+        }
     }
 }
