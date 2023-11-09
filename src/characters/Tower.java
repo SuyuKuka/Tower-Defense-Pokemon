@@ -27,14 +27,6 @@ public class Tower extends Pokemon {
                 + "\nGENTIL\n";
     }
 
-    public void attaque() {
-        System.out.println(this.setRayonValue(this.rayon));
-    }
-
-    private boolean isEnnemi() {
-        return true;
-    }
-
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
     private int setRayonValue(Rayon rayon) {
         if (rayon == Rayon.NONE) {

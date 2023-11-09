@@ -17,10 +17,11 @@ public class MapState {
             if (System.currentTimeMillis() - lastUpdate >= 1000) { // 1000 = 1s a changer si nécessaire
                 lastUpdate = System.currentTimeMillis();
                 money += 1;
-                System.out.println(money);
+                // System.out.println(money);
             }
-        }
-        // LE FONCTIONNEMENT DU JEU
-    }
+            // LE FONCTIONNEMENT DU JEU
 
+        }
+    }
 }
+// 3 = chemin

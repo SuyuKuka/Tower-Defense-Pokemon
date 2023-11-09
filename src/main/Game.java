@@ -30,6 +30,7 @@ public class Game extends JFrame {
             Map m = new Map(20, 20);
             m.mapBuilding();
 
+            System.out.println(m);
             m.affiche();
 
             MapState a = new MapState(m);
