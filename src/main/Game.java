@@ -21,13 +21,13 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        if(args[0].equals("[terminal]")){
+        if (args[0].length() == 0) {
+            System.out.println("Graphics");
+        } else if (args[0].equals("[terminal]")) {
             Map m = new Map(20, 20);
             m.mapBuilding();
 
             m.affiche();
-        }else{
-            System.out.println("Graphics");
         }
     }
 }
