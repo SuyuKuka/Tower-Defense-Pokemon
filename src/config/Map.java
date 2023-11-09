@@ -2,7 +2,6 @@ package config;
 
 import java.util.Random;
 import geometry.IntCoordinates;
-
 //GENERE UNE MAP ALEATOIRE
 public class Map {
 
@@ -220,5 +219,4 @@ public class Map {
         }
         return res;
     }
-
 }
