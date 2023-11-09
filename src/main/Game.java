@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import config.Map;
 import graphics.GameScreen;
+import model.MapState;
 
 public class Game extends JFrame {
 
