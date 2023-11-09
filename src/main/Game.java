@@ -40,7 +40,7 @@ public class Game extends JFrame {
 
         Scanner sc = new Scanner(System.in);
 
-        Tower tower = new Tower("terminal", ABORT, characters.Type.NONE, characters.Type.NONE);
+        Tower tower = new Tower("terminal", 1, characters.Type.NONE, characters.Type.NONE);
         String st = sc.nextLine();
         int[] posTower = tower.putTower(st);
         a.setTower(posTower);
