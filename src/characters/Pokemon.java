@@ -10,7 +10,6 @@ public class Pokemon {
     private int value; // tour -> atk, bad -> pv
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
     private Type[] type = new Type[2];
-    private int lvl;
     private final boolean isTower;
 
     public Pokemon(String name, int value, Type type0, Type type1, boolean isTower) {
@@ -20,7 +19,6 @@ public class Pokemon {
         type[1] = type1;
         speed = Pokemon.Speed.NORMAL;
         this.isTower = isTower;
-        lvl = 5;
     }
 
     public boolean isTower() {
@@ -46,5 +44,9 @@ public class Pokemon {
 
     public void setSpeed(Speed sp) {
         speed = sp;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

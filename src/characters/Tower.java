@@ -9,12 +9,14 @@ public class Tower extends Pokemon {
     private Rayon rayon;
     private Ennemi target;
     private double exp;
+    private int level;
 
     public Tower(String name, int atk, Type type1, Type type2) {
         super(name, atk, type1, type2, true);
         this.rayon = Rayon.MEDIUM;
         target = null;
         exp = 0;
+        level = 5;
     }
 
     public int[] putTower(String st) {
@@ -46,6 +48,26 @@ public class Tower extends Pokemon {
         }
     }
 
+    public void attaque() {
+        target = getTarget();
+        if (target != null) {
+            target.setValue(target.getValue() - getValue());
+            if (target.getValue() <= 0) {
+                // dead
+                winExp(target);
+                levelUp();
+            }
+        }
+    }
+
+    private void winExp(Ennemi target) {
+        this.exp += target.getValue() / 3;
+    }
+
+    private void levelUp() {
+
+    }
+
     public String toString() {
         return "NOM: " + getName()
                 + "\nEXP: " + exp
@@ -57,7 +79,7 @@ public class Tower extends Pokemon {
     }
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
-    private int setRayonValue(Rayon rayon) {
+    public int getRayonValue(Rayon rayon) {
         if (rayon == Rayon.NONE) {
             return 0;
         } else if (rayon == Rayon.SMALL) {
@@ -81,5 +103,10 @@ public class Tower extends Pokemon {
 
     public void setTarget(Ennemi b) {
         target = b;
+    }
+
+    public Ennemi getTarget() {
+        // Wait a faire
+        return null;
     }
 }
