@@ -1,0 +1,4 @@
+0,Miaouss,NORMAL,NONE,30,FAST,false
+0,Miaouss2,NORMAL,NONE,30,FAST,false
+0,Miaouss3,NORMAL,NONE,30,FAST,false
+0,Miaouss4,NORMAL,NONE,30,FAST,false

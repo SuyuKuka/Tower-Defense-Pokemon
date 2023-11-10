@@ -3,7 +3,7 @@ package characters;
 public class Pokemon {
 
     public enum Speed {
-        FAST, NORMAL, SLOW
+        FAST, CLASSIC, SLOW, STUN
     }
 
     private String name;
@@ -18,7 +18,7 @@ public class Pokemon {
         this.value = value;
         type[0] = type0;
         type[1] = type1;
-        speed = Pokemon.Speed.NORMAL;
+        speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
         lvl = 5;
     }
