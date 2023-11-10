@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitWaves {
-
-    public static void showlist() {
-        System.out.println(Ennemi.LIST.getList());
-        // TODO
-    }
+    private int waveCount;
 
 }

@@ -9,7 +9,8 @@
             "name": "Game",
             "request": "launch",
             "mainClass": "main.Game",
-            "projectName": "pooproject_89e8d3d2"
+            "projectName": "pooproject_89e8d3d2",
+            "args": "[terminal]"
         },
         {
             "type": "java",

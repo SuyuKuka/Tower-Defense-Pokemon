@@ -30,6 +30,19 @@ public class Pokemon {
         return isTower;
     }
 
+    public static Speed stringToSpeed(String info) {
+        switch (info) {
+            case "SLOW":
+                return Speed.SLOW;
+            case "STUN":
+                return Speed.STUN;
+            case "FAST":
+                return Speed.FAST;
+            default:
+                return Speed.CLASSIC;
+        }
+    }
+
     // GETTER SETTER
     public Type[] getType() {
         return type;

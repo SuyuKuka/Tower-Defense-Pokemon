@@ -26,7 +26,7 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-
+        System.out.println(args[0]);
         Map m = new Map(20, 20);
         m.mapBuilding();
 
@@ -34,24 +34,13 @@ public class Game extends JFrame {
         // m.affiche();
 
         // MapState a = new MapState(m);
-
-        Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL, characters.Type.NONE);
-        Ennemi P = new Ennemi("sqdqsdqsvqss", 29, characters.Type.NORMAL, characters.Type.NONE);
-        Ennemi D = new Ennemi("8855858ss", 29, characters.Type.NORMAL, characters.Type.NONE);
-
-        Tower pika = new Tower("Pikachu", 256, characters.Type.ELECTIK, characters.Type.NONE);
-
-        pika.setSpeed(Pokemon.Speed.FAST);
         // System.out.println(M);
         // System.out.println(pika);
 
         // System.out.println(M.getList());
 
-        System.out.println();
-
-        // InitWaves.showlist();
-
         InitPokemon.loadingChar();
+        InitWaves.showlist();
 
     }
 }
