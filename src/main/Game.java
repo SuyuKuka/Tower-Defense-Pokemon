@@ -40,20 +40,20 @@ public class Game extends JFrame {
 
         Scanner sc = new Scanner(System.in);
 
-        Tower tower = new Tower("terminal", 1, characters.Type.NONE, characters.Type.NONE);
+        Tower towerTerminal = new Tower("terminal", 1, characters.Type.NONE, characters.Type.NONE);
         String st = sc.nextLine();
-        int[] posTower = tower.putTower(st);
-        a.setTower(posTower);
+        int[] posTower = towerTerminal.putTower(st);
+        a.setTower(posTower,towerTerminal);
         m.affiche();
 
         while (gameStart) {
             st = sc.nextLine();
-            posTower = tower.putTower(st);
-            a.setTower(posTower);
+            posTower = towerTerminal.putTower(st);
+            a.setTower(posTower,towerTerminal);
+            towerTerminal.attaque(null);
             m.affiche();
         }
         sc.close();
-        // MapState a = new MapState(m);
 
         // Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL,
         // characters.Type.NONE);

@@ -1,11 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+
+import characters.Ennemi;
+import characters.Tower;
 import config.Map;
 
 public class MapState {
     private double lastUpdate;
     private int[][] config;
     private int money;
+    private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
+    private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>(); 
 
     public MapState(Map map) {
         config = map.getConfig();
@@ -24,7 +30,7 @@ public class MapState {
         }
     }
 
-    public void setTower(int[] posTower) {
+    public void setTower(int[] posTower, Tower tower) {
         if (posTower[0] == -1 || posTower[1] == -1) {
             return;
         } else {
@@ -33,6 +39,8 @@ public class MapState {
 
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;
+                towerPresent.add(tower);
+                tower.setPos(posTower);
             }
         }
     }

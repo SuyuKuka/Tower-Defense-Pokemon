@@ -1,5 +1,7 @@
 package characters;
 
+import java.util.List;
+
 public class Tower extends Pokemon {
 
     public enum Rayon {
@@ -10,6 +12,7 @@ public class Tower extends Pokemon {
     private Ennemi target;
     private double exp;
     private int level;
+    private int[] pos;
 
     public Tower(String name, int atk, Type type1, Type type2) {
         super(name, atk, type1, type2, true);
@@ -48,12 +51,13 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attaque() {
-        target = getTarget();
+    public void attaque(List<Ennemi> ennemiInMap) {
+        target = getTarget(ennemiInMap);
         if (target != null) {
+            System.out.println("J'ai attaqué");
             target.setValue(target.getValue() - getValue());
             if (target.getValue() <= 0) {
-                // dead
+                ennemiInMap.remove(target);
                 winExp(target);
                 levelUp();
             }
@@ -105,8 +109,36 @@ public class Tower extends Pokemon {
         target = b;
     }
 
-    public Ennemi getTarget() {
-        // Wait a faire
-        return null;
+    public Ennemi getTarget(List<Ennemi> ennemiInMap) {
+        // Parcours la liste des ennemis pour trouver celui dans le rayon de la tour
+        for (Ennemi ennemi : ennemiInMap) {
+            if (estDansRayon(ennemi)) {
+                return ennemi;
+            }
+        }
+        return null; // Aucun ennemi dans le rayon
+    }
+
+    private boolean estDansRayon(Ennemi ennemi) {
+        // Implémente la logique pour vérifier si l'ennemi est dans le rayon de la tour
+        int distance = calculerDistance(ennemi.getPos(), getPos());
+        int rayonTour = getRayonValue(rayon);
+        return distance <= rayonTour;
+    }
+
+    private int calculerDistance(int[] position1, int[] position2) {
+        // Implémente la logique pour calculer la distance entre deux positions
+        // (par exemple, la distance euclidienne)
+        int deltaX = position1[0] - position2[0];
+        int deltaY = position1[1] - position2[1];
+        return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
+    public int[] getPos() {
+        return pos;
+    }
+
+    public void setPos(int[] pos) {
+        this.pos = pos;
     }
 }
