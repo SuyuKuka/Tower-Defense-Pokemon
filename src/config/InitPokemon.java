@@ -1,5 +1,5 @@
 package config;
 
-public class InitPokemon {
-
+public class InitPokemon { 
+    //SCANNER 
 }

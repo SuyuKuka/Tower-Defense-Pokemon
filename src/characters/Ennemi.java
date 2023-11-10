@@ -5,10 +5,14 @@ import java.util.ArrayList;
 public class Ennemi extends Pokemon {
 
     private static ArrayList<Ennemi> EList = new ArrayList<>();
+    public static final Ennemi LIST = new Ennemi();
 
     public Ennemi(String name, int pv, Type type1, Type type2) {
         super(name, pv, type1, type2, false);
         EList.add(this);
+    }
+
+    private Ennemi() {
     }
 
     public String toString() {
@@ -20,7 +24,7 @@ public class Ennemi extends Pokemon {
     }
 
     public void move() {
-
+        // TODO
     }
 
     public ArrayList<Ennemi> getList() {

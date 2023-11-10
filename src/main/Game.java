@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import characters.Ennemi;
 import characters.Pokemon;
 import characters.Tower;
+import config.InitWaves;
 import config.Map;
 import graphique.GameScreen;
 import model.MapState;
@@ -34,6 +35,8 @@ public class Game extends JFrame {
         // MapState a = new MapState(m);
 
         Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL, characters.Type.NONE);
+        Ennemi P = new Ennemi("sqdqsdqsvqss", 29, characters.Type.NORMAL, characters.Type.NONE);
+        Ennemi D = new Ennemi("8855858ss", 29, characters.Type.NORMAL, characters.Type.NONE);
 
         Tower pika = new Tower("Pikachu", 256, characters.Type.ELECTIK, characters.Type.NONE);
 
@@ -41,7 +44,11 @@ public class Game extends JFrame {
         System.out.println(M);
         System.out.println(pika);
 
-        System.out.println(M.getList());
+        // System.out.println(M.getList());
+
+        System.out.println();
+
+        InitWaves.showlist();
 
     }
 }
