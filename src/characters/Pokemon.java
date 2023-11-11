@@ -12,6 +12,7 @@ public class Pokemon {
     private Type[] type = new Type[2];
     private int lvl; // TODO+COMPETENCE
     private boolean isTower;
+    private final boolean isTower;
 
     public Pokemon(String name, int value, Type type0, Type type1, boolean isTower) {
         this.name = name;
@@ -20,7 +21,6 @@ public class Pokemon {
         type[1] = type1;
         speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
-        lvl = 5;
     }
 
     public Pokemon() {
@@ -62,5 +62,9 @@ public class Pokemon {
 
     public void setSpeed(Speed sp) {
         speed = sp;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

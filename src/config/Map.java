@@ -1,6 +1,7 @@
 package config;
 
 import java.util.Random;
+
 import geometry.IntCoordinates;
 //GENERE UNE MAP ALEATOIRE
 public class Map {
@@ -143,6 +144,12 @@ public class Map {
                 switch (map[i][j]) {
                     case 0:
                         plateau[i][j] = '+';
+                        break;
+                    case 1:
+                        plateau[i][j] = '1';
+                        break;
+                    case 2:
+                        plateau[i][j] = 'T';
                         break;
                     case 3:
                         plateau[i][j] = ' ';
