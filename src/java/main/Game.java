@@ -26,9 +26,18 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(args[0]);
-        Map m = new Map(20, 20);
-        m.mapBuilding();
+
+        if (args[0].equals("[terminal]")) {
+            Map m = new Map(20, 20);
+            m.mapBuilding();
+            InitPokemon.loadingCharTerminal();
+            InitWaves wave1 = new InitWaves(3);
+            m.affiche();
+            // System.out.println(Ennemi.LIST.getList());
+        } else {
+            InitPokemon p = new InitPokemon();
+            p.loadingChar();
+        }
 
         // System.out.println(m);
         // m.affiche();
@@ -37,10 +46,6 @@ public class Game extends JFrame {
         // System.out.println(M);
         // System.out.println(pika);
 
-        // System.out.println(M.getList());
-
-        InitPokemon.loadingChar();
-        InitWaves.showlist();
-
+        // System.out.println(M.ge
     }
 }

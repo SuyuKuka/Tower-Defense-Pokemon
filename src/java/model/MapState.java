@@ -1,5 +1,6 @@
 package model;
 
+import config.InitPokemon;
 import config.Map;
 
 public class MapState {
@@ -9,6 +10,7 @@ public class MapState {
 
     public MapState(Map map) {
         config = map.getConfig();
+
         timer();
     }
 

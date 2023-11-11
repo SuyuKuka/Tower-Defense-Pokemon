@@ -1,5 +1,6 @@
 package config;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 import characters.Ennemi;
@@ -9,11 +10,9 @@ import characters.Type;
 
 public class InitPokemon {
 
-    private static Scanner sc;
-
-    public static void loadingChar() {
-
-        InitPokemon.sc = new Scanner(InitPokemon.class.getResourceAsStream("PokemonLoader.txt"));
+    public void loadingChar() {
+        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt");
+        Scanner sc = new Scanner(inputStream);
         while (sc.hasNext()) {
             String[] info = new String[7];
             info = sc.next().split(",");
@@ -32,5 +31,15 @@ public class InitPokemon {
                     Type.stringToType(info[3]));
             t.setSpeed(Pokemon.stringToSpeed(info[5]));
         }
+    }
+
+    public static void loadingCharTerminal() {
+        for (int i = 1; i < 10; i++) {
+            Ennemi ennemiTerminal = new Ennemi("ennemiTerminal", i, Type.NONE, Type.NONE);
+        }
+        for (int i = 1; i < 5; i++) {
+            Tower towerTerminal = new Tower("towerTerminal", i, Type.NONE, Type.NONE);
+        }
+
     }
 }

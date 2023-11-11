@@ -24,7 +24,7 @@ public class Ennemi extends Pokemon {
     }
 
     public void move() {
-        // TODO
+
     }
 
     public ArrayList<Ennemi> getList() {
