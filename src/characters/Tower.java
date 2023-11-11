@@ -1,7 +1,8 @@
-package java.characters;
+package characters;
 
-import java.model.MapState;
 import java.util.ArrayList;
+
+import model.MapState;
 
 public class Tower extends Pokemon {
 
@@ -52,12 +53,11 @@ public class Tower extends Pokemon {
     }
 
     public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) {
-        for (int i = 0; i < towerInMap.size(); i++) {
-            Tower tower = towerInMap.get(i);
-            Ennemi target = tower.getTarget(ennemiInMap);
+        for(Tower tower: towerInMap){
+            Ennemi checkTarget = tower.getTarget(ennemiInMap);
     
-            if (target != null) {
-                tower.setTarget(target);
+            if (checkTarget != null) {
+                tower.setTarget(checkTarget);
                 target.setValue(target.getValue() - tower.getValue());
                 System.out.println("J'ai attaqué");
                 System.out.println(target);

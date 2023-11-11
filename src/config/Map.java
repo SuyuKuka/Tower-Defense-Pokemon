@@ -1,7 +1,8 @@
-package java.config;
+package config;
 
-import java.geometry.IntCoordinates;
 import java.util.Random;
+
+import geometry.IntCoordinates;
 //GENERE UNE MAP ALEATOIRE
 public class Map {
 

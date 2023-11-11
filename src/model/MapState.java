@@ -1,9 +1,11 @@
-package java.model;
+package model;
 
-import java.characters.Ennemi;
-import java.characters.Tower;
-import java.config.Map;
+
 import java.util.ArrayList;
+
+import characters.Ennemi;
+import characters.Tower;
+import config.Map;
 
 public class MapState {
     private double lastUpdate;

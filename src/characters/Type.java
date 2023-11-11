@@ -1,4 +1,4 @@
-package java.characters;
+package characters;
 
 public enum Type {
     NONE, EAU, FEU, SOL, VOL,
