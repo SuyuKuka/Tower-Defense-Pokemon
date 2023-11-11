@@ -8,7 +8,7 @@ import characters.Tower;
 import config.InitPokemon;
 import config.InitWaves;
 import config.Map;
-import graphique.GameScreen;
+import graphics.GameScreen;
 import model.MapState;
 
 import java.util.Scanner;
