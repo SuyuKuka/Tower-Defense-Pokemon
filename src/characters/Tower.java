@@ -60,11 +60,12 @@ public class Tower extends Pokemon {
     }
 
     public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) {
-        for(Tower tower: towerInMap){
-            Ennemi checkTarget = tower.getTarget(ennemiInMap);
+         for (int i = 0; i < towerInMap.size(); i++) {
+            Tower tower = towerInMap.get(i);
+            Ennemi target = tower.getTarget(ennemiInMap);
     
-            if (checkTarget != null) {
-                tower.setTarget(checkTarget);
+            if (target != null) {
+                tower.setTarget(target);
                 target.setValue(target.getValue() - tower.getValue());
                 System.out.println("J'ai attaqué");
                 System.out.println(target);
