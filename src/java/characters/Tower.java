@@ -1,5 +1,7 @@
 package characters;
 
+import java.util.ArrayList;
+
 public class Tower extends Pokemon {
 
     public enum Rayon {
@@ -7,14 +9,21 @@ public class Tower extends Pokemon {
     }
 
     private Rayon rayon;
-    private Ennemi target;
+    private Ennemi target; // TODO
     private double exp;
+
+    private static ArrayList<Tower> TList = new ArrayList<Tower>();
+    public static final Tower LIST = new Tower();
 
     public Tower(String name, int atk, Type type1, Type type2) {
         super(name, atk, type1, type2, true);
-        this.rayon = Rayon.MEDIUM;
+        this.rayon = Rayon.SMALL;
         target = null;
         exp = 0;
+        TList.add(this);
+    }
+
+    private Tower() {
     }
 
     public String toString() {
@@ -29,6 +38,7 @@ public class Tower extends Pokemon {
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
     private int setRayonValue(Rayon rayon) {
+        setRayon(rayon);
         if (rayon == Rayon.NONE) {
             return 0;
         } else if (rayon == Rayon.SMALL) {
@@ -39,6 +49,7 @@ public class Tower extends Pokemon {
             return 5;
         } else {
             return -1; // Global?
+            // return taille de map *2 TODO
         }
     }
 
@@ -52,5 +63,9 @@ public class Tower extends Pokemon {
 
     public void setTarget(Ennemi b) {
         target = b;
+    }
+
+    public ArrayList<Tower> getList() {
+        return TList;
     }
 }

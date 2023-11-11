@@ -3,28 +3,44 @@ package characters;
 public class Pokemon {
 
     public enum Speed {
-        FAST, NORMAL, SLOW
+        FAST, CLASSIC, SLOW, STUN
     }
 
-    private final String name;
+    private String name;
     private int value; // tour -> atk, bad -> pv
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
     private Type[] type = new Type[2];
-    private int lvl;
-    private final boolean isTower;
+    private int lvl; // TODO+COMPETENCE
+    private boolean isTower;
 
     public Pokemon(String name, int value, Type type0, Type type1, boolean isTower) {
         this.name = name;
         this.value = value;
         type[0] = type0;
         type[1] = type1;
-        speed = Pokemon.Speed.NORMAL;
+        speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
         lvl = 5;
     }
 
+    public Pokemon() {
+    }
+
     public boolean isTower() {
         return isTower;
+    }
+
+    public static Speed stringToSpeed(String info) {
+        switch (info) {
+            case "SLOW":
+                return Speed.SLOW;
+            case "STUN":
+                return Speed.STUN;
+            case "FAST":
+                return Speed.FAST;
+            default:
+                return Speed.CLASSIC;
+        }
     }
 
     // GETTER SETTER

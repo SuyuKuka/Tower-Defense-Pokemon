@@ -1,5 +1,6 @@
 package model;
 
+import config.InitPokemon;
 import config.Map;
 
 public class MapState {
@@ -9,11 +10,12 @@ public class MapState {
 
     public MapState(Map map) {
         config = map.getConfig();
+
         timer();
     }
 
     public void timer() {
-        while (true) {
+        while (true) { // TODO: A CHANGER
             if (System.currentTimeMillis() - lastUpdate >= 1000) { // 1000 = 1s a changer si nécessaire
                 lastUpdate = System.currentTimeMillis();
                 money += 1;

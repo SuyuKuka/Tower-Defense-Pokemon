@@ -4,8 +4,10 @@ import javax.swing.JFrame;
 import characters.Ennemi;
 import characters.Pokemon;
 import characters.Tower;
+import config.InitPokemon;
+import config.InitWaves;
 import config.Map;
-import graphics.GameScreen;
+import graphique.GameScreen;
 import model.MapState;
 
 public class Game extends JFrame {
@@ -24,24 +26,26 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args[0].length() == 0) {
-            System.out.println("Graphics");
-        } else if (args[0].equals("[terminal]")) {
+
+        if (args[0].equals("[terminal]")) {
             Map m = new Map(20, 20);
             m.mapBuilding();
-
-            System.out.println(m);
+            InitPokemon.loadingCharTerminal();
+            InitWaves wave1 = new InitWaves(3);
             m.affiche();
-
-            MapState a = new MapState(m);
-
-            Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL, characters.Type.NONE);
-            Tower pika = new Tower("Pikachu", 256, characters.Type.ELECTIK, characters.Type.NONE);
-
-            pika.setSpeed(Pokemon.Speed.FAST);
-            System.out.println(M);
-            System.out.println(pika);
+            // System.out.println(Ennemi.LIST.getList());
+        } else {
+            InitPokemon p = new InitPokemon();
+            p.loadingChar();
         }
-        
+
+        // System.out.println(m);
+        // m.affiche();
+
+        // MapState a = new MapState(m);
+        // System.out.println(M);
+        // System.out.println(pika);
+
+        // System.out.println(M.ge
     }
 }
