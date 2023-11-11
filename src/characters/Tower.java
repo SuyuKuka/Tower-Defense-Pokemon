@@ -146,6 +146,7 @@ public class Tower extends Pokemon {
 
         int distance = deltaX+deltaY;
         int towerRayon = getRayonValue(rayon);
+        System.out.println("---------------------");
         System.out.println("x : " + deltaX);
         System.out.println("y : " + deltaY);
         System.out.println("d : " + distance);
