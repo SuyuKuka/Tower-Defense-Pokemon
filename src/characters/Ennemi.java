@@ -2,15 +2,18 @@ package characters;
 
 import java.util.ArrayList;
 
+import config.Map;
+
 public class Ennemi extends Pokemon {
     private int[] pos;
-
+    private boolean wasRight = false;
     private static ArrayList<Ennemi> EList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
 
     public Ennemi(String name, int pv, Type type1, Type type2) {
         super(name, pv, type1, type2, false);
         EList.add(this);
+
     }
 
     private Ennemi() {
@@ -52,10 +55,6 @@ public class Ennemi extends Pokemon {
                 + "\nMECHANT\n";
     }
 
-    public void move() {
-
-    }
-
     public ArrayList<Ennemi> getList() {
         return EList;
     }
@@ -66,5 +65,13 @@ public class Ennemi extends Pokemon {
 
     public void setPos(int[] pos) {
         this.pos = pos;
+    }
+
+    public boolean wasRight() {
+        return wasRight;
+    }
+
+    public void setWasRight(boolean wasRight) {
+        this.wasRight = wasRight;
     }
 }

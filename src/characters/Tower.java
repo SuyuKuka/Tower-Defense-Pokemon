@@ -60,16 +60,16 @@ public class Tower extends Pokemon {
     }
 
     public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) {
-         for (int i = 0; i < towerInMap.size(); i++) {
+        for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
             Ennemi target = tower.getTarget(ennemiInMap);
-    
+
             if (target != null) {
                 tower.setTarget(target);
                 target.setValue(target.getValue() - tower.getValue());
                 System.out.println("J'ai attaqué");
                 System.out.println(target);
-    
+
                 if (target.getValue() <= 0) {
                     a.isDead(target);
                     tower.winExp(target);
@@ -78,9 +78,6 @@ public class Tower extends Pokemon {
             }
         }
     }
-    
-    
-    
 
     private void winExp(Ennemi target) {
         this.exp += target.getValue() / 3;
@@ -88,7 +85,7 @@ public class Tower extends Pokemon {
 
     private void levelUp() {
         System.out.println(exp);
-        if(exp>5){
+        if (exp > 5) {
             System.out.println("levelUp");
             level++;
         }
@@ -132,10 +129,10 @@ public class Tower extends Pokemon {
     }
 
     public Ennemi getTarget(ArrayList<Ennemi> ennemiInMap) {
-        for(Ennemi e: ennemiInMap){
-             if (estDansRayon(e)){
+        for (Ennemi e : ennemiInMap) {
+            if (estDansRayon(e)) {
                 return e;
-             }
+            }
         }
         return null;
     }
@@ -144,14 +141,16 @@ public class Tower extends Pokemon {
         int deltaX = Math.abs(ennemi.getPos()[0] - getPos()[0]);
         int deltaY = Math.abs(ennemi.getPos()[1] - getPos()[1]);
 
-        int distance = deltaX+deltaY;
+        int distance = deltaX + deltaY;
         int towerRayon = getRayonValue(rayon);
-        System.out.println("---------------------");
-        System.out.println("x : " + deltaX);
-        System.out.println("y : " + deltaY);
-        System.out.println("d : " + distance);
+        /*
+         * 
+         * System.out.println("x : " + deltaX);
+         * System.out.println("y : " + deltaY);
+         * System.out.println("d : " + distance);
+         */
 
-        return distance < towerRayon && deltaX <= towerRayon/2 && deltaY <= towerRayon/2;
+        return distance < towerRayon && deltaX <= towerRayon / 2 && deltaY <= towerRayon / 2;
     }
 
     public int[] getPos() {
