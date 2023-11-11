@@ -3,13 +3,14 @@ package config;
 import java.util.Random;
 
 import geometry.IntCoordinates;
+
 //GENERE UNE MAP ALEATOIRE
 public class Map {
 
     private int[][] map;
 
-    final private IntCoordinates entry;
-    final private IntCoordinates exit;
+    private IntCoordinates entry;
+    private IntCoordinates exit;
 
     private Random rand = new Random();
 
@@ -32,15 +33,18 @@ public class Map {
         // AJOUTE DES OBSTACLES
         addObstacles();
         deployObstacles();
+
+        // AJOUTE UN CADRE
+        border();
     }
 
-    public void wayFinder() {
+    private void wayFinder() {
         for (int i = 1; i < map.length - 3; i = i + 3) {
             map[i][rand.nextInt(map[0].length - 3)] = 2;
         }
     }
 
-    public void wayBuilderV() {
+    private void wayBuilderV() {
         int posPrec = 0;
         for (int i = 1; i < map.length - 1; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -53,7 +57,7 @@ public class Map {
         }
     }
 
-    public void wayBuilderH() {
+    private void wayBuilderH() {
         int posPrec = 0;
         int posHead = 0;
         for (int i = 1; i < map.length; i++) {
@@ -90,7 +94,7 @@ public class Map {
         }
     }
 
-    public void addObstacles() {
+    private void addObstacles() {
         for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
@@ -102,7 +106,7 @@ public class Map {
         }
     }
 
-    public void deployObstacles() {
+    private void deployObstacles() {
         for (int i = 0; i < map.length; i++) {
             int rayon = 2;
             for (int j = 0; j < map[0].length; j++) {
@@ -135,6 +139,16 @@ public class Map {
                 }
             }
         }
+    }
+
+    private void border() {
+        int[][] big = new int[map.length + 1][map[0].length + 2];
+        for (int i = 0; i < big.length - 1; i++) {
+            for (int j = 1; j < big[0].length - 1; j++) {
+                big[i][j] = map[i][j - 1];
+            }
+        }
+        map = big;
     }
 
     public static char[][] intToChar(int[][] map) {
@@ -176,22 +190,22 @@ public class Map {
 
     public void affiche() {
         System.out.print("   ");
-        for(int j=1; j < map[0].length+1; j=j+1){
-            if(j<10){
+        for (int j = 1; j < map[0].length + 1; j = j + 1) {
+            if (j < 10) {
                 System.out.print("0" + j + " ");
-            }else{
+            } else {
                 System.out.print(j + " ");
             }
         }
         System.out.println();
         System.out.print("   ");
-        for(int j=1; j < map[0].length+1; j=j+1){
-            if(j<10){
+        for (int j = 1; j < map[0].length + 1; j = j + 1) {
+            if (j < 10) {
                 System.out.print("==");
-            }else{
+            } else {
                 System.out.print("==");
             }
-            if(j!=map.length){
+            if (j != map.length) {
                 System.out.print("=");
             }
         }
@@ -202,7 +216,7 @@ public class Map {
             for (int j = 0; j < map[0].length; j++) {
                 System.out.print(intToChar(map)[i][j] + "  ");
             }
-    
+
             System.out.println();
         }
     }
