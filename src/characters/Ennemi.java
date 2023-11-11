@@ -28,7 +28,6 @@ public class Ennemi extends Pokemon {
             }
 
             int[] tab = { posX, posY };
-            System.out.println(posX + " " + posY);
             return tab;
         } catch (Exception e) {
             int[] tab = { -1, -1 };

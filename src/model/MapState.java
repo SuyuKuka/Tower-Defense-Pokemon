@@ -60,6 +60,12 @@ public class MapState {
         }
     }
 
+    public void isDead(Ennemi e){
+        ennemiPresent.remove(e);
+        int[] pos = e.getPos();
+        config[pos[0]][pos[1]] = 3;
+    }
+
     public ArrayList<Ennemi> getEnnemiPresent(){
         return ennemiPresent;
     }

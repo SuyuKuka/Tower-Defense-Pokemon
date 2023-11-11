@@ -1,7 +1,8 @@
 package characters;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
+import model.MapState;
 
 public class Tower extends Pokemon {
 
@@ -44,7 +45,6 @@ public class Tower extends Pokemon {
             }
 
             int[] tab = { posX, posY };
-            System.out.println(posX + " " + posY);
             return tab;
         } catch (Exception e) {
             int[] tab = { -1, -1 };
@@ -52,22 +52,27 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap) {
-        for(Tower tower: towerInMap){
-            tower.setTarget(getTarget(ennemiInMap));
-            if (tower.getTarget(ennemiInMap) != null) {      
-                target.setValue(target.getValue() - getValue());
+    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) {
+        for (int i = 0; i < towerInMap.size(); i++) {
+            Tower tower = towerInMap.get(i);
+            Ennemi target = tower.getTarget(ennemiInMap);
+    
+            if (target != null) {
+                tower.setTarget(target);
+                target.setValue(target.getValue() - tower.getValue());
                 System.out.println("J'ai attaqué");
-                System.out.println(ennemiInMap.get(0).toString());
+                System.out.println(target);
+    
                 if (target.getValue() <= 0) {
-                    ennemiInMap.remove(target);
+                    a.isDead(target);
                     tower.winExp(target);
                     tower.levelUp();
                 }
-                target=null;
-            }  
+            }
         }
     }
+    
+    
     
 
     private void winExp(Ennemi target) {
@@ -120,7 +125,6 @@ public class Tower extends Pokemon {
     }
 
     public Ennemi getTarget(ArrayList<Ennemi> ennemiInMap) {
-        // Parcours la liste des ennemis pour trouver celui dans le rayon de la tour
         for(Ennemi e: ennemiInMap){
              if (estDansRayon(e)){
                 return e;

@@ -57,19 +57,10 @@ public class Game extends JFrame {
             st = sc.nextLine();
             posTower = towerTerminal.putTower(st);
             a.setTower(posTower,towerTerminal);
-            towerTerminal.attaque(a.getTowerPresent() ,a.getEnnemiPresent());
+            towerTerminal.attaque(a.getTowerPresent() ,a.getEnnemiPresent(), a);
+            
             m.affiche();
         }
         sc.close();
-
-        // Ennemi M = new Ennemi("Miaouss", 29, characters.Type.NORMAL,
-        // characters.Type.NONE);
-        // Tower pika = new Tower("Pikachu", 256, characters.Type.ELECTIK,
-        // characters.Type.NONE);
-
-        // pika.setSpeed(Pokemon.Speed.FAST);
-        // System.out.println(M);
-        // System.out.println(pika.toString());
-
     }
 }
