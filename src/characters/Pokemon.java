@@ -12,7 +12,6 @@ public class Pokemon {
     private Type[] type = new Type[2];
     private int lvl; // TODO+COMPETENCE
     private boolean isTower;
-    private final boolean isTower;
 
     public Pokemon(String name, int value, Type type0, Type type1, boolean isTower) {
         this.name = name;

@@ -10,7 +10,7 @@ import characters.Type;
 
 public class InitPokemon {
 
-    public void loadingChar() {
+    public static void loadingChar() {
         InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt");
         Scanner sc = new Scanner(inputStream);
         while (sc.hasNext()) {
@@ -20,7 +20,7 @@ public class InitPokemon {
         }
     }
 
-    public static void pokemonMaker(String[] info) {
+    private static void pokemonMaker(String[] info) {
         if (Integer.valueOf(info[0]) == 0) {
             Ennemi e = new Ennemi(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
                     Type.stringToType(info[3]));

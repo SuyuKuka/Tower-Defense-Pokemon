@@ -58,6 +58,8 @@ public class Ennemi extends Pokemon {
 
     public ArrayList<Ennemi> getList() {
         return EList;
+    }
+
     public int[] getPos() {
         return pos;
     }

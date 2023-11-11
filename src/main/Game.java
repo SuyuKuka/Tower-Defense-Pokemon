@@ -29,7 +29,6 @@ public class Game extends JFrame {
         add(gameScreen);
     }
 
-
     public static void main(String[] args) throws Exception {
         Map m = new Map(20, 20);
         m.mapBuilding();
@@ -45,13 +44,13 @@ public class Game extends JFrame {
         Tower towerTerminal = new Tower("towerTerminal", 1, characters.Type.NONE, characters.Type.NONE);
         String st = sc.nextLine();
         int[] posTower = towerTerminal.putTower(st);
-        a.setTower(posTower,towerTerminal);
+        a.setTower(posTower, towerTerminal);
 
         System.out.println("Pose un ennemi");
         Ennemi ennemiTerminal = new Ennemi("enemmiTerminal", 12, characters.Type.NONE, characters.Type.NONE);
         String test = sc.nextLine();
         int[] posEnnemi = ennemiTerminal.putEnnemi(test);
-        a.setEnnemi(posEnnemi,ennemiTerminal);
+        a.setEnnemi(posEnnemi, ennemiTerminal);
 
         m.affiche();
 
@@ -59,9 +58,9 @@ public class Game extends JFrame {
             towerTerminal = new Tower("towerTerminal", 1, characters.Type.NONE, characters.Type.NONE);
             st = sc.nextLine();
             posTower = towerTerminal.putTower(st);
-            a.setTower(posTower,towerTerminal);
-            towerTerminal.attaque(a.getTowerPresent() ,a.getEnnemiPresent(), a);
-            
+            a.setTower(posTower, towerTerminal);
+            towerTerminal.attaque(a.getTowerPresent(), a.getEnnemiPresent(), a);
+
             m.affiche();
         }
         sc.close();
