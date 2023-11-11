@@ -1,6 +1,7 @@
 package characters;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Tower extends Pokemon {
 
@@ -16,7 +17,7 @@ public class Tower extends Pokemon {
 
     public Tower(String name, int atk, Type type1, Type type2) {
         super(name, atk, type1, type2, true);
-        this.rayon = Rayon.MEDIUM;
+        this.rayon = Rayon.SMALL;
         target = null;
         exp = 0;
         level = 5;
@@ -51,25 +52,34 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attaque(List<Ennemi> ennemiInMap) {
-        target = getTarget(ennemiInMap);
-        if (target != null) {
-            System.out.println("J'ai attaqué");
-            target.setValue(target.getValue() - getValue());
-            if (target.getValue() <= 0) {
-                ennemiInMap.remove(target);
-                winExp(target);
-                levelUp();
-            }
+    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap) {
+        for(Tower tower: towerInMap){
+            tower.setTarget(getTarget(ennemiInMap));
+            if (tower.getTarget(ennemiInMap) != null) {      
+                target.setValue(target.getValue() - getValue());
+                System.out.println("J'ai attaqué");
+                System.out.println(ennemiInMap.get(0).toString());
+                if (target.getValue() <= 0) {
+                    ennemiInMap.remove(target);
+                    tower.winExp(target);
+                    tower.levelUp();
+                }
+                target=null;
+            }  
         }
     }
+    
 
     private void winExp(Ennemi target) {
         this.exp += target.getValue() / 3;
     }
 
     private void levelUp() {
-
+        System.out.println(exp);
+        if(exp>5){
+            System.out.println("levelUp");
+            level++;
+        }
     }
 
     public String toString() {
@@ -105,33 +115,28 @@ public class Tower extends Pokemon {
         return rayon;
     }
 
-    public void setTarget(Ennemi b) {
-        target = b;
+    public void setTarget(Ennemi e) {
+        target = e;
     }
 
-    public Ennemi getTarget(List<Ennemi> ennemiInMap) {
+    public Ennemi getTarget(ArrayList<Ennemi> ennemiInMap) {
         // Parcours la liste des ennemis pour trouver celui dans le rayon de la tour
-        for (Ennemi ennemi : ennemiInMap) {
-            if (estDansRayon(ennemi)) {
-                return ennemi;
-            }
+        for(Ennemi e: ennemiInMap){
+             if (estDansRayon(e)){
+                return e;
+             }
         }
-        return null; // Aucun ennemi dans le rayon
+        return null;
     }
 
     private boolean estDansRayon(Ennemi ennemi) {
-        // Implémente la logique pour vérifier si l'ennemi est dans le rayon de la tour
-        int distance = calculerDistance(ennemi.getPos(), getPos());
-        int rayonTour = getRayonValue(rayon);
-        return distance <= rayonTour;
-    }
+        int deltaX = Math.abs(ennemi.getPos()[0] - getPos()[0]);
+        int deltaY = Math.abs(ennemi.getPos()[1] - getPos()[1]);
 
-    private int calculerDistance(int[] position1, int[] position2) {
-        // Implémente la logique pour calculer la distance entre deux positions
-        // (par exemple, la distance euclidienne)
-        int deltaX = position1[0] - position2[0];
-        int deltaY = position1[1] - position2[1];
-        return (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        int distance = deltaX+deltaY;
+        int towerRayon = getRayonValue(rayon);
+
+        return distance < towerRayon && deltaX <= towerRayon/2 && deltaY <= towerRayon/2;
     }
 
     public int[] getPos() {

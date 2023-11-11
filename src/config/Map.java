@@ -144,6 +144,9 @@ public class Map {
                     case 0:
                         plateau[i][j] = '+';
                         break;
+                    case 1:
+                        plateau[i][j] = '1';
+                        break;
                     case 2:
                         plateau[i][j] = 'T';
                         break;

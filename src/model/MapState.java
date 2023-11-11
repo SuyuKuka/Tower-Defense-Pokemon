@@ -44,4 +44,27 @@ public class MapState {
             }
         }
     }
+
+    public void setEnnemi(int[] posEnnemi, Ennemi ennemi) {
+        if (posEnnemi[0] == -1 || posEnnemi[1] == -1) {
+            return;
+        } else {
+            int posX = posEnnemi[0];
+            int posY = posEnnemi[1];
+
+            if (config[posX][posY] == 3) {
+                config[posX][posY] = 1;
+                ennemiPresent.add(ennemi);
+                ennemi.setPos(posEnnemi);
+            }
+        }
+    }
+
+    public ArrayList<Ennemi> getEnnemiPresent(){
+        return ennemiPresent;
+    }
+
+    public ArrayList<Tower> getTowerPresent() {
+        return towerPresent;
+    }
 }
