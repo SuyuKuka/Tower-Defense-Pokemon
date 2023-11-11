@@ -30,7 +30,7 @@ public class MapState {
                         break;
                     case 1:
                         for(Ennemi e: ennemiPresent){
-                            if(i==e.getPos()[0]&&j==e.getPos()[1]){
+                            if(i==e.getPos()[0] && j==e.getPos()[1]){
                                 plateau[i][j]=Character.forDigit(e.getValue(), 10);
                             }
                         }
