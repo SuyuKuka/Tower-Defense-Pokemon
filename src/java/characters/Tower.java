@@ -1,8 +1,7 @@
-package characters;
+package java.characters;
 
+import java.model.MapState;
 import java.util.ArrayList;
-
-import model.MapState;
 
 public class Tower extends Pokemon {
 
@@ -139,6 +138,9 @@ public class Tower extends Pokemon {
 
         int distance = deltaX+deltaY;
         int towerRayon = getRayonValue(rayon);
+        System.out.println("x : " + deltaX);
+        System.out.println("y : " + deltaY);
+        System.out.println("d : " + distance);
 
         return distance < towerRayon && deltaX <= towerRayon/2 && deltaY <= towerRayon/2;
     }

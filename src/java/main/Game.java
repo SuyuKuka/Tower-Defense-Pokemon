@@ -1,14 +1,14 @@
-package main;
+package java.main;
 
 import javax.swing.JFrame;
-import java.util.Scanner;
 
-import characters.Ennemi;
-import characters.Pokemon;
-import characters.Tower;
-import config.Map;
-import graphics.GameScreen;
-import model.MapState;
+import java.characters.Ennemi;
+import java.characters.Pokemon;
+import java.characters.Tower;
+import java.config.Map;
+import java.graphics.GameScreen;
+import java.model.MapState;
+import java.util.Scanner;
 
 public class Game extends JFrame {
 
@@ -30,7 +30,6 @@ public class Game extends JFrame {
     public static void main(String[] args) throws Exception {
         Map m = new Map(20, 20);
         m.mapBuilding();
-        System.out.println(m);
         MapState a = new MapState(m);
         m.affiche();
 
@@ -40,13 +39,13 @@ public class Game extends JFrame {
 
         Scanner sc = new Scanner(System.in);
 
-        Tower towerTerminal = new Tower("towerTerminal", 1, characters.Type.NONE, characters.Type.NONE);
+        Tower towerTerminal = new Tower("towerTerminal", 1, java.characters.Type.NONE, java.characters.Type.NONE);
         String st = sc.nextLine();
         int[] posTower = towerTerminal.putTower(st);
         a.setTower(posTower,towerTerminal);
 
         System.out.println("Pose un ennemi");
-        Ennemi ennemiTerminal = new Ennemi("enemmiTerminal", 12, characters.Type.NONE, characters.Type.NONE);
+        Ennemi ennemiTerminal = new Ennemi("enemmiTerminal", 12, java.characters.Type.NONE, java.characters.Type.NONE);
         String test = sc.nextLine();
         int[] posEnnemi = ennemiTerminal.putEnnemi(test);
         a.setEnnemi(posEnnemi,ennemiTerminal);
@@ -54,6 +53,7 @@ public class Game extends JFrame {
         m.affiche();
 
         while (gameStart) {
+            towerTerminal = new Tower("towerTerminal", 1, java.characters.Type.NONE, java.characters.Type.NONE);
             st = sc.nextLine();
             posTower = towerTerminal.putTower(st);
             a.setTower(posTower,towerTerminal);

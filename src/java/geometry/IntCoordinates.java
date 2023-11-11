@@ -1,4 +1,4 @@
-package geometry;
+package java.geometry;
 
 public record IntCoordinates(int x, int y) {
 

@@ -1,4 +1,4 @@
-package characters;
+package java.characters;
 
 public class Ennemi extends Pokemon {
     private int[] pos;
