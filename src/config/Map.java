@@ -7,7 +7,7 @@ import geometry.IntCoordinates;
 //GENERE UNE MAP ALEATOIRE
 public class Map {
 
-    private int[][] map;
+    public static int[][] map;
 
     private IntCoordinates entry;
     private IntCoordinates exit;
@@ -22,6 +22,7 @@ public class Map {
         map[entry.x()][entry.y()] = 4;
         exit = new IntCoordinates(w - 1, exitRand);
         map[exit.x()][exit.y()] = 5;
+
     }
 
     public void mapBuilding() {
@@ -30,12 +31,13 @@ public class Map {
         wayBuilderV();
         wayBuilderH();
 
+        // AJOUTE UN CADRE
+        border();
+
         // AJOUTE DES OBSTACLES
         addObstacles();
         deployObstacles();
 
-        // AJOUTE UN CADRE
-        border();
     }
 
     private void wayFinder() {
@@ -239,5 +241,10 @@ public class Map {
             res = res + "\n";
         }
         return res;
+    }
+
+    public int[] getEntry() {
+        int[] t = { entry.x(), entry.y() + 1 };
+        return t;
     }
 }

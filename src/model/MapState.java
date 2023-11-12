@@ -1,12 +1,20 @@
 package model;
 
 import config.InitPokemon;
+import config.InitWaves;
+
 import java.util.ArrayList;
 import characters.Ennemi;
 import characters.Tower;
 import config.Map;
+import java.util.Scanner;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapState {
+    private boolean terminal;
+    private Map m;
 
     private double lastUpdate;
     private int[][] config;
@@ -14,10 +22,60 @@ public class MapState {
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
 
-    public MapState(Map map) {
-        config = map.getConfig();
+    public MapState(boolean terminal) {
+        Map map = new Map(20, 20);
+        map.mapBuilding();
+        m = map;
+        config = m.getConfig();
 
         // timer();
+    }
+
+    public void startTerminal() {
+
+        InitPokemon.loadingCharTerminal();
+        InitWaves w = new InitWaves(3);
+
+        System.out.println(
+                "Pour commencer à jouer, il faut placer une tours aux endroits qui contiennent des + sous la forme de coordonées");
+        System.out.println("Exemple : F4 ou F04");
+
+        Scanner sc = new Scanner(System.in);
+
+        affiche(m);
+
+        Timer timer = new Timer();
+        TimerTask update = new TimerTask() {
+            public void run() {
+                for (Ennemi e : ennemiPresent) {
+                    e.move();
+                }
+                System.out.println("IL Y A :" + getEnnemiPresent().size());
+                affiche(m);
+            }
+        };
+        timer.scheduleAtFixedRate(update, 0, 1000);
+        Timer timerE = new Timer();
+
+        TimerTask ennemies = new TimerTask() {
+            int i = 0;
+
+            public void run() {
+                if (i != Ennemi.LIST.getList().size()) {
+                    setEnnemi(m.getEntry(), Ennemi.LIST.getList().get(i));
+                    i++;
+                }
+
+            }
+
+        };
+        timerE.scheduleAtFixedRate(ennemies, 0, 5000);
+
+        sc.close();
+    }
+
+    public void start() {
+
     }
 
     public char[][] intToChar(int[][] map) {
@@ -29,9 +87,9 @@ public class MapState {
                         plateau[i][j] = '+';
                         break;
                     case 1:
-                        for(Ennemi e: ennemiPresent){
-                            if(i==e.getPos()[0]&&j==e.getPos()[1]){
-                                plateau[i][j]=Character.forDigit(e.getValue(), 10);
+                        for (Ennemi e : ennemiPresent) {
+                            if (i == e.getPos()[0] && j == e.getPos()[1]) {
+                                plateau[i][j] = Character.forDigit(e.getValue(), 10);
                             }
                         }
                         break;
@@ -63,22 +121,22 @@ public class MapState {
 
     public void affiche(Map map) {
         System.out.print("   ");
-        for(int j=1; j < config[0].length+1; j=j+1){
-            if(j<10){
+        for (int j = 1; j < config[0].length + 1; j = j + 1) {
+            if (j < 10) {
                 System.out.print("0" + j + " ");
-            }else{
+            } else {
                 System.out.print(j + " ");
             }
         }
         System.out.println();
         System.out.print("   ");
-        for(int j=1; j < config[0].length+1; j=j+1){
-            if(j<10){
+        for (int j = 1; j < config[0].length + 1; j = j + 1) {
+            if (j < 10) {
                 System.out.print("==");
-            }else{
+            } else {
                 System.out.print("==");
             }
-            if(j!=config.length){
+            if (j != config.length) {
                 System.out.print("=");
             }
         }
@@ -89,7 +147,7 @@ public class MapState {
             for (int j = 0; j < config[0].length; j++) {
                 System.out.print(intToChar(config)[i][j] + "  ");
             }
-    
+
             System.out.println();
         }
     }
@@ -103,40 +161,6 @@ public class MapState {
             }
             // LE FONCTIONNEMENT DU JEU
 
-        }
-    }
-
-    public void move(Ennemi e) {
-        config[e.getPos()[0]][e.getPos()[1]] = 3;
-
-        if (config[e.getPos()[0]][e.getPos()[1] + 1] == 3 &&
-                config[e.getPos()[0]][e.getPos()[1] - 1] == 3) {
-
-            if (e.wasRight()) {
-                int[] pos = { e.getPos()[0], e.getPos()[1] + 1 };
-                e.setPos(pos);
-                config[pos[0]][pos[1]] = 1;
-            } else {
-                int[] pos = { e.getPos()[0], e.getPos()[1] - 1 };
-                e.setPos(pos);
-                config[pos[0]][pos[1]] = 1;
-            }
-        } else if (config[e.getPos()[0] + 1][e.getPos()[1]] == 3) { // BAS
-            int[] pos = { e.getPos()[0] + 1, e.getPos()[1] };
-            e.setPos(pos);
-            config[pos[0]][pos[1]] = 1;
-
-        } else if (config[e.getPos()[0]][e.getPos()[1] + 1] == 3) { // DROITE
-            int[] pos = { e.getPos()[0], e.getPos()[1] + 1 };
-            e.setPos(pos);
-            config[pos[0]][pos[1]] = 1;
-            e.setWasRight(true);
-
-        } else if (config[e.getPos()[0]][e.getPos()[1] - 1] == 3) { // GAUCHE
-            int[] pos = { e.getPos()[0], e.getPos()[1] - 1 };
-            e.setPos(pos);
-            config[pos[0]][pos[1]] = 1;
-            e.setWasRight(false);
         }
     }
 
@@ -162,11 +186,12 @@ public class MapState {
             int posX = posEnnemi[0];
             int posY = posEnnemi[1];
 
-            if (config[posX][posY] == 3) {
+            if (config[posX][posY] == 3 || config[posX][posY] == 4) {
                 config[posX][posY] = 1;
                 ennemiPresent.add(ennemi);
                 ennemi.setPos(posEnnemi);
             } else {
+                System.out.println('e');
                 return;
             }
         }

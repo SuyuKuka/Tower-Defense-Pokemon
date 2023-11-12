@@ -23,4 +23,8 @@ public class InitWaves {
             ennemisTerminal.add(Ennemi.LIST.getList().get(rand + floor));
         }
     }
+
+    public ArrayList<Ennemi> getEnnemisListStandby() {
+        return ennemisTerminal;
+    }
 }
