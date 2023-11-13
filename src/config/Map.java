@@ -9,8 +9,8 @@ public class Map {
 
     public static int[][] map;
 
-    private IntCoordinates entry;
-    private IntCoordinates exit;
+    private final IntCoordinates entry;
+    private final IntCoordinates exit;
 
     private Random rand = new Random();
 
@@ -23,9 +23,11 @@ public class Map {
         exit = new IntCoordinates(w - 1, exitRand);
         map[exit.x()][exit.y()] = 5;
 
+        mapBuilding();
+
     }
 
-    public void mapBuilding() {
+    private void mapBuilding() {
         // POUR FAIRE LE CHEMINS
         wayFinder();
         wayBuilderV();
@@ -244,7 +246,28 @@ public class Map {
     }
 
     public int[] getEntry() {
-        int[] t = { entry.x(), entry.y() + 1 };
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                if (map[i][j] == 4) {
+                    int[] t = { i, j };
+                    return t;
+                }
+            }
+        }
+        int[] t = { -1, -1 };
+        return t;
+    }
+
+    public int[] getExit() {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                if (map[i][j] == 5) {
+                    int[] t = { i, j };
+                    return t;
+                }
+            }
+        }
+        int[] t = { -1, -1 };
         return t;
     }
 }

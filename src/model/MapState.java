@@ -24,7 +24,6 @@ public class MapState {
 
     public MapState(boolean terminal) {
         Map map = new Map(20, 20);
-        map.mapBuilding();
         m = map;
         config = m.getConfig();
 
