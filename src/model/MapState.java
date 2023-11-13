@@ -9,9 +9,6 @@ import characters.Tower;
 import config.Map;
 import java.util.Scanner;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MapState {
     private boolean terminal;
     private Map m;
@@ -26,64 +23,87 @@ public class MapState {
         Map map = new Map(20, 20);
         m = map;
         config = m.getConfig();
-
-        // timer();
     }
 
     public void startTerminal() {
 
         InitPokemon.loadingCharTerminal();
-        InitWaves w = new InitWaves(3);
-
+        InitWaves w = new InitWaves(9);
+        System.out.println(
+                "===============================================================================================================");
         System.out.println(
                 "Pour commencer à jouer, il faut placer une tours aux endroits qui contiennent des + sous la forme de coordonées");
-        System.out.println("Exemple : F4 ou F04");
+        System.out.println(
+                " - Exemple : F4 ou F04");
+        System.out.println(
+                "Le jeu se jouera tout seul après avoir placer les 4 tourelles");
+        System.out.println(
+                "Vous avez 3 vies");
+        System.out.println(
+                "===============================================================================================================");
+
+        System.out.println();
 
         Scanner sc = new Scanner(System.in);
 
+        int pas = 0;
+
+        int nbTour = 4;
         int i = 0;
-        int j = 0;
-        int pv = 3;///////////////////////////////////
-        boolean notLose = true;
-        while (notLose) {
-
+        int pv = 3;
+        boolean leaked = false;
+        while (pv != 0) {
             affiche(m);
-
-            for (Ennemi e : ennemiPresent) {
-                e.move();
-            }
-
-            if (i == 5) {
-                if (j < Ennemi.LIST.getList().size()) {
-
-                    setEnnemi(m.getEntry(), Ennemi.LIST.getList().get(j));
-                    j++;
-                    i = 0;
+            for (Ennemi e : ennemiPresent) { // FAIT SE DEPLACER LES ENNEMIS
+                if (e.move()) {
+                    leaked = true;
                 }
             }
-            i++;
-            System.out.print("Ajouter une tour: ");
-            String st = sc.nextLine();
+            if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
+                ennemiPresent.remove(i);
+                leaked = false;
+                pv--;
+            }
+            if (pas == 5) { // TOUT LES 5 ACTUALISATIONS UN NOUVEAU ENNEMIE ENTRE
+                if (!w.getEnnemisListStandby().isEmpty()) {
+                    setEnnemi(m.getEntry(), w.getEnnemisListStandby().get(0));
+                    w.getEnnemisListStandby().remove(0);
+                    pas = 0;
+                }
+            }
+            pas++;
             Tower terminal = new Tower("Terminal", 1, null, null);
-            setTower(terminal.putTower(st), terminal);
+
+            if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
+                System.out.print("Ajouter une tour  (" + nbTour + "): ");
+                String st = sc.nextLine();
+                if (st.length() != 0) {
+
+                    setTower(terminal.putTower(st), terminal);
+                    nbTour--;
+                }
+            } else {
+                System.out.println("Aucune tours restantes");
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             terminal.attaque(towerPresent, ennemiPresent, this);
-
-            // if un ennemi sort
-            // notLose=lose(pv-1);
-
+            System.out.println("Ennemis en attente: " + w.getEnnemisListStandby().size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            if (w.getEnnemisListStandby().size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
+                                                                                      // LA PARTIE
+                System.out.println("VOUS AVEZ GAGNEE");
+                break;
+            }
+        }
+        if (pv == 0) {
+            System.out.println("VOUS AVEZ PERDU");
         }
         sc.close();
-    }
-
-    public boolean lose(int pv) {
-        if (pv < 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public void start() {
-
     }
 
     public char[][] intToChar(int[][] map) {
@@ -92,12 +112,13 @@ public class MapState {
             for (int j = 0; j < map[0].length; j++) {
                 switch (map[i][j]) {
                     case 0:
-                        plateau[i][j] = '+';
+                        plateau[i][j] = '.';
                         break;
                     case 1:
+                        plateau[i][j] = ' ';
                         for (Ennemi e : ennemiPresent) {
                             if (i == e.getPos()[0] && j == e.getPos()[1]) {
-                                plateau[i][j] = Character.forDigit(e.getValue(), 10);
+                                plateau[i][j] = (char) (e.getValue() + 48);
                             }
                         }
                         break;
@@ -117,7 +138,7 @@ public class MapState {
                         plateau[i][j] = '/';
                         break;
                     case 9:
-                        plateau[i][j] = '/';
+                        plateau[i][j] = (char) 5;
                         break;
                     default:
                         break;
@@ -149,7 +170,6 @@ public class MapState {
             }
         }
         System.out.println();
-
         for (int i = 0; i < config.length; i++) {
             System.out.print((char) ('A' + i) + "|| ");
             for (int j = 0; j < config[0].length; j++) {
@@ -157,18 +177,6 @@ public class MapState {
             }
 
             System.out.println();
-        }
-    }
-
-    public void timer() {
-        while (true) { // TODO: A CHANGER
-            if (System.currentTimeMillis() - lastUpdate >= 1000) { // 1000 = 1s a changer si nécessaire
-                lastUpdate = System.currentTimeMillis();
-                money += 1;
-                // System.out.println(money);
-            }
-            // LE FONCTIONNEMENT DU JEU
-
         }
     }
 
@@ -200,10 +208,13 @@ public class MapState {
                 ennemiPresent.add(ennemi);
                 ennemi.setPos(posEnnemi);
             } else {
-                System.out.println("NOP");
                 return;
             }
         }
+    }
+
+    public void start() {
+
     }
 
     public void isDead(Ennemi e) {

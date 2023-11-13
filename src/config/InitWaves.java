@@ -14,13 +14,14 @@ public class InitWaves {
 
     private ArrayList<Ennemi> ennemisTerminal = new ArrayList<>();
 
-    public InitWaves(int numberE) { // numberE: NOMBRE D'ENNEMI DE DEPART
+    public InitWaves(int numberE) { // CREER UNE WAVE ET LA RANDOMISE
         count++;
         wave = count;
-        int floor = 0; // de + en + d'ennemi fort
+        int floor = 1; // de + en + d'ennemi fort
         for (int j = 0; j < numberE; j++) {
             int rand = random.nextInt(numberE);
-            ennemisTerminal.add(Ennemi.LIST.getList().get(rand + floor));
+            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
+            ennemisTerminal.get(j).setValue(rand + floor);
         }
     }
 

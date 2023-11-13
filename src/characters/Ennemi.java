@@ -51,7 +51,12 @@ public class Ennemi extends Pokemon {
         }
     }
 
-    public void move() {
+    public boolean move() {
+        if (config[getPos()[0] + 1][getPos()[1]] == 5 || config[getPos()[0]][getPos()[1] + 1] == 5
+                || config[getPos()[0]][getPos()[1] - 1] == 5) {
+            config[getPos()[0]][getPos()[1]] = 3;
+            return true;
+        }
         config[getPos()[0]][getPos()[1]] = 3;
 
         if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
@@ -66,6 +71,7 @@ public class Ennemi extends Pokemon {
                 setPos(pos);
                 config[pos[0]][pos[1]] = 1;
             }
+
         } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
             int[] pos = { getPos()[0] + 1, getPos()[1] };
             setPos(pos);
@@ -82,7 +88,10 @@ public class Ennemi extends Pokemon {
             setPos(pos);
             config[pos[0]][pos[1]] = 1;
             setWasRight(false);
+
         }
+        return false;
+
     }
 
     public String toString() {

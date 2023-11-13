@@ -67,8 +67,11 @@ public class Tower extends Pokemon {
             if (target != null) {
                 tower.setTarget(target);
                 target.setValue(target.getValue() - tower.getValue());
-                System.out.println("J'ai attaqué");
-                System.out.println(target);
+                /*
+                 * 
+                 * System.out.println("J'ai attaqué");
+                 * System.out.println(target);
+                 */
 
                 if (target.getValue() <= 0) {
                     a.isDead(target);

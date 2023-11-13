@@ -11,13 +11,19 @@ import characters.Type;
 public class InitPokemon {
 
     public static void loadingChar() {
-        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt");
+        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt"); // TROUVER
+                                                                                                                // SI
+                                                                                                                // POSSIBLE
+                                                                                                                // UNE
+                                                                                                                // MEILLEUR
+                                                                                                                // ALTERNATIVE
         Scanner sc = new Scanner(inputStream);
         while (sc.hasNext()) {
             String[] info = new String[7];
             info = sc.next().split(",");
             pokemonMaker(info);
         }
+        sc.close();
     }
 
     private static void pokemonMaker(String[] info) {
