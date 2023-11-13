@@ -9,8 +9,8 @@ public class Map {
 
     public static int[][] map;
 
-    private final IntCoordinates entry;
-    private final IntCoordinates exit;
+    private int[] entry = new int[2];
+    private int[] exit = new int[2];;
 
     private Random rand = new Random();
 
@@ -18,10 +18,12 @@ public class Map {
         int entryRand = rand.nextInt(l);
         int exitRand = rand.nextInt(l);
         map = new int[w][l];
-        entry = new IntCoordinates(0, entryRand);
-        map[entry.x()][entry.y()] = 4;
-        exit = new IntCoordinates(w - 1, exitRand);
-        map[exit.x()][exit.y()] = 5;
+        entry[0] = 0;
+        entry[1] = entryRand;
+        map[entry[0]][entry[1]] = 4;
+        exit[0] = w - 1;
+        exit[1] = exitRand;
+        map[exit[0]][exit[1]] = 5;
 
         mapBuilding();
 
@@ -81,7 +83,7 @@ public class Map {
                 // Cas négatif, création du chemin
                 if (posPrec - posHead < 0) {
                     for (int j = posHead; j >= posPrec; j = j - 1) {
-                        if (map[i][j] != map[exit.x()][exit.y()]) {
+                        if (map[i][j] != map[exit[0]][exit[1]]) {
                             map[i][j] = 3;
                         }
                     }
@@ -89,7 +91,7 @@ public class Map {
                 // Cas positif, création du chemin
                 if (posPrec - posHead >= 0) {
                     for (int j = posHead; j <= posPrec; j = j + 1) {
-                        if (map[i][j] != map[exit.x()][exit.y()]) {
+                        if (map[i][j] != map[exit[0]][exit[1]]) {
                             map[i][j] = 3;
                         }
                     }
@@ -153,6 +155,22 @@ public class Map {
             }
         }
         map = big;
+
+        for (int i = 0; i < big.length; i++) {
+            for (int j = 0; j < big.length; j++) {
+                if (map[i][j] == 4) {
+                    entry = new int[2];
+                    entry[0] = i;
+                    entry[1] = j;
+                }
+                if (map[i][j] == 5) {
+                    exit = new int[2];
+                    exit[0] = i;
+                    exit[1] = j;
+                }
+            }
+        }
+
     }
 
     public static char[][] intToChar(int[][] map) {
@@ -246,28 +264,10 @@ public class Map {
     }
 
     public int[] getEntry() {
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map.length; j++) {
-                if (map[i][j] == 4) {
-                    int[] t = { i, j };
-                    return t;
-                }
-            }
-        }
-        int[] t = { -1, -1 };
-        return t;
+        return entry;
     }
 
     public int[] getExit() {
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map.length; j++) {
-                if (map[i][j] == 5) {
-                    int[] t = { i, j };
-                    return t;
-                }
-            }
-        }
-        int[] t = { -1, -1 };
-        return t;
+        return exit;
     }
 }

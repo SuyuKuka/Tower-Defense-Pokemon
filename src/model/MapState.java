@@ -41,36 +41,45 @@ public class MapState {
 
         Scanner sc = new Scanner(System.in);
 
-        affiche(m);
+        int i = 0;
+        int j = 0;
+        int pv = 3;///////////////////////////////////
+        boolean notLose = true;
+        while (notLose) {
 
-        Timer timer = new Timer();
-        TimerTask update = new TimerTask() {
-            public void run() {
-                for (Ennemi e : ennemiPresent) {
-                    e.move();
-                }
-                System.out.println("IL Y A :" + getEnnemiPresent().size());
-                affiche(m);
-            }
-        };
-        timer.scheduleAtFixedRate(update, 0, 1000);
-        Timer timerE = new Timer();
+            affiche(m);
 
-        TimerTask ennemies = new TimerTask() {
-            int i = 0;
-
-            public void run() {
-                if (i != Ennemi.LIST.getList().size()) {
-                    setEnnemi(m.getEntry(), Ennemi.LIST.getList().get(i));
-                    i++;
-                }
-
+            for (Ennemi e : ennemiPresent) {
+                e.move();
             }
 
-        };
-        timerE.scheduleAtFixedRate(ennemies, 0, 5000);
+            if (i == 5) {
+                if (j < Ennemi.LIST.getList().size()) {
 
+                    setEnnemi(m.getEntry(), Ennemi.LIST.getList().get(j));
+                    j++;
+                    i = 0;
+                }
+            }
+            i++;
+            System.out.print("Ajouter une tour: ");
+            String st = sc.nextLine();
+            Tower terminal = new Tower("Terminal", 1, null, null);
+            setTower(terminal.putTower(st), terminal);
+            terminal.attaque(towerPresent, ennemiPresent, this);
+
+            // if un ennemi sort
+            // notLose=lose(pv-1);
+
+        }
         sc.close();
+    }
+
+    public boolean lose(int pv) {
+        if (pv < 0) {
+            return true;
+        }
+        return false;
     }
 
     public void start() {
@@ -180,6 +189,7 @@ public class MapState {
 
     public void setEnnemi(int[] posEnnemi, Ennemi ennemi) { // MANUELLEMENT
         if (posEnnemi[0] == -1 || posEnnemi[1] == -1) {
+
             return;
         } else {
             int posX = posEnnemi[0];
@@ -190,7 +200,7 @@ public class MapState {
                 ennemiPresent.add(ennemi);
                 ennemi.setPos(posEnnemi);
             } else {
-                System.out.println('e');
+                System.out.println("NOP");
                 return;
             }
         }
