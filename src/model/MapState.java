@@ -8,11 +8,12 @@ import characters.Ennemi;
 import characters.Tower;
 import config.Map;
 import java.util.Scanner;
+import java.util.Random;
 
 public class MapState {
     private boolean terminal;
     private Map m;
-
+    private Random rand = new Random();
     private double lastUpdate;
     private int[][] config;
     private int money;
@@ -25,10 +26,7 @@ public class MapState {
         config = m.getConfig();
     }
 
-    public void startTerminal() {
-
-        InitPokemon.loadingCharTerminal();
-        InitWaves w = new InitWaves(9);
+    private void infoTerminal() {
         System.out.println(
                 "===============================================================================================================");
         System.out.println(
@@ -38,34 +36,51 @@ public class MapState {
         System.out.println(
                 "Le jeu se jouera tout seul après avoir placer les 4 tourelles");
         System.out.println(
-                "Vous avez 3 vies");
+                "Vous avez 3 vies, il y a 3 vagues");
+        System.out.println(
+                "Si un ennemie passe sur la sortis S, vous perdez une vie, a 0 vie la partie est perdu");
         System.out.println(
                 "===============================================================================================================");
+    }
 
-        System.out.println();
+    public void startTerminal() {
 
+        InitPokemon.loadingCharTerminal();
+        InitWaves w = new InitWaves();
         Scanner sc = new Scanner(System.in);
 
-        int pas = 0;
+        int nbTour = 4; // AJUSTABLE
+        int pv = 3; // AJUSTABLE
 
-        int nbTour = 4;
-        int i = 0;
-        int pv = 3;
+        int pas = 0;
         boolean leaked = false;
+        int frequenceApparition = 0;
+
+        infoTerminal();
         while (pv != 0) {
+            System.out.println("\n\n\n\n\n\n\n");
+            System.out.println();
+            System.out.println("Ennemis en attente: " + w.getEnnemisListStandby().size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("FREQ: " + frequenceApparition);
+            System.out.println("PV: " + pv);
+            System.out.println();
             affiche(m);
-            for (Ennemi e : ennemiPresent) { // FAIT SE DEPLACER LES ENNEMIS
-                if (e.move()) {
+            System.out.println();
+
+            for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+                if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
                     leaked = true;
                 }
             }
             if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
-                ennemiPresent.remove(i);
+                ennemiPresent.remove(0);
                 leaked = false;
                 pv--;
             }
-            if (pas == 5) { // TOUT LES 5 ACTUALISATIONS UN NOUVEAU ENNEMIE ENTRE
+            if (pas == frequenceApparition) { // VARIE LA FREQUENCE D'APPARITION DES ENNEMIS
                 if (!w.getEnnemisListStandby().isEmpty()) {
+                    frequenceApparition = rand.nextInt(8) + 1; // PLUS LE BOUND EST PETIT + C FAST
                     setEnnemi(m.getEntry(), w.getEnnemisListStandby().get(0));
                     w.getEnnemisListStandby().remove(0);
                     pas = 0;
@@ -73,27 +88,24 @@ public class MapState {
             }
             pas++;
             Tower terminal = new Tower("Terminal", 1, null, null);
-
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
                 if (st.length() != 0) {
-
-                    setTower(terminal.putTower(st), terminal);
-                    nbTour--;
+                    if (setTower(terminal.putTower(st), terminal)) {
+                        nbTour--;
+                    }
                 }
             } else {
                 System.out.println("Aucune tours restantes");
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(250); // VITESSE DE JEU AUTO
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             terminal.attaque(towerPresent, ennemiPresent, this);
-            System.out.println("Ennemis en attente: " + w.getEnnemisListStandby().size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
+
             if (w.getEnnemisListStandby().size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
                                                                                       // LA PARTIE
                 System.out.println("VOUS AVEZ GAGNEE");
@@ -106,7 +118,7 @@ public class MapState {
         sc.close();
     }
 
-    public char[][] intToChar(int[][] map) {
+    private char[][] intToChar(int[][] map) {
         char[][] plateau = new char[map.length][map[0].length];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -121,6 +133,8 @@ public class MapState {
                                 plateau[i][j] = (char) (e.getValue() + 48);
                             }
                         }
+                        // plateau[i][j] = (char) 4;//PV CACHEE COMMENT THIS LINE TO REVEAL
+
                         break;
                     case 2:
                         plateau[i][j] = 'T';
@@ -175,14 +189,13 @@ public class MapState {
             for (int j = 0; j < config[0].length; j++) {
                 System.out.print(intToChar(config)[i][j] + "  ");
             }
-
             System.out.println();
         }
     }
 
-    public void setTower(int[] posTower, Tower tower) { // MANUELLEMENT
+    public boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
         if (posTower[0] == -1 || posTower[1] == -1) {
-            return;
+            return false;
         } else {
             int posX = posTower[0];
             int posY = posTower[1];
@@ -191,7 +204,9 @@ public class MapState {
                 config[posX][posY] = 2;
                 towerPresent.add(tower);
                 tower.setPos(posTower);
+                return true;
             }
+            return false;
         }
     }
 
@@ -214,7 +229,7 @@ public class MapState {
     }
 
     public void start() {
-
+        // GRAPHIC
     }
 
     public void isDead(Ennemi e) {

@@ -40,11 +40,8 @@ public class InitPokemon {
     }
 
     public static void loadingCharTerminal() {
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 57; i++) {
             Ennemi ennemiTerminal = new Ennemi("ennemiTerminal", i, Type.NONE, Type.NONE);
-        }
-        for (int i = 1; i < 5; i++) {
-            Tower towerTerminal = new Tower("towerTerminal", i, Type.NONE, Type.NONE);
         }
 
     }
