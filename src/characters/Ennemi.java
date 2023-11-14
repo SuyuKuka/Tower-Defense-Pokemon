@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import config.Map;
 
 public class Ennemi extends Pokemon {
+
+    private int[][] config;
+
     private int[] pos;
     private boolean wasRight = false;
     private static ArrayList<Ennemi> EList = new ArrayList<>();
@@ -13,6 +16,7 @@ public class Ennemi extends Pokemon {
     public Ennemi(String name, int pv, Type type1, Type type2) {
         super(name, pv, type1, type2, false);
         EList.add(this);
+        config = Map.map;
 
     }
 
@@ -45,6 +49,49 @@ public class Ennemi extends Pokemon {
             int[] tab = { -1, -1 };
             return tab;
         }
+    }
+
+    public boolean move() {
+        if (config[getPos()[0] + 1][getPos()[1]] == 5 || config[getPos()[0]][getPos()[1] + 1] == 5
+                || config[getPos()[0]][getPos()[1] - 1] == 5) {
+            config[getPos()[0]][getPos()[1]] = 3;
+            return true;
+        }
+        config[getPos()[0]][getPos()[1]] = 3;
+
+        if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
+                config[getPos()[0]][getPos()[1] - 1] == 3) {
+
+            if (wasRight()) {
+                int[] pos = { getPos()[0], getPos()[1] + 1 };
+                setPos(pos);
+                config[pos[0]][pos[1]] = 1;
+            } else {
+                int[] pos = { getPos()[0], getPos()[1] - 1 };
+                setPos(pos);
+                config[pos[0]][pos[1]] = 1;
+            }
+
+        } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
+            int[] pos = { getPos()[0] + 1, getPos()[1] };
+            setPos(pos);
+            config[pos[0]][pos[1]] = 1;
+
+        } else if (config[getPos()[0]][getPos()[1] + 1] == 3) { // DROITE
+            int[] pos = { getPos()[0], getPos()[1] + 1 };
+            setPos(pos);
+            config[pos[0]][pos[1]] = 1;
+            setWasRight(true);
+
+        } else if (config[getPos()[0]][getPos()[1] - 1] == 3) { // GAUCHE
+            int[] pos = { getPos()[0], getPos()[1] - 1 };
+            setPos(pos);
+            config[pos[0]][pos[1]] = 1;
+            setWasRight(false);
+
+        }
+        return false;
+
     }
 
     public String toString() {

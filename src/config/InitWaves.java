@@ -7,20 +7,33 @@ import java.util.Random;
 
 public class InitWaves {
 
-    private static int count;
-    private final int wave;
-
     Random random = new Random();
 
     private ArrayList<Ennemi> ennemisTerminal = new ArrayList<>();
 
-    public InitWaves(int numberE) { // numberE: NOMBRE D'ENNEMI DE DEPART
-        count++;
-        wave = count;
-        int floor = 0; // de + en + d'ennemi fort
-        for (int j = 0; j < numberE; j++) {
-            int rand = random.nextInt(numberE);
-            ennemisTerminal.add(Ennemi.LIST.getList().get(rand + floor));
+    private ArrayList<ArrayList<Ennemi>> Vague = new ArrayList<>();
+
+    public InitWaves() { // CREER UNE WAVE ET LA RANDOMISE
+
+        int floor = 1; // de + en + d'ennemi fort
+        for (int j = 0; j < 6; j++) {
+            int rand = random.nextInt(3);
+            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
+            ennemisTerminal.get(j).setValue(rand + floor);
         }
+        for (int j = 6; j < 25; j++) {
+            int rand = random.nextInt(6);
+            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
+            ennemisTerminal.get(j).setValue(rand + floor);
+        }
+        for (int j = 25; j < 56; j++) {
+            int rand = random.nextInt(9);
+            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
+            ennemisTerminal.get(j).setValue(rand + floor);
+        }
+    }
+
+    public ArrayList<Ennemi> getEnnemisListStandby() {
+        return ennemisTerminal;
     }
 }

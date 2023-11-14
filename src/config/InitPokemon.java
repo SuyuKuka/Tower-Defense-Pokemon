@@ -11,13 +11,19 @@ import characters.Type;
 public class InitPokemon {
 
     public static void loadingChar() {
-        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt");
+        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt"); // TROUVER
+                                                                                                                // SI
+                                                                                                                // POSSIBLE
+                                                                                                                // UNE
+                                                                                                                // MEILLEUR
+                                                                                                                // ALTERNATIVE
         Scanner sc = new Scanner(inputStream);
         while (sc.hasNext()) {
             String[] info = new String[7];
             info = sc.next().split(",");
             pokemonMaker(info);
         }
+        sc.close();
     }
 
     private static void pokemonMaker(String[] info) {
@@ -34,11 +40,8 @@ public class InitPokemon {
     }
 
     public static void loadingCharTerminal() {
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 57; i++) {
             Ennemi ennemiTerminal = new Ennemi("ennemiTerminal", i, Type.NONE, Type.NONE);
-        }
-        for (int i = 1; i < 5; i++) {
-            Tower towerTerminal = new Tower("towerTerminal", i, Type.NONE, Type.NONE);
         }
 
     }

@@ -31,7 +31,7 @@ public class Tower extends Pokemon {
         level = 5;
     }
 
-    public int[] putTower(String st) {
+    public int[] putTower(String st) { // TERMINAL
         try {
             String alphaPart = st.replaceAll("[^A-Z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
@@ -59,7 +59,7 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) {
+    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
             Ennemi target = tower.getTarget(ennemiInMap);
@@ -67,8 +67,11 @@ public class Tower extends Pokemon {
             if (target != null) {
                 tower.setTarget(target);
                 target.setValue(target.getValue() - tower.getValue());
-                System.out.println("J'ai attaqué");
-                System.out.println(target);
+                /*
+                 * 
+                 * System.out.println("J'ai attaqué");
+                 * System.out.println(target);
+                 */
 
                 if (target.getValue() <= 0) {
                     a.isDead(target);
