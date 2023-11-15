@@ -12,6 +12,7 @@ public class GameScreen extends JPanel {
 
     public GameScreen() {
         random = new Random();
+
     }
 
     public void paintComponent(Graphics g) {
