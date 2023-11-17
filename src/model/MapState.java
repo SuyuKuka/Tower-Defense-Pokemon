@@ -56,6 +56,11 @@ public class MapState {
         boolean leaked = false;
         int frequenceApparition = 0;
 
+        int[] pasi = { 4, 11 };
+        setEnnemi(pasi, new Ennemi("test", 7, null, null));
+        setEnnemi(pasi, new Ennemi("qsdqsdqds", 8, null, null));
+        setEnnemi(pasi, new Ennemi("qsdqsdqds", 4, null, null));
+
         infoTerminal();
         while (pv != 0) {
             System.out.println("\n\n\n\n\n\n\n");
@@ -218,7 +223,7 @@ public class MapState {
             int posX = posEnnemi[0];
             int posY = posEnnemi[1];
 
-            if (config[posX][posY] == 3 || config[posX][posY] == 4) {
+            if (config[posX][posY] == 3 || config[posX][posY] == 4 || config[posX][posY] == 1) {
                 config[posX][posY] = 1;
                 ennemiPresent.add(ennemi);
                 ennemi.setPos(posEnnemi);

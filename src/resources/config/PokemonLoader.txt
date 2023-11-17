@@ -1,4 +1,4 @@
-0,Miaouss,NORMAL,NONE,30,FAST,false
+0,Miaouss,NORMAL,NONE,30,FAST,false,
 0,Abo,POISON,NONE,40,CLASSIC,false
 0,Magicarpe,EAU,NONE,20,SLOW,false
 0,Smogo,POISON,NONE,70,SLOW,false
@@ -28,3 +28,7 @@
 0,Pyrax,FEU,INSECTE,150,CLASSIC,true
 0,Grodrive,SPECTRE,VOL,300,SLOW,true
 1,Pikachu,ELECTRIK,NONE,30000,FAST,true
+
+
+
+
