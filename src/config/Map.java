@@ -193,8 +193,9 @@ public class Map {
         return res;
     }
 
-    public int[] getEntry() {
-        return entry;
+    public int[] getFrontEntry() {
+        int[] frontEntry = { 1, entry[1] };
+        return frontEntry;
     }
 
     public int[] getExit() {

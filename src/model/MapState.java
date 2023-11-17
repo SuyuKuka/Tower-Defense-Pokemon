@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import characters.Ennemi;
 import characters.Tower;
 import config.Map;
+import config.InitWaves.Difficulty;
+
 import java.util.Scanner;
 import java.util.Random;
 
@@ -45,27 +47,22 @@ public class MapState {
 
     public void startTerminal() {
 
-        InitPokemon.loadingCharTerminal();
-        InitWaves w = new InitWaves();
+        InitPokemon.loadingChar();
+        InitWaves w = new InitWaves(Difficulty.HARD);
         Scanner sc = new Scanner(System.in);
 
-        int nbTour = 4; // AJUSTABLE
+        int nbTour = 6; // AJUSTABLE
         int pv = 3; // AJUSTABLE
 
         int pas = 0;
         boolean leaked = false;
         int frequenceApparition = 0;
 
-        int[] pasi = { 4, 11 };
-        setEnnemi(pasi, new Ennemi("test", 7, null, null));
-        setEnnemi(pasi, new Ennemi("qsdqsdqds", 8, null, null));
-        setEnnemi(pasi, new Ennemi("qsdqsdqds", 4, null, null));
-
         infoTerminal();
         while (pv != 0) {
             System.out.println("\n\n\n\n\n\n\n");
             System.out.println();
-            System.out.println("Ennemis en attente: " + w.getEnnemisListStandby().size());
+            System.out.println("Vagues restantes " + w.getEnnemisListStandby().size());
             System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
             System.out.println("FREQ: " + frequenceApparition);
             System.out.println("PV: " + pv);
@@ -83,15 +80,27 @@ public class MapState {
                 leaked = false;
                 pv--;
             }
+            /*
+             * 
+             * for (int i = 0; i < w.getEnnemisListStandby().size(); i++) {
+             * for (int j = 0; j < w.getEnnemisListStandby().get(i).size(); j++) {
+             * System.out.println(w.getEnnemisListStandby().get(i).get(j));
+             * }
+             * System.out.println();
+             * }
+             */
+            // A CHANGER
             if (pas == frequenceApparition) { // VARIE LA FREQUENCE D'APPARITION DES ENNEMIS
                 if (!w.getEnnemisListStandby().isEmpty()) {
-                    frequenceApparition = rand.nextInt(8) + 1; // PLUS LE BOUND EST PETIT + C FAST
-                    setEnnemi(m.getEntry(), w.getEnnemisListStandby().get(0));
-                    w.getEnnemisListStandby().remove(0);
+                    frequenceApparition = rand.nextInt(1); // PLUS LE BOUND EST PETIT + C FAST
+                    setEnnemi(m.getFrontEntry(), w.getEnnemisListStandby().get(0).get(0));
+                    System.out.println("SPAWNED");
+                    w.getEnnemisListStandby().get(0).remove(0);
                     pas = 0;
                 }
             }
             pas++;
+
             Tower terminal = new Tower("Terminal", 1, null, null);
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -131,16 +140,7 @@ public class MapState {
                     case 0:
                         plateau[i][j] = '.';
                         break;
-                    case 1:
-                        plateau[i][j] = ' ';
-                        for (Ennemi e : ennemiPresent) {
-                            if (i == e.getPos()[0] && j == e.getPos()[1]) {
-                                plateau[i][j] = (char) (e.getValue() + 48);
-                            }
-                        }
-                        // plateau[i][j] = (char) 4;//PV CACHEE COMMENT THIS LINE TO REVEAL
 
-                        break;
                     case 2:
                         plateau[i][j] = 'T';
                         break;
@@ -161,6 +161,11 @@ public class MapState {
                         break;
                     default:
                         break;
+                }
+                for (Ennemi e : ennemiPresent) {
+                    if (i == e.getPos()[0] && j == e.getPos()[1]) {
+                        plateau[i][j] = (char) (e.getValue() + 48);
+                    }
                 }
             }
         }

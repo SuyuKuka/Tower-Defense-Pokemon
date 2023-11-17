@@ -29,8 +29,9 @@ public class InitPokemon {
     private static void pokemonMaker(String[] info) {
         if (Integer.valueOf(info[0]) == 0) {
             Ennemi e = new Ennemi(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
-                    Type.stringToType(info[3]));
+                    Type.stringToType(info[3]), info[6].equals("true"));
             e.setSpeed(Pokemon.stringToSpeed(info[5]));
+            e.setBoss(info[6]);
         }
         if (Integer.valueOf(info[0]) == 1) {
             Tower t = new Tower(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
@@ -39,10 +40,4 @@ public class InitPokemon {
         }
     }
 
-    public static void loadingCharTerminal() {
-        for (int i = 1; i < 57; i++) {
-            Ennemi ennemiTerminal = new Ennemi("ennemiTerminal", i, Type.NONE, Type.NONE);
-        }
-
-    }
 }

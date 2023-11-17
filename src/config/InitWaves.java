@@ -6,34 +6,76 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class InitWaves {
+    public enum Difficulty {
+        EASY, NORMAL, HARD
+    }
+
+    private int nbTotalEnnemi;
+    private int multiplier;
 
     Random random = new Random();
 
-    private ArrayList<Ennemi> ennemisTerminal = new ArrayList<>();
+    private ArrayList<ArrayList<Ennemi>> vague = new ArrayList<>();
 
-    private ArrayList<ArrayList<Ennemi>> Vague = new ArrayList<>();
+    public InitWaves(Difficulty diff) { // CREER UNE WAVE ET LA RANDOMISE
 
-    public InitWaves() { // CREER UNE WAVE ET LA RANDOMISE
+        difficultyAjust(diff);
 
-        int floor = 1; // de + en + d'ennemi fort
-        for (int j = 0; j < 6; j++) {
-            int rand = random.nextInt(3);
-            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
-            ennemisTerminal.get(j).setValue(rand + floor);
+        int limite = 3;
+        ArrayList<Ennemi> ennemisTerminal = new ArrayList<>();
+        for (int i = 0; i < nbTotalEnnemi; i++) {
+
+            int randBoss = random.nextInt(Ennemi.LIST.getBossList().size());
+            int randChar = random.nextInt(i + 1);
+
+            while (randChar >= 22 || Ennemi.LIST.getList().get(randChar).isBoss()) { // 22: TAILLE DE LA LISTE ENNEMI
+                randChar = random.nextInt(i + 1);
+            }
+            ennemisTerminal.add(Ennemi.LIST.getList().get(randChar));
+
+            if (i == limite) { // AJUSTABLE
+
+                if (i > 6) {
+                    ennemisTerminal.add(Ennemi.LIST.getBossList().get(randBoss));
+                }
+                vague.add(ennemisTerminal);
+
+                limite = limite + limite * 1 / 2 + 2;
+                ennemisTerminal = new ArrayList<>();
+            }
         }
-        for (int j = 6; j < 25; j++) {
-            int rand = random.nextInt(6);
-            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
-            ennemisTerminal.get(j).setValue(rand + floor);
+        // SPOILER
+        int somme = 0;
+        for (int i = 0; i < vague.size(); i++) {
+            System.out.println(vague.get(i));
+            somme = somme + vague.get(i).size();
+            System.out.println();
         }
-        for (int j = 25; j < 56; j++) {
-            int rand = random.nextInt(9);
-            ennemisTerminal.add(Ennemi.LIST.getList().get(j));
-            ennemisTerminal.get(j).setValue(rand + floor);
+
+    }
+
+    private void difficultyAjust(Difficulty diff) { // AJUSTABLE
+        if (diff == Difficulty.EASY) {
+            nbTotalEnnemi = 32;
+            multiplier = 1;
+        }
+        if (diff == Difficulty.NORMAL) {
+            nbTotalEnnemi = 69;
+            multiplier = 2;
+        }
+        if (diff == Difficulty.HARD) {
+            nbTotalEnnemi = 96;
+            multiplier = 3;
+        }
+        for (Ennemi e : Ennemi.LIST.getList()) {
+            e.setValue(e.getValue() * multiplier);
+        }
+        for (Ennemi e : Ennemi.LIST.getBossList()) {
+            e.setValue(e.getValue() * multiplier);
         }
     }
 
-    public ArrayList<Ennemi> getEnnemisListStandby() {
-        return ennemisTerminal;
+    public ArrayList<ArrayList<Ennemi>> getEnnemisListStandby() {
+        return vague;
     }
 }
