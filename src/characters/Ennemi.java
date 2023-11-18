@@ -29,7 +29,7 @@ public class Ennemi extends Pokemon {
 
     }
 
-    private Ennemi() {
+    public Ennemi() {
     }
 
     public int[] putEnnemi(String st) {
@@ -97,7 +97,10 @@ public class Ennemi extends Pokemon {
 
         }
         return false;
+    }
 
+    public Ennemi copiEnnemis(Ennemi e) {
+        return new Ennemi(e.getName(), e.getValue(), e.getType()[0], e.getType()[1], e.isBoss());
     }
 
     public String toString() {

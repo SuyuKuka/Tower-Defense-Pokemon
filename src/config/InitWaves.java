@@ -18,6 +18,7 @@ public class InitWaves {
     private ArrayList<ArrayList<Ennemi>> vague = new ArrayList<>();
 
     public InitWaves(Difficulty diff) { // CREER UNE WAVE ET LA RANDOMISE
+        Ennemi e = new Ennemi();
 
         difficultyAjust(diff);
 
@@ -31,12 +32,14 @@ public class InitWaves {
             while (randChar >= 22 || Ennemi.LIST.getList().get(randChar).isBoss()) { // 22: TAILLE DE LA LISTE ENNEMI
                 randChar = random.nextInt(i + 1);
             }
-            ennemisTerminal.add(Ennemi.LIST.getList().get(randChar));
+            e = e.copiEnnemis(Ennemi.LIST.getList().get(randChar));
+            ennemisTerminal.add(e);
 
             if (i == limite) { // AJUSTABLE
 
                 if (i > 6) {
-                    ennemisTerminal.add(Ennemi.LIST.getBossList().get(randBoss));
+                    e = e.copiEnnemis(Ennemi.LIST.getBossList().get(randBoss));
+                    ennemisTerminal.add(e);
                 }
                 vague.add(ennemisTerminal);
 
@@ -75,7 +78,11 @@ public class InitWaves {
         }
     }
 
-    public ArrayList<ArrayList<Ennemi>> getEnnemisListStandby() {
+    public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
         return vague;
+    }
+
+    public ArrayList<Ennemi> getiWave(int i) {
+        return vague.get(i);
     }
 }

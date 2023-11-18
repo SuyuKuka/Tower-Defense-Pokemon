@@ -22,6 +22,9 @@ public class MapState {
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
 
+    private ArrayList<ArrayList<Ennemi>> allEnnemis = new ArrayList<>();
+    private ArrayList<Ennemi> wave = new ArrayList<>();
+
     public MapState(boolean terminal) {
         Map map = new Map(20, 20);
         m = map;
@@ -54,17 +57,29 @@ public class MapState {
         int nbTour = 6; // AJUSTABLE
         int pv = 3; // AJUSTABLE
 
-        int pas = 0;
         boolean leaked = false;
-        int frequenceApparition = 0;
 
         infoTerminal();
+
+        allEnnemis = w.getAllEnnemis();
+
+        int indexWave = 0;
+        int pas = 0;
         while (pv != 0) {
+
+            wave = allEnnemis.get(indexWave);
+            if (wave.isEmpty() && ennemiPresent.isEmpty()) {
+                allEnnemis.remove(wave);
+                indexWave++;
+            }
+            System.out.println(wave.isEmpty());
+            System.out.println(ennemiPresent.isEmpty());
+
             System.out.println("\n\n\n\n\n\n\n");
             System.out.println();
-            System.out.println("Vagues restantes " + w.getEnnemisListStandby().size());
+            System.out.println("Vagues restantes " + allEnnemis.size());
             System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("FREQ: " + frequenceApparition);
+            System.out.println("FREQ: ");
             System.out.println("PV: " + pv);
             System.out.println();
             affiche(m);
@@ -89,19 +104,15 @@ public class MapState {
              * System.out.println();
              * }
              */
-            // A CHANGER
-            if (pas == frequenceApparition) { // VARIE LA FREQUENCE D'APPARITION DES ENNEMIS
-                if (!w.getEnnemisListStandby().isEmpty()) {
-                    frequenceApparition = rand.nextInt(1); // PLUS LE BOUND EST PETIT + C FAST
-                    setEnnemi(m.getFrontEntry(), w.getEnnemisListStandby().get(0).get(0));
-                    System.out.println("SPAWNED");
-                    w.getEnnemisListStandby().get(0).remove(0);
-                    pas = 0;
-                }
+            if (pas == 2 && !wave.isEmpty()) {
+                System.out.println(wave);
+                setEnnemi(m.getFrontEntry(), wave.get(0));
+                wave.remove(0);
+                pas = 0;
             }
             pas++;
 
-            Tower terminal = new Tower("Terminal", 1, null, null);
+            Tower terminal = new Tower("Terminal", 120, null, null);
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
@@ -120,8 +131,8 @@ public class MapState {
             }
             terminal.attaque(towerPresent, ennemiPresent, this);
 
-            if (w.getEnnemisListStandby().size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
-                                                                                      // LA PARTIE
+            if (allEnnemis.size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
+                                                                       // LA PARTIE
                 System.out.println("VOUS AVEZ GAGNEE");
                 break;
             }
@@ -164,7 +175,7 @@ public class MapState {
                 }
                 for (Ennemi e : ennemiPresent) {
                     if (i == e.getPos()[0] && j == e.getPos()[1]) {
-                        plateau[i][j] = (char) (e.getValue() + 48);
+                        plateau[i][j] = (char) 4;
                     }
                 }
             }
@@ -243,9 +254,8 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
+        System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
-        int[] pos = e.getPos();
-        config[pos[0]][pos[1]] = 3;
     }
 
     public ArrayList<Ennemi> getEnnemiPresent() {
