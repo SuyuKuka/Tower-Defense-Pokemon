@@ -1,7 +1,5 @@
 package characters;
 
-import model.Type;
-
 public class Starter {
     public class Salameche {
     
