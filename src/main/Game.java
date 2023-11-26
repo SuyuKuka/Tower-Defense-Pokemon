@@ -24,7 +24,7 @@ public class Game extends JFrame {
             setSize(1000, 1000);
             setLocationRelativeTo(null);
         }
-        setTitle("Ultra Pro MAX Poké-Révolution");
+        setTitle("PokeRevolute");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icon.png")).getImage());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
