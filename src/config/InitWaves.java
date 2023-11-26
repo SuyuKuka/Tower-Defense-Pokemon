@@ -1,6 +1,6 @@
 package config;
 
-import characters.Ennemi;
+import model.Ennemi;
 
 import java.util.ArrayList;
 import java.util.Random;

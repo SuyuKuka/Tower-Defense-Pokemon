@@ -4,8 +4,8 @@ import config.InitPokemon;
 import config.InitWaves;
 
 import java.util.ArrayList;
-import characters.Ennemi;
-import characters.Tower;
+import model.Ennemi;
+import model.Tower;
 import config.Map;
 import java.util.Scanner;
 import java.util.Random;

@@ -3,10 +3,10 @@ package config;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import characters.Ennemi;
-import characters.Pokemon;
-import characters.Tower;
-import characters.Type;
+import model.Ennemi;
+import model.Pokemon;
+import model.Tower;
+import model.Type;
 
 public class InitPokemon {
 
