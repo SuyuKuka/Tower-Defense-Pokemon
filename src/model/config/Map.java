@@ -1,8 +1,9 @@
-package config;
+package model.config;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import geometry.IntCoordinates;
+import model.characters.Ennemi;
 
 //GENERE UNE MAP ALEATOIRE
 public class Map {
@@ -173,8 +174,76 @@ public class Map {
 
     }
 
-    public int[][] getConfig() {
-        return map;
+    public void affiche(ArrayList<Ennemi> ennemiPresent) {
+        System.out.print("   ");
+        for (int j = 1; j < map[0].length + 1; j = j + 1) {
+            if (j < 10) {
+                System.out.print("0" + j + " ");
+            } else {
+                System.out.print(j + " ");
+            }
+        }
+        System.out.println();
+        System.out.print("   ");
+        for (int j = 1; j < map[0].length + 1; j = j + 1) {
+            if (j < 10) {
+                System.out.print("==");
+            } else {
+                System.out.print("==");
+            }
+            if (j != map.length) {
+                System.out.print("=");
+            }
+        }
+        System.out.println();
+        for (int i = 0; i < map.length; i++) {
+            System.out.print((char) ('A' + i) + "|| ");
+            for (int j = 0; j < map[0].length; j++) {
+                System.out.print(intToChar(map, ennemiPresent)[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    private char[][] intToChar(int[][] map, ArrayList<Ennemi> ennemiPresent) {
+        char[][] plateau = new char[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                switch (map[i][j]) {
+                    case 0:
+                        plateau[i][j] = '.';
+                        break;
+
+                    case 2:
+                        plateau[i][j] = 'T';
+                        break;
+                    case 3:
+                        plateau[i][j] = ' ';
+                        break;
+                    case 4:
+                        plateau[i][j] = 'E';
+                        break;
+                    case 5:
+                        plateau[i][j] = 'S';
+                        break;
+                    case 6:
+                        plateau[i][j] = '/';
+                        break;
+                    case 9:
+                        plateau[i][j] = (char) 5;
+                        break;
+                    default:
+                        break;
+                }
+                for (Ennemi e : ennemiPresent) {
+                    if (i == e.getPos()[0] && j == e.getPos()[1]) {
+                        // plateau[i][j] = (char) 4;
+                        plateau[i][j] = '#';
+                    }
+                }
+            }
+        }
+        return plateau;
     }
 
     public String toString() {
@@ -191,6 +260,10 @@ public class Map {
             res = res + "\n";
         }
         return res;
+    }
+
+    public int[][] getConfig() {
+        return map;
     }
 
     public int[] getFrontEntry() {

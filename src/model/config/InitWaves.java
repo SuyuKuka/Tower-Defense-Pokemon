@@ -1,9 +1,9 @@
-package config;
-
-import characters.Ennemi;
+package model.config;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import model.characters.Ennemi;
 
 public class InitWaves {
     public enum Difficulty {
@@ -48,12 +48,15 @@ public class InitWaves {
             }
         }
         // SPOILER
-        int somme = 0;
-        for (int i = 0; i < vague.size(); i++) {
-            System.out.println(vague.get(i));
-            somme = somme + vague.get(i).size();
-            System.out.println();
-        }
+        /*
+         * 
+         * int somme = 0;
+         * for (int i = 0; i < vague.size(); i++) {
+         * System.out.println(vague.get(i));
+         * somme = somme + vague.get(i).size();
+         * System.out.println();
+         * }
+         */
 
     }
 

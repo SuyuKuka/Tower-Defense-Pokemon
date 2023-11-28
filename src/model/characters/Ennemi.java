@@ -1,8 +1,8 @@
-package characters;
+package model.characters;
 
 import java.util.ArrayList;
 
-import config.Map;
+import model.config.Map;
 
 public class Ennemi extends Pokemon {
 
@@ -32,7 +32,7 @@ public class Ennemi extends Pokemon {
     public Ennemi() {
     }
 
-    public int[] putEnnemi(String st) {
+    public int[] putEnn00emi(String st) {
         try {
             String alphaPart = st.replaceAll("[^A-Z]", "");
             String numPart = st.replaceAll("[^0-9]", "");

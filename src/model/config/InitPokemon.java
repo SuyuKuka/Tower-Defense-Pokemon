@@ -1,22 +1,18 @@
-package config;
+package model.config;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
-import characters.Ennemi;
-import characters.Pokemon;
-import characters.Tower;
-import characters.Type;
+import model.characters.Ennemi;
+import model.characters.Pokemon;
+import model.characters.Tower;
+import model.characters.Type;
 
 public class InitPokemon {
 
     public static void loadingChar() {
-        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt"); // TROUVER
-                                                                                                                // SI
-                                                                                                                // POSSIBLE
-                                                                                                                // UNE
-                                                                                                                // MEILLEUR
-                                                                                                                // ALTERNATIVE
+        // TROUVER SI POSSIBLE UNE MEILLEUR ALTERNATIVE
+        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader.txt");
         Scanner sc = new Scanner(inputStream);
         while (sc.hasNext()) {
             String[] info = new String[7];

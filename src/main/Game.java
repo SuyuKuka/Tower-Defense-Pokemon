@@ -24,7 +24,7 @@ public class Game extends JFrame {
             setSize(1000, 1000);
             setLocationRelativeTo(null);
         }
-        setTitle("Ultra Pro MAX Poké-Révolution");
+        setTitle("PokéRevolute");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icon.png")).getImage());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -36,7 +36,7 @@ public class Game extends JFrame {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 0 && args[0].equals("[terminal]")) {
-            MapState terminal = new MapState(true);
+            MapState terminal = new MapState();
             terminal.startTerminal();
         } else {
             Game game = new Game();
