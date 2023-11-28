@@ -6,38 +6,39 @@ public class Effect {
     //statut stun => immobile pdt x sec, paralysé => + lent, brulure => inflige x dégat/sec diminue sa def physique de -10%, poison => inflige x dégat mais progressive? (cumulable?)
     //reveal spectre
     //Debuff
-    public void reducesPhysicalDefense(Ennemi e, int i, int duration){//Ennemi e qui se prend l'effet, int i la reduction de défense physique
-        
+    public void reducesPhysicalDefense(Ennemi e, int defense, int duration){//Ennemi e qui se prend l'effet, int i la reduction de défense physique
+        //jusqu'a duration
+        e.setPhysical(e.getPhysical()-defense);
     }
     
-    public void reducesSpecialDefense(Ennemi e, int i, int duration){//Ennemi e qui se prend l'effet, int i la reduction de défense spéciale
-        
+    public void reducesSpecialDefense(Ennemi e, int defense, int duration){//Ennemi e qui se prend l'effet, int i la reduction de défense spéciale
+        e.setSpecial(e.getSpecial()-defense);
     }
 
-    public void reducesSpeed(Ennemi e, int i, int duration){//Ennemi e qui se prend l'effet, int i la reduction de la vitesse
-        
+    public void reducesSpeed(Ennemi e, int speed, int duration){//Ennemi e qui se prend l'effet, int i la reduction de la vitesse
+        //faire qlq modif a speed
     }
 
     //Buff
-    public void increasesPhysicalAttack(Tower t, int i, int duration){//Tower t qui se prend l'effet, int i l'augmentation de l'attaque physique
-        
+    public void increasesPhysicalAttack(Tower t, int damage, int duration){//Tower t qui se prend l'effet, int i l'augmentation de l'attaque physique
+        t.setPhysical(t.getPhysical()+damage);
     }
 
-    public void increasesSpecialAttack(Tower t, int i, int duration){//Tower t qui se prend l'effet, int i l'augmentation de l'attaque speciale
-        
+    public void increasesSpecialAttack(Tower t, int damage, int duration){//Tower t qui se prend l'effet, int i l'augmentation de l'attaque speciale
+        t.setSpecial(t.getSpecial()+damage);
     }
 
-    public void increasesSpeedAttack(Tower t, int i, int duration){//Tower t qui se prend l'effet, int i l'augmentation de la vitesse d'attaque
+    public void increasesSpeedAttack(Tower t, int speed, int duration){//Tower t qui se prend l'effet, int i l'augmentation de la vitesse d'attaque
         
     }
 
     public void increasesRayon(Tower t, int range, int duration){//Tower t qui se prend l'effet, int i l'augmentation du rayon d'attaque
-
+        //faire qlq modif a rayon
     }
 
     //Statut
     public void statutStun(Ennemi e, int duration){//Ennemi e qui se prend l'effet, int duration la durée du stun
-
+        
     }
 
     public void statutParalyse(Ennemi e, int slowness, int duration){//Ennemi e qui se prend l'effet, int i la diminution de vitesse

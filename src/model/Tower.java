@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.MapState;
 
@@ -11,18 +12,18 @@ public class Tower extends Pokemon {
     }
 
     private Rayon rayon;
-    private Ennemi target; // TODO
     private double exp;
+    private Ennemi uniqueTarget;
+    private ArrayList<Ennemi> zoneTarget;
     private int level;
     private int[] pos;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    public Tower(String name, int atk, Type type1, Type type2) {
-        super(name, atk, type1, type2, true);
+    public Tower(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
+        super(name, 0, atkPhysical, atkSpecial, type1, type2, true);
         this.rayon = Rayon.SMALL;
-        target = null;
         exp = 0;
         TList.add(this);
     }
@@ -59,45 +60,111 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attaque(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState a) { // TERMINAL (?)
+    public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
-            Ennemi target = tower.getTarget(ennemiInMap);
+            // skill pas encore imprémenter
+            // if (tower.getCurrentSkill.getUnique()) { //true = cible unique; false = cible
+            // zone
+            boolean test0 = true;
+            if (test0) {
+                tower.getUniqueTarget(ennemiInMap);
+                attackUnique(tower);
 
-            if (target != null) {
-                tower.setTarget(target);
-                target.setValue(target.getValue() - tower.getValue());
-                /*
-                 * 
-                 * System.out.println("J'ai attaqué");
-                 * System.out.println(target);
-                 */
-
-                if (target.getValue() <= 0) {
-                    a.isDead(target);
-                    tower.winExp(target);
+                if (uniqueTarget.getPv() <= 0) {
+                    m.isDead(uniqueTarget);
+                    tower.winExp(uniqueTarget);
                     tower.levelUp();
+                }
+            } else {
+                tower.getZoneTarget(ennemiInMap);
+                attackZone(tower);
+
+                for (Ennemi e : zoneTarget) {
+                    if (e.getPv() <= 0) {
+                        m.isDead(e);
+                        tower.winExp(e);
+                        tower.levelUp();
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void attackUnique(Tower tower) {
+        if (uniqueTarget != null) {
+            // skill non encore implementer
+            // if (tower.getCurrentSkill.getStat()) { // true == physique; false ==
+            // speciale
+            boolean test = true;
+            if (test) {
+                int physical = uniqueTarget.getPhysical() - tower.getPhysical();
+                if (physical > 0) {// si def = 100 et atk = 20, physique = 80
+                    uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
+                } else {// si def=20 et atk=100, il fera physique = -80
+                    uniqueTarget.setPv(uniqueTarget.getPv() + physical); // physique est négatif
+                }
+            } else {
+                int special = uniqueTarget.getSpecial() - tower.getSpecial();
+                if (special > 0) {// si def = 100 et atk = 20, special = 80
+                    uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
+                } else {// si def=20 et atk=100, il fera special = -80
+                    uniqueTarget.setPv(uniqueTarget.getPv() + special); // special est négatif
+                }
+            }
+        }
+    }
+
+    private void attackZone(Tower tower) {
+        if (zoneTarget.size() != 0) {
+            for (Ennemi e : zoneTarget) {
+                boolean test = true;
+                // skill non encore implementer
+                // if (tower.getCurrentSkill.getStat()) { // true == physique; false ==
+                // speciale
+                if (test) {
+                    int physical = e.getPhysical() - tower.getPhysical();
+                    if (physical > 0) {// si def = 100 et atk = 20, physique = 80
+                        e.setPv(e.getPv() - 1); // donc on retire -1
+                    } else {// si def=20 et atk=100, il fera physique = -80
+                        e.setPv(e.getPv() + physical); // physique est négatif
+                    }
+                } else {
+                    int special = e.getSpecial() - tower.getSpecial();
+                    if (special > 0) {// si def = 100 et atk = 20, special = 80
+                        e.setPv(e.getPv() - 1); // donc on retire -1
+                    } else {// si def=20 et atk=100, il fera special = -80
+                        e.setPv(e.getPv() + special); // special est négatif
+                    }
                 }
             }
         }
     }
 
     private void winExp(Ennemi target) {
-        this.exp += target.getValue() / 3;
+        this.exp += target.getPv() / 3;
     }
 
     private void levelUp() {
         System.out.println(exp);
+        Random r = new Random();
         if (exp > 5) {
             System.out.println("levelUp");
             level++;
+            int addPhysical = r.nextInt(5);
+            int addSpecial = r.nextInt(5);// fois un multiplicateur?
+            setPhysical(getPhysical() + addPhysical);
+            setSpecial(getSpecial() + addSpecial);
+            exp = 0;
         }
     }
 
     public String toString() {
         return "NOM: " + getName()
                 + "\nEXP: " + exp
-                + " \nATK: " + getValue()
+                + " \nATK PHYSIQUE: " + getPhysical()
+                + " \nATK SPECIAL: " + getSpecial()
                 + " \nTYPE: " + getType()[0] + " et " + getType()[1]
                 + " \nVITESSE: " + getSpeed()
                 + " \nPORTEE " + rayon
@@ -128,16 +195,28 @@ public class Tower extends Pokemon {
     }
 
     public void setTarget(Ennemi e) {
-        target = e;
+        uniqueTarget = e;
     }
 
-    public Ennemi getTarget(ArrayList<Ennemi> ennemiInMap) {
+    public void getUniqueTarget(ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
             if (estDansRayon(e)) {
-                return e;
+                setTarget(e);
             }
         }
-        return null;
+    }
+
+    public void getZoneTarget(ArrayList<Ennemi> ennemiInMap) {
+        for (Ennemi e : ennemiInMap) {
+            if (estDansRayon(e)) {
+                zoneTarget.add(e);
+            } else {
+                if (zoneTarget.contains(e)) {
+                    zoneTarget.remove(e);
+                }
+
+            }
+        }
     }
 
     private boolean estDansRayon(Ennemi ennemi) {
@@ -146,12 +225,6 @@ public class Tower extends Pokemon {
 
         int distance = deltaX + deltaY;
         int towerRayon = getRayonValue(rayon);
-        /*
-         * 
-         * System.out.println("x : " + deltaX);
-         * System.out.println("y : " + deltaY);
-         * System.out.println("d : " + distance);
-         */
 
         return distance < towerRayon && deltaX <= towerRayon / 2 && deltaY <= towerRayon / 2;
     }

@@ -57,9 +57,6 @@ public class MapState {
         int frequenceApparition = 0;
 
         int[] pasi = { 4, 11 };
-        setEnnemi(pasi, new Ennemi("test", 7, null, null));
-        setEnnemi(pasi, new Ennemi("qsdqsdqds", 8, null, null));
-        setEnnemi(pasi, new Ennemi("qsdqsdqds", 4, null, null));
 
         infoTerminal();
         while (pv != 0) {
@@ -92,7 +89,7 @@ public class MapState {
                 }
             }
             pas++;
-            Tower terminal = new Tower("Terminal", 1, null, null);
+            Tower terminal = new Tower("Terminal", 1,1, null, null);
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
@@ -109,7 +106,7 @@ public class MapState {
                     e.printStackTrace();
                 }
             }
-            terminal.attaque(towerPresent, ennemiPresent, this);
+            terminal.attack(towerPresent, ennemiPresent, this);
 
             if (w.getEnnemisListStandby().size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
                                                                                       // LA PARTIE
@@ -135,7 +132,7 @@ public class MapState {
                         plateau[i][j] = ' ';
                         for (Ennemi e : ennemiPresent) {
                             if (i == e.getPos()[0] && j == e.getPos()[1]) {
-                                plateau[i][j] = (char) (e.getValue() + 48);
+                                plateau[i][j] = (char) (e.getPv() + 48);
                             }
                         }
                         // plateau[i][j] = (char) 4;//PV CACHEE COMMENT THIS LINE TO REVEAL

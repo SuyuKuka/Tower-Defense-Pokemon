@@ -13,11 +13,10 @@ public class Ennemi extends Pokemon {
     private static ArrayList<Ennemi> EList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
 
-    public Ennemi(String name, int pv, Type type1, Type type2) {
-        super(name, pv, type1, type2, false);
+    public Ennemi(String name, int pv, int defPhysical, int defSpecial, Type type1, Type type2) {
+        super(name, pv, defPhysical, defSpecial, type1, type2, false);
         EList.add(this);
         config = Map.map;
-
     }
 
     private Ennemi() {
@@ -96,7 +95,9 @@ public class Ennemi extends Pokemon {
 
     public String toString() {
         return "NOM: " + getName()
-                + " \nPV: " + getValue()
+                + " \nPV: " + getPv()
+                + " \nDEF PHYSIQUE: " + getPhysical()
+                + " \nDEF SPECIAL: " + getSpecial()
                 + " \nTYPE: " + getType()[0] + " et " + getType()[1]
                 + " \nVITESSE: " + getSpeed()
                 + "\nMECHANT\n";
