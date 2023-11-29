@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import model.MapState;
 
@@ -17,6 +18,7 @@ public class Tower extends Pokemon {
     private ArrayList<Ennemi> zoneTarget;
     private int level;
     private int[] pos;
+    private Skill[] skills = new Skill[4];
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
@@ -158,6 +160,43 @@ public class Tower extends Pokemon {
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
         }
+    }
+
+    private boolean chooseSkill(Skill newSkill){
+        if(skills.length==4){
+            System.out.println("Voulez-vous remplacer une attaque? O/N");
+            Scanner sc = new Scanner(System.in);
+            
+            if(sc.nextLine().equals("O")){
+                System.out.println("Par lequel souhaitez vous le remplacer? 1/2/3/4");
+                if(sc.nextLine().equals("1")){
+                    skills[1]=newSkill;
+                    sc.close();
+                    return true;
+                }else if(sc.nextLine().equals("2")){
+                    skills[2]=newSkill;
+                    sc.close();
+                    return true;
+                }else if(sc.nextLine().equals("3")){
+                    skills[3]=newSkill;
+                    sc.close();
+                    return true;
+                }else if(sc.nextLine().equals("4")){
+                    skills[4]=newSkill;
+                    sc.close();
+                    return true;
+                }else{
+                    chooseSkill(newSkill);
+                }
+
+            }else if(sc.nextLine().equals("N")){
+                sc.close();
+                return false;
+            }else{
+                chooseSkill(newSkill);
+            }
+        }
+        return false;
     }
 
     public String toString() {

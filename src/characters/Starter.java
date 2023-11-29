@@ -1,7 +1,39 @@
 package characters;
 
+import model.Pokemon;
+
 public class Starter {
-    public class Salameche {
+    public class Salameche extends Pokemon implements TowerLoader{
+
+        @Override
+        public void evolution() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'evolution'");
+        }
+
+        @Override
+        public void skill() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'skill'");
+        }
+
+        @Override
+        public void unlock() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'unlock'");
+        }
+
+        @Override
+        public void innerFocus() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'innerFocus'");
+        }
+
+        @Override
+        public void getCurrentSkill() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getCurrentSkill'");
+        }
     
         
     }
