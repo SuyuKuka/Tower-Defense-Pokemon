@@ -34,6 +34,12 @@ public class Starter {
             // TODO Auto-generated method stub
             throw new UnsupportedOperationException("Unimplemented method 'getCurrentSkill'");
         }
+
+        @Override
+        public void loadSprite() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'loadSprite'");
+        }
     
         
     }
