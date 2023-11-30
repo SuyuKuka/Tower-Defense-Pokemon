@@ -1,4 +1,4 @@
-package characters;
+package model;
 
 public class Pokemon {
 

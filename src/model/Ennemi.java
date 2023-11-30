@@ -1,8 +1,6 @@
-package characters;
+package model;
 
 import java.util.ArrayList;
-
-import config.Map;
 
 public class Ennemi extends Pokemon {
 
@@ -11,16 +9,30 @@ public class Ennemi extends Pokemon {
     private int[] pos;
     private boolean wasRight = false;
     private static ArrayList<Ennemi> EList = new ArrayList<>();
+    private static ArrayList<Ennemi> EBossList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
 
-    public Ennemi(String name, int pv, Type type1, Type type2) {
-        super(name, pv, type1, type2, false);
-        EList.add(this);
-        config = Map.map;
+    private boolean boss;
 
+    public Ennemi(String name, int pv, Type type1, Type type2, boolean boss) {
+        super(name, pv, type1, type2, false);
+        if (boss) {
+            EBossList.add(this);
+            this.boss = boss;
+        } else {
+            EList.add(this);
+        }
+        config = Map.map;
     }
 
-    private Ennemi() {
+    public Ennemi() {
+    }
+
+    public Ennemi(Ennemi e) {
+        super(e.getName(), e.getValue(), e.getType()[0], e.getType()[1], false);
+        this.boss = e.isBoss();
+        setSpeed(e.getSpeed());
+        config = Map.map;
     }
 
     public int[] putEnnemi(String st) {
@@ -52,12 +64,60 @@ public class Ennemi extends Pokemon {
     }
 
     public boolean move() {
+        if (getSpeed() != Speed.STUN) {
+            if (getSpeed() == Speed.FAST) {
+                moveAgain();
+                moveAgain();
+            } else if (getSpeed() == Speed.CLASSIC) {
+                moveAgain();
+            }
+
+            if (config[getPos()[0] + 1][getPos()[1]] == 5 || config[getPos()[0]][getPos()[1] + 1] == 5
+                    || config[getPos()[0]][getPos()[1] - 1] == 5) {
+                return true;
+            }
+
+            if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
+                    config[getPos()[0]][getPos()[1] - 1] == 3) {
+
+                if (wasRight()) {
+                    int[] pos = { getPos()[0], getPos()[1] + 1 };
+                    setPos(pos);
+
+                } else {
+                    int[] pos = { getPos()[0], getPos()[1] - 1 };
+                    setPos(pos);
+
+                }
+
+            } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
+                int[] pos = { getPos()[0] + 1, getPos()[1] };
+                setPos(pos);
+
+            } else if (config[getPos()[0]][getPos()[1] + 1] == 3) { // DROITE
+                int[] pos = { getPos()[0], getPos()[1] + 1 };
+                setPos(pos);
+
+                setWasRight(true);
+
+            } else if (config[getPos()[0]][getPos()[1] - 1] == 3) { // GAUCHE
+                int[] pos = { getPos()[0], getPos()[1] - 1 };
+                setPos(pos);
+
+                setWasRight(false);
+
+            }
+
+        }
+        return false;
+
+    }
+
+    public boolean moveAgain() {
         if (config[getPos()[0] + 1][getPos()[1]] == 5 || config[getPos()[0]][getPos()[1] + 1] == 5
                 || config[getPos()[0]][getPos()[1] - 1] == 5) {
-            config[getPos()[0]][getPos()[1]] = 3;
             return true;
         }
-        config[getPos()[0]][getPos()[1]] = 3;
 
         if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
                 config[getPos()[0]][getPos()[1] - 1] == 3) {
@@ -65,45 +125,48 @@ public class Ennemi extends Pokemon {
             if (wasRight()) {
                 int[] pos = { getPos()[0], getPos()[1] + 1 };
                 setPos(pos);
-                config[pos[0]][pos[1]] = 1;
+
             } else {
                 int[] pos = { getPos()[0], getPos()[1] - 1 };
                 setPos(pos);
-                config[pos[0]][pos[1]] = 1;
+
             }
 
         } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
             int[] pos = { getPos()[0] + 1, getPos()[1] };
             setPos(pos);
-            config[pos[0]][pos[1]] = 1;
 
         } else if (config[getPos()[0]][getPos()[1] + 1] == 3) { // DROITE
             int[] pos = { getPos()[0], getPos()[1] + 1 };
             setPos(pos);
-            config[pos[0]][pos[1]] = 1;
+
             setWasRight(true);
 
         } else if (config[getPos()[0]][getPos()[1] - 1] == 3) { // GAUCHE
             int[] pos = { getPos()[0], getPos()[1] - 1 };
             setPos(pos);
-            config[pos[0]][pos[1]] = 1;
+
             setWasRight(false);
 
         }
         return false;
-
     }
 
     public String toString() {
         return "NOM: " + getName()
-                + " \nPV: " + getValue()
-                + " \nTYPE: " + getType()[0] + " et " + getType()[1]
-                + " \nVITESSE: " + getSpeed()
-                + "\nMECHANT\n";
+                + " PV: " + getValue()
+                + " TYPE: " + getType()[0] + " et " + getType()[1]
+                + " VITESSE: " + getSpeed()
+                + " MECHANT "
+                + "BOSS:" + isBoss() + "\n";
     }
 
     public ArrayList<Ennemi> getList() {
         return EList;
+    }
+
+    public ArrayList<Ennemi> getBossList() {
+        return EBossList;
     }
 
     public int[] getPos() {
@@ -120,5 +183,9 @@ public class Ennemi extends Pokemon {
 
     public void setWasRight(boolean wasRight) {
         this.wasRight = wasRight;
+    }
+
+    public boolean isBoss() {
+        return boss;
     }
 }

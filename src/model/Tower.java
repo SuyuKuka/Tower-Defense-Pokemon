@@ -1,8 +1,6 @@
-package characters;
+package model;
 
 import java.util.ArrayList;
-
-import model.MapState;
 
 public class Tower extends Pokemon {
 
@@ -33,27 +31,25 @@ public class Tower extends Pokemon {
 
     public int[] putTower(String st) { // TERMINAL
         try {
-            String alphaPart = st.replaceAll("[^A-Z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
-
+            String alphaPart = st.replaceAll("[^A-Z]", "");
             int posX;
             int posY;
-
-            if (!st.matches("[A-Z]\\d+")) {
-                posX = -1;
-            } else {
-                posX = alphaPart.charAt(0) - 'A';
-            }
-
             if (!numPart.isEmpty()) {
                 posY = Integer.parseInt(numPart) - 1;
             } else {
                 posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
             }
+            if (!st.matches("\\d+[A-Z]")) {
+                posX = -1;
+            } else {
+                posX = alphaPart.charAt(0) - 'A';
+            }
 
-            int[] tab = { posX, posY };
+            int[] tab = { posY, posX };
             return tab;
         } catch (Exception e) {
+            System.out.println("aie");
             int[] tab = { -1, -1 };
             return tab;
         }
