@@ -2,12 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import model.characters.Ennemi;
-import model.characters.Tower;
-import model.config.InitPokemon;
-import model.config.InitWaves;
-import model.config.Map;
-import model.config.InitWaves.Difficulty;
+import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
 
@@ -22,6 +17,10 @@ public class MapState {
 
     private ArrayList<ArrayList<Ennemi>> allEnnemis = new ArrayList<>();
     private ArrayList<Ennemi> wave = new ArrayList<>();
+
+    private int pv = 3;
+
+    private int limiteDeTemps = 30;
 
     public MapState() {
         Map map = new Map(20, 20);
@@ -51,27 +50,27 @@ public class MapState {
         Scanner sc = new Scanner(System.in);
 
         int nbTour = 6; // AJUSTABLE
-        int pv = 3; // AJUSTABLE
 
         infoTerminal();
 
         allEnnemis = w.getAllEnnemis();
 
         int step = 0;
-        while (gameContinue(pv)) {
+        while (gameContinue()) {
 
-            pv = moveOnMap(pv);
+            moveOnMap();
             loadNextWave();
             m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + allEnnemis.size());
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
             System.out.println("Ennemie en attente:" + wave.size());
             System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
             System.out.println("PV: " + pv);
-            // System.out.println("FREQ: " + step);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
 
             step = ennemiComing(step);
             step++;
 
+            // A METTRE DANS /control
             Tower terminal = new Tower("Terminal", 120, null, null);
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -81,6 +80,8 @@ public class MapState {
                         nbTour--;
                     }
                 }
+            } else {
+                String st = sc.nextLine();
             }
             terminal.attaque(towerPresent, ennemiPresent, this);
 
@@ -88,20 +89,21 @@ public class MapState {
         sc.close();
     }
 
-    private boolean gameContinue(int pv) {
+    private boolean gameContinue() {
+        if (allEnnemis.isEmpty()) {
+            System.out.println("VOUS AVEZ GAGNEE");
+            return false;
+        }
         if (pv == 0) {
             System.out.println("VOUS AVEZ PERDU");
-            return false;
-        } else if (wave.isEmpty() && allEnnemis.isEmpty() && ennemiPresent.isEmpty()) {
-            System.out.println("VOUS AVEZ GAGNEE");
             return false;
         }
         return true;
     }
 
     private int ennemiComing(int pas) {
-        if (pas == 2 && !wave.isEmpty() || pas > 30 && ennemiPresent.isEmpty()) {
-            // System.out.println(wave);
+        if (pas == 2 && !wave.isEmpty() || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
+            System.out.println(wave);
             setEnnemi(m.getFrontEntry(), wave.get(0));
             wave.remove(0);
             return 0;
@@ -109,7 +111,7 @@ public class MapState {
         return pas;
     }
 
-    private int moveOnMap(int pv) {
+    private void moveOnMap() {
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
             if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
@@ -121,7 +123,6 @@ public class MapState {
             leaked = false;
             pv--;
         }
-        return pv;
     }
 
     private void loadNextWave() {

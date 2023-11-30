@@ -1,9 +1,7 @@
-package model.config;
+package model;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import model.characters.Ennemi;
 
 //GENERE UNE MAP ALEATOIRE
 public class Map {
@@ -102,7 +100,7 @@ public class Map {
     }
 
     private void addObstacles() {
-        for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+        for (int i = 0; i < 45; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
             if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
@@ -175,34 +173,35 @@ public class Map {
     }
 
     public void affiche(ArrayList<Ennemi> ennemiPresent) {
-        System.out.print("   ");
-        for (int j = 1; j < map[0].length + 1; j = j + 1) {
-            if (j < 10) {
-                System.out.print("0" + j + " ");
-            } else {
-                System.out.print(j + " ");
-            }
+        System.out.print("      ");
+        for (int j = 0; j < map[0].length; j = j + 1) {
+            System.out.print((char) ('A' + j) + " ");
         }
         System.out.println();
-        System.out.print("   ");
-        for (int j = 1; j < map[0].length + 1; j = j + 1) {
-            if (j < 10) {
-                System.out.print("==");
-            } else {
-                System.out.print("==");
-            }
-            if (j != map.length) {
-                System.out.print("=");
-            }
+        System.out.print("      ");
+        for (int j = 0; j < map[0].length; j = j + 1) {
+            System.out.print("==");
         }
         System.out.println();
         for (int i = 0; i < map.length; i++) {
-            System.out.print((char) ('A' + i) + "|| ");
-            for (int j = 0; j < map[0].length; j++) {
-                System.out.print(intToChar(map, ennemiPresent)[i][j] + "  ");
+            if (i + 1 < 10) {
+                System.out.print("0" + (i + 1) + " || ");
+            } else {
+                System.out.print(i + 1 + " || ");
             }
+            for (int j = 0; j < map[0].length; j++) {
+                // System.out.print(intToChar(map, ennemiPresent)[i][j] + " ");
+                // POSSIBLE PAS COMPATIBLE AVEC CERTAIN SHELL
+                System.out.print(intToCharColor(map, ennemiPresent)[i][j]);
+            }
+            System.out.print(" ||");
             System.out.println();
         }
+        System.out.print("      ");
+        for (int j = 0; j < map[0].length; j = j + 1) {
+            System.out.print("==");
+        }
+        System.out.println();
     }
 
     private char[][] intToChar(int[][] map, ArrayList<Ennemi> ennemiPresent) {
@@ -213,7 +212,6 @@ public class Map {
                     case 0:
                         plateau[i][j] = '.';
                         break;
-
                     case 2:
                         plateau[i][j] = 'T';
                         break;
@@ -226,9 +224,6 @@ public class Map {
                     case 5:
                         plateau[i][j] = 'S';
                         break;
-                    case 6:
-                        plateau[i][j] = '/';
-                        break;
                     case 9:
                         plateau[i][j] = (char) 5;
                         break;
@@ -239,6 +234,48 @@ public class Map {
                     if (i == e.getPos()[0] && j == e.getPos()[1]) {
                         // plateau[i][j] = (char) 4;
                         plateau[i][j] = '#';
+                    }
+                }
+            }
+        }
+        return plateau;
+    }
+
+    private String[][] intToCharColor(int[][] map, ArrayList<Ennemi> ennemiPresent) {
+        String[][] plateau = new String[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                switch (map[i][j]) {
+                    case 0:
+                        plateau[i][j] = ". ";
+                        break;
+
+                    case 2:
+                        plateau[i][j] = "\u001B[47m" + "T " + "\u001B[0m";
+                        break;
+                    case 3:
+                        plateau[i][j] = "\u001B[45m" + "  " + "\u001B[0m";
+                        break;
+                    case 4:
+                        plateau[i][j] = "\u001B[45m" + "\u001B[31m" + "E " + "\u001B[0m";
+                        break;
+                    case 5:
+                        plateau[i][j] = "\u001B[45m" + "\u001B[34m" + "S " + "\u001B[0m";
+                        break;
+                    case 9:
+                        plateau[i][j] = "\u001B[32m" + (char) 5 + " " + "\u001B[0m";
+                        break;
+                    default:
+                        break;
+                }
+                for (Ennemi e : ennemiPresent) {
+                    if (i == e.getPos()[0] && j == e.getPos()[1]) {
+                        // plateau[i][j] = (char) 4;
+                        if (e.isBoss()) {
+                            plateau[i][j] = "\u001B[45m" + "\u001B[36m" + "X " + "\u001B[0m";
+                        } else {
+                            plateau[i][j] = "\u001B[45m" + "\u001B[36m" + "i " + "\u001B[0m";
+                        }
                     }
                 }
             }

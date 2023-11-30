@@ -1,4 +1,4 @@
-package model.characters;
+package model;
 
 public enum Type {
     NONE, EAU, FEU, SOL, VOL,

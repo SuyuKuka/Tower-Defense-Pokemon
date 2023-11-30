@@ -1,11 +1,10 @@
-package model.config;
+package model;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import model.characters.Ennemi;
-
 public class InitWaves {
+
     public enum Difficulty {
         EASY, NORMAL, HARD
     }
@@ -18,7 +17,6 @@ public class InitWaves {
     private ArrayList<ArrayList<Ennemi>> vague = new ArrayList<>();
 
     public InitWaves(Difficulty diff) { // CREER UNE WAVE ET LA RANDOMISE
-        Ennemi e = new Ennemi();
 
         difficultyAjust(diff);
 
@@ -32,31 +30,18 @@ public class InitWaves {
             while (randChar >= 22 || Ennemi.LIST.getList().get(randChar).isBoss()) { // 22: TAILLE DE LA LISTE ENNEMI
                 randChar = random.nextInt(i + 1);
             }
-            e = e.copiEnnemis(Ennemi.LIST.getList().get(randChar));
-            ennemisTerminal.add(e);
+            ennemisTerminal.add(new Ennemi(Ennemi.LIST.getList().get(randChar)));
 
             if (i == limite) { // AJUSTABLE
 
                 if (i > 6) {
-                    e = e.copiEnnemis(Ennemi.LIST.getBossList().get(randBoss));
-                    ennemisTerminal.add(e);
+                    ennemisTerminal.add(new Ennemi(Ennemi.LIST.getBossList().get(randBoss)));
                 }
                 vague.add(ennemisTerminal);
-
                 limite = limite + limite * 1 / 2 + 2;
                 ennemisTerminal = new ArrayList<>();
             }
         }
-        // SPOILER
-        /*
-         * 
-         * int somme = 0;
-         * for (int i = 0; i < vague.size(); i++) {
-         * System.out.println(vague.get(i));
-         * somme = somme + vague.get(i).size();
-         * System.out.println();
-         * }
-         */
 
     }
 

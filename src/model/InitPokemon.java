@@ -1,12 +1,7 @@
-package model.config;
+package model;
 
 import java.io.InputStream;
 import java.util.Scanner;
-
-import model.characters.Ennemi;
-import model.characters.Pokemon;
-import model.characters.Tower;
-import model.characters.Type;
 
 public class InitPokemon {
 
@@ -27,12 +22,6 @@ public class InitPokemon {
             Ennemi e = new Ennemi(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
                     Type.stringToType(info[3]), info[6].equals("true"));
             e.setSpeed(Pokemon.stringToSpeed(info[5]));
-            e.setBoss(info[6]);
-        }
-        if (Integer.valueOf(info[0]) == 1) {
-            Tower t = new Tower(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
-                    Type.stringToType(info[3]));
-            t.setSpeed(Pokemon.stringToSpeed(info[5]));
         }
     }
 
