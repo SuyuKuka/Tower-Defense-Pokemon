@@ -22,7 +22,7 @@ public class Ennemi extends Pokemon {
         } else {
             EList.add(this);
         }
-        config = Map.map;
+        config = Map.map.clone();
     }
 
     public Ennemi() {

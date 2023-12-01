@@ -13,6 +13,8 @@ public class Map {
 
     private Random rand = new Random();
 
+    private ArrayList<int[]> cornerPos = new ArrayList<>();
+
     public Map(int w, int l) {
         int entryRand = rand.nextInt(l);
         int exitRand = rand.nextInt(l);
@@ -25,7 +27,8 @@ public class Map {
         map[exit[0]][exit[1]] = 5;
 
         mapBuilding();
-
+        // affiche(Ennemi.LIST.getList());
+        System.out.println(this);
     }
 
     private void mapBuilding() {
@@ -33,6 +36,17 @@ public class Map {
         wayFinder();
         wayBuilderV();
         wayBuilderH();
+
+        // reSetCorner();
+        // addLooping();
+
+        for (int[] is : cornerPos) {
+            System.out.print(is[0] + " " + is[1] + " ");
+            System.out.println(
+                    enoughSpace(is)
+
+            );
+        }
 
         // AJOUTE UN CADRE
         border();
@@ -43,9 +57,51 @@ public class Map {
 
     }
 
+    private void reSetCorner() {
+        try {
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[0].length; j++) {
+                    if (map[i][j] == 3) {
+                        if ((map[i - 1][j] == 3 && map[i][j + 1] == 3)
+                                || (map[i - 1][j] == 3 && map[i][j - 1] == 3)
+                                || (map[i + 1][j] == 3 && map[i][j + 1] == 3)
+                                || (map[i + 1][j] == 3 && map[i][j - 1] == 3)) {
+                            map[i][j] = 1;
+                            int[] corner = { i, j };
+                            cornerPos.add(corner);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void addLooping() {
+        for (int[] is : cornerPos) {
+            map[is[0]][is[1]] = 1;
+        }
+    }
+
+    private boolean enoughSpace(int[] is) {
+        try {
+            for (int i = is[0]; i < is[0] - 3; i++) {
+                for (int j = is[1]; j < is[1] - 3; j++) {
+                    if (map[i][j] != 3) {
+                        map[i][j] = 8;
+                    }
+
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void wayFinder() {
         for (int i = 1; i < map.length - 3; i = i + 3) {
-            map[i][rand.nextInt(map[0].length - 3)] = 2;
+            map[i][rand.nextInt(map[0].length - 3)] = 1;
         }
     }
 
@@ -249,7 +305,6 @@ public class Map {
                     case 0:
                         plateau[i][j] = ". ";
                         break;
-
                     case 2:
                         plateau[i][j] = "\u001B[47m" + "T " + "\u001B[0m";
                         break;

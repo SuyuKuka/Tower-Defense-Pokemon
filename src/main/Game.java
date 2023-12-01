@@ -2,19 +2,19 @@ package main;
 
 import javax.swing.JFrame;
 
-import graphics.GameScreen;
+import gameview.GameScreen;
+import model.Map;
 import model.MapState;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 public class Game extends JFrame {
 
-    private GameScreen gameScreen;
     boolean fullscreen = false; // AJUSTABLE
 
-    public Game() {
-        if (fullscreen) {
+    public Game(MapState state) {
 
+        if (fullscreen) {
             setAlwaysOnTop(true);
             setUndecorated(true);
             getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -24,22 +24,30 @@ public class Game extends JFrame {
             setSize(1000, 1000);
             setLocationRelativeTo(null);
         }
-        setTitle("PokéRevolute");
+        setTitle("PokeRevolute");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icon.png")).getImage());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        gameScreen = new GameScreen();
+        GameScreen gameScreen = new GameScreen(state);
         add(gameScreen);
+        state.setScreen(gameScreen);
         setVisible(true);
 
     }
 
     public static void main(String[] args) throws Exception {
+
+        Map m = new Map(20, 20);
+
         if (args.length != 0 && args[0].equals("[terminal]")) {
+
             MapState terminal = new MapState();
             terminal.startTerminal();
         } else {
-            Game game = new Game();
+
+            MapState graphic = new MapState();
+            Game game = new Game(graphic);
+            graphic.startGraphic();
 
         }
     }

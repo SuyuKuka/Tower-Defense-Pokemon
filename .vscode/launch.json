@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "main.Game",
             "projectName": "pooproject_89e8d3d2",
-            "args": "[terminal]"
+            "args": ""
         },
         {
             "type": "java",
@@ -18,14 +18,14 @@
             "request": "launch",
             "mainClass": "main.Game",
             "projectName": "pooproject_76e33191",
-            "args": "[terminal]"
+            "args": ""
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "[terminal]"
+            "args": ""
         }
     ]
 }

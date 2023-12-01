@@ -6,6 +6,11 @@ import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
 
+import gameview.GameScreen;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapState {
 
     private Map m;
@@ -21,6 +26,8 @@ public class MapState {
     private int pv = 3;
 
     private int limiteDeTemps = 30;
+
+    private GameScreen screen;
 
     public MapState() {
         Map map = new Map(20, 20);
@@ -115,11 +122,12 @@ public class MapState {
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
             if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
+                ennemiPresent.remove(e);
                 leaked = true;
+                break;
             }
         }
-        if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
-            ennemiPresent.remove(0);
+        if (leaked) { // SI UN ENNEMI PASSE
             leaked = false;
             pv--;
         }
@@ -168,8 +176,48 @@ public class MapState {
         }
     }
 
-    public void start() {
-        // GRAPHIC
+    public void startGraphic() {
+
+        InitPokemon.loadingChar();
+        InitWaves w = new InitWaves(Difficulty.HARD);
+        Scanner sc = new Scanner(System.in);
+
+        int nbTour = 6; // AJUSTABLE
+
+        infoTerminal();
+
+        allEnnemis = w.getAllEnnemis();
+
+        int step = 0;
+        Timer timer = new Timer();
+        while (gameContinue()) {
+
+            screen.repaint();
+
+            moveOnMap();
+            loadNextWave();
+            m.affiche(ennemiPresent);
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            System.out.println("Ennemie en attente:" + wave.size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
+            step = ennemiComing(step);
+            step++;
+
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+            task.run();
+        }
+        sc.close();
     }
 
     public void isDead(Ennemi e) {
@@ -183,5 +231,13 @@ public class MapState {
 
     public ArrayList<Tower> getTowerPresent() {
         return towerPresent;
+    }
+
+    public int[][] getMap() {
+        return config;
+    }
+
+    public void setScreen(GameScreen screen) {
+        this.screen = screen;
     }
 }
