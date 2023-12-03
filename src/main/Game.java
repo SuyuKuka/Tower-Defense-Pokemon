@@ -36,8 +36,9 @@ public class Game extends JFrame {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 0 && args[0].equals("[terminal]")) {
+
             MapState terminal = new MapState();
-            terminal.startTerminal();
+            // terminal.startTerminal();
         } else {
             Game game = new Game();
 

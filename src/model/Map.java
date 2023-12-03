@@ -13,6 +13,8 @@ public class Map {
 
     private Random rand = new Random();
 
+    private ArrayList<Corner> cornerList = new ArrayList<>();
+
     public Map(int w, int l) {
         int entryRand = rand.nextInt(l);
         int exitRand = rand.nextInt(l);
@@ -25,7 +27,158 @@ public class Map {
         map[exit[0]][exit[1]] = 5;
 
         mapBuilding();
+        System.out.println(this);
 
+    }
+
+    public class Corner {
+
+        private int[] pos;
+        private boolean topOrientation;
+        private boolean rightOrientation;
+
+        private int taille = rand.nextInt(3) + 3;
+
+        private boolean haveLoop = false;
+
+        public Corner(int[] pos, boolean top, boolean right) {
+            this.pos = pos;
+            topOrientation = top;
+            rightOrientation = right;
+
+        }
+
+        public void beALoop(int[][] map) {
+
+            if (enoughtSpace()) {
+                if (topOrientation && rightOrientation) {
+                    makeAQLoop();
+                    haveLoop = true;
+                } else if (topOrientation) {
+                    makeASLoop();
+                    haveLoop = true;
+                } else if (rightOrientation) {
+                    makeAALoop();
+                    haveLoop = true;
+                } else {
+                    makeAZLoop();
+                    haveLoop = true;
+                }
+            }
+
+        }
+
+        public boolean enoughtSpace() {
+
+            int x = pos[0];
+            int y = pos[1];
+
+            try {
+                if (topOrientation && rightOrientation) {
+                    for (int i = 0; i < taille; i++) {
+                        for (int j = 0; j < taille; j++) {
+                            if (map[x + i][y - j] != 0 && map[x + i][y - j] != 1) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                } else if (topOrientation) {
+                    for (int i = 0; i < taille; i++) {
+                        for (int j = 0; j < taille; j++) {
+                            if (map[x + i][y + j] != 0 && map[x + i][y + j] != 1) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                } else if (rightOrientation) {
+                    for (int i = 0; i < taille; i++) {
+                        for (int j = 0; j < taille; j++) {
+                            if (map[x - i][y - j] != 0 && map[x - i][y - j] != 1) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                } else {
+                    for (int i = 0; i < taille; i++) {
+                        for (int j = 0; j < taille; j++) {
+                            if (map[x - i][y + j] != 0 && map[x - i][y + j] != 1) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        public void makeAQLoop() {
+            int x = pos[0];
+            int y = pos[1];
+
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1) {
+                        map[x + i][y - j] = 6;
+                    }
+                }
+            }
+        }
+
+        public void makeASLoop() {
+            int x = pos[0];
+            int y = pos[1];
+
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1) {
+                        map[x + i][y + j] = 6;
+                    }
+                }
+            }
+        }
+
+        public void makeAALoop() {
+            int x = pos[0];
+            int y = pos[1];
+
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1) {
+                        map[x - i][y - j] = 6;
+                    }
+                }
+            }
+        }
+
+        public void makeAZLoop() {
+            int x = pos[0];
+            int y = pos[1];
+
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (i == 0 || i == taille - 1 || j == 0 || j == taille - 1) {
+                        map[x - i][y + j] = 6;
+                    }
+                }
+            }
+        }
+
+        public String toString() {
+            if (topOrientation && rightOrientation) {
+                return "corner: (x,y) " + pos[1] + "," + pos[0] + " Q";
+            } else if (topOrientation) {
+                return "corner: " + pos[1] + "," + pos[0] + " S";
+            } else if (rightOrientation) {
+                return "corner: " + pos[1] + "," + pos[0] + " A";
+            } else {
+                return "corner: " + pos[1] + "," + pos[0] + " Z";
+            }
+        }
     }
 
     private void mapBuilding() {
@@ -37,10 +190,51 @@ public class Map {
         // AJOUTE UN CADRE
         border();
 
-        // AJOUTE DES OBSTACLES
-        addObstacles();
-        deployObstacles();
+        // AJOUTE DES LOOPING
+        findCorner();
+        makeLoop();
 
+        // PATHFINDING
+
+        // AJOUTE DES OBSTACLES
+        // addObstacles();
+        // deployObstacles();
+
+    }
+
+    private void makeLoop() {
+        for (int i = 0; i < cornerList.size(); i++) {
+            if (rand.nextInt(5) == 2) {
+                cornerList.get(i).beALoop(map);
+            }
+        }
+
+    }
+
+    private void findCorner() {
+        for (int i = 0; i < map.length - 1; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 3) {
+
+                    if (map[i - 1][j] == 3 && map[i][j + 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, true, true));
+                    }
+                    if (map[i - 1][j] == 3 && map[i][j - 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, true, false));
+                    }
+                    if (map[i + 1][j] == 3 && map[i][j + 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, false, true));
+                    }
+                    if (map[i + 1][j] == 3 && map[i][j - 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, false, false));
+                    }
+                }
+            }
+        }
     }
 
     private void wayFinder() {
