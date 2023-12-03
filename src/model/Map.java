@@ -8,6 +8,8 @@ public class Map {
 
     public static int[][] map;
 
+    public static int[][] roadMap;
+
     private int[] entry = new int[2];
     private int[] exit = new int[2];;
 
@@ -27,7 +29,6 @@ public class Map {
         map[exit[0]][exit[1]] = 5;
 
         mapBuilding();
-        System.out.println(this);
 
     }
 
@@ -193,8 +194,23 @@ public class Map {
         // AJOUTE DES LOOPING
         findCorner();
         makeLoop();
+        System.out.println(this);
 
         // PATHFINDING
+        fakeMove();
+        String res = "";
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (roadMap[i][j] != 0) {
+                    res = res + roadMap[i][j] + " ";
+                } else {
+                    res = res + "  ";
+                }
+
+            }
+            res = res + "\n";
+        }
+        System.out.println(res);
 
         // AJOUTE DES OBSTACLES
         // addObstacles();
@@ -202,39 +218,43 @@ public class Map {
 
     }
 
-    private void makeLoop() {
-        for (int i = 0; i < cornerList.size(); i++) {
-            if (rand.nextInt(5) == 2) {
-                cornerList.get(i).beALoop(map);
+    private void fakeMove() {
+
+        roadMap = new int[map.length][map[0].length];
+
+        int increment = 1;
+        int[] pos = getFrontEntry();
+        roadMap[getFrontEntry()[0]][getFrontEntry()[1]] = increment++;
+
+        while (pos[0] != exit[0] || pos[1] != exit[1]) {
+            if (map[pos[0]][pos[1]] == 6) {
+                System.out.println("LOOPING");// TODO: TAKE THE LOOP
+                break;
             }
-        }
 
-    }
-
-    private void findCorner() {
-        for (int i = 0; i < map.length - 1; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] == 3) {
-
-                    if (map[i - 1][j] == 3 && map[i][j + 1] == 3) {
-                        map[i][j] = 1;
-                        cornerList.add(new Corner(new int[] { i, j }, true, true));
-                    }
-                    if (map[i - 1][j] == 3 && map[i][j - 1] == 3) {
-                        map[i][j] = 1;
-                        cornerList.add(new Corner(new int[] { i, j }, true, false));
-                    }
-                    if (map[i + 1][j] == 3 && map[i][j + 1] == 3) {
-                        map[i][j] = 1;
-                        cornerList.add(new Corner(new int[] { i, j }, false, true));
-                    }
-                    if (map[i + 1][j] == 3 && map[i][j - 1] == 3) {
-                        map[i][j] = 1;
-                        cornerList.add(new Corner(new int[] { i, j }, false, false));
-                    }
+            if (map[pos[0] + 1][pos[1]] != 0) {
+                while (map[pos[0] + 1][pos[1]] != 0) {
+                    roadMap[pos[0] + 1][pos[1]] = increment++;
+                    pos = new int[] { pos[0] + 1, pos[1] };
                 }
             }
+
+            else if (map[pos[0]][pos[1] + 1] != 0) {
+                while (map[pos[0]][pos[1] + 1] != 0) {
+                    roadMap[pos[0]][pos[1] + 1] = increment++;
+                    pos = new int[] { pos[0], pos[1] + 1 };
+                }
+            }
+
+            else if (map[pos[0]][pos[1] - 1] != 0) {
+                while (map[pos[0]][pos[1] - 1] != 0) {
+                    roadMap[pos[0]][pos[1] - 1] = increment++;
+                    pos = new int[] { pos[0], pos[1] - 1 };
+                }
+            }
+
         }
+
     }
 
     private void wayFinder() {
@@ -293,6 +313,66 @@ public class Map {
         }
     }
 
+    private void border() {
+        int[][] big = new int[map.length + 1][map[0].length + 2];
+        for (int i = 0; i < big.length - 1; i++) {
+            for (int j = 1; j < big[0].length - 1; j++) {
+                big[i][j] = map[i][j - 1];
+            }
+        }
+        map = big;
+
+        for (int i = 0; i < big.length; i++) {
+            for (int j = 0; j < big.length; j++) {
+                if (map[i][j] == 4) {
+                    entry = new int[2];
+                    entry[0] = i;
+                    entry[1] = j;
+                }
+                if (map[i][j] == 5) {
+                    exit = new int[2];
+                    exit[0] = i;
+                    exit[1] = j;
+                }
+            }
+        }
+    }
+
+    private void makeLoop() {
+        for (int i = 0; i < cornerList.size(); i++) {
+            if (rand.nextInt(5) == 2) {
+                cornerList.get(i).beALoop(map);
+            }
+        }
+
+    }
+
+    private void findCorner() {
+        for (int i = 0; i < map.length - 1; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 3) {
+
+                    if (map[i - 1][j] == 3 && map[i][j + 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, true, true));
+                    }
+                    if (map[i - 1][j] == 3 && map[i][j - 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, true, false));
+                    }
+                    if (map[i + 1][j] == 3 && map[i][j + 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, false, true));
+                    }
+                    if (map[i + 1][j] == 3 && map[i][j - 1] == 3) {
+                        map[i][j] = 1;
+                        cornerList.add(new Corner(new int[] { i, j }, false, false));
+                    }
+                }
+            }
+        }
+    }
+
     private void addObstacles() {
         for (int i = 0; i < 45; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
@@ -338,32 +418,6 @@ public class Map {
                 }
             }
         }
-    }
-
-    private void border() {
-        int[][] big = new int[map.length + 1][map[0].length + 2];
-        for (int i = 0; i < big.length - 1; i++) {
-            for (int j = 1; j < big[0].length - 1; j++) {
-                big[i][j] = map[i][j - 1];
-            }
-        }
-        map = big;
-
-        for (int i = 0; i < big.length; i++) {
-            for (int j = 0; j < big.length; j++) {
-                if (map[i][j] == 4) {
-                    entry = new int[2];
-                    entry[0] = i;
-                    entry[1] = j;
-                }
-                if (map[i][j] == 5) {
-                    exit = new int[2];
-                    exit[0] = i;
-                    exit[1] = j;
-                }
-            }
-        }
-
     }
 
     public void affiche(ArrayList<Ennemi> ennemiPresent) {
