@@ -78,7 +78,8 @@ public class Map {
                 if (topOrientation && rightOrientation) {
                     for (int i = 0; i < taille; i++) {
                         for (int j = 0; j < taille; j++) {
-                            if (map[x + i][y - j] != 0 && map[x + i][y - j] != 1) {
+                            if (map[x + i][y - j] != 0
+                                    && (map[x + i][y - j] != 1 || pos[0] != (x + i) || pos[1] != (y - j))) {
                                 return false;
                             }
                         }
@@ -87,7 +88,8 @@ public class Map {
                 } else if (topOrientation) {
                     for (int i = 0; i < taille; i++) {
                         for (int j = 0; j < taille; j++) {
-                            if (map[x + i][y + j] != 0 && map[x + i][y + j] != 1) {
+                            if (map[x + i][y + j] != 0
+                                    && (map[x + i][y + j] != 1 || pos[0] != (x + i) || pos[1] != (y + j))) {
                                 return false;
                             }
                         }
@@ -96,7 +98,8 @@ public class Map {
                 } else if (rightOrientation) {
                     for (int i = 0; i < taille; i++) {
                         for (int j = 0; j < taille; j++) {
-                            if (map[x - i][y - j] != 0 && map[x - i][y - j] != 1) {
+                            if (map[x - i][y - j] != 0
+                                    && (map[x - i][y - j] != 1 || pos[0] != (x - i) || pos[1] != (y - j))) {
                                 return false;
                             }
                         }
@@ -105,7 +108,8 @@ public class Map {
                 } else {
                     for (int i = 0; i < taille; i++) {
                         for (int j = 0; j < taille; j++) {
-                            if (map[x - i][y + j] != 0 && map[x - i][y + j] != 1) {
+                            if (map[x - i][y + j] != 0
+                                    && (map[x - i][y + j] != 1 || pos[0] != (x - i) || pos[1] != (y + j))) {
                                 return false;
                             }
                         }
@@ -194,28 +198,70 @@ public class Map {
         // AJOUTE DES LOOPING
         findCorner();
         makeLoop();
-        System.out.println(this);
+        affiche(Ennemi.LIST.getList());
 
         // PATHFINDING
         fakeMove();
+        System.out.println(this);
+        // AJOUTE DES OBSTACLES
+        // addObstacles();
+        // deployObstacles();
+
+    }
+
+    public String toString(int[][] roadMap) {
         String res = "";
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (roadMap[i][j] != 0) {
-                    res = res + roadMap[i][j] + " ";
+                    if (roadMap[i][j] >= 10) {
+                        res = res + roadMap[i][j] + " ";
+                    } else {
+                        res = res + roadMap[i][j] + "  ";
+                    }
                 } else {
-                    res = res + "  ";
+                    res = res + "   ";
                 }
 
             }
             res = res + "\n";
         }
-        System.out.println(res);
+        return res;
+    }
 
-        // AJOUTE DES OBSTACLES
-        // addObstacles();
-        // deployObstacles();
+    private int[] takeLoopZ(int increment, int[] oldPos) {
+        int[] pos = new int[] { oldPos[0], oldPos[1] };
+        System.out.println("LOOPING");
 
+        return pos;
+    }
+
+    private int[] takeLoopQS(int increment, int[] oldPos) {
+        int[] pos = new int[2];
+        int taille = 0;
+        boolean right = false;
+        boolean top = false;
+        for (Corner corner : cornerList) {
+            if ((oldPos[0] == corner.pos[0]) && (oldPos[1] == corner.pos[1])) {
+                taille = corner.taille;
+                right = corner.rightOrientation;
+                top = corner.topOrientation;
+                pos[0] = corner.pos[0];
+                pos[1] = corner.pos[1];
+                break;
+            }
+        }
+
+        if (right) {
+            for (int i = 0; i < taille; i++) {
+                roadMap[pos[0]][pos[1]] = increment;
+                pos[1] = pos[1] + 1;
+            }
+        } else {
+
+        }
+
+        return pos;
     }
 
     private void fakeMove() {
@@ -226,16 +272,16 @@ public class Map {
         int[] pos = getFrontEntry();
         roadMap[getFrontEntry()[0]][getFrontEntry()[1]] = increment++;
 
-        while (pos[0] != exit[0] || pos[1] != exit[1]) {
-            if (map[pos[0]][pos[1]] == 6) {
-                System.out.println("LOOPING");// TODO: TAKE THE LOOP
-                break;
-            }
+        test: while (pos[0] != exit[0] || pos[1] != exit[1]) {
 
             if (map[pos[0] + 1][pos[1]] != 0) {
                 while (map[pos[0] + 1][pos[1]] != 0) {
                     roadMap[pos[0] + 1][pos[1]] = increment++;
                     pos = new int[] { pos[0] + 1, pos[1] };
+                    if (map[pos[0]][pos[1]] == 6) {
+                        pos = takeLoopQS(increment, pos);
+                        break test;
+                    }
                 }
             }
 
@@ -243,6 +289,11 @@ public class Map {
                 while (map[pos[0]][pos[1] + 1] != 0) {
                     roadMap[pos[0]][pos[1] + 1] = increment++;
                     pos = new int[] { pos[0], pos[1] + 1 };
+                    if (map[pos[0]][pos[1]] == 6) {
+                        System.out.println("ZLOOP");
+                        pos = takeLoopZ(increment, pos);
+                        break;
+                    }
                 }
             }
 
@@ -250,6 +301,11 @@ public class Map {
                 while (map[pos[0]][pos[1] - 1] != 0) {
                     roadMap[pos[0]][pos[1] - 1] = increment++;
                     pos = new int[] { pos[0], pos[1] - 1 };
+                    if (map[pos[0]][pos[1]] == 6) {
+                        System.out.println("ALOOP");
+                        // pos = takeLoopA(increment, pos);
+                        break test;
+                    }
                 }
             }
 
@@ -514,6 +570,7 @@ public class Map {
                         plateau[i][j] = "\u001B[32m" + (char) 5 + " " + "\u001B[0m";
                         break;
                     default:
+                        plateau[i][j] = "? ";
                         break;
                 }
                 for (Ennemi e : ennemiPresent) {
