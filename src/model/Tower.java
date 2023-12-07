@@ -66,13 +66,9 @@ public class Tower extends Pokemon {
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
-            // skill pas encore imprémenter
-            // if (tower.getCurrentSkill.getUnique()) { //true = cible unique; false = cible
-            // zone
-            boolean test0 = true;
-            if (test0) {
+            if (skills[select].getUnique()) {
                 tower.getUniqueTarget(ennemiInMap);
-                attackUnique(tower);
+                attackUnique();
 
                 if (uniqueTarget.getPv() <= 0) {
                     m.isDead(uniqueTarget);
@@ -81,7 +77,7 @@ public class Tower extends Pokemon {
                 }
             } else {
                 tower.getZoneTarget(ennemiInMap);
-                attackZone(tower);
+                attackZone();
 
                 for (Ennemi e : zoneTarget) {
                     if (e.getPv() <= 0) {
@@ -95,51 +91,47 @@ public class Tower extends Pokemon {
 
     }
 
-    private void attackUnique(Tower tower) {
+    private void attackUnique() {
         if (uniqueTarget != null) {
-            // skill non encore implementer
-            // if (tower.getCurrentSkill.getStat()) { // true == physique; false ==
-            // speciale
-            boolean test = true;
-            if (test) {
-                int physical = uniqueTarget.getPhysical() - tower.getPhysical();
+            if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
+                int physical = uniqueTarget.getPhysical() - getPhysical();
                 if (physical > 0) {// si def = 100 et atk = 20, physique = 80
                     uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
                 } else {// si def=20 et atk=100, il fera physique = -80
                     uniqueTarget.setPv(uniqueTarget.getPv() + physical); // physique est négatif
                 }
-            } else {
-                int special = uniqueTarget.getSpecial() - tower.getSpecial();
+            } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
+                int special = uniqueTarget.getSpecial() - getSpecial();
                 if (special > 0) {// si def = 100 et atk = 20, special = 80
                     uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
                 } else {// si def=20 et atk=100, il fera special = -80
                     uniqueTarget.setPv(uniqueTarget.getPv() + special); // special est négatif
                 }
+            } else {
+                // Attaque de statut donc effect?
             }
         }
     }
 
-    private void attackZone(Tower tower) {
+    private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
-                boolean test = true;
-                // skill non encore implementer
-                // if (tower.getCurrentSkill.getStat()) { // true == physique; false ==
-                // speciale
-                if (test) {
-                    int physical = e.getPhysical() - tower.getPhysical();
+                if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
+                    int physical = (int) (e.getPhysical() - getPhysical() + skills[select].getPhysicalDamage()) * ;
                     if (physical > 0) {// si def = 100 et atk = 20, physique = 80
                         e.setPv(e.getPv() - 1); // donc on retire -1
                     } else {// si def=20 et atk=100, il fera physique = -80
                         e.setPv(e.getPv() + physical); // physique est négatif
                     }
-                } else {
-                    int special = e.getSpecial() - tower.getSpecial();
+                } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
+                    int special = e.getSpecial() - getSpecial();
                     if (special > 0) {// si def = 100 et atk = 20, special = 80
                         e.setPv(e.getPv() - 1); // donc on retire -1
                     } else {// si def=20 et atk=100, il fera special = -80
                         e.setPv(e.getPv() + special); // special est négatif
                     }
+                } else {
+                    // Attaque de statut donc juste applique effet
                 }
             }
         }
