@@ -1,20 +1,53 @@
 package characters;
 
+import model.Effect;
 import model.Pokemon;
+import model.Skill;
+import model.Tower;
+import model.Type;
 
 public class Starter {
-    public class Salameche extends Pokemon implements TowerLoader{
+    public class Salameche extends Tower implements TowerLoader{
+
+        public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
+            super("Salameche", atkPhysical, atkSpecial, type1, type2);
+        }
 
         @Override
         public void evolution() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'evolution'");
+            if(getLevel()==16){
+                loadSprite();
+                setName("Reptincel");
+                setPhysical(getPhysical()+20);
+                setSpecial(getSpecial()+20);
+            }
+            if(getLevel()==36){
+                loadSprite();
+                setName("Dracaufeu");
+                setPhysical(getPhysical()+20);
+                setSpecial(getSpecial()+20);
+            }
         }
 
         @Override
         public void skill() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'skill'");
+            Effect effect = new Effect();
+            Skill griffe = new Skill("Griffe", 1, 40, 0, Type.NORMAL, 1, null, true, "Lacere la cible avec des griffes acerees pour lui infliger des dégats.");
+            Skill rugissement = new Skill("Rugissement", 1, 0, 0, Type.NORMAL, 1, null, true, "Le lanceur pousse un cri tout mimi pour tromper la vigilance de la cible et baisser sa Defense.");
+            Skill flammeche = new Skill("Flammeche", 4, 0, 40, Type.FEU, 1, null, true, "La cible est attaquée par une faible flamme qui peut aussi la brûler.");
+            Skill dracosouffle = new Skill("Draco-Souffle", 12, 60, 0, Type.DRAGON, 1.2, null, true, "Le lanceur souffle fort sur la cible pour lui infliger des dégâts, ce qui peut aussi la paralyser.");
+            // Griffe	1	40  Normal	Physique	Lacère la cible avec des griffes acérées pour lui infliger des dégâts.
+            // Rugissement	1	-	100	40	Normal	Statut	Le lanceur pousse un cri tout mimi pour tromper la vigilance de la cible et baisser son Attaque.
+            // Flammèche	4	40	100	25	Feu	Spéciale	La cible est attaquée par une faible flamme qui peut aussi la brûler.
+            // Brouillard	8	-	100	20	Normal	Statut	Le lanceur disperse un nuage d’encre ou de fumée qui réduit la Précision de la cible.
+            // Draco-Souffle	12	60	100	20	Dragon	Spéciale	Le lanceur souffle fort sur la cible pour lui infliger des dégâts, ce qui peut aussi la paralyser.
+            // Crocs Feu	17	65	95	15	Feu	Physique	Le lanceur utilise une morsure enflammée qui peut aussi brûler ou apeurer la cible.
+            // Tranche	20	70	100	20	Normal	Physique	Le lanceur donne un coup de griffe ou de faux. Taux de critiques élevé.
+            // Lance-Flammes	24	90	100	15	Feu	Spéciale	La cible reçoit un torrent de flammes qui peut aussi la brûler.
+            // Grimace	28	-	100	10	Normal	Statut	Le lanceur fait une grimace qui effraie la cible et réduit beaucoup sa Vitesse.
+            // Danse Flammes	32	35	85	15	Feu	Spéciale	Un tourbillon de flammes emprisonne la cible pendant quatre à cinq tours.
+            // Feu d’Enfer	36	100	50	5	Feu	Spéciale	La cible est entourée d’un torrent de flammes ardentes qui la brûlent.
+            // Boutefeu	40	120	100	15	Feu	Physique	Le lanceur s’embrase avant de charger la cible, ce qui peut la brûler. Le choc blesse aussi gravement le lanceur.
         }
 
         @Override
@@ -30,18 +63,9 @@ public class Starter {
         }
 
         @Override
-        public void getCurrentSkill() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getCurrentSkill'");
-        }
-
-        @Override
         public void loadSprite() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'loadSprite'");
+            System.out.println("Changer le sprite");
         }
-    
-        
     }
     public class Carapuce {
     

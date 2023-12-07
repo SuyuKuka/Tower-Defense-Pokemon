@@ -1,6 +1,7 @@
 package model;
 
 public class Skill {
+    public String name;
     public int lvl;
     private int physicalDamage;
     private int specialDamage;
@@ -8,14 +9,18 @@ public class Skill {
     private double speedAtk;
     private Effect effect;
     private boolean unique;
+    private String description;
 
-    public Skill(int physicalDamage, int specialDamage, Type type, double speedAtk, Effect effect, boolean unique) {
+    public Skill(String name, int lvl, int physicalDamage, int specialDamage, Type type, double speedAtk, Effect effect, boolean unique, String description) {
+        this.name=name;
+        this.lvl=lvl;
         this.physicalDamage = physicalDamage;
         this.specialDamage = specialDamage;
         this.type = type;
         this.speedAtk = speedAtk;
         this.effect = effect;
         this.unique = unique;
+        this.description=description;
     }
 
     public int getLvl() {
@@ -44,5 +49,9 @@ public class Skill {
 
     public boolean getUnique() {
         return unique;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
