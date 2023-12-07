@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import model.MapState;
-
 public class Tower extends Pokemon {
 
     public enum Rayon {
@@ -94,18 +92,24 @@ public class Tower extends Pokemon {
     private void attackUnique() {
         if (uniqueTarget != null) {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                int physical = uniqueTarget.getPhysical() - getPhysical();
-                if (physical > 0) {// si def = 100 et atk = 20, physique = 80
-                    uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
-                } else {// si def=20 et atk=100, il fera physique = -80
-                    uniqueTarget.setPv(uniqueTarget.getPv() + physical); // physique est négatif
+                int physical = (int) ((uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                        * Type.typeChart(skills[select], uniqueTarget));
+                if (physical >= 0) {
+                    // Cas positif donc retire -1
+                    uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                } else {
+                    // Cas négatif donc retire special vie
+                    uniqueTarget.setPv(uniqueTarget.getPv() + physical);
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                int special = uniqueTarget.getSpecial() - getSpecial();
-                if (special > 0) {// si def = 100 et atk = 20, special = 80
-                    uniqueTarget.setPv(uniqueTarget.getPv() - 1); // donc on retire -1
-                } else {// si def=20 et atk=100, il fera special = -80
-                    uniqueTarget.setPv(uniqueTarget.getPv() + special); // special est négatif
+                int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
+                        * Type.typeChart(skills[select], uniqueTarget));
+                if (special >= 0) {
+                    // Cas positif donc retire -1
+                    uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                } else {
+                    // Cas négatif donc retire special vie
+                    uniqueTarget.setPv(uniqueTarget.getPv() + special);
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -117,18 +121,24 @@ public class Tower extends Pokemon {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                    int physical = (int) (e.getPhysical() - getPhysical() + skills[select].getPhysicalDamage()) * ;
-                    if (physical > 0) {// si def = 100 et atk = 20, physique = 80
-                        e.setPv(e.getPv() - 1); // donc on retire -1
-                    } else {// si def=20 et atk=100, il fera physique = -80
-                        e.setPv(e.getPv() + physical); // physique est négatif
+                    int physical = (int) ((e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                            * Type.typeChart(skills[select], e));
+                    if (physical >= 0) {
+                        // Cas positif donc retire -1
+                        e.setPv(e.getPv() - 1);
+                    } else {
+                        // Cas négatif donc retire special vie
+                        e.setPv(e.getPv() + physical);
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                    int special = e.getSpecial() - getSpecial();
-                    if (special > 0) {// si def = 100 et atk = 20, special = 80
-                        e.setPv(e.getPv() - 1); // donc on retire -1
-                    } else {// si def=20 et atk=100, il fera special = -80
-                        e.setPv(e.getPv() + special); // special est négatif
+                    int special = (int) ((e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
+                            * Type.typeChart(skills[select], e));
+                    if (special >= 0) {
+                        // Cas positif donc retire -1
+                        e.setPv(e.getPv() - 1);
+                    } else {
+                        // Cas négatif donc retire special vie
+                        e.setPv(e.getPv() + special);
                     }
                 } else {
                     // Attaque de statut donc juste applique effet
@@ -233,7 +243,7 @@ public class Tower extends Pokemon {
 
     public void getUniqueTarget(ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            if (estDansRayon(e)) {
+            if (isInRayon(e)) {
                 setTarget(e);
             }
         }
@@ -241,7 +251,7 @@ public class Tower extends Pokemon {
 
     public void getZoneTarget(ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            if (estDansRayon(e)) {
+            if (isInRayon(e)) {
                 zoneTarget.add(e);
             } else {
                 if (zoneTarget.contains(e)) {
@@ -252,7 +262,7 @@ public class Tower extends Pokemon {
         }
     }
 
-    private boolean estDansRayon(Ennemi ennemi) {
+    private boolean isInRayon(Ennemi ennemi) {
         int deltaX = Math.abs(ennemi.getPos()[0] - getPos()[0]);
         int deltaY = Math.abs(ennemi.getPos()[1] - getPos()[1]);
 
