@@ -176,27 +176,21 @@ public class Tower extends Pokemon {
             System.out.println("Votre pokémon a actuellement 4 attaques.");
             System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
             Scanner sc = new Scanner(System.in);
-            if (sc.nextLine() == "O") {
+            if (sc.nextLine().equals("O")) {
                 System.out.println("Par lequel souhaitez vous remplacer? 1/2/3/4");
-                for (int i = 1; i <= totalSkill; i++) {
-                    System.out.println(i + ". " + getName());
+                for (int i = 1; i <= totalSkill + 1; i++) {
+                    System.out.println(i + ". " + newSkill.getName());
                 }
-                switch (sc.nextLine()) {
-                    case "1":
+                if (sc.nextLine().equals("1")) {
                         skills[0] = newSkill;
-                        break;
-                    case "2":
+                    } else if (sc.nextLine().equals("2")) {
                         skills[1] = newSkill;
-                        break;
-                    case "3":
+                    } else if (sc.nextLine().equals("3")) {
                         skills[2] = newSkill;
-                        break;
-                    case "4":
+                    } else if (sc.nextLine().equals("4")) {
                         skills[3] = newSkill;
-                        break;
-                    default:
+                    } else {
                         learnSkill(newSkill);
-                        break;
                 }
             }
             sc.close();
