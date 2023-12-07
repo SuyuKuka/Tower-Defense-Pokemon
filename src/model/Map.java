@@ -17,6 +17,8 @@ public class Map {
 
     private ArrayList<Corner> cornerList = new ArrayList<>();
 
+    private int increment;
+
     public Map(int w, int l) {
         int entryRand = rand.nextInt(l);
         int exitRand = rand.nextInt(l);
@@ -29,7 +31,6 @@ public class Map {
         map[exit[0]][exit[1]] = 5;
 
         mapBuilding();
-
     }
 
     public class Corner {
@@ -49,7 +50,7 @@ public class Map {
 
         }
 
-        public void beALoop(int[][] map) {
+        private void beALoop(int[][] map) {
 
             if (enoughtSpace()) {
                 if (topOrientation && rightOrientation) {
@@ -69,59 +70,74 @@ public class Map {
 
         }
 
-        public boolean enoughtSpace() {
+        private boolean check1(int x, int y) {
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (map[x + i][y - j] != 0
+                            && (map[x + i][y - j] != 1 || pos[0] != (x + i) || pos[1] != (y - j))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
+        private boolean check2(int x, int y) {
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (map[x + i][y + j] != 0
+                            && (map[x + i][y + j] != 1 || pos[0] != (x + i) || pos[1] != (y + j))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private boolean check3(int x, int y) {
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (map[x - i][y - j] != 0
+                            && (map[x - i][y - j] != 1 || pos[0] != (x - i) || pos[1] != (y - j))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private boolean check4(int x, int y) {
+            for (int i = 0; i < taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    if (map[x - i][y + j] != 0
+                            && (map[x - i][y + j] != 1 || pos[0] != (x - i) || pos[1] != (y + j))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private boolean enoughtSpace() {
             int x = pos[0];
             int y = pos[1];
 
             try {
                 if (topOrientation && rightOrientation) {
-                    for (int i = 0; i < taille; i++) {
-                        for (int j = 0; j < taille; j++) {
-                            if (map[x + i][y - j] != 0
-                                    && (map[x + i][y - j] != 1 || pos[0] != (x + i) || pos[1] != (y - j))) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
+                    return check1(x, y);
                 } else if (topOrientation) {
-                    for (int i = 0; i < taille; i++) {
-                        for (int j = 0; j < taille; j++) {
-                            if (map[x + i][y + j] != 0
-                                    && (map[x + i][y + j] != 1 || pos[0] != (x + i) || pos[1] != (y + j))) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
+                    return check2(x, y);
                 } else if (rightOrientation) {
-                    for (int i = 0; i < taille; i++) {
-                        for (int j = 0; j < taille; j++) {
-                            if (map[x - i][y - j] != 0
-                                    && (map[x - i][y - j] != 1 || pos[0] != (x - i) || pos[1] != (y - j))) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
+                    return check3(x, y);
                 } else {
-                    for (int i = 0; i < taille; i++) {
-                        for (int j = 0; j < taille; j++) {
-                            if (map[x - i][y + j] != 0
-                                    && (map[x - i][y + j] != 1 || pos[0] != (x - i) || pos[1] != (y + j))) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
+                    return check4(x, y);
                 }
             } catch (Exception e) {
                 return false;
             }
         }
 
-        public void makeAQLoop() {
+        private void makeAQLoop() {
             int x = pos[0];
             int y = pos[1];
 
@@ -132,9 +148,10 @@ public class Map {
                     }
                 }
             }
+            map[x][y] = 1;
         }
 
-        public void makeASLoop() {
+        private void makeASLoop() {
             int x = pos[0];
             int y = pos[1];
 
@@ -145,9 +162,10 @@ public class Map {
                     }
                 }
             }
+            map[x][y] = 1;
         }
 
-        public void makeAALoop() {
+        private void makeAALoop() {
             int x = pos[0];
             int y = pos[1];
 
@@ -158,9 +176,10 @@ public class Map {
                     }
                 }
             }
+            map[x][y] = 1;
         }
 
-        public void makeAZLoop() {
+        private void makeAZLoop() {
             int x = pos[0];
             int y = pos[1];
 
@@ -171,6 +190,7 @@ public class Map {
                     }
                 }
             }
+            map[x][y] = 1;
         }
 
         public String toString() {
@@ -198,29 +218,31 @@ public class Map {
         // AJOUTE DES LOOPING
         findCorner();
         makeLoop();
-        affiche(Ennemi.LIST.getList());
 
         // PATHFINDING
-        fakeMove();
-        System.out.println(this);
+        initRoadmap();
+        unify();
+
         // AJOUTE DES OBSTACLES
-        // addObstacles();
-        // deployObstacles();
+        addObstacles();
+        deployObstacles();
 
     }
 
-    public String toString(int[][] roadMap) {
+    public static String toString(int[][] roadMap) {
         String res = "";
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (roadMap[i][j] != 0) {
-                    if (roadMap[i][j] >= 10) {
+                    if (roadMap[i][j] >= 100) {
                         res = res + roadMap[i][j] + " ";
-                    } else {
+                    } else if (roadMap[i][j] >= 10) {
                         res = res + roadMap[i][j] + "  ";
+                    } else {
+                        res = res + roadMap[i][j] + "   ";
                     }
                 } else {
-                    res = res + "   ";
+                    res = res + "    ";
                 }
 
             }
@@ -229,87 +251,244 @@ public class Map {
         return res;
     }
 
-    private int[] takeLoopZ(int increment, int[] oldPos) {
-        int[] pos = new int[] { oldPos[0], oldPos[1] };
-        System.out.println("LOOPING");
+    private Corner getCorner(int[] pos) {
+        for (Corner corner : cornerList) {
+            if ((pos[0] == corner.pos[0]) && (pos[1] == corner.pos[1])) {
+                return corner;
+            }
+        }
+        return null;
+    }
 
+    private void right(int LoopLength, int[] pos) {
+        for (int j = 0; j < LoopLength - 1; j++) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos[1] = pos[1] + 1;
+        }
+    }
+
+    private void top(int LoopLength, int[] pos) {
+        for (int j = 0; j < LoopLength - 1; j++) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos[0] = pos[0] - 1;
+        }
+    }
+
+    private void left(int LoopLength, int[] pos) {
+        for (int j = 0; j < LoopLength - 1; j++) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos[1] = pos[1] - 1;
+        }
+    }
+
+    private void bot(int LoopLength, int[] pos) {
+        for (int j = 0; j < LoopLength - 1; j++) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos[0] = pos[0] + 1;
+        }
+    }
+
+    private int[] takeLoopZ(int[] oldPos) {
+
+        int[] pos = new int[] { oldPos[0], oldPos[1] };
+        int LoopLength = 0;
+
+        if (getCorner(oldPos) != null) {
+            LoopLength = getCorner(oldPos).taille;
+        }
+
+        if (getCorner(oldPos).haveLoop) {
+            right(LoopLength, pos);
+            top(LoopLength, pos);
+            left(LoopLength, pos);
+            bot(LoopLength, pos);
+        }
         return pos;
     }
 
-    private int[] takeLoopQS(int increment, int[] oldPos) {
-        int[] pos = new int[2];
-        int taille = 0;
-        boolean right = false;
-        boolean top = false;
-        for (Corner corner : cornerList) {
-            if ((oldPos[0] == corner.pos[0]) && (oldPos[1] == corner.pos[1])) {
-                taille = corner.taille;
-                right = corner.rightOrientation;
-                top = corner.topOrientation;
-                pos[0] = corner.pos[0];
-                pos[1] = corner.pos[1];
+    private int[] takeLoopA(int[] oldPos) {
+
+        int[] pos = new int[] { oldPos[0], oldPos[1] };
+        int LoopLength = 0;
+
+        if (getCorner(oldPos) != null) {
+            LoopLength = getCorner(oldPos).taille;
+        }
+
+        if (getCorner(oldPos).haveLoop) {
+            left(LoopLength, pos);
+            top(LoopLength, pos);
+            right(LoopLength, pos);
+            bot(LoopLength, pos);
+        }
+        return pos;
+    }
+
+    private int[] takeLoopQ(int[] oldPos) {
+
+        int[] pos = new int[] { oldPos[0], oldPos[1] };
+        int LoopLength = 0;
+
+        if (getCorner(oldPos) != null) {
+            LoopLength = getCorner(oldPos).taille;
+        }
+
+        if (getCorner(oldPos).haveLoop) {
+            bot(LoopLength, pos);
+            left(LoopLength, pos);
+            top(LoopLength, pos);
+            right(LoopLength, pos);
+        }
+        return pos;
+    }
+
+    private int[] takeLoopS(int[] oldPos) {
+
+        int[] pos = new int[] { oldPos[0], oldPos[1] };
+        int LoopLength = 0;
+
+        if (getCorner(oldPos) != null) {
+            LoopLength = getCorner(oldPos).taille;
+        }
+
+        if (getCorner(oldPos).haveLoop) {
+            bot(LoopLength, pos);
+            right(LoopLength, pos);
+            top(LoopLength, pos);
+            left(LoopLength, pos);
+        }
+        return pos;
+    }
+
+    private int[] takeLoopQS(int[] oldPos) {
+        if (getCorner(oldPos) != null && getCorner(oldPos).haveLoop) {
+            if (getCorner(oldPos).rightOrientation && getCorner(oldPos).topOrientation) {
+                return takeLoopQ(oldPos);
+            } else if (getCorner(oldPos).topOrientation) {
+                return takeLoopS(oldPos);
+            }
+        }
+        return oldPos;
+    }
+
+    private void debug(int pos[]) {
+        ///////////////////////////
+        // affiche(Ennemi.LIST.getBossList());
+        System.out.println(this);
+        System.out.println(toString(roadMap));
+        System.out.println("POSITION ACTUELLE :" + pos[0] + " " + pos[1]);
+        System.out.println("==========================================================");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
+        ////////////////////////////
+    }
+
+    private boolean atEnd(int[] pos) {
+        if (pos[0] == exit[0] && pos[1] == exit[1]) {
+            return true;
+        }
+        return false;
+    }
+
+    private int[] straightBot(int[] pos) {
+
+        while (map[pos[0] + 1][pos[1]] != 0
+                && map[pos[0] + 1][pos[1]] != 6
+                && roadMap[pos[0] + 1][pos[1]] == 0) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos = new int[] { pos[0] + 1, pos[1] };
+            if (atEnd(pos)) {
+                break;
+            }
+            if (map[pos[0]][pos[1]] == 1 && getCorner(pos) != null && getCorner(pos).haveLoop) {
+                pos = takeLoopQS(pos);
                 break;
             }
         }
-
-        if (right) {
-            for (int i = 0; i < taille; i++) {
-                roadMap[pos[0]][pos[1]] = increment;
-                pos[1] = pos[1] + 1;
-            }
-        } else {
-
-        }
-
         return pos;
     }
 
-    private void fakeMove() {
+    private int[] straightRight(int[] pos) {
+
+        while (map[pos[0]][pos[1] + 1] != 0
+                && map[pos[0]][pos[1] + 1] != 6
+                && roadMap[pos[0]][pos[1] + 1] == 0) {
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos = new int[] { pos[0], pos[1] + 1 };
+            if (atEnd(pos)) {
+                break;
+            }
+            if (map[pos[0]][pos[1]] == 1 && getCorner(pos) != null && getCorner(pos).haveLoop) {
+                pos = takeLoopZ(pos);
+                break;
+            }
+        }
+        return pos;
+
+    }
+
+    private int[] straightLeft(int[] pos) {
+
+        while (map[pos[0]][pos[1] - 1] != 0
+                && map[pos[0]][pos[1] - 1] != 6
+                && roadMap[pos[0]][pos[1] - 1] == 0) {
+
+            if (roadMap[pos[0]][pos[1]] == 0) {
+                roadMap[pos[0]][pos[1]] = increment++;
+            }
+            pos = new int[] { pos[0], pos[1] - 1 };
+            if (atEnd(pos)) {
+                break;
+            }
+            if (map[pos[0]][pos[1]] == 1 && getCorner(pos) != null && getCorner(pos).haveLoop) {
+                pos = takeLoopA(pos);
+                break;
+            }
+        }
+        return pos;
+
+    }
+
+    private void initRoadmap() {
 
         roadMap = new int[map.length][map[0].length];
 
-        int increment = 1;
         int[] pos = getFrontEntry();
         roadMap[getFrontEntry()[0]][getFrontEntry()[1]] = increment++;
 
-        test: while (pos[0] != exit[0] || pos[1] != exit[1]) {
+        while (!atEnd(pos)) {
 
-            if (map[pos[0] + 1][pos[1]] != 0) {
-                while (map[pos[0] + 1][pos[1]] != 0) {
-                    roadMap[pos[0] + 1][pos[1]] = increment++;
-                    pos = new int[] { pos[0] + 1, pos[1] };
-                    if (map[pos[0]][pos[1]] == 6) {
-                        pos = takeLoopQS(increment, pos);
-                        break test;
-                    }
-                }
-            }
+            // debug(pos);
+            try {
 
-            else if (map[pos[0]][pos[1] + 1] != 0) {
-                while (map[pos[0]][pos[1] + 1] != 0) {
-                    roadMap[pos[0]][pos[1] + 1] = increment++;
-                    pos = new int[] { pos[0], pos[1] + 1 };
-                    if (map[pos[0]][pos[1]] == 6) {
-                        System.out.println("ZLOOP");
-                        pos = takeLoopZ(increment, pos);
-                        break;
-                    }
-                }
-            }
+                pos = straightBot(pos);
+                pos = straightLeft(pos);
+                pos = straightRight(pos);
 
-            else if (map[pos[0]][pos[1] - 1] != 0) {
-                while (map[pos[0]][pos[1] - 1] != 0) {
-                    roadMap[pos[0]][pos[1] - 1] = increment++;
-                    pos = new int[] { pos[0], pos[1] - 1 };
-                    if (map[pos[0]][pos[1]] == 6) {
-                        System.out.println("ALOOP");
-                        // pos = takeLoopA(increment, pos);
-                        break test;
-                    }
-                }
+            } catch (Exception e) {
             }
 
         }
+        roadMap[pos[0]][pos[1]] = increment++;
 
     }
 
@@ -394,6 +573,16 @@ public class Map {
         }
     }
 
+    private void unify() {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 6 || map[i][j] == 1) {
+                    map[i][j] = 3;
+                }
+            }
+        }
+    }
+
     private void makeLoop() {
         for (int i = 0; i < cornerList.size(); i++) {
             if (rand.nextInt(5) == 2) {
@@ -430,7 +619,7 @@ public class Map {
     }
 
     private void addObstacles() {
-        for (int i = 0; i < 45; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+        for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
             if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
@@ -553,7 +742,6 @@ public class Map {
                     case 0:
                         plateau[i][j] = ". ";
                         break;
-
                     case 2:
                         plateau[i][j] = "\u001B[47m" + "T " + "\u001B[0m";
                         break;
@@ -615,5 +803,9 @@ public class Map {
 
     public int[] getExit() {
         return exit;
+    }
+
+    public int[][] getRoadMap() {
+        return roadMap;
     }
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Ennemi extends Pokemon {
 
     private int[][] config;
+    private int[][] roadMap = Map.roadMap;
+    private int pas = 1;
 
     private int[] pos;
     private boolean wasRight = false;
@@ -23,6 +25,7 @@ public class Ennemi extends Pokemon {
             EList.add(this);
         }
         config = Map.map;
+
     }
 
     public Ennemi() {
@@ -61,6 +64,85 @@ public class Ennemi extends Pokemon {
             int[] tab = { -1, -1 };
             return tab;
         }
+    }
+
+    public boolean move2() {
+
+        if (getSpeed() != Speed.STUN) {
+            if (getSpeed() == Speed.FAST) {
+                moveAgain2();
+                moveAgain2();
+            } else if (getSpeed() == Speed.CLASSIC) {
+                moveAgain2();
+            }
+
+            if (config[getPos()[0] + 1][getPos()[1]] == 5
+                    || config[getPos()[0]][getPos()[1] + 1] == 5
+                    || config[getPos()[0]][getPos()[1] - 1] == 5) {
+                return true;
+            }
+
+            if (pas == roadMap[getPos()[0] + 1][getPos()[1]] - 1) {
+
+                pas = roadMap[getPos()[0] + 1][getPos()[1]];
+                int[] pos = { getPos()[0] + 1, getPos()[1] };
+
+                setPos(pos);
+
+            } else if (pas == roadMap[getPos()[0]][getPos()[1] - 1] - 1) {
+
+                pas = roadMap[getPos()[0]][getPos()[1] - 1];
+                int[] pos = { getPos()[0], getPos()[1] - 1 };
+
+                setPos(pos);
+
+            } else if (pas == roadMap[getPos()[0]][getPos()[1] + 1] - 1) {
+
+                pas = roadMap[getPos()[0]][getPos()[1] + 1];
+                int[] pos = { getPos()[0], getPos()[1] + 1 };
+
+                setPos(pos);
+
+            } else if (pas == roadMap[getPos()[0] - 1][getPos()[1]] - 1) {
+
+                pas = roadMap[getPos()[0] - 1][getPos()[1]];
+                int[] pos = { getPos()[0] - 1, getPos()[1] };
+
+                setPos(pos);
+            } else {
+                if (pas == roadMap[getPos()[0] + 2][getPos()[1]] - 1) {
+                    pas = roadMap[getPos()[0] + 2][getPos()[1]];
+                    int[] pos = { getPos()[0] + 2, getPos()[1] };
+                    setPos(pos);
+
+                } else if (pas > roadMap[getPos()[0]][getPos()[1] - 21]) {
+                    pas = roadMap[getPos()[0]][getPos()[1] - 2];
+                    int[] pos = { getPos()[0], getPos()[1] - 2 };
+                    setPos(pos);
+
+                } else if (pas > roadMap[getPos()[0]][getPos()[1] + 2]) {
+                    pas = roadMap[getPos()[0]][getPos()[1] + 2];
+                    int[] pos = { getPos()[0], getPos()[1] + 2 };
+                    setPos(pos);
+
+                } else if (pas > roadMap[getPos()[0] - 2][getPos()[1]]) {
+                    pas = roadMap[getPos()[0] - 2][getPos()[1]];
+                    int[] pos = { getPos()[0] - 2, getPos()[1] };
+                    setPos(pos);
+
+                }
+            }
+
+            System.out.println(pas);
+            System.out.println(Map.toString(roadMap));
+
+        }
+        return false;
+
+    }
+
+    private boolean moveAgain2() {
+        return false;
     }
 
     public boolean move() {

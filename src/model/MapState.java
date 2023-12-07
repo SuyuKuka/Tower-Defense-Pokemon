@@ -112,9 +112,10 @@ public class MapState {
     }
 
     private void moveOnMap() {
+
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-            if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
+            if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
             }
         }
@@ -123,6 +124,7 @@ public class MapState {
             leaked = false;
             pv--;
         }
+
     }
 
     private void loadNextWave() {
