@@ -19,6 +19,7 @@ public class Tower extends Pokemon {
     private int level;
     private int[] pos;
     private Skill[] skills = new Skill[4];
+    private int select = 1;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
@@ -31,7 +32,7 @@ public class Tower extends Pokemon {
     }
 
     private Tower() {
-        level = 5;
+        level = 1;
     }
 
     public int[] putTower(String st) { // TERMINAL
@@ -162,41 +163,42 @@ public class Tower extends Pokemon {
         }
     }
 
-    private boolean chooseSkill(Skill newSkill){
-        if(skills.length==4){
-            System.out.println("Voulez-vous remplacer une attaque? O/N");
+    public void learnSkill(Skill newSkill) {
+        int totalSkill = skills.length;
+        if (totalSkill > 4) {
+            System.out.println("Probleme");
+        } else if (totalSkill == 4) {
+            System.out.println("Votre pokémon a actuellement 4 attaques.");
+            System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
             Scanner sc = new Scanner(System.in);
-            
-            if(sc.nextLine().equals("O")){
-                System.out.println("Par lequel souhaitez vous le remplacer? 1/2/3/4");
-                if(sc.nextLine().equals("1")){
-                    skills[1]=newSkill;
-                    sc.close();
-                    return true;
-                }else if(sc.nextLine().equals("2")){
-                    skills[2]=newSkill;
-                    sc.close();
-                    return true;
-                }else if(sc.nextLine().equals("3")){
-                    skills[3]=newSkill;
-                    sc.close();
-                    return true;
-                }else if(sc.nextLine().equals("4")){
-                    skills[4]=newSkill;
-                    sc.close();
-                    return true;
-                }else{
-                    chooseSkill(newSkill);
+            if (sc.nextLine() == "O") {
+                System.out.println("Par lequel souhaitez vous remplacer? 1/2/3/4");
+                for (int i = 1; i <= totalSkill; i++) {
+                    System.out.println(i + ". " + getName());
                 }
-
-            }else if(sc.nextLine().equals("N")){
-                sc.close();
-                return false;
-            }else{
-                chooseSkill(newSkill);
+                switch (sc.nextLine()) {
+                    case "1":
+                        skills[0] = newSkill;
+                        break;
+                    case "2":
+                        skills[1] = newSkill;
+                        break;
+                    case "3":
+                        skills[2] = newSkill;
+                        break;
+                    case "4":
+                        skills[3] = newSkill;
+                        break;
+                    default:
+                        learnSkill(newSkill);
+                        break;
+                }
             }
+            sc.close();
+        } else {
+            skills[totalSkill + 1] = newSkill;
         }
-        return false;
+
     }
 
     public String toString() {

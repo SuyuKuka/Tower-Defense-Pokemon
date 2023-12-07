@@ -1,7 +1,5 @@
 package characters;
 
-import java.util.Scanner;
-
 import model.Effect;
 import model.Skill;
 import model.Tower;
@@ -34,6 +32,7 @@ public class Starter {
 
         @Override
         public void primarySkill() {
+            // Manque les effets
             Skill griffe = new Skill("Griffe", 40, 0, Type.NORMAL, 1, null, true,
                     "Lacere la cible avec des griffes acerees pour lui infliger des dégats.");
             Skill rugissement = new Skill("Rugissement", 0, 0, Type.NORMAL, 1, null, true,
@@ -44,6 +43,7 @@ public class Starter {
 
         @Override
         public void unlock() {
+            // manque les effets
             if (getLevel() == 6) {
                 Skill flammeche = new Skill("Flammeche", 0, 40, Type.FEU, 1, null, true,
                         "La cible est attaquée par une faible flamme qui peut aussi la brûler.");
@@ -83,51 +83,6 @@ public class Starter {
             // flammes ardentes qui la brûlent.
             // Boutefeu 40 120 100 15 Feu Physique Le lanceur s’embrase avant de charger la
             // cible, ce qui peut la brûler. Le choc blesse aussi gravement le lanceur.
-        }
-
-        @Override
-        public void learnSkill(Skill newSkill) {
-            int totalSkill = getSkills().length;
-            Skill[] tmpSkill = getSkills();
-            if (totalSkill > 4) {
-                System.out.println("Probleme");
-            } else if (totalSkill == 4) {
-                System.out.println("Votre pokémon a actuellement 4 attaques.");
-                System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
-                Scanner sc = new Scanner(System.in);
-                if (sc.nextLine() == "O") {
-                    System.out.println("Par lequel souhaitez vous remplacer? 1/2/3/4");
-                    for (int i = 1; i <= totalSkill; i++) {
-                        System.out.println(i + ". " + getName());
-                    }
-                    switch (sc.nextLine()) {
-                        case "1":
-                            tmpSkill[0] = newSkill;
-                            setSkills(tmpSkill);
-                            break;
-                        case "2":
-                            tmpSkill[1] = newSkill;
-                            setSkills(tmpSkill);
-                            break;
-                        case "3":
-                            tmpSkill[2] = newSkill;
-                            setSkills(tmpSkill);
-                            break;
-                        case "4":
-                            tmpSkill[3] = newSkill;
-                            setSkills(tmpSkill);
-                            break;
-                        default:
-                            learnSkill(newSkill);
-                            break;
-                    }
-                }
-                sc.close();
-            } else {
-                tmpSkill[totalSkill + 1] = newSkill;
-                setSkills(tmpSkill);
-            }
-
         }
 
         @Override
