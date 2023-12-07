@@ -279,4 +279,18 @@ public class Tower extends Pokemon {
     public ArrayList<Tower> getList() {
         return TList;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setName(String name) {
+        // TODO Auto-generated method stub
+        super.setName(name);
+    }
+
+    public Skill getCurrentSkill(int select){
+        return skills[select];
+    }
 }

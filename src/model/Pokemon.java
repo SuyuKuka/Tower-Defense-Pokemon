@@ -71,6 +71,10 @@ public class Pokemon {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setSpeed(Speed sp) {
         speed = sp;
     }
@@ -85,5 +89,13 @@ public class Pokemon {
 
     public void setSpecial(int special) {
         this.special = special;
+    }
+
+    public void setFirstType(Type type){
+        this.type[0]=type;
+    }
+    
+    public void setSecondType(Type type){
+        this.type[1]=type;
     }
 }

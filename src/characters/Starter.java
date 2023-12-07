@@ -1,47 +1,118 @@
 package characters;
 
+import java.util.Scanner;
+
+import model.Effect;
 import model.Pokemon;
+import model.Skill;
+import model.Tower;
+import model.Type;
 
 public class Starter {
-    public class Salameche extends Pokemon implements TowerLoader{
+    public class Salameche extends Tower implements TowerLoader{
+        private Skill[] skills = new Skill[4];
 
-        @Override
-        public void evolution() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'evolution'");
+        public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
+            super("Salameche", atkPhysical, atkSpecial, type1, type2);
+            System.out.println("Charge le sprite"); //ressouces/sprite/salameche.png
+            innerFocus(); //jsp si faut l'appeller la ou pas
         }
 
         @Override
-        public void skill() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'skill'");
+        public void evolution() {
+            if(getLevel()==16){
+                System.out.println("Charge le sprite"); //ressouces/sprite/reptincel.png
+                setName("Reptincel");
+                setPhysical(getPhysical()+15);
+                setSpecial(getSpecial()+15);
+            }
+            if(getLevel()==36){
+                System.out.println("Charge le sprite"); //ressouces/sprite/dracaufeu.png
+                setName("Dracaufeu");
+                setPhysical(getPhysical()+30);
+                setSpecial(getSpecial()+30);
+                setSecondType(Type.VOL);
+            }
+        }
+
+        @Override
+        public void primarySkill() {
+            Skill griffe = new Skill("Griffe", 40, 0, Type.NORMAL, 1, null, true, "Lacere la cible avec des griffes acerees pour lui infliger des dégats.");
+            Skill rugissement = new Skill("Rugissement", 0, 0, Type.NORMAL, 1, null, true, "Le lanceur pousse un cri tout mimi pour tromper la vigilance de la cible et baisser sa Defense.");
+            learnSkill(griffe);
+            learnSkill(rugissement);
         }
 
         @Override
         public void unlock() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'unlock'");
+            if(getLevel()==6){
+                Skill flammeche = new Skill("Flammeche", 0, 40, Type.FEU, 1, null, true, "La cible est attaquée par une faible flamme qui peut aussi la brûler.");
+                learnSkill(flammeche);
+            }
+            if(getLevel()==12){
+                Skill dracosouffle = new Skill("Draco-Souffle", 60, 0, Type.DRAGON, 1.2, null, true, "Le lanceur souffle fort sur la cible pour lui infliger des dégâts, ce qui peut aussi la paralyser.");
+                learnSkill(dracosouffle);
+            }
+            if(getLevel()==16){
+                Skill crocsfeu = new Skill("Crocs Feu", 65, 0, Type.FEU, 1, null, true, "Le lanceur utilise une morsure enflammée qui peut aussi brûler ou apeurer la cible.");
+                learnSkill(crocsfeu);
+            }
+            // Griffe	1	40  Normal	Physique	Lacère la cible avec des griffes acérées pour lui infliger des dégâts.
+            // Rugissement	1	-	100	40	Normal	Statut	Le lanceur pousse un cri tout mimi pour tromper la vigilance de la cible et baisser son Attaque.
+            // Flammèche	4	40	100	25	Feu	Spéciale	La cible est attaquée par une faible flamme qui peut aussi la brûler.
+            // Brouillard	8	-	100	20	Normal	Statut	Le lanceur disperse un nuage d’encre ou de fumée qui réduit la Précision de la cible.
+            // Draco-Souffle	12	60	100	20	Dragon	Spéciale	Le lanceur souffle fort sur la cible pour lui infliger des dégâts, ce qui peut aussi la paralyser.
+            // Crocs Feu	17	65	95	15	Feu	Physique	Le lanceur utilise une morsure enflammée qui peut aussi brûler ou apeurer la cible.
+            // Tranche	20	70	100	20	Normal	Physique	Le lanceur donne un coup de griffe ou de faux. Taux de critiques élevé.
+            // Lance-Flammes	24	90	100	15	Feu	Spéciale	La cible reçoit un torrent de flammes qui peut aussi la brûler.
+            // Grimace	28	-	100	10	Normal	Statut	Le lanceur fait une grimace qui effraie la cible et réduit beaucoup sa Vitesse.
+            // Danse Flammes	32	35	85	15	Feu	Spéciale	Un tourbillon de flammes emprisonne la cible pendant quatre à cinq tours.
+            // Feu d’Enfer	36	100	50	5	Feu	Spéciale	La cible est entourée d’un torrent de flammes ardentes qui la brûlent.
+            // Boutefeu	40	120	100	15	Feu	Physique	Le lanceur s’embrase avant de charger la cible, ce qui peut la brûler. Le choc blesse aussi gravement le lanceur.
+        }
+
+        @Override
+        public void learnSkill(Skill newSkill) {
+            int totalSkill = skills.length;
+            if(totalSkill==4){
+                System.out.println("Votre pokémon a actuellement 4 attaques.");
+                System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
+                Scanner sc = new Scanner(System.in);
+                if(sc.nextLine()=="O"){
+                    System.out.println("Par lequel souhaitez vous remplacer? 1/2/3/4");
+                    for(int i=1; i<=totalSkill; i++){
+                        System.out.println(i + ". " + getName());
+                    }
+                    switch (sc.nextLine()) {
+                        case "1":
+                            skills[0]=newSkill;
+                            break;
+                        case "2":
+                            skills[1]=newSkill;
+                            break;
+                        case "3":
+                            skills[2]=newSkill;
+                            break;
+                        case "4":
+                            skills[3]=newSkill;
+                            break;
+                        default:
+                            learnSkill(newSkill);
+                            break;
+                    }
+                }
+                sc.close();
+            }else{
+                skills[totalSkill+1]=newSkill;
+            }
+
         }
 
         @Override
         public void innerFocus() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'innerFocus'");
+            //Augmente son atq de 5% (par exemple)
+            setPhysical((int) (getPhysical() + getPhysical()*0.05));
         }
-
-        @Override
-        public void getCurrentSkill() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getCurrentSkill'");
-        }
-
-        @Override
-        public void loadSprite() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'loadSprite'");
-        }
-    
-        
     }
     public class Carapuce {
     

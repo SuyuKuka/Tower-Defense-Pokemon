@@ -63,4 +63,8 @@ public class Effect {
     public void statutPoison(Ennemi e, int damage, int duration){
 
     }
+
+    public void nothing(){
+        
+    }
 }
