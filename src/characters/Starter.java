@@ -9,8 +9,6 @@ import model.Type;
 
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
-        private Skill[] skills = new Skill[4];
-
         public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
             super("Salameche", atkPhysical, atkSpecial, type1, type2);
             System.out.println("Charge le sprite"); // ressouces/sprite/salameche.png
@@ -89,8 +87,11 @@ public class Starter {
 
         @Override
         public void learnSkill(Skill newSkill) {
-            int totalSkill = skills.length;
-            if (totalSkill == 4) {
+            int totalSkill = getSkills().length;
+            Skill[] tmpSkill = getSkills();
+            if (totalSkill > 4) {
+                System.out.println("Probleme");
+            } else if (totalSkill == 4) {
                 System.out.println("Votre pokémon a actuellement 4 attaques.");
                 System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
                 Scanner sc = new Scanner(System.in);
@@ -101,16 +102,20 @@ public class Starter {
                     }
                     switch (sc.nextLine()) {
                         case "1":
-                            skills[0] = newSkill;
+                            tmpSkill[0] = newSkill;
+                            setSkills(tmpSkill);
                             break;
                         case "2":
-                            skills[1] = newSkill;
+                            tmpSkill[1] = newSkill;
+                            setSkills(tmpSkill);
                             break;
                         case "3":
-                            skills[2] = newSkill;
+                            tmpSkill[2] = newSkill;
+                            setSkills(tmpSkill);
                             break;
                         case "4":
-                            skills[3] = newSkill;
+                            tmpSkill[3] = newSkill;
+                            setSkills(tmpSkill);
                             break;
                         default:
                             learnSkill(newSkill);
@@ -119,7 +124,8 @@ public class Starter {
                 }
                 sc.close();
             } else {
-                skills[totalSkill + 1] = newSkill;
+                tmpSkill[totalSkill + 1] = newSkill;
+                setSkills(tmpSkill);
             }
 
         }

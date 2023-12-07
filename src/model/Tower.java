@@ -293,4 +293,12 @@ public class Tower extends Pokemon {
     public Skill getCurrentSkill(int select){
         return skills[select];
     }
+
+    public Skill[] getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Skill[] skills) {
+        this.skills = skills;
+    }
 }
