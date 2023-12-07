@@ -8,6 +8,10 @@ import model.Ennemi;
 import model.Tower;
 import config.Map;
 import java.util.Scanner;
+
+import characters.Starter;
+import characters.Starter.Salameche;
+
 import java.util.Random;
 
 public class MapState {
@@ -89,12 +93,15 @@ public class MapState {
                 }
             }
             pas++;
-            Tower terminal = new Tower("Terminal", 1,1, null, null);
+            // Tower terminal = new Tower("Terminal", 1,1, null, null);
+            Starter starterInstance = new Starter();
+            Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Type.FEU, Type.NONE);
+
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
                 if (st.length() != 0) {
-                    if (setTower(terminal.putTower(st), terminal)) {
+                    if (setTower(sala.putTower(st), sala)) {
                         nbTour--;
                     }
                 }
@@ -106,7 +113,7 @@ public class MapState {
                     e.printStackTrace();
                 }
             }
-            terminal.attack(towerPresent, ennemiPresent, this);
+            sala.attack(towerPresent, ennemiPresent, this);
 
             if (w.getEnnemisListStandby().size() == 0 && ennemiPresent.size() == 0) { // SI IL N'Y A PLUS D'ENNEMIS DANS
                                                                                       // LA PARTIE

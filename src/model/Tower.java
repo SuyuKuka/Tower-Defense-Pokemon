@@ -18,6 +18,7 @@ public class Tower extends Pokemon {
     private int[] pos;
     private Skill[] skills = new Skill[4];
     private int select = 1;
+    private int totalSkill = 0;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
@@ -27,6 +28,7 @@ public class Tower extends Pokemon {
         this.rayon = Rayon.SMALL;
         exp = 0;
         TList.add(this);
+
     }
 
     private Tower() {
@@ -113,6 +115,7 @@ public class Tower extends Pokemon {
                 }
             } else {
                 // Attaque de statut donc effect?
+                System.out.println("ATQ STATUT");
             }
         }
     }
@@ -141,7 +144,8 @@ public class Tower extends Pokemon {
                         e.setPv(e.getPv() + special);
                     }
                 } else {
-                    // Attaque de statut donc juste applique effet
+                    // Attaque de statut donc juste applique effet?
+                    System.out.println("ATQ STATUT");
                 }
             }
         }
@@ -166,10 +170,9 @@ public class Tower extends Pokemon {
     }
 
     public void learnSkill(Skill newSkill) {
-        int totalSkill = skills.length;
         if (totalSkill > 4) {
             System.out.println("Probleme");
-        } else if (totalSkill == 4) {
+        } else if (skills[3] != null) {
             System.out.println("Votre pokémon a actuellement 4 attaques.");
             System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
             Scanner sc = new Scanner(System.in);
@@ -198,7 +201,9 @@ public class Tower extends Pokemon {
             }
             sc.close();
         } else {
-            skills[totalSkill + 1] = newSkill;
+            totalSkill++;
+            skills[totalSkill] = newSkill;
+            System.out.println("Ajouté" + newSkill.getName());
         }
 
     }
