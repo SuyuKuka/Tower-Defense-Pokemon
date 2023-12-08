@@ -54,6 +54,11 @@ public class MapState {
         infoTerminal();
 
         allEnnemis = w.getAllEnnemis();
+        for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                e.setMap(m);
+            }
+        }
 
         int step = 0;
         while (gameContinue()) {
@@ -115,6 +120,7 @@ public class MapState {
 
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+
             if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
             }

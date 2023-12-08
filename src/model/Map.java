@@ -29,6 +29,7 @@ public class Map {
         exit[0] = w - 1;
         exit[1] = exitRand;
         map[exit[0]][exit[1]] = 5;
+        map[exit[0] - 1][exit[1]] = 3;
 
         mapBuilding();
     }
@@ -71,6 +72,9 @@ public class Map {
         }
 
         private boolean check1(int x, int y) {
+            System.out.println(x);
+            System.out.println(y);
+            System.out.println(taille);
             for (int i = 0; i < taille; i++) {
                 for (int j = 0; j < taille; j++) {
                     if (map[x + i][y - j] != 0
@@ -83,6 +87,7 @@ public class Map {
         }
 
         private boolean check2(int x, int y) {
+
             for (int i = 0; i < taille; i++) {
                 for (int j = 0; j < taille; j++) {
                     if (map[x + i][y + j] != 0
@@ -95,6 +100,7 @@ public class Map {
         }
 
         private boolean check3(int x, int y) {
+
             for (int i = 0; i < taille; i++) {
                 for (int j = 0; j < taille; j++) {
                     if (map[x - i][y - j] != 0
@@ -107,6 +113,7 @@ public class Map {
         }
 
         private boolean check4(int x, int y) {
+
             for (int i = 0; i < taille; i++) {
                 for (int j = 0; j < taille; j++) {
                     if (map[x - i][y + j] != 0
@@ -124,7 +131,7 @@ public class Map {
 
             try {
                 if (topOrientation && rightOrientation) {
-                    return check1(x, y);
+                    return check1(x, y); // TODO VERIFICATION DE COORDENNE VAL ABSOLU X Y + TAILLE BLA BLA
                 } else if (topOrientation) {
                     return check2(x, y);
                 } else if (rightOrientation) {
@@ -204,6 +211,14 @@ public class Map {
                 return "corner: " + pos[1] + "," + pos[0] + " Z";
             }
         }
+
+        public boolean haveLoop() {
+            return haveLoop;
+        }
+
+        public int[] getCornerPos() {
+            return pos;
+        }
     }
 
     private void mapBuilding() {
@@ -211,6 +226,7 @@ public class Map {
         wayFinder();
         wayBuilderV();
         wayBuilderH();
+        System.out.println(this);
 
         // AJOUTE UN CADRE
         border();
@@ -218,7 +234,6 @@ public class Map {
         // AJOUTE DES LOOPING
         findCorner();
         makeLoop();
-
         // PATHFINDING
         initRoadmap();
         unify();
@@ -807,5 +822,9 @@ public class Map {
 
     public int[][] getRoadMap() {
         return roadMap;
+    }
+
+    public ArrayList<Corner> getCornerList() {
+        return cornerList;
     }
 }
