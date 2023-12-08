@@ -39,9 +39,6 @@ public class Starter {
             Skill rugissement = new Skill("Rugissement", 0, 0, Type.NORMAL, 1, null, true,
                     "Le lanceur pousse un cri tout mimi pour tromper la vigilance de la cible et baisser sa Defense.");
             learnSkill(griffe);
-            learnSkill(griffe);
-            learnSkill(griffe);
-            learnSkill(griffe);
             learnSkill(rugissement);
         }
 

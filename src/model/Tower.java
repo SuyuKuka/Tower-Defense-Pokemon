@@ -68,22 +68,26 @@ public class Tower extends Pokemon {
             Tower tower = towerInMap.get(i);
             if (skills[select].getUnique()) {
                 tower.getUniqueTarget(ennemiInMap);
-                attackUnique();
 
-                if (uniqueTarget.getPv() <= 0) {
-                    m.isDead(uniqueTarget);
-                    tower.winExp(uniqueTarget);
-                    tower.levelUp();
+                if (uniqueTarget != null) {
+                    attackUnique();
+                    if (uniqueTarget.getPv() <= 0) {
+                        m.isDead(uniqueTarget);
+                        tower.winExp(uniqueTarget);
+                        tower.levelUp();
+                    }
                 }
             } else {
                 tower.getZoneTarget(ennemiInMap);
-                attackZone();
 
-                for (Ennemi e : zoneTarget) {
-                    if (e.getPv() <= 0) {
-                        m.isDead(e);
-                        tower.winExp(e);
-                        tower.levelUp();
+                if (zoneTarget.size() != 0) {
+                    attackZone();
+                    for (Ennemi e : zoneTarget) {
+                        if (e.getPv() <= 0) {
+                            m.isDead(e);
+                            tower.winExp(e);
+                            tower.levelUp();
+                        }
                     }
                 }
             }
@@ -171,35 +175,41 @@ public class Tower extends Pokemon {
 
     public void learnSkill(Skill newSkill) {
         if (totalSkill > 4) {
-            System.out.println("Probleme");
-        } else if (skills[3] != null) {
-            System.out.println("Votre pokémon a actuellement 4 attaques.");
-            System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
-            Scanner sc = new Scanner(System.in);
-            if (sc.nextLine().equals("O")) {
-                System.out.println("Par lequel souhaitez vous remplacer? 1/2/3/4");
-                for (int i = 1; i <= totalSkill + 1; i++) {
-                    System.out.println(i + ". " + newSkill.getName());
-                }
-                if (sc.nextLine().equals("1")) {
-                        skills[0] = newSkill;
-                    } else if (sc.nextLine().equals("2")) {
-                        skills[1] = newSkill;
-                    } else if (sc.nextLine().equals("3")) {
-                        skills[2] = newSkill;
-                    } else if (sc.nextLine().equals("4")) {
-                        skills[3] = newSkill;
-                    } else {
-                        learnSkill(newSkill);
-                }
-            }
-            sc.close();
+            System.out.println("Probleme, il peut pas avoir + de 4 skills");
         } else {
-            totalSkill++;
-            skills[totalSkill] = newSkill;
-            System.out.println("Ajouté" + newSkill.getName());
+            if (totalSkill == 4) {
+                System.out.println("Votre pokémon a 4 attaques.");
+                System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
+                Scanner sc = new Scanner(System.in);
+                String st = sc.nextLine();
+                if (st.equalsIgnoreCase("O")) {
+                    replaceSkill(newSkill, sc);
+                }
+            } else {
+                skills[totalSkill] = newSkill;
+                totalSkill++;
+                System.out.println(getName() + " a appris " + newSkill.getName());
+                System.out.println(totalSkill);
+            }
         }
+    }
 
+    private void replaceSkill(Skill newSkill, Scanner sc) {
+        System.out.println("Par lequel souhaitez-vous remplacer? 1/2/3/4");
+        prinSkill();
+        int skillIndex = sc.nextInt();
+        if (skillIndex >= 1 && skillIndex <= totalSkill) {
+            System.out.println(skills[skillIndex - 1].getName() + " a bien été remplacé par " + newSkill.getName());
+            skills[skillIndex - 1] = newSkill;
+        } else {
+            System.out.println("Choix invalide.");
+        }
+    }
+
+    private void prinSkill() {
+        for (int i = 0; i < totalSkill; i++) {
+            System.out.println(i + 1 + ". " + skills[i].getName());
+        }
     }
 
     public String toString() {
