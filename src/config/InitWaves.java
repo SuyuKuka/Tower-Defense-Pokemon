@@ -16,7 +16,7 @@ public class InitWaves {
 
     public InitWaves() { // CREER UNE WAVE ET LA RANDOMISE
         int floor =1;
-        ennemisTerminal.add(new Ennemi("test", 40, 20, 50, Type.EAU, Type.SPECTRE));
+        ennemisTerminal.add(new Ennemi("test", 40, 20, 50, Type.EAU, Type.NONE));
         // int floor = 1; // de + en + d'ennemi fort
         // for (int j = 0; j < 6; j++) {
         //     int rand = random.nextInt(3);

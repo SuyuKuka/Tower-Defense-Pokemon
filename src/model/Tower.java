@@ -101,8 +101,11 @@ public class Tower extends Pokemon {
                 if(Type.typeChart(skills[select], uniqueTarget)==0){
                     System.out.println("Immunisé");
                 }else{
-                    int physical = (int) ((uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                            * Type.typeChart(skills[select], uniqueTarget));
+                    double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                            * Type.typeChart(skills[select], uniqueTarget);
+                    if(skills[select].getType()==getType()[0] || skills[select].getType()==getType()[1]){
+                            physical *= 0.5;
+                        }
                     if (physical >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
@@ -110,6 +113,8 @@ public class Tower extends Pokemon {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + physical);
                     }
+                    System.out.println("Vous avez attaqué " + uniqueTarget.getName());
+                    System.out.println("Vous avez infligé " + physical + ", il lui reste " + uniqueTarget.getPv());
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if(Type.typeChart(skills[select], uniqueTarget)==0){
@@ -117,6 +122,9 @@ public class Tower extends Pokemon {
                 }else{
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Type.typeChart(skills[select], uniqueTarget));
+                    if(skills[select].getType()==getType()[0] || skills[select].getType()==getType()[1]){
+                        special *= 0.5;
+                    }
                     if (special >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
@@ -124,12 +132,13 @@ public class Tower extends Pokemon {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + special);
                     }
+                    System.out.println("Vous avez attaqué " + uniqueTarget.getName());
+                    System.out.println("Vous avez infligé " + special + ", il lui reste " + uniqueTarget.getPv());
                 }
             } else {
                 // Attaque de statut donc effect?
                 System.out.println("ATQ STATUT");
             }
-            System.out.println(uniqueTarget.toString());
         }
     }
 
@@ -140,8 +149,11 @@ public class Tower extends Pokemon {
                     if(Type.typeChart(skills[select], e)==0){
                         System.out.println("Immunisé");
                     }else{
-                        int physical = (int) ((e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                                * Type.typeChart(skills[select], e));
+                        double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                                * Type.typeChart(skills[select], e);
+                        if(skills[select].getType()==getType()[0] || skills[select].getType()==getType()[1]){
+                            physical *= 0.5;
+                        }
                         if (physical >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
@@ -149,13 +161,19 @@ public class Tower extends Pokemon {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + physical);
                         }
+                        System.out.println("Vous avez attaqué " + e.getName());
+                        System.out.println("Vous avez infligé " + physical + ", il lui reste " + e.getPv());
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if(Type.typeChart(skills[select], e)==0){
                         System.out.println("Immunisé");
+
                     }else{
-                        int special = (int) ((e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
-                                * Type.typeChart(skills[select], e));
+                        double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
+                                * Type.typeChart(skills[select], e);
+                        if(skills[select].getType()==getType()[0] || skills[select].getType()==getType()[1]){
+                            special *= 0.5;
+                        }
                         if (special >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
@@ -163,6 +181,8 @@ public class Tower extends Pokemon {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + special);
                         }
+                        System.out.println("Vous avez attaqué " + e.getName());
+                        System.out.println("Vous avez infligé " + special + ", il lui reste " + e.getPv());
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
@@ -267,9 +287,7 @@ public class Tower extends Pokemon {
 
     public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            System.out.println("Je suis dans le rayon?");
             if (tower.isInRayon(tower, e)) {
-                System.out.println("J'ai une cible dans mon rayon");
                 tower.uniqueTarget=e;
             }
         }
@@ -277,17 +295,12 @@ public class Tower extends Pokemon {
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            System.out.println("Y'a qlq dans ma zone?");
             if (tower.isInRayon(tower, e)) {
                 if(!tower.zoneTarget.contains(e)){
-                    System.out.println("Ajouté ennemi dans zone");
                     tower.zoneTarget.add(e);
-                    System.out.println("Taille de size " + zoneTarget.size());
                 }
-                System.out.println("Taille de size " + zoneTarget.size());
             } else {
                 if (tower.zoneTarget.contains(e)) {
-                    System.out.println("Nest plus dans la zone");
                     tower.zoneTarget.remove(e);
                 }
 

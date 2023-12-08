@@ -7,7 +7,7 @@ public class Pokemon {
     }
 
     private String name;
-    private int pv; // pv
+    private double pv; // pv
     private int physical; // tour -> atk physical, bad -> def physique
     private int special; // tour -> atk spécial, bad -> def special
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
@@ -55,7 +55,7 @@ public class Pokemon {
         return speed;
     }
 
-    public int getPv() {
+    public double getPv() {
         return pv;
     }
 
@@ -79,7 +79,7 @@ public class Pokemon {
         speed = sp;
     }
 
-    public void setPv(int pv) {
+    public void setPv(double pv) {
         this.pv = pv;
     }
 
@@ -98,4 +98,5 @@ public class Pokemon {
     public void setSecondType(Type type){
         this.type[1]=type;
     }
+
 }
