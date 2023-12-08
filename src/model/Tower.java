@@ -113,8 +113,8 @@ public class Tower extends Pokemon {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + physical);
                     }
-                    System.out.println("Vous avez attaqué " + uniqueTarget.getName());
-                    System.out.println("Vous avez infligé " + physical + ", il lui reste " + uniqueTarget.getPv());
+                    System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    System.out.println(getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if(Type.typeChart(skills[select], uniqueTarget)==0){
@@ -132,8 +132,8 @@ public class Tower extends Pokemon {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + special);
                     }
-                    System.out.println("Vous avez attaqué " + uniqueTarget.getName());
-                    System.out.println("Vous avez infligé " + special + ", il lui reste " + uniqueTarget.getPv());
+                    System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    System.out.println(getName() + " a infligé " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -161,8 +161,8 @@ public class Tower extends Pokemon {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + physical);
                         }
-                        System.out.println("Vous avez attaqué " + e.getName());
-                        System.out.println("Vous avez infligé " + physical + ", il lui reste " + e.getPv());
+                        System.out.println(getName() + " a attaqué " + e.getName());
+                        System.out.println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if(Type.typeChart(skills[select], e)==0){
@@ -181,16 +181,14 @@ public class Tower extends Pokemon {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + special);
                         }
-                        System.out.println("Vous avez attaqué " + e.getName());
-                        System.out.println("Vous avez infligé " + special + ", il lui reste " + e.getPv());
+                        System.out.println(getName() + " a attaqué " + e.getName());
+                        System.out.println(getName() + " a infligé " + special + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
                     System.out.println("ATQ STATUT");
                 }
-                System.out.println(e.toString());
-            }
-            
+            } 
         }
     }
 
