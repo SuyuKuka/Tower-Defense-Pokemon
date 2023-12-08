@@ -10,7 +10,7 @@ public class Starter {
         public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
             super("Salameche", atkPhysical, atkSpecial, type1, type2);
             System.out.println("Charge le sprite"); // ressouces/sprite/salameche.png
-            innerFocus(); // jsp si faut l'appeller la ou pas
+            //innerFocus(); // jsp si faut l'appeller la ou pas
             primarySkill();
         }
 

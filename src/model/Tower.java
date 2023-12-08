@@ -13,11 +13,11 @@ public class Tower extends Pokemon {
     private Rayon rayon;
     private double exp;
     private Ennemi uniqueTarget;
-    private ArrayList<Ennemi> zoneTarget;
+    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
     private int level;
     private int[] pos;
     private Skill[] skills = new Skill[4];
-    private int select = 1;
+    private int select = 0;
     private int totalSkill = 0;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
@@ -67,22 +67,20 @@ public class Tower extends Pokemon {
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
             if (skills[select].getUnique()) {
-                tower.getUniqueTarget(ennemiInMap);
-
-                if (uniqueTarget != null) {
-                    attackUnique();
-                    if (uniqueTarget.getPv() <= 0) {
-                        m.isDead(uniqueTarget);
-                        tower.winExp(uniqueTarget);
+                tower.getUniqueTarget(tower, ennemiInMap);
+                tower.attackUnique();
+                if(tower.uniqueTarget!=null){
+                    if (tower.uniqueTarget.getPv() <= 0) {
+                        m.isDead(tower.uniqueTarget);
+                        tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
                     }
                 }
             } else {
-                tower.getZoneTarget(ennemiInMap);
-
-                if (zoneTarget.size() != 0) {
-                    attackZone();
-                    for (Ennemi e : zoneTarget) {
+                getZoneTarget(tower, ennemiInMap);
+                if (tower.zoneTarget.size() != 0) {
+                    tower.attackZone();
+                    for (Ennemi e : tower.zoneTarget) {
                         if (e.getPv() <= 0) {
                             m.isDead(e);
                             tower.winExp(e);
@@ -96,31 +94,42 @@ public class Tower extends Pokemon {
     }
 
     private void attackUnique() {
-        if (uniqueTarget != null) {
+        if (uniqueTarget == null) {
+            System.out.println("Pas de cible");
+        }else{
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                int physical = (int) ((uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                        * Type.typeChart(skills[select], uniqueTarget));
-                if (physical >= 0) {
-                    // Cas positif donc retire -1
-                    uniqueTarget.setPv(uniqueTarget.getPv() - 1);
-                } else {
-                    // Cas négatif donc retire special vie
-                    uniqueTarget.setPv(uniqueTarget.getPv() + physical);
+                if(Type.typeChart(skills[select], uniqueTarget)==0){
+                    System.out.println("Immunisé");
+                }else{
+                    int physical = (int) ((uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                            * Type.typeChart(skills[select], uniqueTarget));
+                    if (physical >= 0) {
+                        // Cas positif donc retire -1
+                        uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                    } else {
+                        // Cas négatif donc retire special vie
+                        uniqueTarget.setPv(uniqueTarget.getPv() + physical);
+                    }
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
-                        * Type.typeChart(skills[select], uniqueTarget));
-                if (special >= 0) {
-                    // Cas positif donc retire -1
-                    uniqueTarget.setPv(uniqueTarget.getPv() - 1);
-                } else {
-                    // Cas négatif donc retire special vie
-                    uniqueTarget.setPv(uniqueTarget.getPv() + special);
+                if(Type.typeChart(skills[select], uniqueTarget)==0){
+                    System.out.println("Immunisé");
+                }else{
+                    int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
+                            * Type.typeChart(skills[select], uniqueTarget));
+                    if (special >= 0) {
+                        // Cas positif donc retire -1
+                        uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                    } else {
+                        // Cas négatif donc retire special vie
+                        uniqueTarget.setPv(uniqueTarget.getPv() + special);
+                    }
                 }
             } else {
                 // Attaque de statut donc effect?
                 System.out.println("ATQ STATUT");
             }
+            System.out.println(uniqueTarget.toString());
         }
     }
 
@@ -128,30 +137,40 @@ public class Tower extends Pokemon {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                    int physical = (int) ((e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                            * Type.typeChart(skills[select], e));
-                    if (physical >= 0) {
-                        // Cas positif donc retire -1
-                        e.setPv(e.getPv() - 1);
-                    } else {
-                        // Cas négatif donc retire special vie
-                        e.setPv(e.getPv() + physical);
+                    if(Type.typeChart(skills[select], e)==0){
+                        System.out.println("Immunisé");
+                    }else{
+                        int physical = (int) ((e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
+                                * Type.typeChart(skills[select], e));
+                        if (physical >= 0) {
+                            // Cas positif donc retire -1
+                            e.setPv(e.getPv() - 1);
+                        } else {
+                            // Cas négatif donc retire special vie
+                            e.setPv(e.getPv() + physical);
+                        }
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                    int special = (int) ((e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
-                            * Type.typeChart(skills[select], e));
-                    if (special >= 0) {
-                        // Cas positif donc retire -1
-                        e.setPv(e.getPv() - 1);
-                    } else {
-                        // Cas négatif donc retire special vie
-                        e.setPv(e.getPv() + special);
+                    if(Type.typeChart(skills[select], e)==0){
+                        System.out.println("Immunisé");
+                    }else{
+                        int special = (int) ((e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
+                                * Type.typeChart(skills[select], e));
+                        if (special >= 0) {
+                            // Cas positif donc retire -1
+                            e.setPv(e.getPv() - 1);
+                        } else {
+                            // Cas négatif donc retire special vie
+                            e.setPv(e.getPv() + special);
+                        }
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
                     System.out.println("ATQ STATUT");
                 }
+                System.out.println(e.toString());
             }
+            
         }
     }
 
@@ -246,34 +265,39 @@ public class Tower extends Pokemon {
         return rayon;
     }
 
-    public void setTarget(Ennemi e) {
-        uniqueTarget = e;
-    }
-
-    public void getUniqueTarget(ArrayList<Ennemi> ennemiInMap) {
+    public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            if (isInRayon(e)) {
-                setTarget(e);
+            System.out.println("Je suis dans le rayon?");
+            if (tower.isInRayon(tower, e)) {
+                System.out.println("J'ai une cible dans mon rayon");
+                tower.uniqueTarget=e;
             }
         }
     }
 
-    public void getZoneTarget(ArrayList<Ennemi> ennemiInMap) {
+    public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            if (isInRayon(e)) {
-                zoneTarget.add(e);
+            System.out.println("Y'a qlq dans ma zone?");
+            if (tower.isInRayon(tower, e)) {
+                if(!tower.zoneTarget.contains(e)){
+                    System.out.println("Ajouté ennemi dans zone");
+                    tower.zoneTarget.add(e);
+                    System.out.println("Taille de size " + zoneTarget.size());
+                }
+                System.out.println("Taille de size " + zoneTarget.size());
             } else {
-                if (zoneTarget.contains(e)) {
-                    zoneTarget.remove(e);
+                if (tower.zoneTarget.contains(e)) {
+                    System.out.println("Nest plus dans la zone");
+                    tower.zoneTarget.remove(e);
                 }
 
             }
         }
     }
 
-    private boolean isInRayon(Ennemi ennemi) {
-        int deltaX = Math.abs(ennemi.getPos()[0] - getPos()[0]);
-        int deltaY = Math.abs(ennemi.getPos()[1] - getPos()[1]);
+    private boolean isInRayon(Tower tower, Ennemi ennemi) {
+        int deltaX = Math.abs(ennemi.getPos()[0] - tower.getPos()[0]);
+        int deltaY = Math.abs(ennemi.getPos()[1] - tower.getPos()[1]);
 
         int distance = deltaX + deltaY;
         int towerRayon = getRayonValue(rayon);
