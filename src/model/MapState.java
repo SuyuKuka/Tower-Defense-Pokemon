@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
+import model.Ennemi;
+import model.Tower;
+import model.Map;
+import java.util.Scanner;
+
+import characters.Starter;
+import characters.Starter.Salameche;
+
+import java.util.Random;
 
 public class MapState {
 
@@ -52,40 +61,23 @@ public class MapState {
         int nbTour = 6; // AJUSTABLE
 
         infoTerminal();
+        // Tower terminal = new Tower("Terminal", 1,1, null, null);
+        Starter starterInstance = new Starter();
+        Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Type.FEU, Type.NONE);
 
-        allEnnemis = w.getAllEnnemis();
-
-        int step = 0;
-        while (gameContinue()) {
-
-            moveOnMap();
-            loadNextWave();
-            m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            System.out.println("Ennemie en attente:" + wave.size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
-            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
-
-            step = ennemiComing(step);
-            step++;
-
-            // A METTRE DANS /control
-            Tower terminal = new Tower("Terminal", 120, null, null);
-            if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
-                System.out.print("Ajouter une tour  (" + nbTour + "): ");
-                String st = sc.nextLine();
-                if (st.length() != 0) {
-                    if (setTower(terminal.putTower(st), terminal)) {
-                        nbTour--;
-                    }
+        if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
+            System.out.print("Ajouter une tour  (" + nbTour + "): ");
+            String st = sc.nextLine();
+            if (st.length() != 0) {
+                if (setTower(sala.putTower(st), sala)) {
+                    nbTour--;
                 }
-            } else {
-                String st = sc.nextLine();
             }
-            terminal.attaque(towerPresent, ennemiPresent, this);
-
+        } else {
+            String st = sc.nextLine();
         }
+        sala.attack(towerPresent, ennemiPresent, this);
+
         sc.close();
     }
 

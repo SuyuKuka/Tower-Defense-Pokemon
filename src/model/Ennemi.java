@@ -11,11 +11,10 @@ public class Ennemi extends Pokemon {
     private static ArrayList<Ennemi> EList = new ArrayList<>();
     private static ArrayList<Ennemi> EBossList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
+    public boolean boss;
 
-    private boolean boss;
-
-    public Ennemi(String name, int pv, Type type1, Type type2, boolean boss) {
-        super(name, pv, type1, type2, false);
+    public Ennemi(String name, double pv, int defPhysical, int defSpecial, Type type1, Type type2, boolean boss) {
+        super(name, pv, defPhysical, defSpecial, type1, type2, false);
         if (boss) {
             EBossList.add(this);
             this.boss = boss;
@@ -29,7 +28,7 @@ public class Ennemi extends Pokemon {
     }
 
     public Ennemi(Ennemi e) {
-        super(e.getName(), e.getValue(), e.getType()[0], e.getType()[1], false);
+        super(e.getName(), e.getPv(), e.getPhysical(), e.getSpecial(), e.getType()[0], e.getType()[1], false);
         this.boss = e.isBoss();
         setSpeed(e.getSpeed());
         config = Map.map;
@@ -154,10 +153,12 @@ public class Ennemi extends Pokemon {
 
     public String toString() {
         return "NOM: " + getName()
-                + " PV: " + getValue()
-                + " TYPE: " + getType()[0] + " et " + getType()[1]
-                + " VITESSE: " + getSpeed()
-                + " MECHANT "
+                + " \nPV: " + getPv()
+                + " \nDEF PHYSIQUE: " + getPhysical()
+                + " \nDEF SPECIAL: " + getSpecial()
+                + " \nTYPE: " + getType()[0] + " et " + getType()[1]
+                + " \nVITESSE: " + getSpeed()
+                + "\nMECHANT\n"
                 + "BOSS:" + isBoss() + "\n";
     }
 

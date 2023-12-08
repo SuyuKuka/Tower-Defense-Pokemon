@@ -1,5 +1,6 @@
 package model;
 
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -19,9 +20,9 @@ public class InitPokemon {
 
     private static void pokemonMaker(String[] info) {
         if (Integer.valueOf(info[0]) == 0) {
-            Ennemi e = new Ennemi(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
-                    Type.stringToType(info[3]), info[6].equals("true"));
-            e.setSpeed(Pokemon.stringToSpeed(info[5]));
+            // Ennemi e = new Ennemi(info[1], Integer.valueOf(info[4]), Type.stringToType(info[2]),
+            //         Type.stringToType(info[3]), info[6].equals("true"));
+            // e.setSpeed(Pokemon.stringToSpeed(info[5]));
         }
     }
 
