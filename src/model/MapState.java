@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
+import model.Ennemi;
+import model.Tower;
+import model.Map;
+import java.util.Scanner;
+
+import characters.Starter;
+import characters.Starter.Salameche;
+
+import java.util.Random;
 
 public class MapState {
 
@@ -85,12 +94,12 @@ public class MapState {
                         nbTour--;
                     }
                 }
-            } else {
-                String st = sc.nextLine();
             }
-            terminal.attaque(towerPresent, ennemiPresent, this);
-
+        } else {
+            String st = sc.nextLine();
         }
+        sala.attack(towerPresent, ennemiPresent, this);
+
         sc.close();
     }
 

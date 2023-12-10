@@ -59,10 +59,10 @@ public class InitWaves {
             multiplier = 3;
         }
         for (Ennemi e : Ennemi.LIST.getList()) {
-            e.setValue(e.getValue() * multiplier);
+            e.setPv(e.getPv() * multiplier);
         }
         for (Ennemi e : Ennemi.LIST.getBossList()) {
-            e.setValue(e.getValue() * multiplier);
+            e.setPv(e.getPv() * multiplier);
         }
     }
 
