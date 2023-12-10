@@ -39,6 +39,7 @@ public class Game extends JFrame {
 
             MapState terminal = new MapState();
             terminal.startTerminal();
+
         } else {
             Game game = new Game();
 

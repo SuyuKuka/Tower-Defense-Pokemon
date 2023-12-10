@@ -7,7 +7,7 @@ import model.Map.Corner;
 public class Ennemi extends Pokemon {
 
     private Map map;
-    private int[][] roadMap = Map.roadMap;
+    private int[][] roadMap = Map.roadMap.readableMap();
     private int pas = 1;
 
     private int[] pos;
@@ -131,8 +131,6 @@ public class Ennemi extends Pokemon {
         if (direction != ' ') {
             keepDirection = direction;
         }
-        System.out.println(pas);
-        System.out.println(Map.toString(roadMap));
 
         return false;
 
