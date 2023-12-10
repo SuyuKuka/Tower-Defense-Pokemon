@@ -12,7 +12,7 @@ public class Ennemi extends Pokemon {
 
     private int[] pos;
 
-    private char keepDirection;
+    private char prevDirection;
     private boolean onCorner = false;
 
     private static ArrayList<Ennemi> EList = new ArrayList<>();
@@ -74,69 +74,73 @@ public class Ennemi extends Pokemon {
 
         boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
 
-        if (exit) {
-            return true;
-        }
+        int nbMove = 0;
 
-        if (onCorner) {
-            switch (keepDirection) {
-                case 'b':
-                    moveBot();
-                    break;
-                case 't':
-                    moveTop();
-                    break;
-                case 'r':
-                    moveRight();
-                    break;
-                case 'l':
-                    moveLeft();
-                    break;
-            }
-            System.out.println("CORNEEEEEEEEEEEER");
-            onCorner = false;
-        }
-
-        else if (pas == roadMap[getPos()[0] + 1][getPos()[1]] - 1) { // BAS
-            moveBot();
-            direction = 'b';
-        } else if (pas == roadMap[getPos()[0]][getPos()[1] - 1] - 1) { // GAUCHE
-            moveLeft();
-            direction = 'l';
-        } else if (pas == roadMap[getPos()[0]][getPos()[1] + 1] - 1) { // DROITE
-            moveRight();
-            direction = 'r';
-        } else if (pas == roadMap[getPos()[0] - 1][getPos()[1]] - 1) {// HAUT
-            moveTop();
-            direction = 't';
+        if (getSpeed() == Speed.STUN) {
+            nbMove = 0;
+        } else if (getSpeed() == Speed.FAST) {
+            nbMove = 3;
+        } else if (getSpeed() == Speed.CLASSIC) {
+            nbMove = 2;
         } else {
-            switch (keepDirection) {
-                case 'b':
+            nbMove = 1;
+        }
+
+        for (int i = 0; i < nbMove; i++) {
+            try {
+
+                if (exit) {
+                    return true;
+                }
+
+                if (onCorner) {
+                    keepDirection();
+                    onCorner = false;
+                }
+
+                else if (pas == roadMap[getPos()[0] + 1][getPos()[1]] - 1) { // BAS
                     moveBot();
-                    break;
-                case 't':
-                    moveTop();
-                    break;
-                case 'r':
-                    moveRight();
-                    break;
-                case 'l':
+                    direction = 'b';
+                } else if (pas == roadMap[getPos()[0]][getPos()[1] - 1] - 1) { // GAUCHE
                     moveLeft();
-                    break;
+                    direction = 'l';
+                } else if (pas == roadMap[getPos()[0]][getPos()[1] + 1] - 1) { // DROITE
+                    moveRight();
+                    direction = 'r';
+                } else if (pas == roadMap[getPos()[0] - 1][getPos()[1]] - 1) {// HAUT
+                    moveTop();
+                    direction = 't';
+                } else {
+                    keepDirection();
+                    onCorner = true;
+                }
+
+                if (direction != ' ') {
+                    prevDirection = direction;
+                }
+            } catch (Exception e) {
+
             }
-            onCorner = true;
-        }
 
-        if (direction != ' ') {
-            keepDirection = direction;
         }
-
         return false;
-
     }
 
-    private boolean moveAgain2() { // TODO
-        return false;
+    private void keepDirection() {
+        switch (prevDirection) {
+            case 'b':
+                moveBot();
+                break;
+            case 't':
+                moveTop();
+                break;
+            case 'r':
+                moveRight();
+                break;
+            case 'l':
+                moveLeft();
+                break;
+        }
     }
 
     private void moveBot() {
@@ -163,98 +167,6 @@ public class Ennemi extends Pokemon {
         setPos(pos);
     }
 
-    /*
-     * public boolean move() {
-     * if (getSpeed() != Speed.STUN) {
-     * if (getSpeed() == Speed.FAST) {
-     * moveAgain();
-     * moveAgain();
-     * } else if (getSpeed() == Speed.CLASSIC) {
-     * moveAgain();
-     * }
-     * 
-     * if (config[getPos()[0] + 1][getPos()[1]] == 5 ||
-     * config[getPos()[0]][getPos()[1] + 1] == 5
-     * || config[getPos()[0]][getPos()[1] - 1] == 5) {
-     * return true;
-     * }
-     * 
-     * if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
-     * config[getPos()[0]][getPos()[1] - 1] == 3) {
-     * 
-     * if (wasRight()) {
-     * int[] pos = { getPos()[0], getPos()[1] + 1 };
-     * setPos(pos);
-     * 
-     * } else {
-     * int[] pos = { getPos()[0], getPos()[1] - 1 };
-     * setPos(pos);
-     * 
-     * }
-     * 
-     * } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
-     * int[] pos = { getPos()[0] + 1, getPos()[1] };
-     * setPos(pos);
-     * 
-     * } else if (config[getPos()[0]][getPos()[1] + 1] == 3) { // DROITE
-     * int[] pos = { getPos()[0], getPos()[1] + 1 };
-     * setPos(pos);
-     * 
-     * setWasRight(true);
-     * 
-     * } else if (config[getPos()[0]][getPos()[1] - 1] == 3) { // GAUCHE
-     * int[] pos = { getPos()[0], getPos()[1] - 1 };
-     * setPos(pos);
-     * 
-     * setWasRight(false);
-     * 
-     * }
-     * 
-     * }
-     * return false;
-     * 
-     * }
-     * 
-     * public boolean moveAgain() {
-     * if (config[getPos()[0] + 1][getPos()[1]] == 5 ||
-     * config[getPos()[0]][getPos()[1] + 1] == 5
-     * || config[getPos()[0]][getPos()[1] - 1] == 5) {
-     * return true;
-     * }
-     * 
-     * if (config[getPos()[0]][getPos()[1] + 1] == 3 &&
-     * config[getPos()[0]][getPos()[1] - 1] == 3) {
-     * 
-     * if (wasRight()) {
-     * int[] pos = { getPos()[0], getPos()[1] + 1 };
-     * setPos(pos);
-     * 
-     * } else {
-     * int[] pos = { getPos()[0], getPos()[1] - 1 };
-     * setPos(pos);
-     * 
-     * }
-     * 
-     * } else if (config[getPos()[0] + 1][getPos()[1]] == 3) { // BAS
-     * int[] pos = { getPos()[0] + 1, getPos()[1] };
-     * setPos(pos);
-     * 
-     * } else if (config[getPos()[0]][getPos()[1] + 1] == 3) { // DROITE
-     * int[] pos = { getPos()[0], getPos()[1] + 1 };
-     * setPos(pos);
-     * 
-     * setWasRight(true);
-     * 
-     * } else if (config[getPos()[0]][getPos()[1] - 1] == 3) { // GAUCHE
-     * int[] pos = { getPos()[0], getPos()[1] - 1 };
-     * setPos(pos);
-     * 
-     * setWasRight(false);
-     * 
-     * }
-     * return false;
-     * }
-     */
     public String toString() {
         return "NOM: " + getName()
                 + " \nPV: " + getPv()

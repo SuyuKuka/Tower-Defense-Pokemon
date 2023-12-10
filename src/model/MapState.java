@@ -5,15 +5,9 @@ import java.util.ArrayList;
 import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
-import model.Ennemi;
-import model.Tower;
-import model.Map;
-import java.util.Scanner;
 
 import characters.Starter;
 import characters.Starter.Salameche;
-
-import java.util.Random;
 
 public class MapState {
 
@@ -85,21 +79,24 @@ public class MapState {
             step++;
 
             // A METTRE DANS /control
-            Tower terminal = new Tower("Terminal", 120, null, null);
+            // Tower terminal = new Tower("Terminal", 1,1, null, null);
+            Starter starterInstance = new Starter();
+            Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Type.FEU, Type.NONE);
+
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
                 if (st.length() != 0) {
-                    if (setTower(terminal.putTower(st), terminal)) {
+                    if (setTower(sala.putTower(st), sala)) {
                         nbTour--;
                     }
                 }
+            } else {
+                String st = sc.nextLine();
             }
-        } else {
-            String st = sc.nextLine();
-        }
-        sala.attack(towerPresent, ennemiPresent, this);
+            sala.attack(towerPresent, ennemiPresent, this);
 
+        }
         sc.close();
     }
 
@@ -126,16 +123,17 @@ public class MapState {
     }
 
     private void moveOnMap() {
-
+        Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
 
             if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
+                escaped = e;
             }
         }
         if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
-            ennemiPresent.remove(0);
+            ennemiPresent.remove(escaped);
             leaked = false;
             pv--;
         }
