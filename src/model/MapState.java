@@ -61,16 +61,38 @@ public class MapState {
         int nbTour = 6; // AJUSTABLE
 
         infoTerminal();
-        // Tower terminal = new Tower("Terminal", 1,1, null, null);
-        Starter starterInstance = new Starter();
-        Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Type.FEU, Type.NONE);
 
-        if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
-            System.out.print("Ajouter une tour  (" + nbTour + "): ");
-            String st = sc.nextLine();
-            if (st.length() != 0) {
-                if (setTower(sala.putTower(st), sala)) {
-                    nbTour--;
+        allEnnemis = w.getAllEnnemis();
+        for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                e.setMap(m);
+            }
+        }
+
+        int step = 0;
+        while (gameContinue()) {
+
+            moveOnMap();
+            loadNextWave();
+            m.affiche(ennemiPresent);
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            System.out.println("Ennemie en attente:" + wave.size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
+            step = ennemiComing(step);
+            step++;
+
+            // A METTRE DANS /control
+            Tower terminal = new Tower("Terminal", 120, null, null);
+            if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
+                System.out.print("Ajouter une tour  (" + nbTour + "): ");
+                String st = sc.nextLine();
+                if (st.length() != 0) {
+                    if (setTower(terminal.putTower(st), terminal)) {
+                        nbTour--;
+                    }
                 }
             }
         } else {
@@ -104,9 +126,11 @@ public class MapState {
     }
 
     private void moveOnMap() {
+
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-            if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
+
+            if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
             }
         }
@@ -115,6 +139,7 @@ public class MapState {
             leaked = false;
             pv--;
         }
+
     }
 
     private void loadNextWave() {
