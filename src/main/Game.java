@@ -3,6 +3,7 @@ package main;
 import javax.swing.JFrame;
 
 import graphics.GameScreen;
+import graphics.MainMenu;
 import model.MapState;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -28,8 +29,10 @@ public class Game extends JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/resources/icon.png")).getImage());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        gameScreen = new GameScreen();
-        add(gameScreen);
+        // gameScreen = new GameScreen();
+        // add(gameScreen);
+        MainMenu menu = new MainMenu();
+        add(menu);
         setVisible(true);
 
     }
