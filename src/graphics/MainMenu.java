@@ -2,6 +2,7 @@ package graphics;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,8 +19,11 @@ public class MainMenu extends JPanel {
 
         // Heading
         JLabel heading = new JLabel("PokeRevolute", SwingConstants.CENTER);
-        heading.setFont(new Font("Arial", Font.BOLD, 32));
-        panel.add(heading, BorderLayout.NORTH);
+        heading.setFont(new Font("Arial", Font.BOLD, 86));
+        heading.setForeground(Color.WHITE);
+        JPanel headingPanel = new JPanel();
+        headingPanel.add(heading);
+        panel.add(headingPanel, BorderLayout.NORTH);
         try {
             Random rand = new Random();
             int background_random = rand.nextInt(3);
@@ -30,52 +34,46 @@ public class MainMenu extends JPanel {
             e.printStackTrace();
         }
 
-        // Load button images
-        ImageIcon classiqueIcon = new ImageIcon("src/graphics/ressources/classique.png");
-        ImageIcon marathonIcon = new ImageIcon("src/graphics/ressources/marathon.png");
-        ImageIcon boutiqueIcon = new ImageIcon("src/graphics/ressources/boutique.png");
-        ImageIcon optionsIcon = new ImageIcon("src/graphics/ressources/options.png");
-
         // Menu buttons with custom icons
-        JButton classique = new JButton(classiqueIcon);
-        JButton marathon = new JButton(marathonIcon);
-        JButton boutique = new JButton(boutiqueIcon);
-        JButton options = new JButton(optionsIcon);
+        JButton classiqueButton = new JButton(new ImageIcon("src/graphics/ressources/classique.png"));
+        JButton marathonButton = new JButton(new ImageIcon("src/graphics/ressources/marathon.png"));
+        JButton boutiqueButton = new JButton(new ImageIcon("src/graphics/ressources/boutique.png"));
+        JButton optionsButton = new JButton(new ImageIcon("src/graphics/ressources/options.png"));
 
-        classique.setContentAreaFilled(false);
-        marathon.setContentAreaFilled(false);
-        boutique.setContentAreaFilled(false);
-        options.setContentAreaFilled(false);
+        classiqueButton.addActionListener(e -> System.out.println("Classique"));
 
-        classique.setOpaque(false);
-        marathon.setOpaque(false);
-        boutique.setOpaque(false);
-        options.setOpaque(false);
+        marathonButton.addActionListener(e -> System.out.println("Marathon"));
 
+        boutiqueButton.addActionListener(e -> System.out.println("Boutique"));
+
+        optionsButton.addActionListener(e -> System.out.println("Options?"));
         // New panel with GridLayout
-        JPanel newPanel = new JPanel(new GridLayout(0, 1)); // Change number of columns to 1
-        newPanel.add(classique);
-        newPanel.add(marathon);
-        newPanel.add(boutique);
-        newPanel.add(options);
+        JPanel buttonPanel = new JPanel(new GridLayout(0, 1)); // Change number of columns to 1
+        buttonPanel.add(classiqueButton);
+        buttonPanel.add(marathonButton);
+        buttonPanel.add(boutiqueButton);
+        buttonPanel.add(optionsButton);
 
         // Replace old panel with new panel
-        panel.add(newPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.CENTER);
 
         // Profil panel
         JPanel profilPanel = new JPanel();
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         JLabel profilPhoto = new JLabel(new ImageIcon("src/graphics/ressources/profil_photo.png"));
+        profilPhoto.setOpaque(false);
         profilPhoto.setPreferredSize(new Dimension(50, 50));
         profilPanel.add(profilPhoto);
 
         JLabel profilInfo = new JLabel("Level: 1 | Username: Player1", SwingConstants.RIGHT);
+        profilInfo.setOpaque(false);
         profilPanel.add(profilInfo);
 
         panel.add(profilPanel, BorderLayout.SOUTH);
 
         add(panel);
+        setOpaque(false);
         setVisible(true);
     }
 
