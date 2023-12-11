@@ -20,7 +20,7 @@ public class Ennemi extends Pokemon {
     public static final Ennemi LIST = new Ennemi();
     public boolean boss;
 
-    public Ennemi(String name, double pv, int defPhysical, int defSpecial, Type type1, Type type2, boolean boss) {
+    public Ennemi(String name, double pv, double defPhysical, double defSpecial, Type type1, Type type2, boolean boss) {
         super(name, pv, defPhysical, defSpecial, type1, type2, false);
         if (boss) {
             EBossList.add(this);

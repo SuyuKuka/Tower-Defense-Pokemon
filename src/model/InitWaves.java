@@ -60,9 +60,13 @@ public class InitWaves {
         }
         for (Ennemi e : Ennemi.LIST.getList()) {
             e.setPv(e.getPv() * multiplier);
+            e.setPhysical(e.getPhysical() * multiplier);
+            e.setSpecial(e.getSpecial() * multiplier);
         }
         for (Ennemi e : Ennemi.LIST.getBossList()) {
             e.setPv(e.getPv() * multiplier);
+            e.setPhysical(e.getPhysical() * multiplier);
+            e.setSpecial(e.getSpecial() * multiplier);
         }
     }
 

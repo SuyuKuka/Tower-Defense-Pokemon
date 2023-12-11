@@ -8,14 +8,14 @@ public class Pokemon {
 
     private String name;
     private double pv; // pv
-    private int physical; // tour -> atk physical, bad -> def physique
-    private int special; // tour -> atk spécial, bad -> def special
+    private double physical; // tour -> atk physical, bad -> def physique
+    private double special; // tour -> atk spécial, bad -> def special
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
     private Type[] type = new Type[2];
     private int lvl; // TODO+COMPETENCE
     private boolean isTower;
 
-    public Pokemon(String name, double d, int physical, int special, Type type0, Type type1, boolean isTower) {
+    public Pokemon(String name, double d, double physical, double special, Type type0, Type type1, boolean isTower) {
         this.name = name;
         this.pv = d;
         this.physical = physical;
@@ -59,11 +59,11 @@ public class Pokemon {
         return pv;
     }
 
-    public int getPhysical() {
+    public double getPhysical() {
         return physical;
     }
 
-    public int getSpecial() {
+    public double getSpecial() {
         return special;
     }
 
@@ -83,11 +83,11 @@ public class Pokemon {
         this.pv = pv;
     }
 
-    public void setPhysical(int physical) {
+    public void setPhysical(double physical) {
         this.physical = physical;
     }
 
-    public void setSpecial(int special) {
+    public void setSpecial(double special) {
         this.special = special;
     }
 
