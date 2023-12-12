@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -24,21 +25,20 @@ public class MainMenu extends JPanel {
         panel.add(heading, BorderLayout.NORTH);
         
         //Background
+        Random rand = new Random();
+        int background_random = rand.nextInt(3);
+        File file = new File("ressources/background/background_image" + background_random + ".png");
         try {
-            Random rand = new Random();
-            int background_random = rand.nextInt(3);
-            System.out.println(background_random);
-            backgroundImage = ImageIO
-                    .read(getClass().getResource("ressources/background_image" + background_random + ".png"));
+            backgroundImage = ImageIO.read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Bouttons
-        JButton classiqueButton = new JButton(new ImageIcon("src/graphics/ressources/classique_button.png"));
-        JButton marathonButton = new JButton(new ImageIcon("src/graphics/ressources/marathon_button.png"));
-        JButton boutiqueButton = new JButton(new ImageIcon("src/graphics/ressources/boutique_button.png"));
-        JButton optionsButton = new JButton(new ImageIcon("src/graphics/ressources/options_button.png"));
+        JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
+        JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
+        JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
+        JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
         classiqueButton.setBorderPainted(false);
         classiqueButton.setContentAreaFilled(false);
@@ -49,10 +49,10 @@ public class MainMenu extends JPanel {
         optionsButton.setBorderPainted(false);
         optionsButton.setContentAreaFilled(false);
 
-        buttonPressed(classiqueButton, "src/graphics/ressources/classique_button");
-        buttonPressed(marathonButton, "src/graphics/ressources/marathon_button");
-        buttonPressed(boutiqueButton, "src/graphics/ressources/boutique_button");
-        buttonPressed(optionsButton, "src/graphics/ressources/options_button");
+        buttonPressed(classiqueButton, "ressources/button/classique_button");
+        buttonPressed(marathonButton, "ressources/button/marathon_button");
+        buttonPressed(boutiqueButton, "ressources/button/boutique_button");
+        buttonPressed(optionsButton, "ressources/button/options_button");
 
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1)); // Change number of columns to 1
         buttonPanel.setOpaque(false);
@@ -67,7 +67,7 @@ public class MainMenu extends JPanel {
         JPanel profilPanel = new JPanel();
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JLabel profilPhoto = new JLabel(new ImageIcon("src/graphics/ressources/profil_photo.png"));
+        JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
         profilPanel.add(profilPhoto);
 

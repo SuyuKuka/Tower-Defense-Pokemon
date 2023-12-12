@@ -25,7 +25,7 @@ public class Game extends JFrame {
             setSize(1224, 642);
             setLocationRelativeTo(null);
         }
-        setTitle("PokéRevolute");
+        setTitle("PokeRevolute");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icon.png")).getImage());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
