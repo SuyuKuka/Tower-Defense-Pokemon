@@ -35,10 +35,10 @@ public class MainMenu extends JPanel {
         }
 
         // Bouttons
-        JButton classiqueButton = new JButton(new ImageIcon("src/graphics/ressources/classique.png"));
-        JButton marathonButton = new JButton(new ImageIcon("src/graphics/ressources/marathon.png"));
-        JButton boutiqueButton = new JButton(new ImageIcon("src/graphics/ressources/boutique.png"));
-        JButton optionsButton = new JButton(new ImageIcon("src/graphics/ressources/options.png"));
+        JButton classiqueButton = new JButton(new ImageIcon("src/graphics/ressources/classique_button.png"));
+        JButton marathonButton = new JButton(new ImageIcon("src/graphics/ressources/marathon_button.png"));
+        JButton boutiqueButton = new JButton(new ImageIcon("src/graphics/ressources/boutique_button.png"));
+        JButton optionsButton = new JButton(new ImageIcon("src/graphics/ressources/options_button.png"));
 
         classiqueButton.setBorderPainted(false);
         classiqueButton.setContentAreaFilled(false);
@@ -49,10 +49,10 @@ public class MainMenu extends JPanel {
         optionsButton.setBorderPainted(false);
         optionsButton.setContentAreaFilled(false);
 
-        classiqueButton.addActionListener(e -> System.out.println("Classique"));
-        marathonButton.addActionListener(e -> System.out.println("Marathon"));
-        boutiqueButton.addActionListener(e -> System.out.println("Boutique"));
-        optionsButton.addActionListener(e -> System.out.println("Options?"));
+        buttonPressed(classiqueButton, "src/graphics/ressources/classique_button");
+        buttonPressed(marathonButton, "src/graphics/ressources/marathon_button");
+        buttonPressed(boutiqueButton, "src/graphics/ressources/boutique_button");
+        buttonPressed(optionsButton, "src/graphics/ressources/options_button");
 
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1)); // Change number of columns to 1
         buttonPanel.setOpaque(false);
@@ -84,6 +84,18 @@ public class MainMenu extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    private void buttonPressed(JButton button, String st){
+        button.addActionListener(e -> {
+            button.setIcon(new ImageIcon(st + "_pressed.png"));
+        
+            Timer timer = new Timer(500, e1 -> {
+                button.setIcon(new ImageIcon(st + ".png"));
+            });
+            timer.setRepeats(false);
+            timer.start();
+        });
     }
 
 }

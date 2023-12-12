@@ -22,7 +22,7 @@ public class Game extends JFrame {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setResizable(false);
         } else {
-            setSize(1024, 742);
+            setSize(1224, 642);
             setLocationRelativeTo(null);
         }
         setTitle("PokéRevolute");
