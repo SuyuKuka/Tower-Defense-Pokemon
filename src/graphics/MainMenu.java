@@ -18,32 +18,19 @@ public class MainMenu extends JPanel {
 
         // Titre
         JLabel heading = new JLabel();
-        heading.setFont(new Font("Arial", Font.BOLD, 86));
-        heading.setForeground(Color.WHITE);
-
         ImageIcon icon = new ImageIcon("ressources/title.png");
-        icon.setImage(icon.getImage().getScaledInstance(812, 180, Image.SCALE_SMOOTH));
+        icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
         heading.setIcon(icon);
 
-        // Utiliser GridBagLayout pour centrer le titre
         JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setOpaque(false);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        titlePanel.add(heading, gbc);
-
+        titlePanel.add(heading, new GridBagConstraints());
         add(titlePanel, BorderLayout.NORTH);
-        //Titre
-        // JLabel heading = new JLabel("PokeRevolute", SwingConstants.CENTER);
-        // heading.setFont(new Font("Arial", Font.BOLD, 86));
-        // heading.setForeground(Color.WHITE);
-        // add(heading, BorderLayout.NORTH);
 
         //Background
         Random rand = new Random();
         int background_random = rand.nextInt(3);
-        File file = new File("ressources/background/background_image" + background_random + ".png");
+        File file = new File("ressources/background/background" + background_random + ".png");
         try {
             backgroundImage = ImageIO.read(file);
         } catch (IOException e) {
@@ -83,21 +70,42 @@ public class MainMenu extends JPanel {
 
         add(buttonPanel, BorderLayout.CENTER);
 
-        // Profile
+        // Panel pour le profil
         JPanel profilPanel = new JPanel();
+        profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        profilPanel.setPreferredSize(new Dimension(0, 70));
-        //profilPanel.setBackground(Color.BLUE);
+
+        // Panel pour la photo de profil et les informations de profil
+        JPanel cadrePanel = new JPanel();
+        cadrePanel.setBackground(Color.BLACK);
+        cadrePanel.setLayout(new BorderLayout());
+        cadrePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 8));
+        cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
-        profilPanel.add(profilPhoto);
+        cadrePanel.add(profilPhoto, BorderLayout.WEST);
 
-        JLabel profilInfo = new JLabel("Level: 1 | Username: Player1");
-        profilPanel.add(profilInfo);
+        // Création d'un sous-panel pour contenir le pseudo et le niveau du joueur
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.setOpaque(false);
+
+        JLabel pseudo = new JLabel("  Joueur1 ");
+        pseudo.setForeground(Color.WHITE);
+        pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
+        infoPanel.add(pseudo, BorderLayout.NORTH);
+
+        JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
+        levelAccount.setForeground(Color.WHITE);
+        levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
+        infoPanel.add(levelAccount, BorderLayout.CENTER);
+
+        // Ajout du sous-panel au cadrePanel
+        cadrePanel.add(infoPanel, BorderLayout.CENTER);
+        profilPanel.add(cadrePanel);
 
         add(profilPanel, BorderLayout.SOUTH);
-
         setVisible(true);
     }
 
@@ -111,6 +119,7 @@ public class MainMenu extends JPanel {
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
             button.setIcon(new ImageIcon(st + "_pressed.png"));
 
