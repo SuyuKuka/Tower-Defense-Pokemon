@@ -1,5 +1,6 @@
 package model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import model.InitWaves.Difficulty;
@@ -46,7 +47,7 @@ public class MapState {
                 "===============================================================================================================");
     }
 
-    public void startTerminal() {
+    public void startTerminal() throws FileNotFoundException {
 
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(Difficulty.HARD);
