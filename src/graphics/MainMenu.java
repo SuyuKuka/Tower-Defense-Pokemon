@@ -11,6 +11,9 @@ import java.util.Random;
 public class MainMenu extends JPanel {
 
     private BufferedImage backgroundImage;
+    private JPanel titlePanel = new JPanel(new GridBagLayout());
+    private JPanel profilPanel = new JPanel();
+    private JPanel buttonPanel = new JPanel();
 
     public MainMenu() {
         setLayout(new BorderLayout());
@@ -22,7 +25,6 @@ public class MainMenu extends JPanel {
         icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
         heading.setIcon(icon);
 
-        JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setOpaque(false);
         titlePanel.add(heading, new GridBagConstraints());
         add(titlePanel, BorderLayout.NORTH);
@@ -43,13 +45,12 @@ public class MainMenu extends JPanel {
         JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
-        buttonPressed(classiqueButton, "ressources/button/classique_button");
-        buttonPressed(marathonButton, "ressources/button/marathon_button");
-        buttonPressed(boutiqueButton, "ressources/button/boutique_button");
-        buttonPressed(optionsButton, "ressources/button/options_button");
+        buttonPressed(classiqueButton, "classique");
+        buttonPressed(marathonButton, "marathon");
+        buttonPressed(boutiqueButton, "boutique");
+        buttonPressed(optionsButton, "options");
 
         // Panel pour les boutons
-        JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
 
@@ -71,7 +72,6 @@ public class MainMenu extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
 
         // Panel pour le profil
-        JPanel profilPanel = new JPanel();
         profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
@@ -121,13 +121,34 @@ public class MainMenu extends JPanel {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            button.setIcon(new ImageIcon(st + "_pressed.png"));
+            button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
 
             Timer timer = new Timer(500, e1 -> {
-                button.setIcon(new ImageIcon(st + ".png"));
+                button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
+                if (st.equals("classique")) {
+                    setVisible(false);
+                    Classique classique = new Classique();
+                    remove(titlePanel);
+                    remove(buttonPanel);
+                    remove(profilPanel);
+                    add(classique);
+                    setVisible(true);
+                } else if (st.equals("marathon")) {
+
+                } else if (st.equals("boutique")) {
+
+                } else if (st.equals("options")) {
+
+                } else {
+                    // erreur?
+                }
             });
             timer.setRepeats(false);
             timer.start();
         });
+    }
+
+    public BufferedImage getBackgroundImage() {
+        return this.backgroundImage;
     }
 }
