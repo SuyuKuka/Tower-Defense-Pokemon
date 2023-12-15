@@ -12,14 +12,12 @@ import java.util.Random;
 public class MainMenu extends JPanel {
 
     private BufferedImage backgroundImage;
-    private JPanel mainPanel = new JPanel(new FlowLayout());
-    private JPanel titlePanel = new JPanel(new GridBagLayout());
-    private JPanel profilPanel = new JPanel();
-    private JPanel buttonPanel = new JPanel();
+    private JPanel mainPanel = new JPanel();
 
     public MainMenu() {
         setLayout(new BorderLayout());
         setOpaque(false);
+        
 
         initMainMenu();
     
@@ -34,17 +32,18 @@ public class MainMenu extends JPanel {
 
     public void initMainMenu(){
         mainPanel.setOpaque(false);
+        mainPanel.setLayout(new BorderLayout());
 
         // Titre
+        JPanel titlePanel = new JPanel(new GridBagLayout());
+        titlePanel.setOpaque(false);
+    
         JLabel heading = new JLabel();
         ImageIcon icon = new ImageIcon("ressources/title.png");
         icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
         heading.setIcon(icon);
 
-        titlePanel.setOpaque(false);
         titlePanel.add(heading, new GridBagConstraints());
-
-        mainPanel.add(titlePanel);
 
         //Background
         Random rand = new Random();
@@ -59,6 +58,10 @@ public class MainMenu extends JPanel {
         }
 
         // Boutons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setOpaque(false);
+
         JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
         JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
         JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
@@ -68,10 +71,6 @@ public class MainMenu extends JPanel {
         buttonPressed(marathonButton, "marathon");
         buttonPressed(boutiqueButton, "boutique");
         buttonPressed(optionsButton, "options");
-
-        // Panel pour les boutons
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setOpaque(false);
 
         // Centrer les boutons verticalement
         classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -88,13 +87,14 @@ public class MainMenu extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 
-        mainPanel.add(buttonPanel);
-
-        // Panel pour le profil
+        JPanel profilPanel = new JPanel();
         profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
-        // Panel pour la photo de profil et les informations de profil
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.setOpaque(false);
+
         JPanel cadrePanel = new JPanel();
         cadrePanel.setBackground(Color.BLACK);
         cadrePanel.setLayout(new BorderLayout());
@@ -103,28 +103,27 @@ public class MainMenu extends JPanel {
 
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
-        cadrePanel.add(profilPhoto, BorderLayout.WEST);
-
-        // Création d'un sous-panel pour contenir le pseudo et le niveau du joueur
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BorderLayout());
-        infoPanel.setOpaque(false);
+        
 
         JLabel pseudo = new JLabel("  Joueur1 ");
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
-        infoPanel.add(pseudo, BorderLayout.NORTH);
+        
 
         JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
+        
+        cadrePanel.add(profilPhoto, BorderLayout.WEST);
+        infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);
 
-        // Ajout du sous-panel au cadrePanel
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        mainPanel.add(profilPanel);
+        mainPanel.add(titlePanel, BorderLayout.NORTH);
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+        mainPanel.add(profilPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
     }
@@ -135,11 +134,13 @@ public class MainMenu extends JPanel {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
+            System.out.println(st + "avant");
             button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
 
             Timer timer = new Timer(500, e1 -> {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 start(st);
+                System.out.println(st + "apres");
             });
             timer.setRepeats(false);
             timer.start();
@@ -149,6 +150,7 @@ public class MainMenu extends JPanel {
     public void start(String st){
         switch (st) {
             case "classique":
+            System.out.println("je vais lancer classique");
                 showClassiqueScreen();
                 break;
             case "marathon":
@@ -180,20 +182,14 @@ public class MainMenu extends JPanel {
     private void showMainMenuScreen() {
         setVisible(false);
         MainMenu mainMenu = new MainMenu();
-        this.remove(titlePanel);
-        this.remove(buttonPanel);
-        this.remove(profilPanel);
-        this.add(titlePanel);
-        this.add(buttonPanel);
-        this.add(profilPanel);
+        removeAll();
+        add(mainMenu.mainPanel);
         this.setVisible(true);
     }
 
     private void switchToScreen(JPanel screen) {
         setVisible(false);
-        remove(titlePanel);
-        remove(buttonPanel);
-        remove(profilPanel);
+        removeAll();
         add(screen);
         setVisible(true);
     }    
@@ -207,19 +203,7 @@ public class MainMenu extends JPanel {
         return this.backgroundImage;
     }
 
-    public JPanel getTitlePanel() {
-        return titlePanel;
-    }
-
-    public JPanel getButtonPanel(){
-        return buttonPanel;
-    }
-
     public JPanel getMainPanel() {
         return mainPanel;
-    }
-
-    public JPanel getProfilPanel() {
-        return profilPanel;
     }
 }

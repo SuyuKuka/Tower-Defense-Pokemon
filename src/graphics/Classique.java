@@ -2,8 +2,6 @@ package graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Classique extends MainMenu {
     private JPanel titlePanel = new JPanel();
@@ -14,6 +12,12 @@ public class Classique extends MainMenu {
         setLayout(new BorderLayout());
         setOpaque(false);
 
+        initClassique();
+        setVisible(true);
+
+    }
+
+    public void initClassique(){
         //Titre
         JLabel heading = new JLabel("Choisis la difficulté");
         heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
@@ -56,12 +60,6 @@ public class Classique extends MainMenu {
 
         backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
         add(backPanel, BorderLayout.SOUTH);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(getBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
     }
 
     public JPanel getBackPanel() {
