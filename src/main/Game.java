@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 public class Game extends JFrame {
 
     private GameScreen gameScreen;
+    public int width;
+    public int height;
     boolean fullscreen = false; // AJUSTABLE
 
     public Game() {
@@ -22,7 +24,9 @@ public class Game extends JFrame {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setResizable(false);
         } else {
-            setSize(1224, 642);
+            this.width = 1224;
+            this.height = 642;
+            setSize(width, height);
             setLocationRelativeTo(null);
         }
         setTitle("PokeRevolute");

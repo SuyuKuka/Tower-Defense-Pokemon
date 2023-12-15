@@ -2,6 +2,7 @@ package graphics;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.Random;
 public class MainMenu extends JPanel {
 
     private BufferedImage backgroundImage;
+    private JPanel mainPanel = new JPanel(new FlowLayout());
     private JPanel titlePanel = new JPanel(new GridBagLayout());
     private JPanel profilPanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
@@ -18,6 +20,20 @@ public class MainMenu extends JPanel {
     public MainMenu() {
         setLayout(new BorderLayout());
         setOpaque(false);
+
+        initMainMenu();
+    
+        setVisible(true);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    public void initMainMenu(){
+        mainPanel.setOpaque(false);
 
         // Titre
         JLabel heading = new JLabel();
@@ -27,14 +43,17 @@ public class MainMenu extends JPanel {
 
         titlePanel.setOpaque(false);
         titlePanel.add(heading, new GridBagConstraints());
-        add(titlePanel, BorderLayout.NORTH);
+
+        mainPanel.add(titlePanel);
 
         //Background
         Random rand = new Random();
         int background_random = rand.nextInt(3);
         File file = new File("ressources/background/background" + background_random + ".png");
         try {
-            backgroundImage = ImageIO.read(file);
+            if(backgroundImage==null){
+                backgroundImage = ImageIO.read(file);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,14 +81,14 @@ public class MainMenu extends JPanel {
 
         // Ajouter des boutons avec des rigid areas (espace fixe) entre eux
         buttonPanel.add(classiqueButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Espacement vertical de 5 pixels
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(marathonButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(boutiqueButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 
-        add(buttonPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel);
 
         // Panel pour le profil
         profilPanel.setOpaque(false);
@@ -105,17 +124,12 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        add(profilPanel, BorderLayout.SOUTH);
-        setVisible(true);
+        mainPanel.add(profilPanel);
+
+        add(mainPanel);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    private void buttonPressed(JButton button, String st) {
+    protected void buttonPressed(JButton button, String st) {
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
@@ -125,30 +139,87 @@ public class MainMenu extends JPanel {
 
             Timer timer = new Timer(500, e1 -> {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
-                if (st.equals("classique")) {
-                    setVisible(false);
-                    Classique classique = new Classique();
-                    remove(titlePanel);
-                    remove(buttonPanel);
-                    remove(profilPanel);
-                    add(classique);
-                    setVisible(true);
-                } else if (st.equals("marathon")) {
-
-                } else if (st.equals("boutique")) {
-
-                } else if (st.equals("options")) {
-
-                } else {
-                    // erreur?
-                }
+                start(st);
             });
             timer.setRepeats(false);
             timer.start();
         });
     }
 
+    public void start(String st){
+        switch (st) {
+            case "classique":
+                showClassiqueScreen();
+                break;
+            case "marathon":
+
+                break;
+            case "boutique":
+
+                break;
+            case "options":
+
+                break;
+            case "facile":
+
+                break;
+            case "moyen":
+
+                break;
+            case "difficile":
+
+                break;
+            case "retour":
+                showMainMenuScreen();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showMainMenuScreen() {
+        setVisible(false);
+        MainMenu mainMenu = new MainMenu();
+        this.remove(titlePanel);
+        this.remove(buttonPanel);
+        this.remove(profilPanel);
+        this.add(titlePanel);
+        this.add(buttonPanel);
+        this.add(profilPanel);
+        this.setVisible(true);
+    }
+
+    private void switchToScreen(JPanel screen) {
+        setVisible(false);
+        remove(titlePanel);
+        remove(buttonPanel);
+        remove(profilPanel);
+        add(screen);
+        setVisible(true);
+    }    
+
+    private void showClassiqueScreen() {
+        Classique classique = new Classique();
+        switchToScreen(classique);
+    }
+
     public BufferedImage getBackgroundImage() {
         return this.backgroundImage;
+    }
+
+    public JPanel getTitlePanel() {
+        return titlePanel;
+    }
+
+    public JPanel getButtonPanel(){
+        return buttonPanel;
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public JPanel getProfilPanel() {
+        return profilPanel;
     }
 }
