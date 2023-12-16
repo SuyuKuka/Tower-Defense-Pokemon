@@ -155,6 +155,8 @@ public class MapState {
         } else {
             int posX = posTower[0];
             int posY = posTower[1];
+            System.out.println(posX);
+            System.out.println(posY);
 
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;

@@ -19,7 +19,6 @@ public class Map {
 
     private ArrayList<int[]> obstaclePos = new ArrayList<>();
 
-    //
     public Map(int height, int width) {
 
         map = new int[height][width];
