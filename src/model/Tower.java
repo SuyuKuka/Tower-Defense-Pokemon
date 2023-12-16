@@ -36,12 +36,12 @@ public class Tower extends Pokemon {
     }
 
     public int[] putTower(String st) { // TERMINAL
-        String alphaPart = st.replaceAll("[^A-Za-z]", "");
-        String numPart = st.replaceAll("[^0-9]", "");
-
         int posX;
         int posY;
 
+        String alphaPart = st.replaceAll("[^A-Za-z]", "");
+        String numPart = st.replaceAll("[^0-9]", "");
+        
         if (!alphaPart.isEmpty() && !numPart.isEmpty()) {
             posX = Character.toUpperCase(alphaPart.charAt(0)) - 'A';
             posY = Integer.parseInt(numPart) - 1;
