@@ -20,7 +20,6 @@ public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
     private BufferedImage backgroundImage;
-    private GameScreen gameScreen;
     boolean fullscreen = false; // AJUSTABLE
 
     public Game() {
@@ -108,14 +107,14 @@ public class Game extends JFrame {
 
             Timer timer = new Timer(500, e1 -> {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
-                handleButtonClick(st);
+                changePanel(st);
             });
             timer.setRepeats(false);
             timer.start();
         });
     }
     
-    private void handleButtonClick(String buttonName) {
+    private void changePanel(String buttonName) {
         Timer timer = new Timer(1, e1 -> {
             if(buttonName.equals("retour")){
                 cardLayout.show(mainPanel, "menu");
