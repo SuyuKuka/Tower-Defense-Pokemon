@@ -31,16 +31,18 @@ public class MainMenu extends JPanel {
         mainMenuPanel.setLayout(new BorderLayout());
 
         //Background
-        Random rand = new Random();
-        int background_random = rand.nextInt(3);
-        File file = new File("ressources/background/background" + background_random + ".png");
-        try {
-            backgroundImage = ImageIO.read(file);
-            if(backgroundImage==null){
+        if(backgroundImage == null){
+            Random rand = new Random();
+            int background_random = rand.nextInt(3);
+            File file = new File("ressources/background/background" + background_random + ".png");
+            try {
                 backgroundImage = ImageIO.read(file);
+                if(backgroundImage==null){
+                    backgroundImage = ImageIO.read(file);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         // Titre
@@ -130,43 +132,44 @@ public class MainMenu extends JPanel {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    
         button.addActionListener(e -> {
             button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
-
+    
             Timer timer = new Timer(500, e1 -> {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
-                start(st);
+                handleButtonClick(st);
             });
             timer.setRepeats(false);
             timer.start();
         });
     }
-
-    public void start(String st){
-        switch (st) {
+    
+    private void handleButtonClick(String buttonName) {
+        switch (buttonName) {
             case "classique":
                 showClassiqueScreen();
                 break;
             case "marathon":
-
+                // Ajoutez le code pour l'écran Marathon ici
                 break;
             case "boutique":
-
+                // Ajoutez le code pour l'écran Boutique ici
                 break;
             case "options":
-
-                break;
-            case "facile":
-
-                break;
-            case "moyen":
-
-                break;
-            case "difficile":
-
+                // Ajoutez le code pour l'écran Options ici
                 break;
             case "retour":
                 showMainMenuScreen();
+                break;
+            case "facile":
+                // Ajoutez le code pour le niveau facile ici
+                break;
+            case "moyen":
+                // Ajoutez le code pour le niveau moyen ici
+                break;
+            case "difficile":
+                // Ajoutez le code pour le niveau difficile ici
                 break;
             default:
                 break;
