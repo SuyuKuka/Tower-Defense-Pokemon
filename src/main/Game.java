@@ -116,10 +116,14 @@ public class Game extends JFrame {
     }
     
     private void handleButtonClick(String buttonName) {
-        if(buttonName.equals("retour")){
-            cardLayout.show(mainPanel, "menu");
-        }else{
-            cardLayout.show(mainPanel, buttonName);
-        }
+        Timer timer = new Timer(1, e1 -> {
+            if(buttonName.equals("retour")){
+                cardLayout.show(mainPanel, "menu");
+            }else{
+                cardLayout.show(mainPanel, buttonName);
+            }
+            });
+            timer.setRepeats(false);
+            timer.start();
     }
 }
