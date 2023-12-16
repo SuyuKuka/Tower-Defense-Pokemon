@@ -8,7 +8,7 @@ public class InitPokemon {
 
     public static void loadingChar() throws FileNotFoundException {
         // TROUVER SI POSSIBLE UNE MEILLEUR ALTERNATIVE
-        File file = new File("ressources/config/PokemonLoader2.txt");
+        File file = new File("ressources/config/PokemonLoader2.csv");
         Scanner sc = new Scanner(file);
         while (sc.hasNext()) {
             String[] info = new String[8];
@@ -25,7 +25,7 @@ public class InitPokemon {
                 Integer.valueOf(info[3]), // DEFSPE
                 Type.valueOf(info[4]), // TYPE1
                 Type.stringToType(info[5]), // TYPE2
-                info[6].equals("true")); // BOSS
+                info[6].equals("VRAI")); // BOSS
         e.setSpeed(Pokemon.stringToSpeed(info[7])); // SPEED
 
     }
