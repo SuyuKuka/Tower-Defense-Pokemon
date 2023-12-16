@@ -52,6 +52,7 @@ public class MainMenu extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 
+        //Profil
         JPanel profilPanel = new JPanel();
         profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -69,12 +70,10 @@ public class MainMenu extends JPanel {
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
         
-
         JLabel pseudo = new JLabel("  Joueur1 ");
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
         
-
         JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
@@ -92,6 +91,4 @@ public class MainMenu extends JPanel {
 
         setVisible(true);
     }
- 
-
 }
