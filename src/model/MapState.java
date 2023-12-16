@@ -153,10 +153,9 @@ public class MapState {
         if (posTower[0] == -1 || posTower[1] == -1) {
             return false;
         } else {
-            int posX = posTower[0];
-            int posY = posTower[1];
-            System.out.println(posX);
-            System.out.println(posY);
+            // LA CONCEPTION DU TABLEAU EST DIFFERENTE, INVERSER I J
+            int posX = posTower[1];
+            int posY = posTower[0];
 
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;
@@ -168,20 +167,15 @@ public class MapState {
         }
     }
 
-    public void setEnnemi(int[] posEnnemi, Ennemi ennemi) { // MANUELLEMENT
-        if (posEnnemi[0] == -1 || posEnnemi[1] == -1) {
+    private void setEnnemi(int[] posEnnemi, Ennemi ennemi) { // MANUELLEMENT
+        int posX = posEnnemi[0];
+        int posY = posEnnemi[1];
 
-            return;
+        if (config[posX][posY] == 3 || config[posX][posY] == 4) {
+            ennemiPresent.add(ennemi);
+            ennemi.setPos(posEnnemi);
         } else {
-            int posX = posEnnemi[0];
-            int posY = posEnnemi[1];
-
-            if (config[posX][posY] == 3 || config[posX][posY] == 4) {
-                ennemiPresent.add(ennemi);
-                ennemi.setPos(posEnnemi);
-            } else {
-                return;
-            }
+            return;
         }
     }
 
@@ -201,4 +195,5 @@ public class MapState {
     public ArrayList<Tower> getTowerPresent() {
         return towerPresent;
     }
+
 }
