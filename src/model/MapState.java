@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import model.InitWaves.Difficulty;
 
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import characters.Starter;
 import characters.Starter.Salameche;
@@ -96,6 +98,49 @@ public class MapState {
             }
             sala.attack(towerPresent, ennemiPresent, this);
 
+        }
+        sc.close();
+    }
+
+    public void startGraphics() {
+
+        InitPokemon.loadingChar();
+        InitWaves w = new InitWaves(Difficulty.HARD);
+        Scanner sc = new Scanner(System.in);
+
+        int nbTour = 6; // AJUSTABLE
+
+        infoTerminal();
+
+        allEnnemis = w.getAllEnnemis();
+
+        int step = 0;
+        Timer timer = new Timer();
+        while (gameContinue()) {
+            screen.repaint();
+
+            moveOnMap();
+            loadNextWave();
+            m.affiche(ennemiPresent);
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            System.out.println("Ennemie en attente:" + wave.size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
+            step = ennemiComing(step);
+            step++;
+
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+            task.run();
         }
         sc.close();
     }
