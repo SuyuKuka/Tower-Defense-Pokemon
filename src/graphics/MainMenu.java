@@ -2,48 +2,14 @@ package graphics;
 
 import main.Game;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
 public class MainMenu extends JPanel {
-    private BufferedImage backgroundImage;
-    private JPanel mainMenuPanel;
-
-    public MainMenu() {
+    public MainMenu(Game main) {
+        System.out.println("Menu");
         setLayout(new BorderLayout());
         setOpaque(false);
-        
-        System.out.println("menu");
-        mainMenuPanel = new JPanel();
-        initMainMenu();
-    
-        setVisible(true);
-    }
-
-
-    public void initMainMenu(){
-        mainMenuPanel.setOpaque(false);
-        mainMenuPanel.setLayout(new BorderLayout());
-
-        //Background
-        if(backgroundImage == null){
-            Random rand = new Random();
-            int background_random = rand.nextInt(3);
-            File file = new File("ressources/background/background" + background_random + ".png");
-            try {
-                backgroundImage = ImageIO.read(file);
-                if(backgroundImage==null){
-                    backgroundImage = ImageIO.read(file);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         // Titre
         JPanel titlePanel = new JPanel(new GridBagLayout());
@@ -66,10 +32,10 @@ public class MainMenu extends JPanel {
         JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
-        buttonPressed(classiqueButton, "classique");
-        buttonPressed(marathonButton, "marathon");
-        buttonPressed(boutiqueButton, "boutique");
-        buttonPressed(optionsButton, "options");
+        main.buttonPressed(classiqueButton, "classique");
+        main.buttonPressed(marathonButton, "marathon");
+        main.buttonPressed(boutiqueButton, "boutique");
+        main.buttonPressed(optionsButton, "options");
 
         // Centrer les boutons verticalement
         classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -120,91 +86,12 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        mainMenuPanel.add(titlePanel, BorderLayout.NORTH);
-        mainMenuPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainMenuPanel.add(profilPanel, BorderLayout.SOUTH);
+        add(titlePanel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.CENTER);
+        add(profilPanel, BorderLayout.SOUTH);
 
-        add(mainMenuPanel);
-    }
-
-    protected void buttonPressed(JButton button, String st) {
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    
-        button.addActionListener(e -> {
-            button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
-    
-            Timer timer = new Timer(500, e1 -> {
-                button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
-                handleButtonClick(st);
-            });
-            timer.setRepeats(false);
-            timer.start();
-        });
-    }
-    
-    private void handleButtonClick(String buttonName) {
-        switch (buttonName) {
-            case "classique":
-                showClassiqueScreen();
-                break;
-            case "marathon":
-                // Ajoutez le code pour l'écran Marathon ici
-                break;
-            case "boutique":
-                // Ajoutez le code pour l'écran Boutique ici
-                break;
-            case "options":
-                // Ajoutez le code pour l'écran Options ici
-                break;
-            case "retour":
-                showMainMenuScreen();
-                break;
-            case "facile":
-                // Ajoutez le code pour le niveau facile ici
-                break;
-            case "moyen":
-                // Ajoutez le code pour le niveau moyen ici
-                break;
-            case "difficile":
-                // Ajoutez le code pour le niveau difficile ici
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void showMainMenuScreen() {
-        MainMenu mainMenu = new MainMenu();
-        switchToScreen(mainMenu.getMainMenuPanel());
-    }
-
-    private void switchToScreen(JPanel screen) {
-        setVisible(false);
-        removeAll();
-        add(screen);
         setVisible(true);
-    }    
-
-    private void showClassiqueScreen() {
-        Classique classique = new Classique();
-        switchToScreen(classique.getClassiquePanel());
     }
-
-    public JPanel getMainMenuPanel() {
-        return mainMenuPanel;
-    }
-
-    public BufferedImage getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(getBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
-    }
+ 
 
 }

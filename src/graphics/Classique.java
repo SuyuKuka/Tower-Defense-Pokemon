@@ -1,26 +1,17 @@
 package graphics;
 
 import javax.swing.*;
+
+import main.Game;
+
 import java.awt.*;
 
-public class Classique extends MainMenu {
-    private JPanel classiquePanel;
+public class Classique extends JPanel {
 
-    public Classique() {
-        setLayout(new BorderLayout());
-        setOpaque(false);
-
+    public Classique(Game main) {
         System.out.println("Classique");
-        classiquePanel = new JPanel();
-
-        initClassique();
-        setVisible(true);
-
-    }
-
-    public void initClassique(){
-        classiquePanel.setOpaque(false);
-        classiquePanel.setLayout(new BorderLayout());
+        setOpaque(false);
+        setLayout(new BorderLayout());
         //Titre
         JLabel heading = new JLabel("Choisis la difficulté");
         heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
@@ -40,9 +31,9 @@ public class Classique extends MainMenu {
         JButton mediumButton = new JButton(new ImageIcon("ressources/button/moyen_button.png"));
         JButton hardButton = new JButton(new ImageIcon("ressources/button/difficile_button.png"));
 
-        buttonPressed(easyButton, "facile");
-        buttonPressed(mediumButton, "moyen");
-        buttonPressed(hardButton, "difficle");
+        main.buttonPressed(easyButton, "facile");
+        main.buttonPressed(mediumButton, "moyen");
+        main.buttonPressed(hardButton, "difficile");
         
 
         easyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -60,19 +51,17 @@ public class Classique extends MainMenu {
         backPanel.setOpaque(false);
         
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        buttonPressed(backButton, "retour");
+        main.buttonPressed(backButton, "retour");
 
         backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
         backPanel.add(backButton);
 
-        classiquePanel.add(titlePanel, BorderLayout.NORTH);
-        classiquePanel.add(buttonPanel, BorderLayout.CENTER);
-        classiquePanel.add(backPanel, BorderLayout.SOUTH);
+        add(titlePanel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.CENTER);
+        add(backPanel, BorderLayout.SOUTH);
 
-        add(classiquePanel);
+        setVisible(true);
     }
 
-    public JPanel getClassiquePanel() {
-        return classiquePanel;
-    }
+
 }
