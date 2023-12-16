@@ -1,8 +1,9 @@
 package graphics;
 
+import main.Game;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,29 +11,37 @@ import java.io.IOException;
 import java.util.Random;
 
 public class MainMenu extends JPanel {
-
     private BufferedImage backgroundImage;
-    private JPanel mainPanel;
+    private JPanel mainMenuPanel;
+
     public MainMenu() {
         setLayout(new BorderLayout());
         setOpaque(false);
         
         System.out.println("menu");
-        mainPanel = new JPanel();
+        mainMenuPanel = new JPanel();
         initMainMenu();
     
         setVisible(true);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
 
     public void initMainMenu(){
-        mainPanel.setOpaque(false);
-        mainPanel.setLayout(new BorderLayout());
+        mainMenuPanel.setOpaque(false);
+        mainMenuPanel.setLayout(new BorderLayout());
+
+        //Background
+        Random rand = new Random();
+        int background_random = rand.nextInt(3);
+        File file = new File("ressources/background/background" + background_random + ".png");
+        try {
+            backgroundImage = ImageIO.read(file);
+            if(backgroundImage==null){
+                backgroundImage = ImageIO.read(file);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Titre
         JPanel titlePanel = new JPanel(new GridBagLayout());
@@ -44,18 +53,6 @@ public class MainMenu extends JPanel {
         heading.setIcon(icon);
 
         titlePanel.add(heading, new GridBagConstraints());
-
-        //Background
-        Random rand = new Random();
-        int background_random = rand.nextInt(3);
-        File file = new File("ressources/background/background" + background_random + ".png");
-        try {
-            if(backgroundImage==null){
-                backgroundImage = ImageIO.read(file);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         // Boutons
         JPanel buttonPanel = new JPanel();
@@ -121,11 +118,11 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        mainPanel.add(titlePanel, BorderLayout.NORTH);
-        mainPanel.add(buttonPanel, BorderLayout.CENTER);
-        mainPanel.add(profilPanel, BorderLayout.SOUTH);
+        mainMenuPanel.add(titlePanel, BorderLayout.NORTH);
+        mainMenuPanel.add(buttonPanel, BorderLayout.CENTER);
+        mainMenuPanel.add(profilPanel, BorderLayout.SOUTH);
 
-        add(mainPanel);
+        add(mainMenuPanel);
     }
 
     protected void buttonPressed(JButton button, String st) {
@@ -177,8 +174,8 @@ public class MainMenu extends JPanel {
     }
 
     private void showMainMenuScreen() {
-        // MainMenu mainMenu = new MainMenu();
-        // switchToScreen(mainMenu.getMainPanel());
+        MainMenu mainMenu = new MainMenu();
+        switchToScreen(mainMenu.getMainMenuPanel());
     }
 
     private void switchToScreen(JPanel screen) {
@@ -193,11 +190,18 @@ public class MainMenu extends JPanel {
         switchToScreen(classique.getClassiquePanel());
     }
 
-    public BufferedImage getBackgroundImage() {
-        return this.backgroundImage;
+    public JPanel getMainMenuPanel() {
+        return mainMenuPanel;
     }
 
-    public JPanel getMainPanel() {
-        return mainPanel;
+    public BufferedImage getBackgroundImage() {
+        return backgroundImage;
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(getBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
+    }
+
 }
