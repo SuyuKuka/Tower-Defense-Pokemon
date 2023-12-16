@@ -2,34 +2,57 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
-public class GameScreen extends JPanel {
+import model.Ennemi;
+import model.MapState;
 
-    private Random random;
+public class GameScreen extends JPanel {
+    private int[][] map;
+    private MapState state = new MapState();
 
     public GameScreen() {
-        random = new Random();
-
+        this.map = state.getMap().getMap();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        for (int i = 0; i < 500; i++) {
-            for (int j = 0; j < 500; j++) {
-                g.fillRect(i * 50, j * 50, 50, 50);
-                g.setColor(randColor());
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                g.fillRect(j * 45, i * 45, 45, 45);
+                switch (map[i][j]) {
+                    case 2:
+                        g.setColor(Color.BLUE);
+                        break;
+                    case 3:
+                        g.setColor(new Color(165, 125, 49));
+                        break;
+                    case 4:
+                        g.setColor(new Color(165, 125, 49));
+                        break;
+                    case 5:
+                        g.setColor(new Color(165, 125, 49));
+                        break;
+                    case 9:
+                        g.setColor(new Color(138, 216, 93));
+                        break;
+                    default:
+                        g.setColor(new Color(111, 160, 83));
+                        break;
+                }
+                for (Ennemi e : state.getEnnemiPresent()) {
+                    if (i == e.getPos()[0] && j == e.getPos()[1]) {
+                        // plateau[i][j] = (char) 4;
+                        if (e.isBoss()) {
+                            g.setColor(new Color(225, 0, 0));
+                        } else {
+                            g.setColor(new Color(225, 0, 0));
+                        }
+                    }
+                }
+                g.fillRect(0, 0, 45, 45);
             }
         }
-    }
-
-    private Color randColor() {
-        int r = random.nextInt(256);
-        int g = random.nextInt(256);
-        int b = random.nextInt(256);
-        return new Color(r, g, b);
     }
 }

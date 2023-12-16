@@ -201,4 +201,8 @@ public class MapState {
     public ArrayList<Tower> getTowerPresent() {
         return towerPresent;
     }
+
+    public Map getMap() {
+        return m;
+    }
 }
