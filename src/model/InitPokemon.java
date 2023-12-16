@@ -1,20 +1,26 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class InitPokemon {
 
     public static void loadingChar() {
-        // TROUVER SI POSSIBLE UNE MEILLEUR ALTERNATIVE
-        InputStream inputStream = InitPokemon.class.getResourceAsStream("/resources/config/PokemonLoader2.txt");
-        Scanner sc = new Scanner(inputStream);
-        while (sc.hasNext()) {
+        File ennemiLoader = new File("ressources/config/PokemonLoader2.txt");
+        Scanner sc;
+		try {
+			sc = new Scanner(ennemiLoader);
+            while (sc.hasNext()) {
             String[] info = new String[8];
             info = sc.next().split(",");
             pokemonMaker(info);
         }
         sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}  
     }
 
     private static void pokemonMaker(String[] info) {
