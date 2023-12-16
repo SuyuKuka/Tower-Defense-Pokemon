@@ -12,13 +12,13 @@ import java.util.Random;
 public class MainMenu extends JPanel {
 
     private BufferedImage backgroundImage;
-    private JPanel mainPanel = new JPanel();
-
+    private JPanel mainPanel;
     public MainMenu() {
         setLayout(new BorderLayout());
         setOpaque(false);
         
-
+        System.out.println("menu");
+        mainPanel = new JPanel();
         initMainMenu();
     
         setVisible(true);
@@ -134,13 +134,11 @@ public class MainMenu extends JPanel {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            System.out.println(st + "avant");
             button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
 
             Timer timer = new Timer(500, e1 -> {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 start(st);
-                System.out.println(st + "apres");
             });
             timer.setRepeats(false);
             timer.start();
@@ -150,7 +148,6 @@ public class MainMenu extends JPanel {
     public void start(String st){
         switch (st) {
             case "classique":
-            System.out.println("je vais lancer classique");
                 showClassiqueScreen();
                 break;
             case "marathon":
@@ -180,11 +177,8 @@ public class MainMenu extends JPanel {
     }
 
     private void showMainMenuScreen() {
-        setVisible(false);
-        MainMenu mainMenu = new MainMenu();
-        removeAll();
-        add(mainMenu.mainPanel);
-        this.setVisible(true);
+        // MainMenu mainMenu = new MainMenu();
+        // switchToScreen(mainMenu.getMainPanel());
     }
 
     private void switchToScreen(JPanel screen) {
@@ -196,7 +190,7 @@ public class MainMenu extends JPanel {
 
     private void showClassiqueScreen() {
         Classique classique = new Classique();
-        switchToScreen(classique);
+        switchToScreen(classique.getClassiquePanel());
     }
 
     public BufferedImage getBackgroundImage() {
