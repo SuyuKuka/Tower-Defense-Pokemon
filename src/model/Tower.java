@@ -58,7 +58,7 @@ public class Tower extends Pokemon {
             posY = -1;
         }
 
-        int[] tab = {posY, posX};
+        int[] tab = {posX, posY};
         return tab;
     }
 
