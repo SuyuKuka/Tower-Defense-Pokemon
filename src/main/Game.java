@@ -110,7 +110,7 @@ public class Game extends JFrame {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
 
-            Timer timer = new Timer(500, e1 -> {
+            Timer timer = new Timer(200, e1 -> {
                 if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
                     button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
                 }else{

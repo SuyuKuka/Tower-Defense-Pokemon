@@ -58,31 +58,25 @@ public class Rectangle extends JPanel implements MouseInputListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+		// System.out.println("Released");
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		/*
-		if(hasMove) {
-			System.out.println("test test");
-		}
-		*/
+		// System.out.println("Dragged");
+
 	}
 
 	@Override

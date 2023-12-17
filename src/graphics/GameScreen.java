@@ -20,7 +20,7 @@ public class GameScreen extends JPanel {
     private ArrayList<Ennemi> ennemiPresent;
 
     //Création des 3 catégories de panels
-    private JPanel ennemiPanel = new JPanel();
+    private JPanel ennemiPanel;
     private JPanel mapPanel = new JPanel();
     private JPanel towerPanel;
 
@@ -34,7 +34,7 @@ public class GameScreen extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/team_background/team1.png")), 0, 0,  600, 720, this);
+                    g.drawImage(ImageIO.read(new File("ressources/team_background/team1.png")), 0, 0,  800, 800, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -42,7 +42,17 @@ public class GameScreen extends JPanel {
         };
         
         //Initialisation des panels
-        ennemiPanel.setBackground(Color.BLACK);
+        ennemiPanel = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("ressources/team_background/ennemi.png")), 0, 0,  600, 720, this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
         ennemiPanel.setLayout(new BoxLayout(ennemiPanel, BoxLayout.Y_AXIS));
         ennemiPanel.setPreferredSize(new Dimension(254, 0));
         mapPanel.setPreferredSize(new Dimension(630, 0));
@@ -54,9 +64,14 @@ public class GameScreen extends JPanel {
         JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
-                g.setColor(Color.BLACK);
-                g.fillRect(0, 0, getWidth(), getHeight());
                 super.paintComponent(g);
+                try {
+                    g.drawImage(ImageIO.read(new File("ressources/team_background/ennemi.png")), 0, 0,  600, 1000, this);
+                    
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
             }
         };
         
@@ -77,40 +92,24 @@ public class GameScreen extends JPanel {
         createEnnemiLabel("Bulbizarre", container);
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
-
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
-
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
-
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
-
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
         createEnnemiLabel("KAIXIANG", container);
-
         createEnnemiLabel("KAIXIANG", container);
-
-
-        // JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
-        // profilPhoto.setPreferredSize(new Dimension(10, 10));
-        // JLabel nameLabel = new JLabel("Test");
-        // nameLabel.setOpaque(false);
-        // nameLabel.setForeground(Color.WHITE);
-        // container.add(profilPhoto);
-        // container.add(nameLabel);
-        
         
         
 
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
-        ennemiList.setBackground(Color.BLACK);
         ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
@@ -179,7 +178,8 @@ public class GameScreen extends JPanel {
         towerPanel.add(pcButton, BorderLayout.SOUTH);
         towerPanel.add(towerTeamPanel); 
         
-
+        //mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
+        mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
         add(ennemiPanel, BorderLayout.WEST);
         add(mapPanel, BorderLayout.CENTER);
         add(towerPanel, BorderLayout.EAST);
@@ -247,45 +247,49 @@ public class GameScreen extends JPanel {
         // 1. Create a new JPanel to hold all the elements.
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
         ennemiInfo.setOpaque(false);
-    
+        //ennemiInfo.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+
         // 2. Create a JLabel for the profile photo and set its size.
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setOpaque(false);
         profilPhoto.setPreferredSize(new Dimension(50, 50));
-    
+
         // 3. Create a JLabel for the name and set its properties (font, color, etc.).
         JLabel nameLabel = new JLabel(name);
         nameLabel.setOpaque(false);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         nameLabel.setForeground(Color.WHITE);
-    
+
         // 5. Create a JProgressBar for the health bar and set its properties.
         JProgressBar healthBar = new JProgressBar();
         healthBar.setOpaque(false);
         healthBar.setMinimum(0);
-        healthBar.setMaximum(100);
-        healthBar.setValue(80);
+        healthBar.setMaximum(200);
+        healthBar.setValue(50);
         healthBar.setForeground(Color.RED);
         healthBar.setStringPainted(true);
-    
+
         // 6. Add all the components to the new JPanel in the desired layout.
         GridBagConstraints gbc = new GridBagConstraints();
-    
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 2;
+        gbc.ipadx = 10; // Add horizontal padding to the profile photo.
         ennemiInfo.add(profilPhoto, gbc);
-    
+
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 1;
+        gbc.anchor = GridBagConstraints.WEST; // This will align the name to the left.
+        gbc.insets = new Insets(0, 8, 0, 0); // Add space around the name label.
         ennemiInfo.add(nameLabel, gbc);
-    
+
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         ennemiInfo.add(healthBar, gbc);
-    
+
         // 7. Add the JPanel to the container.
         container.add(ennemiInfo);
     }
