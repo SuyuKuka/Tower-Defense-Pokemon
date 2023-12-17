@@ -30,9 +30,9 @@ public class Marathon extends JPanel {
         JButton mediumButton = new JButton(new ImageIcon("ressources/button/moyen_button.png"));
         JButton hardButton = new JButton(new ImageIcon("ressources/button/difficile_button.png"));
 
-        main.buttonPressed(easyButton, "facile");
-        main.buttonPressed(mediumButton, "moyen");
-        main.buttonPressed(hardButton, "difficile");
+        main.buttonPressed(easyButton, "gameScreen_m_facile");
+        main.buttonPressed(mediumButton, "gameScreen_m_moyen");
+        main.buttonPressed(hardButton, "gameScreen_m_difficile");
         
 
         easyButton.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -6,7 +6,7 @@ import java.util.Random;
 //GENERE UNE MAP ALEATOIRE
 public class Map {
     // ATTRIBUT
-    public static int[][] map;
+    public int[][] map;
     public static RoadMap roadMap;
 
     private int[] entry;
@@ -467,7 +467,7 @@ public class Map {
             return roadMap;
         }
 
-        public static String toString(int[][] roadMap) {
+        public String toString(int[][] roadMap) {
             //////////////////////////////////////////////////////////
             String res = "";
             for (int i = 0; i < map.length; i++) {
@@ -827,5 +827,9 @@ public class Map {
 
     public ArrayList<Corner> getCornerList() {
         return cornerList;
+    }
+
+    public int[][] getMap() {
+        return map;
     }
 }

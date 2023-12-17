@@ -30,9 +30,9 @@ public class Classique extends JPanel {
         JButton mediumButton = new JButton(new ImageIcon("ressources/button/moyen_button.png"));
         JButton hardButton = new JButton(new ImageIcon("ressources/button/difficile_button.png"));
 
-        main.buttonPressed(easyButton, "facile");
-        main.buttonPressed(mediumButton, "moyen");
-        main.buttonPressed(hardButton, "difficile");
+        main.buttonPressed(easyButton, "gameScreen_c_facile");
+        main.buttonPressed(mediumButton, "gameScreen_c_moyen");
+        main.buttonPressed(hardButton, "gameScreen_c_difficile");
         
 
         easyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,7 +52,7 @@ public class Classique extends JPanel {
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         main.buttonPressed(backButton, "retour");
 
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
+        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0)); //TROP PUISSANT
         backPanel.add(backButton);
 
         add(titlePanel, BorderLayout.NORTH);
