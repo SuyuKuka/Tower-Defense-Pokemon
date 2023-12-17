@@ -34,7 +34,7 @@ public class GameScreen extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/team_background/team1.png")), 0, 0,  800, 800, this);
+                    g.drawImage(ImageIO.read(new File("ressources/template/team1.png")), 0, 0,  800, 800, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -47,7 +47,7 @@ public class GameScreen extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/team_background/ennemi.png")), 0, 0,  600, 720, this);
+                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0,  600, 720, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -66,7 +66,7 @@ public class GameScreen extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/team_background/ennemi.png")), 0, 0,  600, 1000, this);
+                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0,  600, 1000, this);
                     
                 } catch (IOException e) {
                     e.printStackTrace();
