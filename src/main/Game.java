@@ -19,6 +19,7 @@ import javax.swing.*;
 public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
+    private GameScreen gameScreen = new GameScreen();
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
@@ -30,7 +31,7 @@ public class Game extends JFrame {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setResizable(false);
         } else {
-            setSize(1224, 642);
+            setSize(1224, 654);
             setLocationRelativeTo(null);
         }
         setTitle("PokeRevolute");
@@ -71,12 +72,13 @@ public class Game extends JFrame {
         mainPanel.add(marathon, "marathon");
         mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
+        mainPanel.add(gameScreen, "gameScreen");
         
         add(mainPanel);
         setVisible(true);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if (args.length != 0 && args[0].equals("[terminal]")) {
             MapState terminal = new MapState();
             terminal.startTerminal();
@@ -101,12 +103,19 @@ public class Game extends JFrame {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    
         button.addActionListener(e -> {
-            button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
+            if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
+                button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
+            }else{
+                button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
+            }
 
             Timer timer = new Timer(500, e1 -> {
-                button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
+                if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
+                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
+                }else{
+                    button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
+                }
                 changePanel(st);
             });
             timer.setRepeats(false);
@@ -119,10 +128,15 @@ public class Game extends JFrame {
             if(buttonName.equals("retour")){
                 cardLayout.show(mainPanel, "menu");
             }else{
-                cardLayout.show(mainPanel, buttonName);
+                if(buttonName.length()>=10 && buttonName.substring(0, 10).equals("gameScreen")){
+                    cardLayout.show(mainPanel, buttonName.substring(0, 10));
+                    //gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13, buttonName.length()));
+                }else{
+                    cardLayout.show(mainPanel, buttonName);
+                }
             }
-            });
-            timer.setRepeats(false);
-            timer.start();
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 }

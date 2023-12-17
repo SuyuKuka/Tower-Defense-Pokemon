@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import characters.Starter;
 import characters.Starter.Salameche;
+import graphics.GameScreen;
 
 public class MapState {
 
@@ -102,15 +103,11 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphics() {
-
+    public void startGraphics(GameScreen screen, String difficulty) {
         InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(Difficulty.HARD);
-        Scanner sc = new Scanner(System.in);
+        InitWaves w = new InitWaves(stringToDifficulty(difficulty));
 
         int nbTour = 6; // AJUSTABLE
-
-        infoTerminal();
 
         allEnnemis = w.getAllEnnemis();
 
@@ -122,11 +119,11 @@ public class MapState {
             moveOnMap();
             loadNextWave();
             m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            System.out.println("Ennemie en attente:" + wave.size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
-            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            // System.out.println("Ennemie en attente:" + wave.size());
+            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            // System.out.println("PV: " + pv);
+            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
 
             step = ennemiComing(step);
             step++;
@@ -142,7 +139,6 @@ public class MapState {
             };
             task.run();
         }
-        sc.close();
     }
 
     private boolean gameContinue() {
@@ -171,7 +167,6 @@ public class MapState {
         Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-
             if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
@@ -230,10 +225,6 @@ public class MapState {
         }
     }
 
-    public void start() {
-        // GRAPHIC
-    }
-
     public void isDead(Ennemi e) {
         System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
@@ -250,4 +241,18 @@ public class MapState {
     public Map getMap() {
         return m;
     }
+
+    public Difficulty stringToDifficulty(String difficulty){
+        switch (difficulty) {
+            case "facile":
+                return Difficulty.EASY;
+            case "moyen":
+                return Difficulty.NORMAL;
+            case "difficile":
+                return Difficulty.HARD;
+            default:
+                return null;
+        }
+    }
+
 }
