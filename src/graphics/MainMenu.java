@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class MainMenu extends JPanel {
     public MainMenu(Game main) {
-        System.out.println("Menu");
         setLayout(new BorderLayout());
         setOpaque(false);
 

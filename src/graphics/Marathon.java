@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class Marathon extends JPanel {
     public Marathon(Game main) {
-        System.out.println("Classique");
         setOpaque(false);
         setLayout(new BorderLayout());
         //Titre

@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class Classique extends JPanel {
     public Classique(Game main) {
-        System.out.println("Classique");
         setOpaque(false);
         setLayout(new BorderLayout());
         //Titre

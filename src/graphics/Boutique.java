@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class Boutique extends JPanel {
     public Boutique(Game main){
-        System.out.println("Boutique");
         setOpaque(false);
         setLayout(new BorderLayout());
         //Titre

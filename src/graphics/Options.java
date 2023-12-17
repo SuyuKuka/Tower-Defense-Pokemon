@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class Options extends JPanel {
     public Options(Game main){
-        System.out.println("Options");
         setOpaque(false);
         setLayout(new BorderLayout());
         //Titre

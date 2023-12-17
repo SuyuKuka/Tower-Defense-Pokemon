@@ -19,7 +19,7 @@ import javax.swing.*;
 public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
-    private GameScreen gameScreen = new GameScreen();
+    private GameScreen gameScreen = new GameScreen(this);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
