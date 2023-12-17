@@ -5,7 +5,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
 public class Rectangle extends JPanel implements MouseInputListener {

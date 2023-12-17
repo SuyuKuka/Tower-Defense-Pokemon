@@ -51,46 +51,113 @@ public class GameScreen extends JPanel {
         towerPanel.setLayout(new BorderLayout());
 
         //Ennemi
-        JLabel ennemiLabel = new JLabel("Ennemie sur le terrain");
-        ennemiLabel.setForeground(Color.WHITE);
-        ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        ennemiPanel.add(ennemiLabel);
-        JLabel test = new JLabel("Carapuce");
-        test.setForeground(Color.WHITE);
-        ennemiPanel.add(test);
-        ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        test.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel container = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                super.paintComponent(g);
+            }
+        };
+        
+        container.setOpaque(false);
 
+        BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
+        container.setLayout(boxLayout);
+
+        JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
+        ennemiLabel.setOpaque(false);
+        ennemiLabel.setForeground(Color.WHITE);
+        ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 22));
+        ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ennemiPanel.add(ennemiLabel);
+
+        createEnnemiLabel("Carapuce", container);
+        createEnnemiLabel("Salameche", container);
+        createEnnemiLabel("Bulbizarre", container);
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+        createEnnemiLabel("KAIXIANG", container);
+
+        createEnnemiLabel("KAIXIANG", container);
+
+
+        // JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
+        // profilPhoto.setPreferredSize(new Dimension(10, 10));
+        // JLabel nameLabel = new JLabel("Test");
+        // nameLabel.setOpaque(false);
+        // nameLabel.setForeground(Color.WHITE);
+        // container.add(profilPhoto);
+        // container.add(nameLabel);
+        
+        
+        
+
+        JScrollPane ennemiList = new JScrollPane(container);
+        ennemiList.setOpaque(false);
+        ennemiList.setBackground(Color.BLACK);
+        ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
+        ennemiPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
+        ennemiPanel.add(ennemiList);
         //Map
         mapPanel = initiateMapPanel(mapPanel);
 
         //Tour
-        JButton pcButton = new JButton(new ImageIcon("ressources/button/pc_button.png"));
-        main.buttonPressed(pcButton, "pc");
+        
+        JLabel team = new JLabel("Ton équipe");
+        team.setForeground(Color.WHITE);
+        team.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        team.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        Rectangle pokemon1 = new Rectangle(1);
+        Rectangle pokemon2 = new Rectangle(2);
+        Rectangle pokemon3 = new Rectangle(3);
+        Rectangle pokemon4 = new Rectangle(4);
+        Rectangle pokemon5 = new Rectangle(5);
+        Rectangle pokemon6 = new Rectangle(6);
+        Rectangle hero1 = new Rectangle(7);
+        Rectangle hero2 = new Rectangle(8);
 
         JPanel towerTeamPanel = new JPanel();
-        //towerTeamPanel.setLayout(new BoxLayout(towerTeamPanel, BoxLayout.Y_AXIS));
         towerTeamPanel.setOpaque(false);
 
-        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 10, 10);
+        JPanel row1 = new JPanel(flowLayout);
         row1.setOpaque(false);
-        row1.add(new Rectangle(1));
-        row1.add(new Rectangle(2));
+        row1.add(pokemon1);
+        row1.add(pokemon2);
 
-        JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        JPanel row2 = new JPanel(flowLayout);
         row2.setOpaque(false);
-        row2.add(new Rectangle(3));
-        row2.add(new Rectangle(4));
+        row2.add(pokemon3);
+        row2.add(pokemon4);
 
-        JPanel row3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        JPanel row3 = new JPanel(flowLayout);
         row3.setOpaque(false);
-        row3.add(new Rectangle(5));
-        row3.add(new Rectangle(6));
+        row3.add(pokemon5);
+        row3.add(pokemon6);
 
-        JPanel row4 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        JPanel row4 = new JPanel(flowLayout);
         row4.setOpaque(false);
-        row4.add(new Rectangle(7));
-        row4.add(new Rectangle(8));
+        row4.add(hero1);
+        row4.add(hero2);
 
         for (Component rectangle : Arrays.asList(row1, row2, row3, row4)) {
             for (Component component : ((Container) rectangle).getComponents()) {
@@ -98,14 +165,18 @@ public class GameScreen extends JPanel {
             }
         }
 
-        towerPanel.add(pcButton, BorderLayout.NORTH);
+        JButton pcButton = new JButton(new ImageIcon("ressources/button/pc_button.png"));
+        main.buttonPressed(pcButton, "pc");
+
+        towerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
+        towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); //TROP PUISSANT
+
+        towerPanel.add(team, BorderLayout.NORTH);
         towerTeamPanel.add(row1);
         towerTeamPanel.add(row2);
         towerTeamPanel.add(row3);
         towerTeamPanel.add(row4);
-
-        towerPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); //TROP PUISSANT
-        towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
+        towerPanel.add(pcButton, BorderLayout.SOUTH);
         towerPanel.add(towerTeamPanel); 
         
 
@@ -170,5 +241,52 @@ public class GameScreen extends JPanel {
             JLabel ennemiName = new JLabel(e.getName());
             ennemiPanel.add(ennemiName);
         }
+    }
+
+    public void createEnnemiLabel(String name, JPanel container){
+        // 1. Create a new JPanel to hold all the elements.
+        JPanel ennemiInfo = new JPanel(new GridBagLayout());
+        ennemiInfo.setOpaque(false);
+    
+        // 2. Create a JLabel for the profile photo and set its size.
+        JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
+        profilPhoto.setOpaque(false);
+        profilPhoto.setPreferredSize(new Dimension(50, 50));
+    
+        // 3. Create a JLabel for the name and set its properties (font, color, etc.).
+        JLabel nameLabel = new JLabel(name);
+        nameLabel.setOpaque(false);
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        nameLabel.setForeground(Color.WHITE);
+    
+        // 5. Create a JProgressBar for the health bar and set its properties.
+        JProgressBar healthBar = new JProgressBar();
+        healthBar.setOpaque(false);
+        healthBar.setMinimum(0);
+        healthBar.setMaximum(100);
+        healthBar.setValue(80);
+        healthBar.setForeground(Color.RED);
+        healthBar.setStringPainted(true);
+    
+        // 6. Add all the components to the new JPanel in the desired layout.
+        GridBagConstraints gbc = new GridBagConstraints();
+    
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        ennemiInfo.add(profilPhoto, gbc);
+    
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        ennemiInfo.add(nameLabel, gbc);
+    
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        ennemiInfo.add(healthBar, gbc);
+    
+        // 7. Add the JPanel to the container.
+        container.add(ennemiInfo);
     }
 }

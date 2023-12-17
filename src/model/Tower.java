@@ -28,7 +28,7 @@ public class Tower extends Pokemon {
         this.rayon = Rayon.SMALL;
         exp = 0;
         TList.add(this);
-
+        level = 1;
     }
 
     private Tower() {
