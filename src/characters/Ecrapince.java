@@ -19,6 +19,7 @@ public class Ecrapince extends Tower implements TowerLoader {
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
+            setSecondType(Type.TENEBRE);
         }
     }
 

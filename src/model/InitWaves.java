@@ -14,35 +14,48 @@ public class InitWaves {
 
     Random random = new Random();
 
-    private ArrayList<ArrayList<Ennemi>> vague = new ArrayList<>();
+    private ArrayList<ArrayList<Ennemi>> AllWaves = new ArrayList<>();
 
     public InitWaves(Difficulty diff) { // CREER UNE WAVE ET LA RANDOMISE
 
         difficultyAjust(diff);
 
         int limite = 3;
-        ArrayList<Ennemi> ennemisTerminal = new ArrayList<>();
-        for (int i = 0; i < nbTotalEnnemi; i++) {
+        ArrayList<Ennemi> wave = new ArrayList<>();
+        for (int i = 1; i < nbTotalEnnemi; i++) {
 
-            int randBoss = random.nextInt(Ennemi.LIST.getBossList().size());
-            int randChar = random.nextInt(i + 1);
-
-            while (randChar >= 22 || Ennemi.LIST.getList().get(randChar).isBoss()) { // 22: TAILLE DE LA LISTE ENNEMI
-                randChar = random.nextInt(i + 1);
+            if (!haveBoss(wave) && AllWaves.size() > 3) {
+                wave.add(addBoss());
             }
-            ennemisTerminal.add(new Ennemi(Ennemi.LIST.getList().get(randChar)));
+
+            int randChar = random.nextInt(i);
+            while (randChar >= Ennemi.LIST.getList().size()) {
+                randChar = random.nextInt(i);
+            }
 
             if (i == limite) { // AJUSTABLE
 
-                if (i > 6) {
-                    ennemisTerminal.add(new Ennemi(Ennemi.LIST.getBossList().get(randBoss)));
-                }
-                vague.add(ennemisTerminal);
+                AllWaves.add(wave);
                 limite = limite + limite * 1 / 2 + 2;
-                ennemisTerminal = new ArrayList<>();
+                wave = new ArrayList<>();
             }
+            wave.add(new Ennemi(Ennemi.LIST.getList().get(randChar)));
         }
 
+    }
+
+    private Ennemi addBoss() {
+        int randBoss = random.nextInt(Ennemi.LIST.getBossList().size());
+        return new Ennemi(Ennemi.LIST.getBossList().get(randBoss));
+    }
+
+    private boolean haveBoss(ArrayList<Ennemi> ennemisTerminal) {
+        for (Ennemi ennemi : ennemisTerminal) {
+            if (ennemi.isBoss()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void difficultyAjust(Difficulty diff) { // AJUSTABLE
@@ -71,10 +84,10 @@ public class InitWaves {
     }
 
     public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
-        return vague;
+        return AllWaves;
     }
 
     public ArrayList<Ennemi> getiWave(int i) {
-        return vague.get(i);
+        return AllWaves.get(i);
     }
 }

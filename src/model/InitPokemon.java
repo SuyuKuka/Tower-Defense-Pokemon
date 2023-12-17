@@ -8,7 +8,7 @@ public class InitPokemon {
 
     public static void loadingChar() throws FileNotFoundException {
         // TROUVER SI POSSIBLE UNE MEILLEUR ALTERNATIVE
-        File file = new File("ressources/config/PokemonLoader2.csv");
+        File file = new File("ressources/config/PokemonLoader.csv");
         Scanner sc = new Scanner(file);
         while (sc.hasNext()) {
             String[] info = new String[8];
