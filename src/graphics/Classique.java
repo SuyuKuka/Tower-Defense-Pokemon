@@ -29,11 +29,6 @@ public class Classique extends JPanel {
         JButton mediumButton = new JButton(new ImageIcon("ressources/button/moyen_button.png"));
         JButton hardButton = new JButton(new ImageIcon("ressources/button/difficile_button.png"));
 
-        main.buttonPressed(easyButton, "gameScreen_c_facile");
-        main.buttonPressed(mediumButton, "gameScreen_c_moyen");
-        main.buttonPressed(hardButton, "gameScreen_c_difficile");
-        
-
         easyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         mediumButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         hardButton.setAlignmentX(Component.CENTER_ALIGNMENT);

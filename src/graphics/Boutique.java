@@ -24,7 +24,6 @@ public class Boutique extends JPanel {
         backPanel.setOpaque(false);
         
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        main.buttonPressed(backButton, "retour");
 
         backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
         backPanel.add(backButton);

@@ -31,11 +31,6 @@ public class MainMenu extends JPanel {
         JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
-        main.buttonPressed(classiqueButton, "classique");
-        main.buttonPressed(marathonButton, "marathon");
-        main.buttonPressed(boutiqueButton, "boutique");
-        main.buttonPressed(optionsButton, "options");
-
         // Centrer les boutons verticalement
         classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
