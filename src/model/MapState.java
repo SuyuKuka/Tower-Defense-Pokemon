@@ -106,28 +106,25 @@ public class MapState {
     public void startGraphics(GameScreen screen, String difficulty) {
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(stringToDifficulty(difficulty));
-
+    
         int nbTour = 6; // AJUSTABLE
-
+    
         allEnnemis = w.getAllEnnemis();
+        for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                e.setMap(m);
+            }
+        }
 
-        int step = 0;
-        Timer timer = new Timer();
         while (gameContinue()) {
-            screen.repaint();
-
+             int step = 0;
+            //m.affiche(ennemiPresent);
             moveOnMap();
             loadNextWave();
-            m.affiche(ennemiPresent);
-            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            // System.out.println("Ennemie en attente:" + wave.size());
-            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
-
+    
             step = ennemiComing(step);
             step++;
-
+    
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {

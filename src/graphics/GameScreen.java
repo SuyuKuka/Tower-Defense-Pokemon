@@ -87,27 +87,6 @@ public class GameScreen extends JPanel {
         ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         ennemiPanel.add(ennemiLabel);
 
-        createEnnemiLabel("Carapuce", container);
-        createEnnemiLabel("Salameche", container);
-        createEnnemiLabel("Bulbizarre", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        createEnnemiLabel("KAIXIANG", container);
-        
-        
-
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
         ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -238,12 +217,12 @@ public class GameScreen extends JPanel {
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {
         for(Ennemi e : ennemiPresent){
-            JLabel ennemiName = new JLabel(e.getName());
-            ennemiPanel.add(ennemiName);
+            createEnnemiLabel(e, ennemiPanel);
+            System.out.println(ennemiPresent.size());
         }
     }
 
-    public void createEnnemiLabel(String name, JPanel container){
+    public void createEnnemiLabel(Ennemi e, JPanel container){
         // 1. Create a new JPanel to hold all the elements.
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
         ennemiInfo.setOpaque(false);
@@ -255,7 +234,7 @@ public class GameScreen extends JPanel {
         profilPhoto.setPreferredSize(new Dimension(50, 50));
 
         // 3. Create a JLabel for the name and set its properties (font, color, etc.).
-        JLabel nameLabel = new JLabel(name);
+        JLabel nameLabel = new JLabel(e.getName());
         nameLabel.setOpaque(false);
         nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         nameLabel.setForeground(Color.WHITE);
@@ -264,8 +243,8 @@ public class GameScreen extends JPanel {
         JProgressBar healthBar = new JProgressBar();
         healthBar.setOpaque(false);
         healthBar.setMinimum(0);
-        healthBar.setMaximum(200);
-        healthBar.setValue(50);
+        healthBar.setMaximum((int) e.getTotalPv());
+        healthBar.setValue((int) e.getPv());
         healthBar.setForeground(Color.RED);
         healthBar.setStringPainted(true);
 
@@ -292,5 +271,10 @@ public class GameScreen extends JPanel {
 
         // 7. Add the JPanel to the container.
         container.add(ennemiInfo);
+    }
+
+    public void startLevel(String buttonName){
+        System.out.println(buttonName);
+        getState().startGraphics(this, buttonName);
     }
 }

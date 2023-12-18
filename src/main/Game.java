@@ -130,13 +130,17 @@ public class Game extends JFrame {
             }else{
                 if(buttonName.length()>=10 && buttonName.substring(0, 10).equals("gameScreen")){
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
-                    //gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13, buttonName.length()));
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            gameScreen.startLevel(buttonName.substring(13, buttonName.length()));
+                        }
+                    });
                 }else{
-                    cardLayout.show(mainPanel, buttonName);
+                    cardLayout.show(mainPanel, buttonName);       
                 }
             }
         });
         timer.setRepeats(false);
-        timer.start();
+        timer.start();   
     }
 }

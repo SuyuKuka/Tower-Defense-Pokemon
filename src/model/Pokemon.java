@@ -7,6 +7,7 @@ public class Pokemon {
     }
 
     private String name;
+    private double totalPv;
     private double pv; // pv
     private double physical; // tour -> atk physical, bad -> def physique
     private double special; // tour -> atk spécial, bad -> def special
@@ -24,6 +25,7 @@ public class Pokemon {
         type[1] = type1;
         speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
+        totalPv = pv;
     }
 
     public Pokemon() {
@@ -99,4 +101,7 @@ public class Pokemon {
         this.type[1]=type;
     }
 
+    public double getTotalPv() {
+        return totalPv;
+    }
 }
