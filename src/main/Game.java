@@ -1,10 +1,10 @@
 package main;
 
-import graphics.Boutique;
-import graphics.Classique;
+import graphics.Shop;
+import graphics.Classic;
 import graphics.GameScreen;
 import graphics.MainMenu;
-import graphics.Marathon;
+import graphics.Endless;
 import graphics.Options;
 import model.MapState;
 import java.awt.*;
@@ -38,14 +38,14 @@ public class Game extends JFrame {
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //Background
-        if(backgroundImage == null){
+        // Background
+        if (backgroundImage == null) {
             Random rand = new Random();
             int background_random = rand.nextInt(3);
             File file = new File("ressources/background/background" + background_random + ".png");
             try {
                 backgroundImage = ImageIO.read(file);
-                if(backgroundImage==null){
+                if (backgroundImage == null) {
                     backgroundImage = ImageIO.read(file);
                 }
             } catch (IOException e) {
@@ -62,9 +62,9 @@ public class Game extends JFrame {
         mainPanel.setOpaque(false);
 
         MainMenu menu = new MainMenu(this);
-        Classique classique = new Classique(this);
-        Marathon marathon = new Marathon(this);
-        Boutique boutique = new Boutique(this);
+        Classic classique = new Classic(this);
+        Endless marathon = new Endless(this);
+        Shop boutique = new Shop(this);
         Options options = new Options(this);
 
         mainPanel.add(menu, "menu");
@@ -73,7 +73,7 @@ public class Game extends JFrame {
         mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
         mainPanel.add(gameScreen, "gameScreen");
-        
+
         add(mainPanel);
         setVisible(true);
     }
@@ -84,13 +84,12 @@ public class Game extends JFrame {
             terminal.startTerminal();
         } else {
             javax.swing.SwingUtilities.invokeLater(
-				new Runnable() {
-					public void run() {
-						Game game = new Game();
-						game.setVisible(true);
-					}
-				}
-			);
+                    new Runnable() {
+                        public void run() {
+                            Game game = new Game();
+                            game.setVisible(true);
+                        }
+                    });
         }
     }
 
@@ -104,16 +103,17 @@ public class Game extends JFrame {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
-                button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
-            }else{
+            if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
+                button.setIcon(
+                        new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
+            } else {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
 
             Timer timer = new Timer(500, e1 -> {
-                if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
+                if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
                     button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
-                }else{
+                } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
                 changePanel(st);
@@ -122,16 +122,17 @@ public class Game extends JFrame {
             timer.start();
         });
     }
-    
+
     private void changePanel(String buttonName) {
         Timer timer = new Timer(1, e1 -> {
-            if(buttonName.equals("retour")){
+            if (buttonName.equals("retour")) {
                 cardLayout.show(mainPanel, "menu");
-            }else{
-                if(buttonName.length()>=10 && buttonName.substring(0, 10).equals("gameScreen")){
+            } else {
+                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
-                    //gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13, buttonName.length()));
-                }else{
+                    // gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13,
+                    // buttonName.length()));
+                } else {
                     cardLayout.show(mainPanel, buttonName);
                 }
             }
