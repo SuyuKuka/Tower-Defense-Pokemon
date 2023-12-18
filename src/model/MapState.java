@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import model.InitWaves.Difficulty;
@@ -27,6 +28,7 @@ public class MapState {
     private int pv = 3;
 
     private int limiteDeTemps = 30;
+    int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     public MapState() {
         Map map = new Map(20, 20);
@@ -123,7 +125,8 @@ public class MapState {
             // System.out.println("Ennemie en attente:" + wave.size());
             // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
             // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 -
+            // step));
 
             step = ennemiComing(step);
             step++;
@@ -236,7 +239,7 @@ public class MapState {
         return m;
     }
 
-    public Difficulty stringToDifficulty(String difficulty){
+    public Difficulty stringToDifficulty(String difficulty) {
         switch (difficulty) {
             case "facile":
                 return Difficulty.EASY;

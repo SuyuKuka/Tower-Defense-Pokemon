@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Options extends JPanel {
-    public Options(Game main){
-        System.out.println("Options");
+    public Options(Game main) {
+
         setOpaque(false);
         setLayout(new BorderLayout());
-        //Titre
+        // Titre
         JLabel heading = new JLabel("Options");
         heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
         heading.setForeground(Color.WHITE);
@@ -20,14 +20,14 @@ public class Options extends JPanel {
         titlePanel.add(heading, new GridBagConstraints());
         titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 48, 0));
 
-        //Back
+        // Back
         JPanel backPanel = new JPanel();
         backPanel.setOpaque(false);
-        
+
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         main.buttonPressed(backButton, "retour");
 
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
+        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
         backPanel.add(backButton);
 
         add(titlePanel, BorderLayout.NORTH);

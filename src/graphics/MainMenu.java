@@ -7,14 +7,14 @@ import java.awt.*;
 
 public class MainMenu extends JPanel {
     public MainMenu(Game main) {
-        System.out.println("Menu");
+
         setLayout(new BorderLayout());
         setOpaque(false);
 
         // Titre
         JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setOpaque(false);
-    
+
         JLabel heading = new JLabel();
         ImageIcon icon = new ImageIcon("ressources/title.png");
         icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
@@ -52,7 +52,7 @@ public class MainMenu extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 
-        //Profil
+        // Profil
         JPanel profilPanel = new JPanel();
         profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -69,15 +69,15 @@ public class MainMenu extends JPanel {
 
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
-        
+
         JLabel pseudo = new JLabel("  Joueur1 ");
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
-        
+
         JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
-        
+
         cadrePanel.add(profilPhoto, BorderLayout.WEST);
         infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);

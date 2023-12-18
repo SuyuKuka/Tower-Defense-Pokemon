@@ -650,6 +650,7 @@ public class Map {
     }
 
     private void deployObstacles() {
+
         for (int[] obst : obstaclePos) {
             map[obst[0]][obst[1]] = 9;
             expandTop(obst);

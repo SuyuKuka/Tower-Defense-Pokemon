@@ -23,29 +23,29 @@ public class Game extends JFrame {
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
+    int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+
     public Game() {
-        if (fullscreen) {
-            setAlwaysOnTop(true);
-            setUndecorated(true);
-            getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-            setResizable(false);
-        } else {
-            setSize(1224, 654);
-            setLocationRelativeTo(null);
-        }
+
+        setAlwaysOnTop(true);
+        setSize(screenWidth - screenWidth / 3,
+                screenHeight - screenHeight / 3);
+
+        setLocationRelativeTo(null);
+
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //Background
-        if(backgroundImage == null){
+        // Background
+        if (backgroundImage == null) {
             Random rand = new Random();
             int background_random = rand.nextInt(3);
             File file = new File("ressources/background/background" + background_random + ".png");
             try {
                 backgroundImage = ImageIO.read(file);
-                if(backgroundImage==null){
+                if (backgroundImage == null) {
                     backgroundImage = ImageIO.read(file);
                 }
             } catch (IOException e) {
@@ -73,24 +73,23 @@ public class Game extends JFrame {
         mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
         mainPanel.add(gameScreen, "gameScreen");
-        
+
         add(mainPanel);
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        if (args.length != 0 && args[0].equals("[terminal]")) {
+        if (args.length != 0 && args[0].equals("[teral]")) {
             MapState terminal = new MapState();
             terminal.startTerminal();
         } else {
             javax.swing.SwingUtilities.invokeLater(
-				new Runnable() {
-					public void run() {
-						Game game = new Game();
-						game.setVisible(true);
-					}
-				}
-			);
+                    new Runnable() {
+                        public void run() {
+                            Game game = new Game();
+                            game.setVisible(true);
+                        }
+                    });
         }
     }
 
@@ -104,16 +103,17 @@ public class Game extends JFrame {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
-                button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
-            }else{
+            if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
+                button.setIcon(
+                        new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
+            } else {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
 
             Timer timer = new Timer(500, e1 -> {
-                if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
+                if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
                     button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
-                }else{
+                } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
                 changePanel(st);
@@ -122,16 +122,17 @@ public class Game extends JFrame {
             timer.start();
         });
     }
-    
+
     private void changePanel(String buttonName) {
         Timer timer = new Timer(1, e1 -> {
-            if(buttonName.equals("retour")){
+            if (buttonName.equals("retour")) {
                 cardLayout.show(mainPanel, "menu");
-            }else{
-                if(buttonName.length()>=10 && buttonName.substring(0, 10).equals("gameScreen")){
+            } else {
+                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
-                    //gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13, buttonName.length()));
-                }else{
+                    // gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13,
+                    // buttonName.length()));
+                } else {
                     cardLayout.show(mainPanel, buttonName);
                 }
             }
