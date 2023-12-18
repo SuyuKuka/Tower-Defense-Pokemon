@@ -12,13 +12,11 @@ public class Rectangle extends JPanel implements MouseInputListener {
     private double xClick;
     private double yClick;
     private int numero;
-    private int arcWidth = 30; // ajustez la largeur de l'arc selon vos besoins
-    private int arcHeight = 30; // ajustez la hauteur de l'arc selon vos besoins
+    private int arcWidth = 30;
+    private int arcHeight = 30;
 
-    public Rectangle(int numero) {
-        int cote = 10;
+    public Rectangle(int numero) {//faudra surement mettre en argument la tour
         setLayout(null); 
-        setBounds(0, 0, cote * 2, cote);
         setOpaque(false);
         if (numero <= 6) {
             setForeground(new Color(0, 120, 0));
@@ -45,6 +43,7 @@ public class Rectangle extends JPanel implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		//Affiche les infos 
 		if(!hasMove) {
 			System.out.println("Rectangle " + numero + " - entrée mouvement");
 			xClick=e.getX();
@@ -63,29 +62,29 @@ public class Rectangle extends JPanel implements MouseInputListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// System.out.println("Released");
+		//Pose a ces coordonnées la
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// System.out.println("Dragged");
-
+		int newX = (int) (getLocation().getX() + e.getX() - xClick - getWidth() / 2);
+		int newY = (int) (getLocation().getY() + e.getY() - yClick - getHeight() / 2);
+        setLocation(newX, newY);
+        repaint();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// if(hasMove) {
-		// 	//Position du cadre, épaisseur du cadre, endroit ou on a cliqué
-		// 	double x=e.getXOnScreen() - cadre.getX() - xClick;
-		// 	double y=e.getYOnScreen() - cadre.getY() - cadre.getInsets().top - yClick;
-		// 	setLocation((int) x, (int) y);
-		// }
+
 	}
 }
