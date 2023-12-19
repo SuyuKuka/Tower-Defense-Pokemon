@@ -278,9 +278,4 @@ public class GameScreen extends JPanel {
         // 7. Add the JPanel to the container.
         container.add(ennemiInfo);
     }
-
-    public void startLevel(String buttonName) {
-        System.out.println(buttonName);
-        getState().startGraphics(this, buttonName);
-    }
 }

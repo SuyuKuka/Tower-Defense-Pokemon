@@ -104,10 +104,10 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(UpdateMap screen) {
+    public void startGraphic(UpdateMap screen, String difficulty) {
 
         InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(Difficulty.HARD);
+        InitWaves w = new InitWaves(stringToDifficulty(difficulty));
         Scanner sc = new Scanner(System.in);
 
         int nbTour = 6; // AJUSTABLE
