@@ -11,6 +11,7 @@ import java.awt.*;
 public class Options extends JPanel {
 
     private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
 
     public Options(Game main) {
         setOpaque(false);
@@ -28,7 +29,7 @@ public class Options extends JPanel {
 
     private JPanel titlePanel() {
         JLabel heading = new JLabel("Options");
-        heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
+        heading.setFont(maker.getCustomFont());
         heading.setForeground(Color.WHITE);
 
         JPanel titlePanel = new JPanel();

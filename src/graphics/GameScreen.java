@@ -19,6 +19,7 @@ import geometry.Rectangle;
 public class GameScreen extends JPanel {
 
     private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
 
     private int[][] map;
     private MapState state = new MapState();

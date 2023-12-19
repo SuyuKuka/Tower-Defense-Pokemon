@@ -13,7 +13,7 @@ public class GraphicsMaker {
         try {
 
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File("ressources/munro.ttf"));
-            customFont = customFont.deriveFont(Font.ITALIC, 96f);
+            customFont = customFont.deriveFont(Font.ITALIC, 60f);
 
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();

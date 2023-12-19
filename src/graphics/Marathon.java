@@ -9,7 +9,8 @@ import java.awt.*;
 
 public class Marathon extends JPanel {
 
-    private ButtonManager manager = new ButtonManager();;
+    private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
 
     public Marathon(Game main) {
         setOpaque(false);
@@ -32,8 +33,8 @@ public class Marathon extends JPanel {
     }
 
     private JPanel titlePanel() {
-        JLabel heading = new JLabel("Choisis la difficulté");
-        heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
+        JLabel heading = new JLabel("Choisis la difficulte");
+        heading.setFont(maker.getCustomFont());
         heading.setForeground(Color.WHITE);
 
         JPanel titlePanel = new JPanel();
