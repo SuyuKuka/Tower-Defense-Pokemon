@@ -2,6 +2,7 @@ package main;
 
 import graphics.Boutique;
 import graphics.Classique;
+import graphics.GameScreen;
 import graphics.UpdateMap;
 import graphics.MainMenu;
 import graphics.Marathon;
@@ -93,6 +94,7 @@ public class Game extends JFrame {
             // GameScreen gameScreen = new GameScreen(tmp);
             // tmp.startGraphic(gameScreen);
             //gameScreen.startLevel("facile");
+            
         }
     }
 

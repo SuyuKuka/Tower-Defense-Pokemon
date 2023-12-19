@@ -17,7 +17,6 @@ import graphics.UpdateMap;
 public class MapState {
 
     private Map m;
-
     private int[][] config;
 
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
@@ -261,5 +260,4 @@ public class MapState {
                 return null;
         }
     }
-
 }
