@@ -2,13 +2,16 @@ package graphics;
 
 import main.Game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import control.ButtonManager;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class MainMenu extends JPanel {
 
@@ -29,6 +32,7 @@ public class MainMenu extends JPanel {
 
         // Profil
         JPanel profilPanel = profilPanel();
+        JPanel bot = new JPanel();
 
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.EAST);
@@ -50,8 +54,10 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel profilPanel() {
-        JPanel profilPanel = new JPanel();
-        profilPanel.setOpaque(false);
+
+        loadBgImage("ressources/background/background0.jpg");
+        JPanel profilPanel = addBg("ressources/background/background0.jpg");
+
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
         JPanel infoPanel = new JPanel();
@@ -83,6 +89,36 @@ public class MainMenu extends JPanel {
         profilPanel.add(cadrePanel);
 
         return profilPanel;
+    }
+
+    private BufferedImage loadBgImage(String path) {
+        BufferedImage backgroundImage = null;
+        if (backgroundImage == null) {
+            File file = new File(path);
+            try {
+                backgroundImage = ImageIO.read(file);
+                if (backgroundImage == null) {
+                    backgroundImage = ImageIO.read(file);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return backgroundImage;
+    }
+
+    private JPanel addBg(String path) {
+        BufferedImage backgroundImage = loadBgImage(path);
+        JPanel IPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        return IPanel;
     }
 
     private JPanel buttonPanel(Game main) {
