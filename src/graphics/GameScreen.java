@@ -158,10 +158,10 @@ public class GameScreen extends JPanel {
         towerPanel.add(towerTeamPanel); 
         
         //mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
-        mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
-        add(ennemiPanel, BorderLayout.WEST);
+        //mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
+        //add(ennemiPanel, BorderLayout.WEST);
         add(mapPanel, BorderLayout.CENTER);
-        add(towerPanel, BorderLayout.EAST);
+        //add(towerPanel, BorderLayout.EAST);
     }
 
     public JPanel initiateMapPanel(JPanel mapPanel){

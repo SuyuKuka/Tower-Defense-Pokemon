@@ -67,12 +67,13 @@ public class Game extends JFrame {
         Boutique boutique = new Boutique(this);
         Options options = new Options(this);
 
-        mainPanel.add(menu, "menu");
-        mainPanel.add(classique, "classique");
-        mainPanel.add(marathon, "marathon");
-        mainPanel.add(boutique, "boutique");
-        mainPanel.add(options, "options");
+        // mainPanel.add(menu, "menu");
+        // mainPanel.add(classique, "classique");
+        // mainPanel.add(marathon, "marathon");
+        // mainPanel.add(boutique, "boutique");
+        // mainPanel.add(options, "options");
         mainPanel.add(gameScreen, "gameScreen");
+        //gameScreen.startLevel("facile");
         
         add(mainPanel);
         setVisible(true);
@@ -83,14 +84,10 @@ public class Game extends JFrame {
             MapState terminal = new MapState();
             terminal.startTerminal();
         } else {
-            javax.swing.SwingUtilities.invokeLater(
-				new Runnable() {
-					public void run() {
-						Game game = new Game();
-						game.setVisible(true);
-					}
-				}
-			);
+            Game game = new Game();
+            game.setVisible(true);
+            GameScreen gameScreen = new GameScreen(game);
+            gameScreen.startLevel("facile");
         }
     }
 
