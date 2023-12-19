@@ -275,6 +275,6 @@ public class GameScreen extends JPanel {
 
     public void startLevel(String buttonName){
         System.out.println(buttonName);
-        getState().startGraphics(this, buttonName);
+        getState().startGraphic(this);
     }
 }
