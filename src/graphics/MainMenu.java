@@ -35,6 +35,7 @@ public class MainMenu extends JPanel {
         // Profil
         JPanel profilPanel = profilPanel();
         JPanel bigProfil = bigProfilPanel();
+        bigProfil.setVisible(false);
 
         profilPanel.addMouseListener(new MouseAdapter() {
             @Override
