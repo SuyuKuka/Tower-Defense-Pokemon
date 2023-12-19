@@ -8,21 +8,20 @@ import model.Type;
 public class Terhal extends Tower implements TowerLoader {
 
     public Terhal(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
-        super("Terhal", atkPhysical, atkSpecial, type1, type2);
-        System.out.println("Charge le sprite"); // ressouces/sprite/terhal.png
+        super("Terhal", atkPhysical, atkSpecial, type1, type2, "ressouces/sprite/beldum.png");
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 20) {
-            System.out.println("Charge le sprite"); // ressouces/sprite/Metang.png
+            setSprite("ressouces/sprite/metang.png");
             setName("Metang");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 45) {
-            System.out.println("Charge le sprite"); // ressouces/sprite/Metalosse.png
+            setSprite("ressouces/sprite/metagross.png");
             setName("Metalosse");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);

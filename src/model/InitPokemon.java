@@ -25,7 +25,8 @@ public class InitPokemon {
                 Integer.valueOf(info[3]), // DEFSPE
                 Type.valueOf(info[4]), // TYPE1
                 Type.stringToType(info[5]), // TYPE2
-                info[6].equals("VRAI")); // BOSS
+                info[6].equals("VRAI"),
+                info[7]); // BOSS
         e.setSpeed(Pokemon.stringToSpeed(info[7])); // SPEED
 
     }

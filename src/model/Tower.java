@@ -23,8 +23,8 @@ public class Tower extends Pokemon {
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    public Tower(String name, double atkPhysical, double atkSpecial, Type type1, Type type2) {
-        super(name, 0, atkPhysical, atkSpecial, type1, type2, true);
+    public Tower(String name, double atkPhysical, double atkSpecial, Type type1, Type type2, String sprite) {
+        super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
         this.rayon = Rayon.SMALL;
         exp = 0;
         TList.add(this);

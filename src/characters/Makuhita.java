@@ -8,7 +8,7 @@ import model.Type;
 public class Makuhita extends Tower implements TowerLoader {
 
     public Makuhita(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
-        super("Makuhita", atkPhysical, atkSpecial, type1, type2);
+        super("Makuhita", atkPhysical, atkSpecial, type1, type2, "ressources/sprite/makuhita.png");
         System.out.println("Charge le sprite"); // ressouces/sprite/makuhita.png
         primarySkill();
     }
@@ -16,7 +16,7 @@ public class Makuhita extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 16) {
-            System.out.println("Charge le sprite"); // ressouces/sprite/Hariyama.png
+            setSprite("ressouces/sprite/hariyama.png");
             setName("Hariyama");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial());

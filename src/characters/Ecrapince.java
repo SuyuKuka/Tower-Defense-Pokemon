@@ -7,15 +7,14 @@ import model.Type;
 public class Ecrapince extends Tower implements TowerLoader {
 
     public Ecrapince(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
-        super("Ecrapince", atkPhysical, atkSpecial, type1, type2);
-        System.out.println("Charge le sprite"); // ressouces/sprite/ecrapince.png
+        super("Ecrapince", atkPhysical, atkSpecial, type1, type2, "ressources/sprite/torkoal.png");
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            System.out.println("Charge le sprite"); // ressouces/sprite/Colhomard.png
+            setSprite("ressouces/sprite/crawdaunt.png");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);

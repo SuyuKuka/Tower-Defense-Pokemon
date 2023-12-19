@@ -7,21 +7,20 @@ import model.Type;
 public class Anchwatt extends Tower implements TowerLoader {
 
     public Anchwatt(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
-        super("Anchwatt", atkPhysical, atkSpecial, type1, type2);
-        System.out.println("Charge le sprite");
+        super("Anchwatt", atkPhysical, atkSpecial, type1, type2, "ressources/sprite/tynamo.png");
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 39) {
-            System.out.println("Charge le sprite");
+            setSprite("ressources/sprite/eelektrik.png");
             setName("Lamperoie");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 45) {
-            System.out.println("Charge le sprite");
+            setSprite("ressources/sprite/eelektross.png");
             setName("Ohmassacre");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);
