@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.GameScreen;
+import graphics.UpdateMap;
 
 public class MapState {
 
@@ -103,12 +104,16 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphics(GameScreen screen, String difficulty) {
+    public void startGraphic(UpdateMap screen) {
+
         InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(stringToDifficulty(difficulty));
-    
+        InitWaves w = new InitWaves(Difficulty.HARD);
+        Scanner sc = new Scanner(System.in);
+
         int nbTour = 6; // AJUSTABLE
-    
+
+        infoTerminal();
+
         allEnnemis = w.getAllEnnemis();
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
@@ -116,15 +121,24 @@ public class MapState {
             }
         }
 
+        int step = 0;
+        Timer timer = new Timer();
         while (gameContinue()) {
-             int step = 0;
-            //m.affiche(ennemiPresent);
+
+            screen.repaint();
+
             moveOnMap();
             loadNextWave();
-    
+            m.affiche(ennemiPresent);
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            System.out.println("Ennemie en attente:" + wave.size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
             step = ennemiComing(step);
             step++;
-    
+
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
@@ -136,6 +150,7 @@ public class MapState {
             };
             task.run();
         }
+        sc.close();
     }
 
     private boolean gameContinue() {
@@ -233,7 +248,7 @@ public class MapState {
         return m;
     }
 
-    public Difficulty stringToDifficulty(String difficulty){
+    public Difficulty stringToDifficulty(String difficulty) {
         switch (difficulty) {
             case "facile":
                 return Difficulty.EASY;
