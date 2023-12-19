@@ -3,50 +3,53 @@ package graphics;
 import main.Game;
 
 import javax.swing.*;
+
+import control.ButtonManager;
+
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenu extends JPanel {
+
+    private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
+
     public MainMenu(Game main) {
+
         setLayout(new BorderLayout());
         setOpaque(false);
 
         // Titre
-        JPanel titlePanel = new JPanel(new GridBagLayout());
-        titlePanel.setOpaque(false);
-    
-        JLabel heading = new JLabel();
-        ImageIcon icon = new ImageIcon("ressources/title.png");
-        icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
-        heading.setIcon(icon);
-
-        titlePanel.add(heading, new GridBagConstraints());
+        JPanel titlePanel = titlePanel();
 
         // Boutons
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setOpaque(false);
+        JPanel buttonPanel = buttonPanel(main);
+        buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
 
-        JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
-        JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
-        JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
-        JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
+        // Profil
+        JPanel profilPanel = profilPanel();
 
-        // Centrer les boutons verticalement
-        classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boutiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(titlePanel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.EAST);
+        add(profilPanel, BorderLayout.SOUTH);
 
-        // Ajouter des boutons avec des rigid areas (espace fixe) entre eux
-        buttonPanel.add(classiqueButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        buttonPanel.add(marathonButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        buttonPanel.add(boutiqueButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        buttonPanel.add(optionsButton);
+        setVisible(true);
+    }
 
-        //Profil
+    private JPanel titlePanel() {
+        JPanel titlePanel = new JPanel();
+        JLabel heading = new JLabel("POKEREVOLUTE");
+        heading.setFont(maker.getCustomFont());
+        heading.setForeground(Color.WHITE);
+
+        titlePanel.add(heading, new GridBagConstraints());
+        titlePanel.setBackground(Color.BLACK);
+
+        return titlePanel;
+    }
+
+    private JPanel profilPanel() {
         JPanel profilPanel = new JPanel();
         profilPanel.setOpaque(false);
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -63,15 +66,15 @@ public class MainMenu extends JPanel {
 
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
         profilPhoto.setPreferredSize(new Dimension(50, 50));
-        
+
         JLabel pseudo = new JLabel("  Joueur1 ");
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
-        
+
         JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
-        
+
         cadrePanel.add(profilPhoto, BorderLayout.WEST);
         infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);
@@ -79,10 +82,41 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        add(titlePanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
-        add(profilPanel, BorderLayout.SOUTH);
-
-        setVisible(true);
+        return profilPanel;
     }
+
+    private JPanel buttonPanel(Game main) {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setOpaque(false);
+
+        JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
+        JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
+        JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
+        JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
+
+        manager.buttonPressed(classiqueButton, "classique", main);
+        manager.buttonPressed(marathonButton, "marathon", main);
+        manager.buttonPressed(boutiqueButton, "boutique", main);
+        manager.buttonPressed(optionsButton, "options", main);
+
+        // Centrer les boutons verticalement
+        classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        boutiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Ajouter des boutons avec des rigid areas (espace fixe) entre eux
+        buttonPanel.add(classiqueButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        buttonPanel.add(marathonButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        buttonPanel.add(boutiqueButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        buttonPanel.add(optionsButton);
+
+        return buttonPanel;
+
+    }
+
 }

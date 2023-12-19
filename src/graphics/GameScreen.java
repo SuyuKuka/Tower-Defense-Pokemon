@@ -5,6 +5,8 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 
+import control.ButtonManager;
+
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -15,11 +17,14 @@ import main.Game;
 import geometry.Rectangle;
 
 public class GameScreen extends JPanel {
+
+    private ButtonManager manager = new ButtonManager();
+
     private int[][] map;
     private MapState state = new MapState();
     private ArrayList<Ennemi> ennemiPresent;
 
-    //Création des 3 catégories de panels
+    // Création des 3 catégories de panels
     private JPanel ennemiPanel;
     private JPanel mapPanel = new JPanel();
     private JPanel towerPanel;
@@ -29,25 +34,25 @@ public class GameScreen extends JPanel {
         this.ennemiPresent = state.getEnnemiPresent();
         this.map = state.getMap().getMap();
 
-        towerPanel = new JPanel(){
+        towerPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/team1.png")), 0, 0,  800, 800, this);
+                    g.drawImage(ImageIO.read(new File("ressources/template/team1.png")), 0, 0, 800, 800, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         };
-        
-        //Initialisation des panels
-        ennemiPanel = new JPanel(){
+
+        // Initialisation des panels
+        ennemiPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0,  600, 720, this);
+                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 720, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -60,21 +65,21 @@ public class GameScreen extends JPanel {
         towerPanel.setPreferredSize(new Dimension(340, 0));
         towerPanel.setLayout(new BorderLayout());
 
-        //Ennemi
+        // Ennemi
         JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0,  600, 1000, this);
-                    
+                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 1000, this);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                
+
             }
         };
-        
+
         container.setOpaque(false);
 
         BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -91,14 +96,14 @@ public class GameScreen extends JPanel {
         ennemiList.setOpaque(false);
         ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
-        ennemiPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
+        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        ennemiPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
         ennemiPanel.add(ennemiList);
-        //Map
+        // Map
         mapPanel = initiateMapPanel(mapPanel);
 
-        //Tour
-        
+        // Tour
+
         JLabel team = new JLabel("Ton équipe");
         team.setForeground(Color.WHITE);
         team.setFont(new Font(Font.SERIF, Font.BOLD, 20));
@@ -144,10 +149,10 @@ public class GameScreen extends JPanel {
         }
 
         JButton pcButton = new JButton(new ImageIcon("ressources/button/pc_button.png"));
-        main.buttonPressed(pcButton, "pc");
+        manager.buttonPressed(pcButton, "pc", main);
 
-        towerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); //TROP PUISSANT
-        towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); //TROP PUISSANT
+        towerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); // TROP PUISSANT
 
         towerPanel.add(team, BorderLayout.NORTH);
         towerTeamPanel.add(row1);
@@ -155,17 +160,17 @@ public class GameScreen extends JPanel {
         towerTeamPanel.add(row3);
         towerTeamPanel.add(row4);
         towerPanel.add(pcButton, BorderLayout.SOUTH);
-        towerPanel.add(towerTeamPanel); 
-        
-        //mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
+        towerPanel.add(towerTeamPanel);
+
+        // mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
         mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
         add(ennemiPanel, BorderLayout.WEST);
         add(mapPanel, BorderLayout.CENTER);
         add(towerPanel, BorderLayout.EAST);
     }
 
-    public JPanel initiateMapPanel(JPanel mapPanel){
-        mapPanel = new JPanel() { 
+    public JPanel initiateMapPanel(JPanel mapPanel) {
+        mapPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -211,22 +216,22 @@ public class GameScreen extends JPanel {
         return mapPanel;
     }
 
-    public MapState getState(){
+    public MapState getState() {
         return state;
     }
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {
-        for(Ennemi e : ennemiPresent){
+        for (Ennemi e : ennemiPresent) {
             createEnnemiLabel(e, ennemiPanel);
             System.out.println(ennemiPresent.size());
         }
     }
 
-    public void createEnnemiLabel(Ennemi e, JPanel container){
+    public void createEnnemiLabel(Ennemi e, JPanel container) {
         // 1. Create a new JPanel to hold all the elements.
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
         ennemiInfo.setOpaque(false);
-        //ennemiInfo.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        // ennemiInfo.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 
         // 2. Create a JLabel for the profile photo and set its size.
         JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
@@ -273,7 +278,7 @@ public class GameScreen extends JPanel {
         container.add(ennemiInfo);
     }
 
-    public void startLevel(String buttonName){
+    public void startLevel(String buttonName) {
         System.out.println(buttonName);
         getState().startGraphics(this, buttonName);
     }
