@@ -2,7 +2,7 @@ package main;
 
 import graphics.Boutique;
 import graphics.Classique;
-import graphics.GameScreen;
+import graphics.UpdateMap;
 import graphics.MainMenu;
 import graphics.Marathon;
 import graphics.Options;
@@ -20,7 +20,7 @@ public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
     MapState tmp = new MapState();
-    private GameScreen gameScreen = new GameScreen(tmp);
+    private UpdateMap gameScreen = new UpdateMap(tmp);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 

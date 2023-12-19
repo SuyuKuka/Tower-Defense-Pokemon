@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import characters.Starter;
 import characters.Starter.Salameche;
-import graphics.GameScreen;
+import graphics.UpdateMap;
 
 public class MapState {
 
@@ -105,7 +105,7 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(GameScreen screen) {
+    public void startGraphic(UpdateMap screen) {
 
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(Difficulty.HARD);

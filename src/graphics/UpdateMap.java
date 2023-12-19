@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 import model.Ennemi;
 import model.MapState;
 
-public class GameScreen extends JPanel {
+public class UpdateMap extends JPanel {
 
     private MapState state;
 
-    public GameScreen(MapState state) {
+    public UpdateMap(MapState state) {
         this.state = state;
 
     }
