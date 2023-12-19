@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JPanel;
+
 import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.GameScreen;

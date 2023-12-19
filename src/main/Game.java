@@ -19,7 +19,8 @@ import javax.swing.*;
 public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
-    private GameScreen gameScreen = new GameScreen(this);
+    MapState tmp = new MapState();
+    private GameScreen gameScreen = new GameScreen(tmp);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
@@ -73,10 +74,12 @@ public class Game extends JFrame {
         // mainPanel.add(boutique, "boutique");
         // mainPanel.add(options, "options");
         mainPanel.add(gameScreen, "gameScreen");
+        
         //gameScreen.startLevel("facile");
         
         add(mainPanel);
         setVisible(true);
+        tmp.startGraphic(gameScreen);
     }
 
     public static void main(String[] args) {
@@ -86,8 +89,10 @@ public class Game extends JFrame {
         } else {
             Game game = new Game();
             game.setVisible(true);
-            GameScreen gameScreen = new GameScreen(game);
-            gameScreen.startLevel("facile");
+            
+            // GameScreen gameScreen = new GameScreen(tmp);
+            // tmp.startGraphic(gameScreen);
+            //gameScreen.startLevel("facile");
         }
     }
 
@@ -129,7 +134,7 @@ public class Game extends JFrame {
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            gameScreen.startLevel(buttonName.substring(13, buttonName.length()));
+                            //gameScreen.startLevel(buttonName.substring(13, buttonName.length()));
                         }
                     });
                 }else{
