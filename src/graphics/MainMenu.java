@@ -10,8 +10,6 @@ import control.ButtonManager;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -36,15 +34,26 @@ public class MainMenu extends JPanel {
 
         // Profil
         JPanel profilPanel = profilPanel();
-        JPanel bigProfil = new JPanel();
-        bigProfil.setBounds(50, 50, 200, 150);
+        JPanel bigProfil = bigProfilPanel();
+
+        profilPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                bigProfil.setVisible(false);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                bigProfil.setVisible(true);
+            }
+        });
 
         menu.add(titlePanel, BorderLayout.NORTH);
         menu.add(buttonPanel, BorderLayout.EAST);
         menu.add(profilPanel, BorderLayout.SOUTH);
+        menu.add(bigProfil, BorderLayout.WEST);
 
         add(menu, "menu");
-        add(bigProfil, "bigProfil");
 
         setVisible(true);
     }
@@ -93,6 +102,45 @@ public class MainMenu extends JPanel {
 
         return buttonPanel;
 
+    }
+
+    private JPanel bigProfilPanel() {
+        JPanel profilPanel = new JPanel();
+
+        profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.setBackground(Color.BLACK);
+
+        JPanel cadrePanel = new JPanel();
+
+        cadrePanel.setLayout(new BorderLayout());
+        cadrePanel.setBackground(Color.BLACK);
+        cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
+
+        cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        BufferedImage resize = loadBgImage("ressources/profile/profil_photo.png");
+        Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JLabel profilPhoto = new JLabel(new ImageIcon(resized));
+
+        JLabel pseudo = new JLabel("  Joueur1 ");
+        pseudo.setForeground(Color.WHITE);
+        pseudo.setFont(maker.getCustomFont().deriveFont(20f));
+
+        JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
+        levelAccount.setForeground(Color.WHITE);
+        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
+
+        cadrePanel.add(profilPhoto, BorderLayout.WEST);
+        infoPanel.add(pseudo, BorderLayout.NORTH);
+        infoPanel.add(levelAccount, BorderLayout.CENTER);
+
+        cadrePanel.add(infoPanel, BorderLayout.CENTER);
+        profilPanel.add(cadrePanel);
+
+        return profilPanel;
     }
 
     private JPanel profilPanel() {
