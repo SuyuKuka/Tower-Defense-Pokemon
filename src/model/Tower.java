@@ -26,7 +26,7 @@ public class Tower extends Pokemon {
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    public Tower(String name, double atkPhysical, double atkSpecial, Type type1, Type type2, String sprite) {
+    public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite) {
         super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
         this.rayon = Rayon.SMALL;
         exp = 0;
@@ -125,11 +125,11 @@ public class Tower extends Pokemon {
             System.out.println("Pas de cible");
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                if (Type.typeChart(skills[select], uniqueTarget) == 0) {
+                if (Types.typeChart(skills[select], uniqueTarget) == 0) {
                     System.out.println("Immunisé");
                 } else {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                            * Type.typeChart(skills[select], uniqueTarget);
+                            * Types.typeChart(skills[select], uniqueTarget);
                     if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
                         physical *= 0.5;
                     }
@@ -145,11 +145,11 @@ public class Tower extends Pokemon {
                             getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                if (Type.typeChart(skills[select], uniqueTarget) == 0) {
+                if (Types.typeChart(skills[select], uniqueTarget) == 0) {
                     System.out.println("Immunisé");
                 } else {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
-                            * Type.typeChart(skills[select], uniqueTarget));
+                            * Types.typeChart(skills[select], uniqueTarget));
                     if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
                         special *= 0.5;
                     }
@@ -175,11 +175,11 @@ public class Tower extends Pokemon {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                    if (Type.typeChart(skills[select], e) == 0) {
+                    if (Types.typeChart(skills[select], e) == 0) {
                         System.out.println("Immunisé");
                     } else {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
-                                * Type.typeChart(skills[select], e);
+                                * Types.typeChart(skills[select], e);
                         if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
                             physical *= 0.5;
                         }
@@ -195,12 +195,12 @@ public class Tower extends Pokemon {
                                 .println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                    if (Type.typeChart(skills[select], e) == 0) {
+                    if (Types.typeChart(skills[select], e) == 0) {
                         System.out.println("Immunisé");
 
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
-                                * Type.typeChart(skills[select], e);
+                                * Types.typeChart(skills[select], e);
                         if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
                             special *= 0.5;
                         }

@@ -7,7 +7,7 @@ import model.Types;
 
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
-        public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
+        public Salameche(String name, int atkPhysical, int atkSpecial, Types type1, Types type2) {
             super("Salameche", atkPhysical, atkSpecial, type1, type2, "ressouces/sprite/charmander.png");
             System.out.println("Charge le sprite"); // ressouces/sprite/salameche.png
             // innerFocus(); // jsp si faut l'appeller la ou pas

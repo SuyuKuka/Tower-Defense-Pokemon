@@ -20,7 +20,8 @@ public class Ennemi extends Pokemon {
     public static final Ennemi LIST = new Ennemi();
     public boolean boss;
 
-    public Ennemi(String name, double pv, double defPhysical, double defSpecial, Type type1, Type type2, boolean boss, String sprite) {
+    public Ennemi(String name, double pv, double defPhysical, double defSpecial, Types type1, Types type2, boolean boss,
+            String sprite) {
         super(name, pv, defPhysical, defSpecial, type1, type2, false, sprite);
         if (boss) {
             EBossList.add(this);
@@ -35,7 +36,8 @@ public class Ennemi extends Pokemon {
     }
 
     public Ennemi(Ennemi e) {
-        super(e.getName(), e.getPv(), e.getPhysical(), e.getSpecial(), e.getType()[0], e.getType()[1], false, e.getSprite());
+        super(e.getName(), e.getPv(), e.getPhysical(), e.getSpecial(), e.getType()[0], e.getType()[1], false,
+                e.getSprite());
         this.boss = e.isBoss();
         setSpeed(e.getSpeed());
     }

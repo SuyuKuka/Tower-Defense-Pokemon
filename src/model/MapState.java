@@ -90,7 +90,7 @@ public class MapState {
             // A METTRE DANS /control
             // Tower terminal = new Tower("Terminal", 1,1, null, null);
             Starter starterInstance = new Starter();
-            Salameche sala = starterInstance.new Salameche("Salameche", 100000, 0, Type.FEU, Type.NONE);
+            Salameche sala = starterInstance.new Salameche("Salameche", 100000, 0, Types.FEU, Types.NONE);
 
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -120,7 +120,7 @@ public class MapState {
 
         int nbTour = 6; // AJUSTABLE
 
-        //infoTerminal();
+        // infoTerminal();
 
         allEnnemis = w.getAllEnnemis();
         for (ArrayList<Ennemi> eList : allEnnemis) {
@@ -128,24 +128,24 @@ public class MapState {
                 e.setMap(m);
             }
         }
-        
 
         int step = 0;
         Timer timer = new Timer();
         while (gameContinue()) {
 
             screen.repaint();
-            
+
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
             moveOnMap();
             loadNextWave();
-            //m.affiche(ennemiPresent);
+            // m.affiche(ennemiPresent);
             // System.out.println("Vagues restantes: " + (allEnnemis.size()));
             // System.out.println("Ennemie en attente:" + wave.size());
             // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
             // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 -
+            // step));
 
             step = ennemiComing(step);
             step++;
@@ -162,7 +162,7 @@ public class MapState {
             task.run();
         }
         sc.close();
-        for(Ennemi e : screen.getePresent().getEnnemiGone()){
+        for (Ennemi e : screen.getePresent().getEnnemiGone()) {
             screen.getePresent().deleteEnnemiLabel(e);
         }
     }

@@ -17,7 +17,8 @@ public class Pokemon {
     private boolean isTower;
     private String sprite;
 
-    public Pokemon(String name, double d, double physical, double special, Type type0, Type type1, boolean isTower, String sprite) {
+    public Pokemon(String name, double d, double physical, double special, Types type0, Types type1, boolean isTower,
+            String sprite) {
         this.name = name;
         this.pv = d;
         this.physical = physical;
