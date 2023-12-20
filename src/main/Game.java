@@ -87,13 +87,17 @@ public class Game extends JFrame {
                 cardLayout.show(mainPanel, "menu");
             } else {
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+
                             state.startGraphic(updateMap, buttonName.substring(13, buttonName.length()));
+                            return null;
                         }
-                    });
+                    };
+                    worker.execute();
                 } else {
                     cardLayout.show(mainPanel, buttonName);
                 }

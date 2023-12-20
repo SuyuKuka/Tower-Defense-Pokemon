@@ -12,11 +12,11 @@ public class Pokemon {
     private double physical; // tour -> atk physical, bad -> def physique
     private double special; // tour -> atk spécial, bad -> def special
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
-    private Type[] type = new Type[2];
+    private Types[] type = new Types[2];
     private int lvl; // TODO+COMPETENCE
     private boolean isTower;
 
-    public Pokemon(String name, double d, double physical, double special, Type type0, Type type1, boolean isTower) {
+    public Pokemon(String name, double d, double physical, double special, Types type0, Types type1, boolean isTower) {
         this.name = name;
         this.pv = d;
         this.physical = physical;
@@ -49,7 +49,7 @@ public class Pokemon {
     }
 
     // GETTER SETTER
-    public Type[] getType() {
+    public Types[] getType() {
         return type;
     }
 
@@ -93,12 +93,12 @@ public class Pokemon {
         this.special = special;
     }
 
-    public void setFirstType(Type type){
-        this.type[0]=type;
+    public void setFirstType(Types type) {
+        this.type[0] = type;
     }
-    
-    public void setSecondType(Type type){
-        this.type[1]=type;
+
+    public void setSecondType(Types type) {
+        this.type[1] = type;
     }
 
     public double getTotalPv() {

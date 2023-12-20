@@ -1,6 +1,6 @@
 package model;
 
-public enum Type {
+public enum Types {
     NORMAL, FEU, EAU, PLANTE, ELECTRIQUE, GLACE,
     COMBAT, POISON, SOL, VOL, PSY, INSECTE, ROCHE,
     SPECTRE, DRAGON, TENEBRE, ACIER, FEE, NONE;
@@ -26,7 +26,7 @@ public enum Type {
             { 1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1 },// FAIRY
     };
 
-    public static Type stringToType(String st) {
+    public static Types stringToType(String st) {
         switch (st) {
             case "NORMAL":
                 return NORMAL;
@@ -69,7 +69,7 @@ public enum Type {
         }
     }
 
-    public static int typeToInt(Type type) {
+    public static int typeToInt(Types type) {
         switch (type) {
             case NORMAL:
                 return 0;

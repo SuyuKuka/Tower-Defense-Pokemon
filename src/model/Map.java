@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import model.InitWaves.Difficulty;
+
 //GENERE UNE MAP ALEATOIRE
 public class Map {
     // ATTRIBUT
@@ -18,8 +20,9 @@ public class Map {
     private int increment;
 
     private ArrayList<int[]> obstaclePos = new ArrayList<>();
+    private Difficulty diff;
 
-    public Map(int height, int width) {
+    public Map(int height, int width, Difficulty diff) {
 
         map = new int[height][width];
         entry = new int[] { 0, rand.nextInt(width - 2) + 1 };
@@ -29,7 +32,7 @@ public class Map {
         map[exit[0]][exit[1]] = 5;
 
         map[exit[0] - 1][exit[1]] = 3;
-
+        this.diff = diff;
         mapBuilding();
 
     }
@@ -512,8 +515,18 @@ public class Map {
     }
 
     private void wayFinder() {
-        for (int i = 1; i < map.length - 3; i = i + 3) {
-            map[i][rand.nextInt(map[0].length - 2) + 1] = 2;
+        if (diff == Difficulty.EASY) {
+            for (int i = 1; i < map.length - 3; i = i + 3) {
+                map[i][rand.nextInt(map[0].length - 2) + 1] = 2;
+            }
+        } else if (diff == Difficulty.NORMAL) {
+            for (int i = 1; i < map.length - 3; i = i + 5) {
+                map[i][rand.nextInt(map[0].length - 2) + 1] = 2;
+            }
+        } else {
+            for (int i = 1; i < map.length - 3; i = i + 9) {
+                map[i][rand.nextInt(map[0].length - 2) + 1] = 2;
+            }
         }
     }
 
@@ -618,8 +631,17 @@ public class Map {
     }
 
     private void makeLoop() {
+        boolean chance;
+        if (diff == Difficulty.EASY) {
+            chance = true; // 100%
+        } else if (diff == Difficulty.NORMAL) {
+            chance = rand.nextInt(4) > 2; // 50%
+        } else {
+            chance = false; // 0%
+        }
+
         for (int i = 0; i < cornerList.size(); i++) {
-            if (rand.nextInt(5) > 2) { // AJUSTABLE
+            if (chance) {
                 cornerList.get(i).beALoop(map);
             }
         }
@@ -637,7 +659,16 @@ public class Map {
     }
 
     private void addObstacles() {
-        for (int i = 0; i < 20; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
+        int nbObstacles = 0;
+        if (diff == Difficulty.EASY) {
+            nbObstacles = 20;
+        } else if (diff == Difficulty.NORMAL) {
+            nbObstacles = 40;
+        } else {
+            nbObstacles = 60;
+        }
+
+        for (int i = 0; i < nbObstacles; i++) { // QUANTITE D'OBSTACLE AJUSTABLE
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
             if (map[x][y] == 3 || map[x][y] == 4 || map[x][y] == 5) {
@@ -650,6 +681,7 @@ public class Map {
     }
 
     private void deployObstacles() {
+
         for (int[] obst : obstaclePos) {
             map[obst[0]][obst[1]] = 9;
             expandTop(obst);

@@ -30,9 +30,7 @@ public class MapState {
     private int limiteDeTemps = 30;
 
     public MapState() {
-        Map map = new Map(20, 20);
-        m = map;
-        config = m.getConfig();
+
     }
 
     private void infoTerminal() {
@@ -51,6 +49,9 @@ public class MapState {
     }
 
     public void startTerminal() {
+        Map map = new Map(20, 20, Difficulty.EASY);
+        m = map;
+        config = m.getConfig();
 
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(Difficulty.HARD);
@@ -85,7 +86,7 @@ public class MapState {
             // A METTRE DANS /control
             // Tower terminal = new Tower("Terminal", 1,1, null, null);
             Starter starterInstance = new Starter();
-            Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Type.FEU, Type.NONE);
+            Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Types.FEU, Types.NONE);
 
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -106,6 +107,9 @@ public class MapState {
 
     public void startGraphic(UpdateMap screen, String difficulty) {
 
+        Map map = new Map(20, 20, stringToDifficulty(difficulty));
+        m = map;
+        config = m.getConfig();
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(stringToDifficulty(difficulty));
         Scanner sc = new Scanner(System.in);

@@ -33,7 +33,6 @@ public class GameScreen extends JPanel {
     public GameScreen(Game main) {
         setLayout(new BorderLayout());
         this.ennemiPresent = state.getEnnemiPresent();
-        this.map = state.getMap().getConfig();
 
         towerPanel = new JPanel() {
             @Override
