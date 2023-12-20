@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 public class InitPokemon {
 
     public static void loadingChar() {
-        File ennemiLoader = new File("ressources/config/PokemonLoader2.txt");
+        File ennemiLoader = new File("ressources/config/PokemonLoader.csv");
         Scanner sc;
         try {
             sc = new Scanner(ennemiLoader);
@@ -33,7 +33,7 @@ public class InitPokemon {
                 Types.valueOf(info[4]), // TYPE1
                 Types.stringToType(info[5]), // TYPE2
                 info[6].equals("VRAI"),
-                info[7]); // BOSS
+                info[8]); // BOSS
         e.setSpeed(Pokemon.stringToSpeed(info[7])); // SPEED
 
     }

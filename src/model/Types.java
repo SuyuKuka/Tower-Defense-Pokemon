@@ -28,41 +28,41 @@ public enum Types {
 
     public static Types stringToType(String st) {
         switch (st) {
-            case "NORMAL":
+            case "Normal":
                 return NORMAL;
-            case "FEU":
+            case "Fire":
                 return FEU;
-            case "EAU":
+            case "Water":
                 return EAU;
-            case "PLANTE":
+            case "Grass":
                 return PLANTE;
-            case "ELECTRIQUE":
+            case "Electric":
                 return ELECTRIQUE;
-            case "GLACE":
+            case "Ice":
                 return GLACE;
-            case "COMBAT":
+            case "Fighting":
                 return COMBAT;
-            case "POISON":
+            case "Poison":
                 return POISON;
-            case "SOL":
+            case "Ground":
                 return SOL;
-            case "VOL":
+            case "Flying":
                 return VOL;
-            case "PSY":
+            case "Psychic":
                 return PSY;
-            case "INSECTE":
+            case "Bug":
                 return INSECTE;
-            case "ROCHE":
+            case "Rock":
                 return ROCHE;
-            case "SPECTRE":
+            case "Ghost":
                 return SPECTRE;
-            case "DRAGON":
+            case "Dragon":
                 return DRAGON;
-            case "TENEBRE":
+            case "Dark":
                 return TENEBRE;
-            case "ACIER":
+            case "Steel":
                 return ACIER;
-            case "FEE":
+            case "Fairy":
                 return FEE;
             default:
                 return NONE;
