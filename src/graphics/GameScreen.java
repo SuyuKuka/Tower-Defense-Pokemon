@@ -6,6 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import control.ButtonManager;
+import control.TowerManagement;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import javax.imageio.ImageIO;
 import model.Ennemi;
 import model.MapState;
 import main.Game;
-import geometry.Rectangle;
 
 public class GameScreen extends JPanel {
 
@@ -31,142 +31,142 @@ public class GameScreen extends JPanel {
     private JPanel towerPanel;
 
     public GameScreen(Game main) {
-        setLayout(new BorderLayout());
-        this.ennemiPresent = state.getEnnemiPresent();
+        // setLayout(new BorderLayout());
+        // this.ennemiPresent = state.getEnnemiPresent();
 
-        towerPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/team1.png")), 0, 0, 800, 800, this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        // towerPanel = new JPanel() {
+        //     @Override
+        //     protected void paintComponent(Graphics g) {
+        //         super.paintComponent(g);
+        //         try {
+        //             g.drawImage(ImageIO.read(new File("ressources/template/team1.png")), 0, 0, 800, 800, this);
+        //         } catch (IOException e) {
+        //             e.printStackTrace();
+        //         }
+        //     }
+        // };
 
-        // Initialisation des panels
-        ennemiPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 720, this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ennemiPanel.setLayout(new BoxLayout(ennemiPanel, BoxLayout.Y_AXIS));
-        ennemiPanel.setPreferredSize(new Dimension(254, 0));
-        mapPanel.setPreferredSize(new Dimension(630, 0));
-        towerPanel.setOpaque(false);
-        towerPanel.setPreferredSize(new Dimension(340, 0));
-        towerPanel.setLayout(new BorderLayout());
+        // // Initialisation des panels
+        // ennemiPanel = new JPanel() {
+        //     @Override
+        //     protected void paintComponent(Graphics g) {
+        //         super.paintComponent(g);
+        //         try {
+        //             g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 720, this);
+        //         } catch (IOException e) {
+        //             e.printStackTrace();
+        //         }
+        //     }
+        // };
+        // ennemiPanel.setLayout(new BoxLayout(ennemiPanel, BoxLayout.Y_AXIS));
+        // ennemiPanel.setPreferredSize(new Dimension(254, 0));
+        // mapPanel.setPreferredSize(new Dimension(630, 0));
+        // towerPanel.setOpaque(false);
+        // towerPanel.setPreferredSize(new Dimension(340, 0));
+        // towerPanel.setLayout(new BorderLayout());
 
-        // Ennemi
-        JPanel container = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                try {
-                    g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 1000, this);
+        // // Ennemi
+        // JPanel container = new JPanel() {
+        //     @Override
+        //     protected void paintComponent(Graphics g) {
+        //         super.paintComponent(g);
+        //         try {
+        //             g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 1000, this);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        //         } catch (IOException e) {
+        //             e.printStackTrace();
+        //         }
 
-            }
-        };
+        //     }
+        // };
 
-        container.setOpaque(false);
+        // container.setOpaque(false);
 
-        BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(boxLayout);
+        // BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
+        // container.setLayout(boxLayout);
 
-        JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
-        ennemiLabel.setOpaque(false);
-        ennemiLabel.setForeground(Color.WHITE);
-        ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 22));
-        ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        ennemiPanel.add(ennemiLabel);
+        // JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
+        // ennemiLabel.setOpaque(false);
+        // ennemiLabel.setForeground(Color.WHITE);
+        // ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 22));
+        // ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // ennemiPanel.add(ennemiLabel);
 
-        JScrollPane ennemiList = new JScrollPane(container);
-        ennemiList.setOpaque(false);
-        ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        // JScrollPane ennemiList = new JScrollPane(container);
+        // ennemiList.setOpaque(false);
+        // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-        ennemiPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-        ennemiPanel.add(ennemiList);
-        // Map
-        mapPanel = initiateMapPanel(mapPanel);
+        // ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        // ennemiPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        // ennemiPanel.add(ennemiList);
+        // // Map
+        // mapPanel = initiateMapPanel(mapPanel);
 
-        // Tour
+        // // Tour
 
-        JLabel team = new JLabel("Ton équipe");
-        team.setForeground(Color.WHITE);
-        team.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        team.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // JLabel team = new JLabel("Ton équipe");
+        // team.setForeground(Color.WHITE);
+        // team.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        // team.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        Rectangle pokemon1 = new Rectangle(1);
-        Rectangle pokemon2 = new Rectangle(2);
-        Rectangle pokemon3 = new Rectangle(3);
-        Rectangle pokemon4 = new Rectangle(4);
-        Rectangle pokemon5 = new Rectangle(5);
-        Rectangle pokemon6 = new Rectangle(6);
-        Rectangle hero1 = new Rectangle(7);
-        Rectangle hero2 = new Rectangle(8);
+        // // Rectangle pokemon1 = new Rectangle(1);
+        // // Rectangle pokemon2 = new Rectangle(2);
+        // // Rectangle pokemon3 = new Rectangle(3);
+        // // Rectangle pokemon4 = new Rectangle(4);
+        // // Rectangle pokemon5 = new Rectangle(5);
+        // // Rectangle pokemon6 = new Rectangle(6);
+        // // Rectangle hero1 = new Rectangle(7);
+        // // Rectangle hero2 = new Rectangle(8);
 
-        JPanel towerTeamPanel = new JPanel();
-        towerTeamPanel.setOpaque(false);
+        // JPanel towerTeamPanel = new JPanel();
+        // towerTeamPanel.setOpaque(false);
 
-        FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 10, 10);
-        JPanel row1 = new JPanel(flowLayout);
-        row1.setOpaque(false);
-        row1.add(pokemon1);
-        row1.add(pokemon2);
+        // FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 10, 10);
+        // JPanel row1 = new JPanel(flowLayout);
+        // row1.setOpaque(false);
+        // row1.add(pokemon1);
+        // row1.add(pokemon2);
 
-        JPanel row2 = new JPanel(flowLayout);
-        row2.setOpaque(false);
-        row2.add(pokemon3);
-        row2.add(pokemon4);
+        // JPanel row2 = new JPanel(flowLayout);
+        // row2.setOpaque(false);
+        // row2.add(pokemon3);
+        // row2.add(pokemon4);
 
-        JPanel row3 = new JPanel(flowLayout);
-        row3.setOpaque(false);
-        row3.add(pokemon5);
-        row3.add(pokemon6);
+        // JPanel row3 = new JPanel(flowLayout);
+        // row3.setOpaque(false);
+        // row3.add(pokemon5);
+        // row3.add(pokemon6);
 
-        JPanel row4 = new JPanel(flowLayout);
-        row4.setOpaque(false);
-        row4.add(hero1);
-        row4.add(hero2);
+        // JPanel row4 = new JPanel(flowLayout);
+        // row4.setOpaque(false);
+        // row4.add(hero1);
+        // row4.add(hero2);
 
-        for (Component rectangle : Arrays.asList(row1, row2, row3, row4)) {
-            for (Component component : ((Container) rectangle).getComponents()) {
-                component.setPreferredSize(new Dimension(156, 62));
-            }
-        }
+        // for (Component rectangle : Arrays.asList(row1, row2, row3, row4)) {
+        //     for (Component component : ((Container) rectangle).getComponents()) {
+        //         component.setPreferredSize(new Dimension(156, 62));
+        //     }
+        // }
 
-        JButton pcButton = new JButton(new ImageIcon("ressources/button/pc_button.png"));
-        manager.buttonPressed(pcButton, "pc", main);
+        // JButton pcButton = new JButton(new ImageIcon("ressources/button/pc_button.png"));
+        // manager.buttonPressed(pcButton, "pc", main);
 
-        towerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-        towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); // TROP PUISSANT
+        // towerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        // towerTeamPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0)); // TROP PUISSANT
 
-        towerPanel.add(team, BorderLayout.NORTH);
-        towerTeamPanel.add(row1);
-        towerTeamPanel.add(row2);
-        towerTeamPanel.add(row3);
-        towerTeamPanel.add(row4);
-        towerPanel.add(pcButton, BorderLayout.SOUTH);
-        towerPanel.add(towerTeamPanel);
+        // towerPanel.add(team, BorderLayout.NORTH);
+        // towerTeamPanel.add(row1);
+        // towerTeamPanel.add(row2);
+        // towerTeamPanel.add(row3);
+        // towerTeamPanel.add(row4);
+        // towerPanel.add(pcButton, BorderLayout.SOUTH);
+        // towerPanel.add(towerTeamPanel);
 
-        // mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
-        mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
-        add(ennemiPanel, BorderLayout.WEST);
-        add(mapPanel, BorderLayout.CENTER);
-        add(towerPanel, BorderLayout.EAST);
+        // // mapPanel.setBorder(BorderFactory.createLineBorder(new Color(165,42,42), 5));
+        // mapPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 15, Color.BLACK));
+        // add(ennemiPanel, BorderLayout.WEST);
+        // add(mapPanel, BorderLayout.CENTER);
+        // add(towerPanel, BorderLayout.EAST);
     }
 
     public JPanel initiateMapPanel(JPanel mapPanel) {

@@ -22,6 +22,7 @@ public class Tower extends Pokemon {
     private Skill[] skills = new Skill[4];
     private int select = 0;
     private int totalSkill = 0;
+    private int price;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
@@ -31,7 +32,7 @@ public class Tower extends Pokemon {
         this.rayon = Rayon.SMALL;
         exp = 0;
         TList.add(this);
-
+        level = 1;
     }
 
     private Tower() {
@@ -379,5 +380,13 @@ public class Tower extends Pokemon {
 
     public void setSkills(Skill[] skills) {
         this.skills = skills;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
