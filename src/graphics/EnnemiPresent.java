@@ -1,12 +1,12 @@
 package graphics;
 
 import java.awt.*;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
+
+import java.util.ArrayList;
 
 import model.Ennemi;
 

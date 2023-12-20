@@ -58,9 +58,9 @@ public class UpdateMap extends JPanel {
 
     private Color getEnnemiColor(Ennemi e) {
         if (e.isBoss()) {
-            return new Color(225, 225, 225); // Couleur pour les boss
+            return new Color(225, 225, 225); //Couleur boss
         } else {
-            return new Color(225, 0, 0); // Couleur pour les ennemis non-boss (exemple: vert)
+            return new Color(225, 0, 0); //Couleur normal
         }
     }
     
