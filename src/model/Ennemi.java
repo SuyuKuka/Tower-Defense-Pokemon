@@ -19,10 +19,12 @@ public class Ennemi extends Pokemon {
     private static ArrayList<Ennemi> EBossList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
     public boolean boss;
+    private double totalPv;
 
     public Ennemi(String name, double pv, double defPhysical, double defSpecial, Types type1, Types type2, boolean boss,
             String sprite) {
         super(name, pv, defPhysical, defSpecial, type1, type2, false, sprite);
+        totalPv = pv;
         if (boss) {
             EBossList.add(this);
             this.boss = boss;
@@ -201,6 +203,10 @@ public class Ennemi extends Pokemon {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    public double getTotalPv() {
+        return totalPv;
     }
 
 }
