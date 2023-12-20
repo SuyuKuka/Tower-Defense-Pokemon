@@ -15,66 +15,78 @@ import graphics.GraphicsMaker;
 import model.Tower;
 
 public class TowerManagement extends JPanel {
-    private GraphicsMaker maker = new GraphicsMaker();
     private Tower pokemon;
     private int numero;
-    private int arcWidth = 30;
-    private int arcHeight = 30;
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
         this.numero = numero;
-    
-        setLayout(new GridBagLayout());
-    
+
+        setLayout(new BorderLayout()); // Use BorderLayout for better organization
+
         if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
-            try {
-                BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
-                Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
-    
-                GridBagConstraints spriteConstraints = new GridBagConstraints();
-                spriteConstraints.gridx = 0;
-                spriteConstraints.gridy = 0;
-                spriteConstraints.anchor = GridBagConstraints.NORTHWEST;
-                add(spriteLabel, spriteConstraints);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    
-            JLabel levelLabel = new JLabel("Nv : " + String.valueOf(pokemon.getLevel()));
-            levelLabel.setForeground(Color.WHITE);
-            levelLabel.setFont(getFont().deriveFont(Font.PLAIN, 24f));
-    
-            GridBagConstraints levelConstraints = new GridBagConstraints();
-            levelConstraints.gridx = 1;
-            levelConstraints.gridy = 0;
-            levelConstraints.anchor = GridBagConstraints.CENTER;
-            add(levelLabel, levelConstraints);
-    
-            JLabel priceLabel = new JLabel("Cout : " + String.valueOf(pokemon.getPrice()) + " $");
-            priceLabel.setForeground(Color.WHITE);
-            priceLabel.setFont(getFont().deriveFont(Font.PLAIN, 20f));
-    
-            // Changer la colonne pour placer le prix tout à gauche
-            GridBagConstraints priceConstraints = new GridBagConstraints();
-            priceConstraints.gridx = -1;  // Changer de 1 à 0
-            priceConstraints.gridy = 1;
-            priceConstraints.anchor = GridBagConstraints.WEST;
-            add(priceLabel, priceConstraints);
-    
-            JLabel nameLabel = new JLabel(pokemon.getName());
-            nameLabel.setForeground(Color.WHITE);
-            nameLabel.setFont(getFont().deriveFont(Font.PLAIN, 24f));
-    
-            GridBagConstraints nameConstraints = new GridBagConstraints();
-            nameConstraints.gridx = 1;
-            nameConstraints.gridy = 1;
-            nameConstraints.anchor = GridBagConstraints.CENTER;
-            add(nameLabel, nameConstraints);
+            add(addSpriteLabel(), BorderLayout.WEST);
+            add(addInfoPanel(), BorderLayout.CENTER);
         }
     }
 
+    private JPanel addInfoPanel() {
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new GridLayout(2, 1));
+        infoPanel.setOpaque(false);
+        infoPanel.add(addLevelLabel());
+        infoPanel.add(addNameLabel());
+
+        return infoPanel;
+    }
+
+    private JPanel addSpriteLabel() {
+        JPanel spritePanel = new JPanel();
+        spritePanel.setLayout(new GridLayout(2, 1));
+        spritePanel.setOpaque(false);
+        try {
+            BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
+            Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
+            spritePanel.add(spriteLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        spritePanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0)); // TROP PUISSANT
+        spritePanel.add(addPriceLabel(), BorderLayout.WEST);
+        return spritePanel;
+    }
+
+    private JPanel addLevelLabel() {
+        JPanel levelPanel = new JPanel();
+        levelPanel.setOpaque(false);
+        JLabel levelLabel = new JLabel("Nv : " + String.valueOf(pokemon.getLevel()));
+        levelLabel.setForeground(Color.WHITE);
+        levelLabel.setFont(getFont().deriveFont(Font.PLAIN, 24f));
+        levelPanel.add(levelLabel);
+        return levelPanel;
+    }
+
+    private JPanel addPriceLabel() {
+        JPanel pricePanel = new JPanel();
+        pricePanel.setOpaque(false);
+        JLabel priceLabel = new JLabel("Cout : " + String.valueOf(pokemon.getPrice()) + "$");
+        priceLabel.setForeground(Color.WHITE);
+        priceLabel.setFont(getFont().deriveFont(Font.PLAIN, 20f));
+        priceLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0)); // TROP PUISSANT
+        pricePanel.add(priceLabel);
+        return pricePanel;
+    }
+
+    private JPanel addNameLabel() {
+        JPanel namePanel = new JPanel();
+        namePanel.setOpaque(false);
+        JLabel nameLabel = new JLabel(pokemon.getName());
+        nameLabel.setForeground(Color.WHITE);
+        nameLabel.setFont(getFont().deriveFont(Font.PLAIN, 24f));
+        namePanel.add(nameLabel);
+        return namePanel;
+    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -93,3 +105,4 @@ public class TowerManagement extends JPanel {
         }
     }
 }
+
