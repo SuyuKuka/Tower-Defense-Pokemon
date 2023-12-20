@@ -9,6 +9,8 @@ import javax.swing.border.LineBorder;
 
 import control.ButtonManager;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,6 +23,7 @@ public class MainMenu extends JPanel {
     private ButtonManager manager = new ButtonManager();
     private GraphicsMaker maker = new GraphicsMaker();
     private boolean displayProfile = false;
+    private boolean inCadrePanel = false;
 
     public MainMenu(Game main) {
         setLayout(new CardLayout());
@@ -35,28 +38,9 @@ public class MainMenu extends JPanel {
         JPanel buttonPanel = buttonPanel(main);
 
         // Profil
-        JPanel profilPanel = profilPanel();
         JPanel bigProfil = bigProfilPanel();
+        JPanel profilPanel = profilPanel(bigProfil);
         bigProfil.setVisible(false);
-
-        profilPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //displayProfile=false;;
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                displayProfile = true;
-                System.out.println(displayProfile);
-                if(displayProfile){
-                    System.out.println("afficher");
-                    bigProfil.setVisible(true);
-                }else{
-                    bigProfil.setVisible(false);
-                }
-            }
-        });
 
         menu.add(titlePanel, BorderLayout.NORTH);
         menu.add(buttonPanel, BorderLayout.EAST);
@@ -153,55 +137,80 @@ public class MainMenu extends JPanel {
         return profilPanel;
     }
 
-    private JPanel profilPanel() {
-
+    private JPanel profilPanel(JPanel bigProfil) {
         JPanel profilPanel = addBgPanel("ressources/background/banner.png");
-
+    
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-
+    
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setBackground(Color.BLACK);
-
+    
         JPanel cadrePanel = new JPanel();
-
+    
         cadrePanel.setLayout(new BorderLayout());
         cadrePanel.setBackground(Color.BLACK);
         cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
-
+    
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+    
         BufferedImage resize = loadBgImage("ressources/profile/profil_photo.png");
         Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         JLabel profilPhoto = new JLabel(new ImageIcon(resized));
-
-        JLabel pseudo = new JLabel("  Joueur1 ");
+    
+        JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
-
-        JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
+    
+        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
-
+    
         cadrePanel.add(profilPhoto, BorderLayout.WEST);
         infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);
-
+    
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
-
+    
         cadrePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("sortie");
-                displayProfile=false;;
+                inCadrePanel = false;
+                Timer timer = new Timer(400, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        if (!inCadrePanel && !displayProfile) {
+                            bigProfil.setVisible(false);
+                        }
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
+                System.out.println("Exited cadre " + inCadrePanel);
             }
-
+        
             @Override
             public void mouseEntered(MouseEvent e) {
-                displayProfile=true;
-                System.out.println("entrée");
-                System.out.println(displayProfile);
+                inCadrePanel = true;
+                if (!displayProfile) {
+                    bigProfil.setVisible(true);
+                }
+            }
+        });
+        
+        bigProfil.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                displayProfile = false;
+                if (!inCadrePanel && !displayProfile) {
+                    bigProfil.setVisible(false);
+                }
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                displayProfile = true;
             }
         });
 
@@ -236,6 +245,14 @@ public class MainMenu extends JPanel {
         };
 
         return IPanel;
+    }
+
+    public boolean isDisplayProfile() {
+        return displayProfile;
+    }
+
+    public void setDisplayProfile(boolean displayProfile) {
+        this.displayProfile = displayProfile;
     }
 
 }
