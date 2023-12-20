@@ -4,21 +4,22 @@ public class Skill {
     public String name;
     private int physicalDamage;
     private int specialDamage;
-    private Type type;
+    private Types type;
     private double speedAtk;
     private Effect effect;
     private boolean unique;
     private String description;
 
-    public Skill(String name, int physicalDamage, int specialDamage, Type type, double speedAtk, Effect effect, boolean unique, String description) {
-        this.name=name;
+    public Skill(String name, int physicalDamage, int specialDamage, Types type, double speedAtk, Effect effect,
+            boolean unique, String description) {
+        this.name = name;
         this.physicalDamage = physicalDamage;
         this.specialDamage = specialDamage;
         this.type = type;
         this.speedAtk = speedAtk;
         this.effect = effect;
         this.unique = unique;
-        this.description=description;
+        this.description = description;
     }
 
     public String getName() {
@@ -33,7 +34,7 @@ public class Skill {
         return specialDamage;
     }
 
-    public Type getType() {
+    public Types getType() {
         return type;
     }
 

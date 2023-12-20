@@ -12,6 +12,7 @@ import java.util.TimerTask;
 import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.GameScreen;
+import graphics.UpdateMap;
 
 public class MapState {
 
@@ -30,9 +31,7 @@ public class MapState {
     private int limiteDeTemps = 30;
 
     public MapState() {
-        Map map = new Map(20, 20);
-        m = map;
-        config = m.getConfig();
+
     }
 
     private void infoTerminal() {
@@ -50,7 +49,10 @@ public class MapState {
                 "===============================================================================================================");
     }
 
-    public void startTerminal() throws FileNotFoundException {
+    public void startTerminal() {
+        Map map = new Map(20, 20, Difficulty.EASY);
+        m = map;
+        config = m.getConfig();
 
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(Difficulty.HARD);
@@ -104,27 +106,40 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphics(GameScreen screen, String difficulty) {
+    public void startGraphic(UpdateMap screen, String difficulty) {
+
+        Map map = new Map(20, 20, stringToDifficulty(difficulty));
+        m = map;
+        config = m.getConfig();
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(stringToDifficulty(difficulty));
+        Scanner sc = new Scanner(System.in);
 
         int nbTour = 6; // AJUSTABLE
 
+        infoTerminal();
+
         allEnnemis = w.getAllEnnemis();
+        for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                e.setMap(m);
+            }
+        }
 
         int step = 0;
         Timer timer = new Timer();
         while (gameContinue()) {
+
             screen.repaint();
 
             moveOnMap();
             loadNextWave();
             m.affiche(ennemiPresent);
-            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            // System.out.println("Ennemie en attente:" + wave.size());
-            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+            System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            System.out.println("Ennemie en attente:" + wave.size());
+            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            System.out.println("PV: " + pv);
+            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
 
             step = ennemiComing(step);
             step++;
@@ -140,6 +155,7 @@ public class MapState {
             };
             task.run();
         }
+        sc.close();
     }
 
     private boolean gameContinue() {
@@ -237,7 +253,7 @@ public class MapState {
         return m;
     }
 
-    public Difficulty stringToDifficulty(String difficulty){
+    public Difficulty stringToDifficulty(String difficulty) {
         switch (difficulty) {
             case "facile":
                 return Difficulty.EASY;

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 public class Tower extends Pokemon {
 
     public enum Rayon {
@@ -35,31 +38,56 @@ public class Tower extends Pokemon {
         level = 1;
     }
 
-    public int[] putTower(String st) { // TERMINAL
-        int posX;
-        int posY;
+    public Skill loadSkill(String skillName) throws FileNotFoundException {
+        File file = new File("ressources/config/Pokemon Moves.csv");
+        Scanner sc = new Scanner(file);
+        int phys = 0;
+        int spe = 0;
+        while (sc.hasNext()) {
+            String[] info = new String[9];
+            info = sc.nextLine().split(";");
+            if (info[7].equals(skillName)) {
+                if (info[2].equals("Physical")) {
+                    phys = Integer.valueOf(info[4]);
+                    spe = 0;
+                } else if (info[2].equals("Special")) {
+                    phys = 0;
+                    spe = Integer.valueOf(info[4]);
+                }
 
-        String alphaPart = st.replaceAll("[^A-Za-z]", "");
-        String numPart = st.replaceAll("[^0-9]", "");
-        
-        if (!alphaPart.isEmpty() && !numPart.isEmpty()) {
-            posX = Character.toUpperCase(alphaPart.charAt(0)) - 'A';
-            posY = Integer.parseInt(numPart) - 1;
-        } else if (st.matches("[A-Za-z]\\d+")) {
-            // Si alphabet puis chiffre
-            posX = Character.toUpperCase(st.charAt(0)) - 'A';
-            posY = Integer.parseInt(st.replaceAll("[^0-9]", "")) - 1;
-        } else if (st.matches("\\d+[A-Za-z]")) {
-            // Si chiffre puis alphabet
-            posX = Character.toUpperCase(st.replaceAll("[^A-Za-z]", "").charAt(0)) - 'A';
-            posY = Integer.parseInt(st.replaceAll("[^0-9]", "")) - 1;
-        } else {
-            posX = -1;
-            posY = -1;
+                return new Skill(skillName, phys, spe, Types.stringToType(info[1]), exp, null, isTower(), skillName);
+            }
         }
+        sc.close();
+        return null;
+    }
 
-        int[] tab = {posX, posY};
-        return tab;
+    public int[] putTower(String st) { // TERMINAL
+        try {
+            String alphaPart = st.replaceAll("[^A-Z]", "");
+            String numPart = st.replaceAll("[^0-9]", "");
+
+            int posX;
+            int posY;
+
+            if (!st.matches("[A-Z]\\d+")) {
+                posX = -1;
+            } else {
+                posX = alphaPart.charAt(0) - 'A';
+            }
+
+            if (!numPart.isEmpty()) {
+                posY = Integer.parseInt(numPart) - 1;
+            } else {
+                posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
+            }
+
+            int[] tab = { posX, posY };
+            return tab;
+        } catch (Exception e) {
+            int[] tab = { -1, -1 };
+            return tab;
+        }
     }
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)

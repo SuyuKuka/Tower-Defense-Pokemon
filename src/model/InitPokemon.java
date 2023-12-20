@@ -12,17 +12,17 @@ public class InitPokemon {
     public static void loadingChar() {
         File ennemiLoader = new File("ressources/config/PokemonLoader2.txt");
         Scanner sc;
-		try {
-			sc = new Scanner(ennemiLoader);
+        try {
+            sc = new Scanner(ennemiLoader);
             while (sc.hasNext()) {
-            String[] info = new String[8];
-            info = sc.next().split(",");
-            pokemonMaker(info);
+                String[] info = new String[8];
+                info = sc.next().split(",");
+                pokemonMaker(info);
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}  
     }
 
     private static void pokemonMaker(String[] info) {

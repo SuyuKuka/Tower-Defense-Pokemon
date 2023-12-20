@@ -3,16 +3,33 @@ package graphics;
 import main.Game;
 
 import javax.swing.*;
+
+import control.ButtonManager;
+
 import java.awt.*;
 
 public class Options extends JPanel {
-    public Options(Game main){
-        System.out.println("Options");
+
+    private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
+
+    public Options(Game main) {
         setOpaque(false);
         setLayout(new BorderLayout());
-        //Titre
+        // Titre
+        JPanel titlePanel = titlePanel();
+
+        // Back
+        JPanel backPanel = backButton(main);
+
+        add(titlePanel, BorderLayout.NORTH);
+        add(backPanel, BorderLayout.SOUTH);
+        setVisible(true);
+    }
+
+    private JPanel titlePanel() {
         JLabel heading = new JLabel("Options");
-        heading.setFont(new Font(Font.SERIF, Font.BOLD, 64));
+        heading.setFont(maker.getCustomFont());
         heading.setForeground(Color.WHITE);
 
         JPanel titlePanel = new JPanel();
@@ -20,19 +37,19 @@ public class Options extends JPanel {
         titlePanel.add(heading, new GridBagConstraints());
         titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 48, 0));
 
-        //Back
+        return titlePanel;
+    }
+
+    private JPanel backButton(Game main) {
         JPanel backPanel = new JPanel();
         backPanel.setOpaque(false);
-        
-        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        main.buttonPressed(backButton, "retour");
 
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224+backButton.getPreferredSize().width, 0, 0));
+        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
+        manager.buttonPressed(backButton, "retour", main);
+
+        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
         backPanel.add(backButton);
 
-        add(titlePanel, BorderLayout.NORTH);
-        add(backPanel, BorderLayout.SOUTH);
-
-        setVisible(true);
+        return backPanel;
     }
 }

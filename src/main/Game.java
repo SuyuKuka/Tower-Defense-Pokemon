@@ -6,6 +6,7 @@ import graphics.GameScreen;
 import graphics.MainMenu;
 import graphics.Marathon;
 import graphics.Options;
+import graphics.UpdateMap;
 import model.MapState;
 import java.awt.*;
 import java.awt.image.*;
@@ -19,7 +20,9 @@ import javax.swing.*;
 public class Game extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
-    private GameScreen gameScreen = new GameScreen();
+    private GameScreen gameScreen = new GameScreen(this);
+    private MapState state = new MapState();
+    private UpdateMap updateMap = new UpdateMap(state);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
@@ -38,14 +41,14 @@ public class Game extends JFrame {
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //Background
-        if(backgroundImage == null){
+        // Background
+        if (backgroundImage == null) {
             Random rand = new Random();
             int background_random = rand.nextInt(3);
-            File file = new File("ressources/background/background" + background_random + ".png");
+            File file = new File("ressources/background/background" + background_random + ".jpg");
             try {
                 backgroundImage = ImageIO.read(file);
-                if(backgroundImage==null){
+                if (backgroundImage == null) {
                     backgroundImage = ImageIO.read(file);
                 }
             } catch (IOException e) {
@@ -72,66 +75,30 @@ public class Game extends JFrame {
         mainPanel.add(marathon, "marathon");
         mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
-        mainPanel.add(gameScreen, "gameScreen");
-        
+        mainPanel.add(updateMap, "gameScreen");
+
         add(mainPanel);
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        if (args.length != 0 && args[0].equals("[terminal]")) {
-            MapState terminal = new MapState();
-            terminal.startTerminal();
-        } else {
-            javax.swing.SwingUtilities.invokeLater(
-				new Runnable() {
-					public void run() {
-						Game game = new Game();
-						game.setVisible(true);
-					}
-				}
-			);
-        }
-    }
-
-    public BufferedImage getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    public void buttonPressed(JButton button, String st) {
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.addActionListener(e -> {
-            if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
-                button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
-            }else{
-                button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
-            }
-
-            Timer timer = new Timer(500, e1 -> {
-                if(st.length()>=10 && st.substring(0, 10).equals("gameScreen")){
-                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
-                }else{
-                    button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
-                }
-                changePanel(st);
-            });
-            timer.setRepeats(false);
-            timer.start();
-        });
-    }
-    
-    private void changePanel(String buttonName) {
+    public void changePanel(String buttonName) {
         Timer timer = new Timer(1, e1 -> {
-            if(buttonName.equals("retour")){
+            if (buttonName.equals("retour")) {
                 cardLayout.show(mainPanel, "menu");
-            }else{
-                if(buttonName.length()>=10 && buttonName.substring(0, 10).equals("gameScreen")){
+            } else {
+                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+
                     cardLayout.show(mainPanel, buttonName.substring(0, 10));
-                    //gameScreen.getState().startGraphics(gameScreen, buttonName.substring(13, buttonName.length()));
-                }else{
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+
+                            state.startGraphic(updateMap, buttonName.substring(13, buttonName.length()));
+                            return null;
+                        }
+                    };
+                    worker.execute();
+                } else {
                     cardLayout.show(mainPanel, buttonName);
                 }
             }
@@ -139,4 +106,24 @@ public class Game extends JFrame {
         timer.setRepeats(false);
         timer.start();
     }
+
+    public static void main(String[] args) {
+        if (args.length != 0 && args[0].equals("[tenal]")) {
+            MapState terminal = new MapState();
+            terminal.startTerminal();
+        } else {
+            javax.swing.SwingUtilities.invokeLater(
+                    new Runnable() {
+                        public void run() {
+                            Game game = new Game();
+                            game.setVisible(true);
+                        }
+                    });
+        }
+    }
+
+    public BufferedImage getBackgroundImage() {
+        return backgroundImage;
+    }
+
 }

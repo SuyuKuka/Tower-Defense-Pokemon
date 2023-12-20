@@ -1,29 +1,71 @@
 package graphics;
 
 import main.Game;
+import model.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import control.ButtonManager;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenu extends JPanel {
+    private Player user = new Player();
+    private ButtonManager manager = new ButtonManager();
+    private GraphicsMaker maker = new GraphicsMaker();
+    private boolean displayProfile = false;
+    private boolean inCadrePanel = false;
+
     public MainMenu(Game main) {
-        System.out.println("Menu");
-        setLayout(new BorderLayout());
+        setLayout(new CardLayout());
         setOpaque(false);
 
+        JPanel menu = new JPanel(new BorderLayout());
+        menu.setOpaque(false);
         // Titre
-        JPanel titlePanel = new JPanel(new GridBagLayout());
-        titlePanel.setOpaque(false);
-    
-        JLabel heading = new JLabel();
-        ImageIcon icon = new ImageIcon("ressources/title.png");
-        icon.setImage(icon.getImage().getScaledInstance(812, 170, Image.SCALE_SMOOTH));
-        heading.setIcon(icon);
-
-        titlePanel.add(heading, new GridBagConstraints());
+        JPanel titlePanel = titlePanel();
 
         // Boutons
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = buttonPanel(main);
+
+        // Profil
+        JPanel bigProfil = bigProfilPanel();
+        JPanel profilPanel = profilPanel(bigProfil);
+        bigProfil.setVisible(false);
+
+        menu.add(titlePanel, BorderLayout.NORTH);
+        menu.add(buttonPanel, BorderLayout.EAST);
+        menu.add(profilPanel, BorderLayout.SOUTH);
+        menu.add(bigProfil, BorderLayout.WEST);
+
+        add(menu, "menu");
+
+        setVisible(true);
+    }
+
+    private JPanel titlePanel() {
+        JPanel titlePanel = addBgPanel("ressources/background/banner.png");
+        JLabel heading = new JLabel("POKEREVOLUTE");
+        heading.setFont(maker.getCustomFont());
+        heading.setForeground(Color.WHITE);
+
+        titlePanel.add(heading, new GridBagConstraints());
+        titlePanel.setBackground(Color.BLACK);
+
+        return titlePanel;
+    }
+
+    private JPanel buttonPanel(Game main) {
+        JPanel buttonPanel = addBgPanel("ressources/button/buttonpanel.png");
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
 
@@ -32,10 +74,10 @@ public class MainMenu extends JPanel {
         JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
-        main.buttonPressed(classiqueButton, "classique");
-        main.buttonPressed(marathonButton, "marathon");
-        main.buttonPressed(boutiqueButton, "boutique");
-        main.buttonPressed(optionsButton, "options");
+        manager.buttonPressed(classiqueButton, "classique", main);
+        manager.buttonPressed(marathonButton, "marathon", main);
+        manager.buttonPressed(boutiqueButton, "boutique", main);
+        manager.buttonPressed(optionsButton, "options", main);
 
         // Centrer les boutons verticalement
         classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,32 +94,39 @@ public class MainMenu extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 
-        //Profil
+        return buttonPanel;
+
+    }
+
+    private JPanel bigProfilPanel() {
         JPanel profilPanel = new JPanel();
-        profilPanel.setOpaque(false);
+
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
-        infoPanel.setOpaque(false);
+        infoPanel.setBackground(Color.BLACK);
 
         JPanel cadrePanel = new JPanel();
-        cadrePanel.setBackground(Color.BLACK);
+
         cadrePanel.setLayout(new BorderLayout());
-        cadrePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 8));
+        cadrePanel.setBackground(Color.BLACK);
+        cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
+
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
-        profilPhoto.setPreferredSize(new Dimension(50, 50));
-        
-        JLabel pseudo = new JLabel("  Joueur1 ");
+        BufferedImage resize = loadBgImage("ressources/profile/profil_photo.png");
+        Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JLabel profilPhoto = new JLabel(new ImageIcon(resized));
+
+        JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
-        pseudo.setFont(new Font(pseudo.getFont().getName(), Font.BOLD, 16));
-        
-        JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
+        pseudo.setFont(maker.getCustomFont().deriveFont(20f));
+
+        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl());
         levelAccount.setForeground(Color.WHITE);
-        levelAccount.setFont(new Font(levelAccount.getFont().getName(), Font.BOLD, 16));
-        
+        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
+
         cadrePanel.add(profilPhoto, BorderLayout.WEST);
         infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);
@@ -85,10 +134,125 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        add(titlePanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
-        add(profilPanel, BorderLayout.SOUTH);
-
-        setVisible(true);
+        return profilPanel;
     }
+
+    private JPanel profilPanel(JPanel bigProfil) {
+        JPanel profilPanel = addBgPanel("ressources/background/banner.png");
+    
+        profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+    
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.setBackground(Color.BLACK);
+    
+        JPanel cadrePanel = new JPanel();
+    
+        cadrePanel.setLayout(new BorderLayout());
+        cadrePanel.setBackground(Color.BLACK);
+        cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
+    
+        cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    
+        BufferedImage resize = loadBgImage("ressources/profile/profil_photo.png");
+        Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JLabel profilPhoto = new JLabel(new ImageIcon(resized));
+    
+        JLabel pseudo = new JLabel("  " + user.getPseudo());
+        pseudo.setForeground(Color.WHITE);
+        pseudo.setFont(maker.getCustomFont().deriveFont(20f));
+    
+        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
+        levelAccount.setForeground(Color.WHITE);
+        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
+    
+        cadrePanel.add(profilPhoto, BorderLayout.WEST);
+        infoPanel.add(pseudo, BorderLayout.NORTH);
+        infoPanel.add(levelAccount, BorderLayout.CENTER);
+    
+        cadrePanel.add(infoPanel, BorderLayout.CENTER);
+        profilPanel.add(cadrePanel);
+    
+        cadrePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                inCadrePanel = false;
+                Timer timer = new Timer(400, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        if (!inCadrePanel && !displayProfile) {
+                            bigProfil.setVisible(false);
+                        }
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
+                System.out.println("Exited cadre " + inCadrePanel);
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                inCadrePanel = true;
+                if (!displayProfile) {
+                    bigProfil.setVisible(true);
+                }
+            }
+        });
+        
+        bigProfil.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                displayProfile = false;
+                if (!inCadrePanel && !displayProfile) {
+                    bigProfil.setVisible(false);
+                }
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                displayProfile = true;
+            }
+        });
+
+        return profilPanel;
+    }
+
+    private BufferedImage loadBgImage(String path) {
+        BufferedImage backgroundImage = null;
+        if (backgroundImage == null) {
+            File file = new File(path);
+            try {
+                backgroundImage = ImageIO.read(file);
+                if (backgroundImage == null) {
+                    backgroundImage = ImageIO.read(file);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return backgroundImage;
+    }
+
+    private JPanel addBgPanel(String path) {
+        BufferedImage backgroundImage = loadBgImage(path);
+        JPanel IPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        return IPanel;
+    }
+
+    public boolean isDisplayProfile() {
+        return displayProfile;
+    }
+
+    public void setDisplayProfile(boolean displayProfile) {
+        this.displayProfile = displayProfile;
+    }
+
 }

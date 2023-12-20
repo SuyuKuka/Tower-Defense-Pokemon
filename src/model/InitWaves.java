@@ -71,16 +71,7 @@ public class InitWaves {
             nbTotalEnnemi = 96;
             multiplier = 3;
         }
-        for (Ennemi e : Ennemi.LIST.getList()) {
-            e.setPv(e.getPv() * multiplier);
-            e.setPhysical(e.getPhysical() * multiplier);
-            e.setSpecial(e.getSpecial() * multiplier);
-        }
-        for (Ennemi e : Ennemi.LIST.getBossList()) {
-            e.setPv(e.getPv() * multiplier);
-            e.setPhysical(e.getPhysical() * multiplier);
-            e.setSpecial(e.getSpecial() * multiplier);
-        }
+
     }
 
     public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
