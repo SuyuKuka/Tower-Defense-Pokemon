@@ -9,6 +9,9 @@ import graphics.Options;
 import graphics.GameScreen2;
 import graphics.UpdateMap;
 import model.MapState;
+import model.Player;
+import model.Tower;
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
@@ -29,7 +32,10 @@ public class Game extends JFrame {
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
-    public Game() {
+    private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+    public Game(Player p) {
         if (fullscreen) {
             setAlwaysOnTop(true);
             setUndecorated(true);
@@ -37,7 +43,7 @@ public class Game extends JFrame {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setResizable(false);
         } else {
-            setSize(1224, 654);
+            setSize(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3);
             setLocationRelativeTo(null);
         }
         setTitle("PokeRevolute");
@@ -67,7 +73,7 @@ public class Game extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        MainMenu menu = new MainMenu(this);
+        MainMenu menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Boutique boutique = new Boutique(this);
@@ -118,7 +124,27 @@ public class Game extends JFrame {
             javax.swing.SwingUtilities.invokeLater(
                     new Runnable() {
                         public void run() {
-                            Game game = new Game();
+                            Player p = new Player();
+                            Tower t = new Tower("pkm1", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+                            Tower td = new Tower("pkm2", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+                            Tower qt = new Tower("pkm4", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+                            Tower ts = new Tower("pkm3", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+                            Tower tsu = new Tower("pkm3", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+                            Tower tts = new Tower("pkm3", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png");
+
+                            p.addteam(ts, 0);
+                            p.addteam(td, 1);
+                            p.addteam(qt, 2);
+                            p.addteam(t, 3);
+                            p.addteam(tsu, 4);
+                            p.addteam(tts, 5);
+                            Game game = new Game(p);
                             game.setVisible(true);
                         }
                     });

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SuperposedPanelsExample",
+            "request": "launch",
+            "mainClass": "graphics.SuperposedPanelsExample",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
+            "name": "StackedPanels3DExample",
+            "request": "launch",
+            "mainClass": "graphics.StackedPanels3DExample",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
             "name": "test",
             "request": "launch",
             "mainClass": "main.test",
@@ -38,7 +52,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "${file}",
+            "mainClass": "${file}"
         }
     ]
 }
