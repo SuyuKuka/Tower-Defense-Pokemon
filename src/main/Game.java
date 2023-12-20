@@ -12,6 +12,7 @@ import model.MapState;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ public class Game extends JFrame {
     private GameScreen gameScreen = new GameScreen(this);
     private MapState state = new MapState();
     private GameScreen2 test = new GameScreen2(state);
-    //private UpdateMap updateMap = new UpdateMap(state);
+    // private UpdateMap updateMap = new UpdateMap(state);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
@@ -109,7 +110,7 @@ public class Game extends JFrame {
         timer.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         if (args.length != 0 && args[0].equals("[tenal]")) {
             MapState terminal = new MapState();
             terminal.startTerminal();

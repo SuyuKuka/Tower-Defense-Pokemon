@@ -52,7 +52,7 @@ public class MapState {
                 "===============================================================================================================");
     }
 
-    public void startTerminal() {
+    public void startTerminal() throws FileNotFoundException {
         Map map = new Map(20, 20, Difficulty.EASY);
         m = map;
         config = m.getConfig();
@@ -109,10 +109,12 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(GameScreen2 screen, String difficulty) {
+    public void startGraphic(GameScreen2 screen, String difficulty) throws FileNotFoundException {
+
         Map map = new Map(20, 20, stringToDifficulty(difficulty));
         m = map;
         config = m.getConfig();
+
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(stringToDifficulty(difficulty));
         Scanner sc = new Scanner(System.in);
@@ -127,6 +129,7 @@ public class MapState {
             for (Ennemi e : eList) {
                 e.setMap(m);
             }
+
         }
 
         int step = 0;
@@ -181,7 +184,7 @@ public class MapState {
 
     private int ennemiComing(int pas) {
         if (pas == 2 && !wave.isEmpty() || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
-            System.out.println(wave);
+
             setEnnemi(m.getFrontEntry(), wave.get(0));
             wave.remove(0);
             return 0;
