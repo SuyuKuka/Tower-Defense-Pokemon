@@ -12,6 +12,7 @@ import model.Ennemi;
 
 public class EnnemiPresent extends JPanel{
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
+    private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
     JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -49,7 +50,7 @@ public class EnnemiPresent extends JPanel{
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
         setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-        
+
         add(ennemiList);
     }
 
@@ -64,13 +65,19 @@ public class EnnemiPresent extends JPanel{
     }
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {
+        for (Ennemi e : ennemiGone) {
+            deleteEnnemiLabel(e);
+        }
+        
         for (Ennemi e : ennemiPresent) {
             if(!ennemiDisplayed.contains(e)){
                 createEnnemiLabel(e);
             }
-            container.revalidate();
-            container.repaint();
         }
+    
+        ennemiGone.clear();
+        container.revalidate();
+        container.repaint();
     }
 
     public void createEnnemiLabel(Ennemi e) {
@@ -115,5 +122,25 @@ public class EnnemiPresent extends JPanel{
 
         container.add(ennemiInfo);
         ennemiDisplayed.add(e);
+    }
+
+    public void deleteEnnemiLabel(Ennemi e) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JPanel) {
+                JPanel panel = (JPanel) c;
+                if (panel.getComponent(1) instanceof JLabel && ((JLabel) panel.getComponent(1)).getText().equals(e.getName())) {
+                    container.remove(panel);
+                    break;
+                }
+            }
+        }
+        ennemiDisplayed.remove(e);
+        
+        container.revalidate();
+        container.repaint();
+    }
+
+    public ArrayList<Ennemi> getEnnemiGone() {
+        return ennemiGone;
     }
 }
