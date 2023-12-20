@@ -21,10 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
-public class MainMenu extends JLayeredPane {
+public class MainMenu extends JPanel {
     private Player user;
     private ButtonManager manager = new ButtonManager();
     private GraphicsMaker maker = new GraphicsMaker();
@@ -32,22 +29,11 @@ public class MainMenu extends JLayeredPane {
     private boolean inCadrePanel = false;
 
     public MainMenu(Game main, Player p) {
-
+        CardLayout cdL = new CardLayout();
         user = p;
-
+        setLayout(new BorderLayout());
         setOpaque(false);
 
-        main.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                Dimension newSize = main.getContentPane().getSize();
-                setSize(newSize);
-
-            }
-        });
-
-        JPanel menu = new JPanel(new BorderLayout());
-        menu.setOpaque(false);
         // Titre
         JPanel titlePanel = titlePanel();
 
@@ -63,18 +49,33 @@ public class MainMenu extends JLayeredPane {
         JPanel pcPanel = pcPanel();
         JPanel teamPanel = teamPanel(pcPanel);
         pcPanel.setVisible(false);
-
         profilPanel.add(teamPanel, BorderLayout.EAST);
 
-        menu.add(titlePanel, BorderLayout.NORTH);
-        menu.add(buttonPanel, BorderLayout.EAST);
-        menu.add(profilPanel, BorderLayout.SOUTH);
-        menu.add(bigProfil, BorderLayout.WEST);
+        // right
+        JPanel rightSidePanel = new JPanel(cdL);
+        rightSidePanel.add(buttonPanel, "button");
+        rightSidePanel.add(pcPanel, "pc");
+        rightSidePanel.setOpaque(false);
 
-        menu.setBounds(0, 0, main.getWidth(), main.getHeight() - 30);
-        menu.setVisible(false);
-        add(menu);
+        teamPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                cdL.show(rightSidePanel, "pc");
+            }
 
+            @Override
+            public void mouseExited(MouseEvent e) {
+                cdL.show(rightSidePanel, "button");
+            }
+
+        });
+
+        add(titlePanel, BorderLayout.NORTH);
+        add(rightSidePanel, BorderLayout.EAST);
+        add(profilPanel, BorderLayout.SOUTH);
+        add(bigProfil, BorderLayout.WEST);
+
+        setVisible(true);
     }
 
     private JPanel pcPanel() {
@@ -114,19 +115,6 @@ public class MainMenu extends JLayeredPane {
         }
         teamPanel.setOpaque(false);
         teamPanel.setBorder(new EmptyBorder(0, 70, 0, 30));
-
-        teamPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                pcPanel.setVisible(true);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                pcPanel.setVisible(false);
-            }
-
-        });
 
         return teamPanel;
     }
@@ -267,7 +255,6 @@ public class MainMenu extends JLayeredPane {
                 });
                 timer.setRepeats(false);
                 timer.start();
-                System.out.println("Exited cadre " + inCadrePanel);
             }
 
             @Override
