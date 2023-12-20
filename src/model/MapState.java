@@ -11,7 +11,9 @@ import java.util.TimerTask;
 
 import characters.Starter;
 import characters.Starter.Salameche;
+import graphics.EnnemiPresent;
 import graphics.GameScreen;
+import graphics.GameScreen2;
 import graphics.UpdateMap;
 
 public class MapState {
@@ -19,6 +21,7 @@ public class MapState {
     private Map m;
 
     private int[][] config;
+    private GameScreen2 screen;
 
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
@@ -106,18 +109,18 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(UpdateMap screen, String difficulty) {
-
+    public void startGraphic(GameScreen2 screen, String difficulty) {
         Map map = new Map(20, 20, stringToDifficulty(difficulty));
         m = map;
         config = m.getConfig();
         InitPokemon.loadingChar();
         InitWaves w = new InitWaves(stringToDifficulty(difficulty));
         Scanner sc = new Scanner(System.in);
+        this.screen = screen;
 
         int nbTour = 6; // AJUSTABLE
 
-        infoTerminal();
+        //infoTerminal();
 
         allEnnemis = w.getAllEnnemis();
         for (ArrayList<Ennemi> eList : allEnnemis) {
@@ -125,21 +128,24 @@ public class MapState {
                 e.setMap(m);
             }
         }
+        
 
         int step = 0;
         Timer timer = new Timer();
         while (gameContinue()) {
 
             screen.repaint();
+            
+            screen.getePresent().setEnnemiPresent(ennemiPresent);
 
             moveOnMap();
             loadNextWave();
-            m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            System.out.println("Ennemie en attente:" + wave.size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
-            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+            //m.affiche(ennemiPresent);
+            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
+            // System.out.println("Ennemie en attente:" + wave.size());
+            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+            // System.out.println("PV: " + pv);
+            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
 
             step = ennemiComing(step);
             step++;
@@ -156,6 +162,9 @@ public class MapState {
             task.run();
         }
         sc.close();
+        for(Ennemi e : screen.getePresent().getEnnemiGone()){
+            screen.getePresent().deleteEnnemiLabel(e);
+        }
     }
 
     private boolean gameContinue() {
@@ -191,6 +200,7 @@ public class MapState {
         }
         if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
             ennemiPresent.remove(escaped);
+            screen.getePresent().getEnnemiGone().add(escaped);
             leaked = false;
             pv--;
         }
@@ -239,6 +249,7 @@ public class MapState {
     public void isDead(Ennemi e) {
         System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
+        screen.getePresent().getEnnemiGone().add(e);
     }
 
     public ArrayList<Ennemi> getEnnemiPresent() {

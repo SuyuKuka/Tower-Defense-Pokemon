@@ -6,6 +6,7 @@ import graphics.GameScreen;
 import graphics.MainMenu;
 import graphics.Marathon;
 import graphics.Options;
+import graphics.GameScreen2;
 import graphics.UpdateMap;
 import model.MapState;
 import java.awt.*;
@@ -22,7 +23,8 @@ public class Game extends JFrame {
     private JPanel mainPanel = new JPanel(cardLayout);
     private GameScreen gameScreen = new GameScreen(this);
     private MapState state = new MapState();
-    private UpdateMap updateMap = new UpdateMap(state);
+    private GameScreen2 test = new GameScreen2(state);
+    //private UpdateMap updateMap = new UpdateMap(state);
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
@@ -75,7 +77,7 @@ public class Game extends JFrame {
         mainPanel.add(marathon, "marathon");
         mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
-        mainPanel.add(updateMap, "gameScreen");
+        mainPanel.add(test, "gameScreen");
 
         add(mainPanel);
         setVisible(true);
@@ -93,7 +95,7 @@ public class Game extends JFrame {
                         @Override
                         protected Void doInBackground() throws Exception {
 
-                            state.startGraphic(updateMap, buttonName.substring(13, buttonName.length()));
+                            state.startGraphic(test, buttonName.substring(13, buttonName.length()));
                             return null;
                         }
                     };

@@ -1,9 +1,7 @@
 package graphics;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 import model.Ennemi;
 import model.MapState;
@@ -14,6 +12,7 @@ public class UpdateMap extends JPanel {
 
     public UpdateMap(MapState state) {
         this.state = state;
+        setLayout(new BorderLayout());
     }
 
     private void drawEnnemi(Graphics g, int i, int j) {
@@ -59,9 +58,9 @@ public class UpdateMap extends JPanel {
 
     private Color getEnnemiColor(Ennemi e) {
         if (e.isBoss()) {
-            return new Color(225, 225, 225); // Couleur pour les boss
+            return new Color(225, 225, 225); //Couleur boss
         } else {
-            return new Color(225, 0, 0); // Couleur pour les ennemis non-boss (exemple: vert)
+            return new Color(225, 0, 0); //Couleur normal
         }
     }
     
