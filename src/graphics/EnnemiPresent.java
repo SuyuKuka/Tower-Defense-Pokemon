@@ -9,19 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import model.Ennemi;
-import model.MapState;
 
 public class EnnemiPresent extends JPanel{
-//il sera appellé dans map state, et dans le while ou setEnnemiPresent et jpense que ça devrais marcher
-    public EnnemiPresent(){
-        setPreferredSize(new Dimension(254, 0));
-        setPreferredSize(new Dimension(630, 0));
-        setOpaque(false);
-        setPreferredSize(new Dimension(340, 0));
-        setLayout(new BorderLayout());
-
-        // Ennemi
-        JPanel container = new JPanel() {
+    private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
+    JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -35,6 +26,11 @@ public class EnnemiPresent extends JPanel{
             }
         };
 
+    public EnnemiPresent(){
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(254, 0));
+
+        // Ennemi
         container.setOpaque(false);
 
         BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -45,7 +41,7 @@ public class EnnemiPresent extends JPanel{
         ennemiLabel.setForeground(Color.WHITE);
         ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 22));
         ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(ennemiLabel);
+        add(ennemiLabel, BorderLayout.NORTH);
 
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
@@ -53,6 +49,7 @@ public class EnnemiPresent extends JPanel{
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
         setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
+        
         add(ennemiList);
     }
 
@@ -68,13 +65,15 @@ public class EnnemiPresent extends JPanel{
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {
         for (Ennemi e : ennemiPresent) {
-            createEnnemiLabel(e, this);
-            System.out.println(ennemiPresent.size());
+            if(!ennemiDisplayed.contains(e)){
+                createEnnemiLabel(e);
+            }
+            container.revalidate();
+            container.repaint();
         }
     }
 
-    public void createEnnemiLabel(Ennemi e, JPanel container) {
-        // 1. Create a new JPanel to hold all the elements.
+    public void createEnnemiLabel(Ennemi e) {
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
         ennemiInfo.setOpaque(false);
 
@@ -96,7 +95,6 @@ public class EnnemiPresent extends JPanel{
         healthBar.setStringPainted(true);
 
         GridBagConstraints gbc = new GridBagConstraints();
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 2;
@@ -115,7 +113,7 @@ public class EnnemiPresent extends JPanel{
         gbc.gridheight = 1;
         ennemiInfo.add(healthBar, gbc);
 
-        // 7. Add the JPanel to the container.
         container.add(ennemiInfo);
+        ennemiDisplayed.add(e);
     }
 }

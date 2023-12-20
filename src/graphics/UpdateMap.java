@@ -1,9 +1,7 @@
 package graphics;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 import model.Ennemi;
 import model.MapState;
@@ -14,6 +12,7 @@ public class UpdateMap extends JPanel {
 
     public UpdateMap(MapState state) {
         this.state = state;
+        setLayout(new BorderLayout());
     }
 
     private void drawEnnemi(Graphics g, int i, int j) {

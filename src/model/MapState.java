@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.GameScreen;
+import graphics.GameScreen2;
 import graphics.UpdateMap;
 
 public class MapState {
@@ -105,7 +106,7 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(UpdateMap screen, String difficulty) {
+    public void startGraphic(GameScreen2 screen, String difficulty) {
 
         Map map = new Map(20, 20, stringToDifficulty(difficulty));
         m = map;
@@ -124,12 +125,15 @@ public class MapState {
                 e.setMap(m);
             }
         }
+        
 
         int step = 0;
         Timer timer = new Timer();
         while (gameContinue()) {
 
             screen.repaint();
+            
+            screen.getePresent().setEnnemiPresent(ennemiPresent);
 
             moveOnMap();
             loadNextWave();
