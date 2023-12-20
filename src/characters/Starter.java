@@ -7,8 +7,8 @@ import model.Types;
 
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
-        public Salameche(String name, int atkPhysical, int atkSpecial, Types type1, Types type2) {
-            super("Salameche", atkPhysical, atkSpecial, type1, type2);
+        public Salameche(String name, int atkPhysical, int atkSpecial, Type type1, Type type2) {
+            super("Salameche", atkPhysical, atkSpecial, type1, type2, "ressouces/sprite/charmander.png");
             System.out.println("Charge le sprite"); // ressouces/sprite/salameche.png
             // innerFocus(); // jsp si faut l'appeller la ou pas
             primarySkill();
@@ -17,13 +17,13 @@ public class Starter {
         @Override
         public void evolution() {
             if (getLevel() == 16) {
-                System.out.println("Charge le sprite"); // ressouces/sprite/reptincel.png
+                setSprite("ressouces/sprite/charmeleon.png");
                 setName("Reptincel");
                 setPhysical(getPhysical() + 15);
                 setSpecial(getSpecial() + 15);
             }
             if (getLevel() == 36) {
-                System.out.println("Charge le sprite"); // ressouces/sprite/dracaufeu.png
+                setSprite("ressouces/sprite/charizard.png");
                 setName("Dracaufeu");
                 setPhysical(getPhysical() + 30);
                 setSpecial(getSpecial() + 30);
@@ -86,11 +86,14 @@ public class Starter {
             // cible, ce qui peut la brûler. Le choc blesse aussi gravement le lanceur.
         }
 
-        @Override
-        public void innerFocus() {
-            // Augmente son atq de 5% (par exemple)
-            setPhysical((int) (getPhysical() + getPhysical() * 0.05));
-        }
+        /*
+         * 
+         * @Override
+         * public void innerFocus() {
+         * // Augmente son atq de 5% (par exemple)
+         * setPhysical((int) (getPhysical() + getPhysical() * 0.05));
+         * }
+         */
     }
 
     public class Carapuce {

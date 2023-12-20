@@ -15,8 +15,9 @@ public class Pokemon {
     private Types[] type = new Types[2];
     private int lvl; // TODO+COMPETENCE
     private boolean isTower;
+    private String sprite;
 
-    public Pokemon(String name, double d, double physical, double special, Types type0, Types type1, boolean isTower) {
+    public Pokemon(String name, double d, double physical, double special, Type type0, Type type1, boolean isTower, String sprite) {
         this.name = name;
         this.pv = d;
         this.physical = physical;
@@ -25,7 +26,7 @@ public class Pokemon {
         type[1] = type1;
         speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
-        totalPv = pv;
+        this.sprite = sprite;
     }
 
     public Pokemon() {
@@ -73,6 +74,10 @@ public class Pokemon {
         return name;
     }
 
+    public String getSprite() {
+        return sprite;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -101,7 +106,7 @@ public class Pokemon {
         this.type[1] = type;
     }
 
-    public double getTotalPv() {
-        return totalPv;
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
     }
 }

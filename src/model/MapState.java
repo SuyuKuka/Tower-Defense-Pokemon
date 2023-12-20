@@ -1,5 +1,6 @@
 package model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import model.InitWaves.Difficulty;
@@ -86,7 +87,7 @@ public class MapState {
             // A METTRE DANS /control
             // Tower terminal = new Tower("Terminal", 1,1, null, null);
             Starter starterInstance = new Starter();
-            Salameche sala = starterInstance.new Salameche("Salameche", 1, 0, Types.FEU, Types.NONE);
+            Salameche sala = starterInstance.new Salameche("Salameche", 100000, 0, Type.FEU, Type.NONE);
 
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class InitPokemon {
 
@@ -28,9 +30,10 @@ public class InitPokemon {
                 Integer.valueOf(info[1]), // PV
                 Integer.valueOf(info[2]), // DEFPHY
                 Integer.valueOf(info[3]), // DEFSPE
-                Types.valueOf(info[4]), // TYPE1
-                Types.stringToType(info[5]), // TYPE2
-                info[6].equals("true")); // BOSS
+                Type.valueOf(info[4]), // TYPE1
+                Type.stringToType(info[5]), // TYPE2
+                info[6].equals("VRAI"),
+                info[7]); // BOSS
         e.setSpeed(Pokemon.stringToSpeed(info[7])); // SPEED
 
     }
