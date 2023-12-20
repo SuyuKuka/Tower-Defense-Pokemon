@@ -28,6 +28,7 @@ public class Pokemon {
         speed = Pokemon.Speed.CLASSIC;
         this.isTower = isTower;
         this.sprite = sprite;
+        totalPv = pv;
     }
 
     public Pokemon() {
@@ -109,5 +110,9 @@ public class Pokemon {
 
     public void setSprite(String sprite) {
         this.sprite = sprite;
+    }
+
+    public double getTotalPv() {
+        return totalPv;
     }
 }
