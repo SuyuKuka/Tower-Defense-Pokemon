@@ -1,6 +1,7 @@
 package graphics;
 
 import main.Game;
+import model.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,9 +17,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainMenu extends JPanel {
-
+    private Player user = new Player();
     private ButtonManager manager = new ButtonManager();
     private GraphicsMaker maker = new GraphicsMaker();
+    private boolean displayProfile = false;
 
     public MainMenu(Game main) {
         setLayout(new CardLayout());
@@ -40,12 +42,19 @@ public class MainMenu extends JPanel {
         profilPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
-                bigProfil.setVisible(false);
+                //displayProfile=false;;
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                bigProfil.setVisible(true);
+                displayProfile = true;
+                System.out.println(displayProfile);
+                if(displayProfile){
+                    System.out.println("afficher");
+                    bigProfil.setVisible(true);
+                }else{
+                    bigProfil.setVisible(false);
+                }
             }
         });
 
@@ -126,11 +135,11 @@ public class MainMenu extends JPanel {
         Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         JLabel profilPhoto = new JLabel(new ImageIcon(resized));
 
-        JLabel pseudo = new JLabel("  Joueur1 ");
+        JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
 
-        JLabel levelAccount = new JLabel("  Nv du compte : 1 ");
+        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl());
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
 
@@ -180,6 +189,21 @@ public class MainMenu extends JPanel {
 
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
+
+        cadrePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                System.out.println("sortie");
+                displayProfile=false;;
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                displayProfile=true;
+                System.out.println("entrée");
+                System.out.println(displayProfile);
+            }
+        });
 
         return profilPanel;
     }
