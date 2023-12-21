@@ -19,6 +19,9 @@ import model.Tower;
 public class TowerManagement extends JPanel implements MouseListener, MouseMotionListener{
     private Tower pokemon;
     private int numero;
+    private boolean hasMove;
+    private double xClick;
+    private double yClick;
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
@@ -28,7 +31,7 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
 
         setPreferredSize(new Dimension(20, 10));
 
-        setLayout(new BorderLayout()); // Use BorderLayout for better organization
+        setLayout(new BorderLayout());
 
         if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
             
@@ -114,41 +117,66 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        JPanel towerPanel = addSpriteLabel();
-        int newX = (int) (getLocation().getX() + e.getX() - xClick - getWidth() / 2);
-        int newY = (int) (getLocation().getY() + e.getY() - yClick - getHeight() / 2);
-        towerPanel.setLocation(newX, newY);
-        repaint();
+        if (!hasMove) {
+            // Store the initial click position relative to the center of the spritePanel
+            xClick = e.getX() - (addSpriteLabel().getWidth() / 2);
+            yClick = e.getY() - (addSpriteLabel().getHeight() / 2);
+            hasMove = true;
+        } else {
+            // Calculate the new position based on the drag
+            int newX = (int) (e.getX() - xClick);
+            int newY = (int) (e.getY() - yClick);
+
+            // Set the new position for the spritePanel (the panel containing the sprite)
+            Component[] components = getComponents();
+            for (Component component : components) {
+                if (component instanceof JPanel && ((JPanel) component).getComponentCount() > 0) {
+                    component.setLocation(newX, newY);
+                    setComponentZOrder((JPanel) component, 0);
+                    break; // Assuming there is only one spritePanel, you can modify this accordingly
+                }
+            }
+
+            // Repaint the panel
+            repaint();
+        }
     }
+
+
+
+
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseMoved'");
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
         //Affiche les infos de la tour
+        if(!hasMove) {
+            System.out.println("Rectangle " + numero + " - entrée mouvement");
+            xClick=e.getX();
+            yClick=e.getY();
+            hasMove = true;
+        }else {
+            System.out.println("Rectangle " + numero + " - sortie mouvement");
+            hasMove = false;
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 }
