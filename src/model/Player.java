@@ -23,7 +23,7 @@ public class Player {
         exp = 0;
         lvl = 1;
         obtainedPokemon = new ArrayList<>();
-        team[0] = new Tower("Salameche", 1, 0, Types.FEU, Types.NONE, "ressources/sprite/charizard.png");
+        team[0] = new Tower("Salameche", 1, 0, Types.FEU, Types.NONE, "ressources/sprite/charmander.png");
         team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");
         team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");
         team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");

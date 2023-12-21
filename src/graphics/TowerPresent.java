@@ -23,6 +23,7 @@ public class TowerPresent extends JPanel{
         add(initiateTitle());
 
         JPanel heroPanel = new JPanel(new GridLayout(1, 2));
+        heroPanel.setOpaque(false);
         TowerManagement hero1 = new TowerManagement(hero[0], 7);
         TowerManagement hero2 = new TowerManagement(hero[1], 8);
         heroPanel.add(hero1);
