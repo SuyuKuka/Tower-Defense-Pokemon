@@ -115,7 +115,10 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
     @Override
     public void mouseDragged(MouseEvent e) {
         JPanel towerPanel = addSpriteLabel();
-        towerPanel.setLocation(, );
+        int newX = (int) (getLocation().getX() + e.getX() - xClick - getWidth() / 2);
+        int newY = (int) (getLocation().getY() + e.getY() - yClick - getHeight() / 2);
+        towerPanel.setLocation(newX, newY);
+        repaint();
     }
 
     @Override
