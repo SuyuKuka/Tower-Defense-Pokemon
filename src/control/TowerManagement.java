@@ -118,26 +118,24 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
     @Override
     public void mouseDragged(MouseEvent e) {
         if (!hasMove) {
-            // Store the initial click position relative to the center of the spritePanel
             xClick = e.getX() - (addSpriteLabel().getWidth() / 2);
             yClick = e.getY() - (addSpriteLabel().getHeight() / 2);
             hasMove = true;
         } else {
-            // Calculate the new position based on the drag
             int newX = (int) (e.getX() - xClick);
             int newY = (int) (e.getY() - yClick);
 
-            // Set the new position for the spritePanel (the panel containing the sprite)
             Component[] components = getComponents();
             for (Component component : components) {
                 if (component instanceof JPanel && ((JPanel) component).getComponentCount() > 0) {
-                    component.setLocation(newX, newY);
-                    setComponentZOrder((JPanel) component, 0);
+                    Component label = ((JPanel) component).getComponent(0);
+                    if (label instanceof JLabel) {
+                        label.setBounds(newX, newY, label.getWidth(), label.getHeight());
+                    }
                     break; // Assuming there is only one spritePanel, you can modify this accordingly
                 }
             }
 
-            // Repaint the panel
             repaint();
         }
     }
