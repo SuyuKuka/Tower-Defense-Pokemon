@@ -22,11 +22,13 @@ public class Tower extends Pokemon {
     private Skill[] skills = new Skill[4];
     private int select = 0;
     private int totalSkill = 0;
+    private State state = State.LOCKED;
 
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite) {
+    public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
+            State state) {
         super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
         this.rayon = Rayon.SMALL;
         exp = 0;
@@ -380,4 +382,13 @@ public class Tower extends Pokemon {
     public void setSkills(Skill[] skills) {
         this.skills = skills;
     }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return state;
+    }
+
 }

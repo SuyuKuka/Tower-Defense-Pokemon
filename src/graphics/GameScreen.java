@@ -5,7 +5,7 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 
-import control.ButtonManager;
+import control.Control;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import geometry.Rectangle;
 
 public class GameScreen extends JPanel {
 
-    private ButtonManager manager = new ButtonManager();
+    private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
     private int[][] map;

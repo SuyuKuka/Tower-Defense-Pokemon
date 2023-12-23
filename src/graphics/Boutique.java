@@ -4,7 +4,7 @@ import main.Game;
 
 import javax.swing.*;
 
-import control.ButtonManager;
+import control.Control;
 
 import java.awt.*;
 import java.io.File;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Boutique extends JPanel {
 
-    private ButtonManager manager = new ButtonManager();
+    private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Boutique(Game main) {

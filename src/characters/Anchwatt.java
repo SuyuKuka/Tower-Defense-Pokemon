@@ -7,7 +7,7 @@ import model.Types;
 public class Anchwatt extends Tower implements TowerLoader {
 
     public Anchwatt(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Anchwatt", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/tynamo.png");
+        super("Anchwatt", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/tynamo.png", State.LOCKED);
         primarySkill();
     }
 

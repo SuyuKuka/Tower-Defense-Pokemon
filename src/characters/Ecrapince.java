@@ -7,7 +7,7 @@ import model.Types;
 public class Ecrapince extends Tower implements TowerLoader {
 
     public Ecrapince(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Ecrapince", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/torkoal.png");
+        super("Ecrapince", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/torkoal.png", State.LOCKED);
         primarySkill();
     }
 

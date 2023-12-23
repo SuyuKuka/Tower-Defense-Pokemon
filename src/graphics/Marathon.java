@@ -2,14 +2,14 @@ package graphics;
 
 import javax.swing.*;
 
-import control.ButtonManager;
+import control.Control;
 import main.Game;
 
 import java.awt.*;
 
 public class Marathon extends JPanel {
 
-    private ButtonManager manager = new ButtonManager();
+    private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Marathon(Game main) {

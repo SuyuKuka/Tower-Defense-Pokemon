@@ -6,6 +6,10 @@ public class Pokemon {
         FAST, CLASSIC, SLOW, STUN
     }
 
+    public enum State {
+        PC, TEAM, LOCKED
+    }
+
     private String name;
     private double totalPv;
     private double pv; // pv
@@ -29,6 +33,7 @@ public class Pokemon {
         this.isTower = isTower;
         this.sprite = sprite;
         totalPv = pv;
+
     }
 
     public Pokemon() {
@@ -115,4 +120,5 @@ public class Pokemon {
     public double getTotalPv() {
         return totalPv;
     }
+
 }

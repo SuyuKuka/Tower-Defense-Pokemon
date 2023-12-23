@@ -2,20 +2,24 @@ package control;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+
 import javax.swing.Timer;
 
 import main.Game;
+import model.Pokemon.State;
+import model.Player;
+import model.Tower;
 
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ButtonManager {
-    private JButton button;
+public class Control {
+    private Player user;
 
-    public ButtonManager() {
+    public Control(Player p) {
+        user = p;
+    }
+
+    public Control() {
 
     }
 
@@ -43,6 +47,16 @@ public class ButtonManager {
             timer.setRepeats(false);
             timer.start();
         });
+    }
+
+    public void switchPkm(Tower pkm) {
+        if (pkm.getState() == State.PC) {
+            user.getPc().remove(pkm);
+            user.addteam(pkm);
+        } else {
+            user.getPc().add(pkm);
+            user.removeTeam(pkm);
+        }
     }
 
 }

@@ -8,7 +8,7 @@ import model.Types;
 public class Terhal extends Tower implements TowerLoader {
 
     public Terhal(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Terhal", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/beldum.png");
+        super("Terhal", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/beldum.png", State.LOCKED);
         primarySkill();
     }
 

@@ -7,7 +7,7 @@ import model.Types;
 public class Nodulithe extends Tower implements TowerLoader {
 
     public Nodulithe(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Nodulithe", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/roggenrola.png");
+        super("Nodulithe", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/roggenrola.png", State.LOCKED);
         System.out.println("Charge le sprite");
         primarySkill();
     }

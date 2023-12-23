@@ -9,6 +9,11 @@ import graphics.Options;
 import graphics.GameScreen2;
 import graphics.UpdateMap;
 import model.MapState;
+import model.Player;
+import model.Pokemon;
+import model.Tower;
+import model.Pokemon.State;
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
@@ -29,7 +34,14 @@ public class Game extends JFrame {
     private BufferedImage backgroundImage;
     boolean fullscreen = false; // AJUSTABLE
 
-    public Game() {
+    private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+    public Game(Player p) {
+
+        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ressources/icon.png").getImage(),
+                new Point(0, 0), "POKEMONGOOOOO"));
+
         if (fullscreen) {
             setAlwaysOnTop(true);
             setUndecorated(true);
@@ -37,7 +49,7 @@ public class Game extends JFrame {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setResizable(false);
         } else {
-            setSize(1224, 654);
+            setSize(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3);
             setLocationRelativeTo(null);
         }
         setTitle("PokeRevolute");
@@ -67,7 +79,7 @@ public class Game extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        MainMenu menu = new MainMenu(this);
+        MainMenu menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Boutique boutique = new Boutique(this);
@@ -118,7 +130,39 @@ public class Game extends JFrame {
             javax.swing.SwingUtilities.invokeLater(
                     new Runnable() {
                         public void run() {
-                            Game game = new Game();
+                            Player p = new Player();
+                            Tower t = new Tower("charmander", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charmander.png", State.LOCKED);
+                            Tower t1 = new Tower("charmeleon", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charmeleon.png", State.LOCKED);
+                            Tower t2 = new Tower("charizard", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charizard.png", State.LOCKED);
+                            Tower t3 = new Tower("squirtle", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/squirtle.png", State.LOCKED);
+                            Tower t4 = new Tower("venusaur", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/venusaur.png", State.LOCKED);
+                            Tower t5 = new Tower("ivysaur", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/ivysaur.png", State.LOCKED);
+
+                            p.getObtainedPokemon().add(t);
+                            p.getObtainedPokemon().add(t1);
+                            p.getObtainedPokemon().add(t2);
+                            p.getObtainedPokemon().add(t3);
+                            p.getObtainedPokemon().add(t4);
+                            p.getObtainedPokemon().add(t5);
+                            for (Tower pkm : p.getObtainedPokemon()) {
+                                pkm.setState(State.PC);
+                            }
+
+                            p.addteam(t);
+                            p.addteam(t1);
+                            p.addteam(t2);
+                            p.addteam(t3);
+
+                            p.getPc().add(t4);
+                            p.getPc().add(t5);
+
+                            Game game = new Game(p);
                             game.setVisible(true);
                         }
                     });
