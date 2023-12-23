@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import model.Ennemi;
 import model.MapState;
+import model.Player;
 
 public class UpdateMap extends JPanel {
     private MapState state;
@@ -27,13 +28,17 @@ public class UpdateMap extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                int row = evt.getY() / cellSize;
-                int col = evt.getX() / cellSize;
-                if (tPresent.getSelectedPokemon() != null) {
-                    if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
-                            && col < state.getMap().getConfig()[0].length) {
-                        state.setTower(new int[] { row, col }, tPresent.getSelectedPokemon().getPokemon());
-                        repaint();
+                if(!tPresent.getSelectedPokemon().isPlaced()){
+                    int row = evt.getY() / cellSize;
+                    int col = evt.getX() / cellSize;
+                    if (tPresent.getSelectedPokemon() != null) {
+                        if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
+                                && col < state.getMap().getConfig()[0].length) {
+                            state.setTower(new int[] { row, col }, Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1]);
+                            repaint();
+                            tPresent.getSelectedPokemon().setPlaced(true);
+                            tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                        }
                     }
                 }
             }
@@ -66,7 +71,7 @@ public class UpdateMap extends JPanel {
         if (color == Color.BLUE) {
             if (tPresent.getSelectedPokemon() != null) {
                 try {
-                    BufferedImage image = ImageIO.read(new File(tPresent.getSelectedPokemon().getSprite()));
+                    BufferedImage image = ImageIO.read(new File(Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1].getSprite()));
                     g.drawImage(image, j * scale, i * scale, scale, scale, null);
                 } catch (IOException e) {
                     e.printStackTrace();

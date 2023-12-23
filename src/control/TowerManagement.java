@@ -16,6 +16,7 @@ public class TowerManagement extends JPanel{
     private boolean isSelected;
     private JPanel spritePanel = new JPanel();
     private JPanel infoPanel = new JPanel();
+    private boolean isPlaced = false;
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
@@ -130,4 +131,13 @@ public class TowerManagement extends JPanel{
     public Tower getPokemon() {
         return pokemon;
     }
+    
+    public boolean isPlaced() {
+        return isPlaced;
+    }
+
+    public void setPlaced(boolean placed) {
+        isPlaced = placed;
+    }
+    
 }
