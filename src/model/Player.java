@@ -10,6 +10,7 @@ public class Player {
     private double exp;
     private int lvl;
     private ArrayList<Pokemon> obtainedPokemon;
+    private ArrayList<Pokemon> pc;
     private Pokemon[] team = new Pokemon[6];
 
     // private ArrayList<Hero> heroContract = new ArrayList<>();
@@ -20,6 +21,7 @@ public class Player {
         exp = 0;
         lvl = 1;
         obtainedPokemon = new ArrayList<>();
+        pc = new ArrayList<>();
     }
 
     public String getPseudo() {
@@ -46,6 +48,10 @@ public class Player {
         return obtainedPokemon;
     }
 
+    public ArrayList<Pokemon> getPc() {
+        return pc;
+    }
+
     public void addteam(Tower t, int pos) { // temporaire ptet
         if (pos > 6) {
             System.out.println("invalide");
@@ -53,4 +59,5 @@ public class Player {
             team[pos] = t;
         }
     }
+
 }

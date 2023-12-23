@@ -36,6 +36,10 @@ public class Game extends JFrame {
     private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     public Game(Player p) {
+
+        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ressources/icon.png").getImage(),
+                new Point(0, 0), "POKEMONGOOOOO"));
+
         if (fullscreen) {
             setAlwaysOnTop(true);
             setUndecorated(true);
@@ -125,25 +129,27 @@ public class Game extends JFrame {
                     new Runnable() {
                         public void run() {
                             Player p = new Player();
-                            Tower t = new Tower("pkm1", ALLBITS, ABORT, null, null,
+                            Tower t = new Tower("charmander", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charmander.png");
+                            Tower t1 = new Tower("charmeleon", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/charmeleon.png");
+                            Tower t2 = new Tower("charizard", ALLBITS, ABORT, null, null,
                                     "ressources/sprite/charizard.png");
-                            Tower td = new Tower("pkm2", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
-                            Tower qt = new Tower("pkm4", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
-                            Tower ts = new Tower("pkm3", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
-                            Tower tsu = new Tower("pkm3", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
-                            Tower tts = new Tower("pkm3", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
+                            Tower t3 = new Tower("squirtle", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/squirtle.png");
+                            Tower t4 = new Tower("venusaur", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/venusaur.png");
+                            Tower t5 = new Tower("ivysaur", ALLBITS, ABORT, null, null,
+                                    "ressources/sprite/ivysaur.png");
 
-                            p.addteam(ts, 0);
-                            p.addteam(td, 1);
-                            p.addteam(qt, 2);
-                            p.addteam(t, 3);
-                            p.addteam(tsu, 4);
-                            p.addteam(tts, 5);
+                            p.addteam(t, 0);
+                            p.addteam(t1, 1);
+                            p.addteam(t2, 2);
+                            p.addteam(t3, 3);
+
+                            p.getPc().add(t4);
+                            p.getPc().add(t5);
+
                             Game game = new Game(p);
                             game.setVisible(true);
                         }
