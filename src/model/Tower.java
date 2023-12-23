@@ -128,11 +128,11 @@ public class Tower extends Pokemon {
 
     private void attackUnique() {
         if (uniqueTarget == null) {
-            System.out.println("Pas de cible");
+            //System.out.println("Pas de cible");
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    System.out.println("Immunisé");
+                    //System.out.println("Immunisé");
                 } else {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                             * Types.typeChart(skills[select], uniqueTarget);
@@ -154,7 +154,7 @@ public class Tower extends Pokemon {
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    System.out.println("Immunisé");
+                    //System.out.println("Immunisé");
                 } else {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Types.typeChart(skills[select], uniqueTarget));
@@ -186,7 +186,7 @@ public class Tower extends Pokemon {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        System.out.println("Immunisé");
+                        //System.out.println("Immunisé");
                     } else {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                                 * Types.typeChart(skills[select], e);
@@ -208,7 +208,7 @@ public class Tower extends Pokemon {
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        System.out.println("Immunisé");
+                        //System.out.println("Immunisé");
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
@@ -241,7 +241,6 @@ public class Tower extends Pokemon {
     }
 
     private void levelUp() {
-        System.out.println(exp);
         Random r = new Random();
         if (exp > 5) {
             System.out.println("levelUp");

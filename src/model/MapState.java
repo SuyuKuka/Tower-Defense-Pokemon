@@ -255,7 +255,7 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
-        System.out.println("DEAD:" + e);
+        //System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
