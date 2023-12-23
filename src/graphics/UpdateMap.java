@@ -3,6 +3,10 @@ package graphics;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
@@ -12,9 +16,10 @@ import model.MapState;
 public class UpdateMap extends JPanel {
     private MapState state;
     private TowerPresent tPresent;
-    private int cellSize = 45;
+    private int cellSize = 30;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
+        setBackground(new Color(111, 160, 83));
         this.state = state;
         this.tPresent = tPresent;
         setLayout(new BorderLayout());
@@ -22,21 +27,12 @@ public class UpdateMap extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                System.out.println("clicked");
-                int row = evt.getY() / cellSize; // Ajuste le décalage
-                int col = evt.getX() / cellSize; // Ajuste le décalage
-                System.out.println(row);
-                System.out.println(col);
-                int rawX = evt.getX();
-                int rawY = evt.getY();
-                System.out.println("Raw X: " + rawX + ", Raw Y: " + rawY);
-
+                int row = evt.getY() / cellSize;
+                int col = evt.getX() / cellSize;
                 if (tPresent.getSelectedPokemon() != null) {
-                    // Assure-toi que les coordonnées sont valides
                     if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
                             && col < state.getMap().getConfig()[0].length) {
                         state.setTower(new int[] { row, col }, tPresent.getSelectedPokemon().getPokemon());
-                        // Actualise l'affichage
                         repaint();
                     }
                 }
@@ -67,9 +63,22 @@ public class UpdateMap extends JPanel {
     }
 
     private void drawCell(Graphics g, int i, int j, int cellValue, int scale) {
-        g.setColor(getCellColor(cellValue));
-        g.fillRect(j * scale, i * scale, scale, scale);
-    }
+        Color color = getCellColor(cellValue);
+        if (color == Color.BLUE) {
+            System.out.println("oui");
+            if (tPresent.getSelectedPokemon() != null) {
+                try {
+                    BufferedImage image = ImageIO.read(new File(tPresent.getSelectedPokemon().getSprite()));
+                    g.drawImage(image, j * scale, i * scale, scale, scale, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            g.setColor(color);
+            g.fillRect(j * scale, i * scale, scale, scale);
+        }
+    }  
 
     private Color getCellColor(int cellValue) {
         switch (cellValue) {
