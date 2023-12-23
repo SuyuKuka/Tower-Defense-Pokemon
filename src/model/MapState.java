@@ -153,6 +153,9 @@ public class MapState {
             step = ennemiComing(step);
             step++;
 
+            for (Tower tour : towerPresent) {
+                tour.attackNoSkills(towerPresent, ennemiPresent, null);
+            }
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
@@ -163,7 +166,7 @@ public class MapState {
                 }
             };
             task.run();
-            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
+
         }
         sc.close();
         for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -253,7 +256,7 @@ public class MapState {
     public void isDead(Ennemi e) {
         System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
-        if(screen!=null){
+        if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
         }
     }

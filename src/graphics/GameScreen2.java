@@ -8,16 +8,15 @@ import javax.swing.*;
 
 import model.MapState;
 
-public class GameScreen2 extends JPanel{
+public class GameScreen2 extends JPanel {
     EnnemiPresent ePresent = new EnnemiPresent();
     TowerPresent tPresent = new TowerPresent();
-    public GameScreen2(MapState mState){
-        setBackground( new Color(111, 160, 83));
+
+    public GameScreen2(MapState mState) {
+
         setLayout(new BorderLayout());
         UpdateMap uMap = new UpdateMap(mState, tPresent);
-        
 
-        add(ePresent, BorderLayout.WEST);
         add(uMap, BorderLayout.CENTER);
         add(tPresent, BorderLayout.EAST);
 

@@ -91,6 +91,10 @@ public class Tower extends Pokemon {
         }
     }
 
+    public void attackNoSkills(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) {
+
+    }
+
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
