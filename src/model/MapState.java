@@ -153,9 +153,8 @@ public class MapState {
             step = ennemiComing(step);
             step++;
 
-            for (Tower tour : towerPresent) {
-                tour.attackNoSkills(towerPresent, ennemiPresent, null);
-            }
+            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
+            System.out.println("attaque");
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
@@ -166,7 +165,6 @@ public class MapState {
                 }
             };
             task.run();
-
         }
         sc.close();
         for (Ennemi e : screen.getePresent().getEnnemiGone()) {
