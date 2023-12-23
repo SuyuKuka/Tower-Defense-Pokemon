@@ -1,6 +1,9 @@
 package graphics;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -126,6 +129,12 @@ public class EnnemiPresent extends JPanel{
 
         container.add(ennemiInfo);
         ennemiDisplayed.add(e);
+        ennemiInfo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //affiche un popup avec les infos de l'ennemi
+            }
+        });
     }
 
     public void deleteEnnemiLabel(Ennemi e) {

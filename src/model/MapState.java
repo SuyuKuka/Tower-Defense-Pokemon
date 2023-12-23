@@ -163,6 +163,7 @@ public class MapState {
                 }
             };
             task.run();
+            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
         }
         sc.close();
         for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -219,13 +220,13 @@ public class MapState {
         }
     }
 
-    private boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
+    public boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
         if (posTower[0] == -1 || posTower[1] == -1) {
             return false;
         } else {
             // LA CONCEPTION DU TABLEAU EST DIFFERENTE, INVERSER I J
-            int posX = posTower[1];
-            int posY = posTower[0];
+            int posX = posTower[0];
+            int posY = posTower[1];
 
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;
@@ -252,7 +253,9 @@ public class MapState {
     public void isDead(Ennemi e) {
         System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
-        screen.getePresent().getEnnemiGone().add(e);
+        if(screen!=null){
+            screen.getePresent().getEnnemiGone().add(e);
+        }
     }
 
     public ArrayList<Ennemi> getEnnemiPresent() {

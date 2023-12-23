@@ -1,21 +1,27 @@
 package graphics;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
 import control.TowerManagement;
 import model.Player;
 import model.Tower;
 
 import java.awt.*;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class TowerPresent extends JPanel{
-    private Tower[] team = model.Player.INSTANCE.getTeam();
-    private Tower[] hero = model.Player.INSTANCE.getHero();
+    private Tower[] team = Player.INSTANCE.getTeam();
+    private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
+    private TowerManagement selectedPokemon;
+
     public TowerPresent(){
         setPreferredSize(new Dimension(354, 1000)); //taille parfaite
         setOpaque(false);
@@ -32,18 +38,13 @@ public class TowerPresent extends JPanel{
         add(heroPanel);
 
         setLayout(new GridLayout(8,1));
-        TowerManagement pokemon1 = new TowerManagement(team[0], 1);
-        TowerManagement pokemon2 = new TowerManagement(team[1], 2);
-        TowerManagement pokemon3 = new TowerManagement(team[2], 3);
-        TowerManagement pokemon4 = new TowerManagement(team[3], 4);
-        TowerManagement pokemon5 = new TowerManagement(team[4], 5);
-        TowerManagement pokemon6 = new TowerManagement(team[5], 6);
-        add(pokemon1);
-        add(pokemon2);
-        add(pokemon3);
-        add(pokemon4);
-        add(pokemon5);
-        add(pokemon6);
+        for(int i=0; i<team.length; i=i+1){
+            try {
+                initiateTeam(team[i], i+1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     
@@ -72,5 +73,39 @@ public class TowerPresent extends JPanel{
         titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
         return titlePanel;
+    }
+
+    public void initiateTeam(Tower tower, int numero) throws IOException{
+        TowerManagement pokemon = new TowerManagement(tower, numero);
+        add(pokemon);
+        pokemon.setEnabled(true);
+    
+        pokemon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(pokemon.getNumero());
+                if(pokemon.isSelected()) {
+                    pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+                    System.out.println(x + " et " + y);
+                    selectedPokemon=pokemon;
+                } else {
+                    pokemon.setBorder(BorderFactory.createEmptyBorder());
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+                    System.out.println(x + " et " + y);
+                    selectedPokemon=null;
+                }
+            }
+        });
+    }
+   
+    public Tower getTower(){
+        return selectedPokemon.getPokemon();
+    }
+
+    public TowerManagement getSelectedPokemon() {
+        return selectedPokemon;
     }
 }

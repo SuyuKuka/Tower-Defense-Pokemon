@@ -1,18 +1,47 @@
 package graphics;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
+
 
 import model.Ennemi;
 import model.MapState;
 
 public class UpdateMap extends JPanel {
-
     private MapState state;
+    private TowerPresent tPresent;
 
-    public UpdateMap(MapState state) {
+    public UpdateMap(MapState state, TowerPresent tPresent) {
         this.state = state;
+        this.tPresent = tPresent;
         setLayout(new BorderLayout());
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                System.out.println("clicked");
+                int cellSize = 45; // Taille d'une cellule
+                int row = (evt.getY() - cellSize) / cellSize;  // Ajuste le décalage
+                int col = (evt.getX() - cellSize) / cellSize;  // Ajuste le décalage
+                System.out.println(row);
+                System.out.println(col);
+                int rawX = evt.getX();
+                int rawY = evt.getY();
+                System.out.println("Raw X: " + rawX + ", Raw Y: " + rawY);
+
+                if (tPresent.getSelectedPokemon() != null) {
+                    // Assure-toi que les coordonnées sont valides
+                    if (row >= 0 && row < state.getMap().getConfig().length && col >= 0 && col < state.getMap().getConfig()[0].length) {
+                        state.setTower(new int[]{row, col}, tPresent.getSelectedPokemon().getPokemon());
+                        // Actualise l'affichage
+                        repaint();
+                    }
+                }
+            }
+        });
     }
 
     private void drawEnnemi(Graphics g, int i, int j) {

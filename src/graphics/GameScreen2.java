@@ -1,26 +1,29 @@
 package graphics;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 
 import model.MapState;
 
 public class GameScreen2 extends JPanel{
     EnnemiPresent ePresent = new EnnemiPresent();
+    TowerPresent tPresent = new TowerPresent();
     public GameScreen2(MapState mState){
         setBackground( new Color(111, 160, 83));
         setLayout(new BorderLayout());
-        UpdateMap uMap = new UpdateMap(mState);
-        TowerPresent tPresent = new TowerPresent();
-
+        UpdateMap uMap = new UpdateMap(mState, tPresent);
+        
 
         add(ePresent, BorderLayout.WEST);
         add(uMap, BorderLayout.CENTER);
         add(tPresent, BorderLayout.EAST);
+
     }
 
     public EnnemiPresent getePresent() {
         return ePresent;
     }
-    
 }

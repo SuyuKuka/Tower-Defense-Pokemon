@@ -83,7 +83,7 @@ public class Tower extends Pokemon {
                 posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
             }
 
-            int[] tab = { posX, posY };
+            int[] tab = { posY, posX };
             return tab;
         } catch (Exception e) {
             int[] tab = { -1, -1 };

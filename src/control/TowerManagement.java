@@ -1,27 +1,21 @@
 package control;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MouseInputListener;
 
-import graphics.GraphicsMaker;
 import model.Tower;
 
-public class TowerManagement extends JPanel implements MouseListener, MouseMotionListener{
+public class TowerManagement extends JPanel{
     private Tower pokemon;
     private int numero;
-    private boolean hasMove;
-    private double xClick;
-    private double yClick;
+    private boolean isSelected;
+    private JPanel spritePanel = new JPanel();
+    private JPanel infoPanel = new JPanel();
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
@@ -29,23 +23,16 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
 
         setOpaque(false);
 
-        setPreferredSize(new Dimension(20, 10));
-
         setLayout(new BorderLayout());
 
         if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
-            
             add(addSpriteLabel(), BorderLayout.WEST);
             add(addInfoPanel(), BorderLayout.CENTER);
-
-            addMouseListener(this);
-            addMouseMotionListener(this);
         }
 
     }
 
     private JPanel addInfoPanel() {
-        JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setOpaque(false);
 
@@ -56,7 +43,6 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
     }
 
     private JPanel addSpriteLabel() {
-        JPanel spritePanel = new JPanel();
         spritePanel.setOpaque(false);
         try {
             BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
@@ -115,66 +101,33 @@ public class TowerManagement extends JPanel implements MouseListener, MouseMotio
         }
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        if (!hasMove) {
-            xClick = e.getX() - (addSpriteLabel().getWidth() / 2);
-            yClick = e.getY() - (addSpriteLabel().getHeight() / 2);
-            hasMove = true;
-        } else {
-            int newX = (int) (e.getX() - xClick);
-            int newY = (int) (e.getY() - yClick);
+    public String getSprite(){
+        return pokemon.getSprite();
+    }
 
-            Component[] components = getComponents();
-            for (Component component : components) {
-                if (component instanceof JPanel && ((JPanel) component).getComponentCount() > 0) {
-                    Component label = ((JPanel) component).getComponent(0);
-                    if (label instanceof JLabel) {
-                        label.setBounds(newX, newY, label.getWidth(), label.getHeight());
-                    }
-                    break; // Assuming there is only one spritePanel, you can modify this accordingly
-                }
-            }
+    public int getNumero() {
+        return numero;
+    }
 
-            repaint();
+    public boolean isSelected() {
+        if(isSelected){
+            isSelected = false;
+            return isSelected;
+        }else{
+            isSelected = true;
+            return isSelected;
         }
     }
 
-
-
-
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
+    public JPanel getSpritePanel() {
+        return spritePanel;
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        //Affiche les infos de la tour
-        if(!hasMove) {
-            System.out.println("Rectangle " + numero + " - entrée mouvement");
-            xClick=e.getX();
-            yClick=e.getY();
-            hasMove = true;
-        }else {
-            System.out.println("Rectangle " + numero + " - sortie mouvement");
-            hasMove = false;
-        }
+    public JPanel getInfoPanel() {
+        return infoPanel;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
+    public Tower getPokemon() {
+        return pokemon;
     }
 }
