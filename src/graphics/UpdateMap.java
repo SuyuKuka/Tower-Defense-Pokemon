@@ -53,7 +53,6 @@ public class UpdateMap extends JPanel {
         int scale = cellSize;
         super.paintComponent(g);
         int[][] map = state.getMap().getConfig();
-
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 drawCell(g, i, j, map[i][j], scale);
@@ -65,7 +64,6 @@ public class UpdateMap extends JPanel {
     private void drawCell(Graphics g, int i, int j, int cellValue, int scale) {
         Color color = getCellColor(cellValue);
         if (color == Color.BLUE) {
-            System.out.println("oui");
             if (tPresent.getSelectedPokemon() != null) {
                 try {
                     BufferedImage image = ImageIO.read(new File(tPresent.getSelectedPokemon().getSprite()));

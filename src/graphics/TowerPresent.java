@@ -83,18 +83,15 @@ public class TowerPresent extends JPanel{
         pokemon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(pokemon.getNumero());
                 if(pokemon.isSelected()) {
                     pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
                     int x = e.getXOnScreen();
                     int y = e.getYOnScreen();
-                    System.out.println(x + " et " + y);
                     selectedPokemon=pokemon;
                 } else {
                     pokemon.setBorder(BorderFactory.createEmptyBorder());
                     int x = e.getXOnScreen();
                     int y = e.getYOnScreen();
-                    System.out.println(x + " et " + y);
                     selectedPokemon=null;
                 }
             }

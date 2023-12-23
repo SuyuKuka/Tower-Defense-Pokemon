@@ -187,7 +187,6 @@ public class MainMenu extends JPanel {
                 });
                 timer.setRepeats(false);
                 timer.start();
-                System.out.println("Exited cadre " + inCadrePanel);
             }
         
             @Override
