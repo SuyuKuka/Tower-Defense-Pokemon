@@ -17,13 +17,13 @@ public class Starter {
         @Override
         public void evolution() {
             if (getLevel() == 16) {
-                setSprite("ressouces/sprite/charmeleon.png");
+                setSprite("ressources/sprite/charmeleon.png");
                 setName("Reptincel");
                 setPhysical(getPhysical() + 15);
                 setSpecial(getSpecial() + 15);
             }
             if (getLevel() == 36) {
-                setSprite("ressouces/sprite/charizard.png");
+                setSprite("ressources/sprite/charizard.png");
                 setName("Dracaufeu");
                 setPhysical(getPhysical() + 30);
                 setSpecial(getSpecial() + 30);

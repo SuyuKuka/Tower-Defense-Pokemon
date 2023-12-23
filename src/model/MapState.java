@@ -72,6 +72,11 @@ public class MapState {
             }
         }
 
+        // A METTRE DANS /control
+        // Tower terminal = new Tower("Terminal", 1,1, null, null);
+        Starter starterInstance = new Starter();
+        Salameche sala = starterInstance.new Salameche("Salameche", 10, 0, Types.FEU, Types.NONE);
+
         int step = 0;
         while (gameContinue()) {
 
@@ -87,10 +92,7 @@ public class MapState {
             step = ennemiComing(step);
             step++;
 
-            // A METTRE DANS /control
-            // Tower terminal = new Tower("Terminal", 1,1, null, null);
-            Starter starterInstance = new Starter();
-            Salameche sala = starterInstance.new Salameche("Salameche", 100000, 0, Types.FEU, Types.NONE);
+
 
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -153,6 +155,7 @@ public class MapState {
             step = ennemiComing(step);
             step++;
 
+            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
@@ -203,7 +206,9 @@ public class MapState {
         }
         if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
             ennemiPresent.remove(escaped);
-            screen.getePresent().getEnnemiGone().add(escaped);
+            if(screen!=null){
+                screen.getePresent().getEnnemiGone().add(escaped);
+            }
             leaked = false;
             pv--;
         }
@@ -219,13 +224,13 @@ public class MapState {
         }
     }
 
-    private boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
+    public boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
         if (posTower[0] == -1 || posTower[1] == -1) {
             return false;
         } else {
             // LA CONCEPTION DU TABLEAU EST DIFFERENTE, INVERSER I J
-            int posX = posTower[1];
-            int posY = posTower[0];
+            int posX = posTower[0];
+            int posY = posTower[1];
 
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;
@@ -250,9 +255,11 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
-        System.out.println("DEAD:" + e);
+        //System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
-        screen.getePresent().getEnnemiGone().add(e);
+        if (screen != null) {
+            screen.getePresent().getEnnemiGone().add(e);
+        }
     }
 
     public ArrayList<Ennemi> getEnnemiPresent() {

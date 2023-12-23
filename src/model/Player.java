@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+
+import characters.Starter;
+import characters.Starter.Salameche;
 import model.Hero;
 import model.Pokemon.State;
 
@@ -16,7 +19,10 @@ public class Player {
     private ArrayList<Tower> pc;
     private Tower[] team = new Tower[6];
 
-    // private ArrayList<Hero> heroContract = new ArrayList<>();
+    private ArrayList<Hero> heroContract = new ArrayList<>();
+    private Tower[] hero = new Tower[2];
+
+    public static final Player INSTANCE = new Player();
 
     public Player() {
         this.pseudo = "Joueur";
@@ -25,6 +31,16 @@ public class Player {
         lvl = 1;
         obtainedPokemon = new ArrayList<>();
         pc = new ArrayList<>();
+        Starter starterInstance = new Starter();
+        Salameche sala = starterInstance.new Salameche("Salameche", 20, 40, Types.FEU, Types.NONE);
+        team[0] = sala;
+        team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        hero[0] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        hero[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
     }
 
     public String getPseudo() {
@@ -81,4 +97,17 @@ public class Player {
         t.setState(State.PC);
     }
 
+
+    public Tower[] getHero() {
+        return hero;
+    }
+
+    public ArrayList<Hero> getHeroContract() {
+        return heroContract;
+    }
+
+    // TODO
+    public void setPseudo(String pseudo) throws Exception {
+
+    }
 }

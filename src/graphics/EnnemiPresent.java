@@ -1,6 +1,9 @@
 package graphics;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +14,10 @@ import java.util.ArrayList;
 import model.Ennemi;
 
 public class EnnemiPresent extends JPanel{
+    private GraphicsMaker maker = new GraphicsMaker();
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
-    JPanel container = new JPanel() {
+    private static JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -27,32 +31,35 @@ public class EnnemiPresent extends JPanel{
             }
         };
 
-    public EnnemiPresent(){
-        setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(254, 0));
-
-        // Ennemi
-        container.setOpaque(false);
-
-        BoxLayout boxLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(boxLayout);
-
-        JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
-        ennemiLabel.setOpaque(false);
-        ennemiLabel.setForeground(Color.WHITE);
-        ennemiLabel.setFont(new Font(Font.SERIF, Font.BOLD, 22));
-        ennemiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(ennemiLabel, BorderLayout.NORTH);
-
-        JScrollPane ennemiList = new JScrollPane(container);
-        ennemiList.setOpaque(false);
-        ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-        setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // TROP PUISSANT
-
-        add(ennemiList);
-    }
+        public EnnemiPresent() {
+            setLayout(new BorderLayout());
+            setPreferredSize(new Dimension(254, 0));
+    
+            // Ennemi
+            container.setOpaque(false);
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+    
+            JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
+            ennemiLabel.setOpaque(false);
+            ennemiLabel.setForeground(Color.WHITE);
+            ennemiLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 26f));
+    
+            Box box = Box.createHorizontalBox();
+            box.add(Box.createHorizontalGlue());
+            box.add(ennemiLabel);
+            box.add(Box.createHorizontalGlue());
+    
+            add(box, BorderLayout.NORTH);
+    
+            JScrollPane ennemiList = new JScrollPane(container);
+            ennemiList.setOpaque(false);
+            ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    
+            ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+            setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+    
+            add(ennemiList);
+        }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -90,7 +97,7 @@ public class EnnemiPresent extends JPanel{
 
         JLabel nameLabel = new JLabel(e.getName());
         nameLabel.setOpaque(false);
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        nameLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 16f));
         nameLabel.setForeground(Color.WHITE);
 
         JProgressBar healthBar = new JProgressBar();
@@ -122,6 +129,12 @@ public class EnnemiPresent extends JPanel{
 
         container.add(ennemiInfo);
         ennemiDisplayed.add(e);
+        ennemiInfo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //affiche un popup avec les infos de l'ennemi
+            }
+        });
     }
 
     public void deleteEnnemiLabel(Ennemi e) {
@@ -139,6 +152,23 @@ public class EnnemiPresent extends JPanel{
         container.revalidate();
         container.repaint();
     }
+
+    public static void updateEnnemiHealth(Ennemi ennemi, int damageTaken) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JPanel) {
+                JPanel panel = (JPanel) c;
+                if (panel.getComponent(1) instanceof JLabel && ((JLabel) panel.getComponent(1)).getText().equals(ennemi.getName())) {
+                    JProgressBar healthBar = (JProgressBar) panel.getComponent(2);
+                    int currentHealth = healthBar.getValue();
+                    int newHealth = Math.max(currentHealth + damageTaken, 0);
+                    healthBar.setValue(newHealth);
+                    break;
+                }
+            }
+        }
+        container.revalidate();
+        container.repaint();
+    }    
 
     public ArrayList<Ennemi> getEnnemiGone() {
         return ennemiGone;
