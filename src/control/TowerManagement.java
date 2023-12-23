@@ -36,12 +36,19 @@ public class TowerManagement extends JPanel{
     private JPanel addInfoPanel() {
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setOpaque(false);
-
+    
         infoPanel.add(addNameLabel(), BorderLayout.NORTH);
-        infoPanel.add(addPriceLabel(), BorderLayout.SOUTH);
-
+    
+        // Ajoutez une vérification pour afficher le niveau ou le prix
+        if (isPlaced) {
+            infoPanel.add(addLevelLabel(), BorderLayout.SOUTH);
+        } else {
+            infoPanel.add(addPriceLabel(), BorderLayout.SOUTH);
+        }
+    
         return infoPanel;
     }
+    
 
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
