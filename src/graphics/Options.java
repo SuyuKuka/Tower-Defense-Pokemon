@@ -4,13 +4,13 @@ import main.Game;
 
 import javax.swing.*;
 
-import control.ButtonManager;
+import control.Control;
 
 import java.awt.*;
 
 public class Options extends JPanel {
 
-    private ButtonManager manager = new ButtonManager();
+    private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Options(Game main) {
