@@ -127,6 +127,14 @@ public class MainMenu extends JPanel {
 
     private JPanel teamPanel(JPanel pcPanel) {
         JPanel teamPanel = imagePanel("ressources/background/teampanel.png");
+        teamPanel.setOpaque(false);
+
+        BufferedImage resize = loadImage("ressources/pc_sprite.png");
+        Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JLabel pcLabel = new JLabel(new ImageIcon(resized));
+        pcLabel.setOpaque(false);
+        teamPanel.add(pcLabel);
+        
         if (user.getTeam()[0] == null) {
             JLabel pokeicon = new JLabel("Vous n'avez aucun Pokemon dans votre equipe.");
             pokeicon.setFont(maker.getCustomFont().deriveFont(20f));
@@ -147,9 +155,6 @@ public class MainMenu extends JPanel {
             }
             teamPanel.add(slot);
         }
-
-        teamPanel.setOpaque(false);
-        teamPanel.setBorder(new EmptyBorder(0, 70, 0, 30));
 
         return teamPanel;
     }
@@ -382,7 +387,6 @@ public class MainMenu extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (!selected) {
-
                         setBorder(new LineBorder(Color.RED, 1));
                         selected = true;
                         waitForExchange();
