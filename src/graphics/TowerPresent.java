@@ -88,7 +88,7 @@ public class TowerPresent extends JPanel{
                         if(selectedPokemon!=null){
                         selectedPokemon.setBorder(BorderFactory.createEmptyBorder());
                         }
-                        pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
+                        pokemon.setBorder(new MatteBorder(2, 2, 2, 2, Color.RED));
                         selectedPokemon=pokemon;
                     } else {
                         pokemon.setBorder(BorderFactory.createEmptyBorder());

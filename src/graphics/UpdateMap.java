@@ -36,8 +36,10 @@ public class UpdateMap extends JPanel {
                                 && col < state.getMap().getConfig()[0].length) {
                             state.setTower(new int[] { row, col }, Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1]);
                             repaint();
-                            tPresent.getSelectedPokemon().setPlaced(true);
-                            tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                            if(state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())){
+                                tPresent.getSelectedPokemon().setPlaced(true);
+                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                            }
                         }
                     }
                 }
