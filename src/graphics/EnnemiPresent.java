@@ -17,7 +17,7 @@ public class EnnemiPresent extends JPanel{
     private GraphicsMaker maker = new GraphicsMaker();
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
-    JPanel container = new JPanel() {
+    private static JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -152,6 +152,23 @@ public class EnnemiPresent extends JPanel{
         container.revalidate();
         container.repaint();
     }
+
+    public static void updateEnnemiHealth(Ennemi ennemi, int damageTaken) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JPanel) {
+                JPanel panel = (JPanel) c;
+                if (panel.getComponent(1) instanceof JLabel && ((JLabel) panel.getComponent(1)).getText().equals(ennemi.getName())) {
+                    JProgressBar healthBar = (JProgressBar) panel.getComponent(2);
+                    int currentHealth = healthBar.getValue();
+                    int newHealth = Math.max(currentHealth + damageTaken, 0);
+                    healthBar.setValue(newHealth);
+                    break;
+                }
+            }
+        }
+        container.revalidate();
+        container.repaint();
+    }    
 
     public ArrayList<Ennemi> getEnnemiGone() {
         return ennemiGone;

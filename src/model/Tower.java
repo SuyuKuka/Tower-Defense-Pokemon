@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import graphics.EnnemiPresent;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -63,37 +65,34 @@ public class Tower extends Pokemon {
         return null;
     }
 
-    public int[] putTower(String st) { // TERMINAL
+    public int[] putTower(String st) {
         try {
-            String alphaPart = st.replaceAll("[^A-Z]", "");
+            String alphaPart = st.replaceAll("[^A-Za-z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
-
+    
             int posX;
             int posY;
-
-            if (!st.matches("[A-Z]\\d+")) {
+    
+            if (!st.matches("[A-Za-z]+\\d+")) {
                 posX = -1;
             } else {
-                posX = alphaPart.charAt(0) - 'A';
+                posX = alphaPart.toUpperCase().charAt(0) - 'A';
             }
-
+    
             if (!numPart.isEmpty()) {
                 posY = Integer.parseInt(numPart) - 1;
             } else {
-                posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
+                posY = -1;
             }
-
-            int[] tab = { posY, posX };
+    
+            int[] tab = {posY, posX};
             return tab;
         } catch (Exception e) {
-            int[] tab = { -1, -1 };
+            int[] tab = {-1, -1};
             return tab;
         }
     }
-
-    public void attackNoSkills(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) {
-
-    }
+    
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
@@ -106,10 +105,11 @@ public class Tower extends Pokemon {
                         m.isDead(tower.uniqueTarget);
                         tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
+                        tower.uniqueTarget=null;
                     }
                 }
             } else {
-                getZoneTarget(tower, ennemiInMap);
+                tower.getZoneTarget(tower, ennemiInMap);
                 if (tower.zoneTarget.size() != 0) {
                     tower.attackZone();
                     for (Ennemi e : tower.zoneTarget) {
@@ -117,6 +117,7 @@ public class Tower extends Pokemon {
                             m.isDead(e);
                             tower.winExp(e);
                             tower.levelUp();
+                            tower.zoneTarget.remove(e);
                         }
                     }
                 }
@@ -141,13 +142,15 @@ public class Tower extends Pokemon {
                     if (physical >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + physical);
+                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
                     }
-                    System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
-                    System.out.println(
-                            getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    // System.out.println(
+                    //         getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
@@ -161,13 +164,15 @@ public class Tower extends Pokemon {
                     if (special >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
+                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
                         // Cas négatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + special);
+                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, special);
                     }
-                    System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
-                    System.out.println(
-                            getName() + " a infligé " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    // System.out.println(
+                    //         getName() + " a infligé " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -191,18 +196,19 @@ public class Tower extends Pokemon {
                         if (physical >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
+                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                         } else {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + physical);
+                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
                         }
-                        System.out.println(getName() + " a attaqué " + e.getName());
-                        System.out
-                                .println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
+                        // System.out.println(getName() + " a attaqué " + e.getName());
+                        // System.out
+                        //         .println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
                         System.out.println("Immunisé");
-
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
@@ -212,13 +218,15 @@ public class Tower extends Pokemon {
                         if (special >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
+                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                         } else {
                             // Cas négatif donc retire special vie
                             e.setPv(e.getPv() + special);
+                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) special);
                         }
-                        System.out.println(getName() + " a attaqué " + e.getName());
-                        System.out
-                                .println(getName() + " a infligé " + special + "pv, il lui reste " + e.getPv() + "pv");
+                        // System.out.println(getName() + " a attaqué " + e.getName());
+                        // System.out
+                        //         .println(getName() + " a infligé " + special + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
@@ -261,8 +269,8 @@ public class Tower extends Pokemon {
             } else {
                 skills[totalSkill] = newSkill;
                 totalSkill++;
-                System.out.println(getName() + " a appris " + newSkill.getName());
-                System.out.println(totalSkill);
+                // System.out.println(getName() + " a appris " + newSkill.getName());
+                // System.out.println(totalSkill);
             }
         }
     }
@@ -320,12 +328,15 @@ public class Tower extends Pokemon {
     }
 
     public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
+        tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
             if (tower.isInRayon(tower, e)) {
                 tower.uniqueTarget = e;
+                break;
             }
         }
     }
+    
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
@@ -370,7 +381,6 @@ public class Tower extends Pokemon {
 
     @Override
     public void setName(String name) {
-        // TODO Auto-generated method stub
         super.setName(name);
     }
 

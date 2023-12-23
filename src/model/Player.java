@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+
+import characters.Starter;
+import characters.Starter.Salameche;
 import model.Hero;
 
 public class Player {
@@ -23,8 +26,9 @@ public class Player {
         exp = 0;
         lvl = 1;
         obtainedPokemon = new ArrayList<>();
-        team[0] = new Tower("Salameche", 100000, 0, Types.FEU, Types.NONE,
-                "ressources/sprite/charmander.png");
+        Starter starterInstance = new Starter();
+        Salameche sala = starterInstance.new Salameche("Salameche", 10, 10, Types.FEU, Types.NONE);
+        team[0] = sala;
         team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");
         team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");
         team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png");

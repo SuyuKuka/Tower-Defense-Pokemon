@@ -8,8 +8,7 @@ import model.Types;
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
         public Salameche(String name, int atkPhysical, int atkSpecial, Types type1, Types type2) {
-            super("Salameche", atkPhysical, atkSpecial, type1, type2, "ressouces/sprite/charmander.png");
-            System.out.println("Charge le sprite"); // ressouces/sprite/salameche.png
+            super("Salameche", atkPhysical, atkSpecial, type1, type2, "ressources/sprite/charmander.png");
             // innerFocus(); // jsp si faut l'appeller la ou pas
             primarySkill();
         }
@@ -17,13 +16,13 @@ public class Starter {
         @Override
         public void evolution() {
             if (getLevel() == 16) {
-                setSprite("ressouces/sprite/charmeleon.png");
+                setSprite("ressources/sprite/charmeleon.png");
                 setName("Reptincel");
                 setPhysical(getPhysical() + 15);
                 setSpecial(getSpecial() + 15);
             }
             if (getLevel() == 36) {
-                setSprite("ressouces/sprite/charizard.png");
+                setSprite("ressources/sprite/charizard.png");
                 setName("Dracaufeu");
                 setPhysical(getPhysical() + 30);
                 setSpecial(getSpecial() + 30);
