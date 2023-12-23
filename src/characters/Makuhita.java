@@ -8,7 +8,7 @@ import model.Types;
 public class Makuhita extends Tower implements TowerLoader {
 
     public Makuhita(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Makuhita", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/makuhita.png");
+        super("Makuhita", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/makuhita.png", State.LOCKED);
         System.out.println("Charge le sprite"); // ressouces/sprite/makuhita.png
         primarySkill();
     }

@@ -10,7 +10,9 @@ import graphics.GameScreen2;
 import graphics.UpdateMap;
 import model.MapState;
 import model.Player;
+import model.Pokemon;
 import model.Tower;
+import model.Pokemon.State;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -130,22 +132,32 @@ public class Game extends JFrame {
                         public void run() {
                             Player p = new Player();
                             Tower t = new Tower("charmander", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charmander.png");
+                                    "ressources/sprite/charmander.png", State.LOCKED);
                             Tower t1 = new Tower("charmeleon", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charmeleon.png");
+                                    "ressources/sprite/charmeleon.png", State.LOCKED);
                             Tower t2 = new Tower("charizard", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png");
+                                    "ressources/sprite/charizard.png", State.LOCKED);
                             Tower t3 = new Tower("squirtle", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/squirtle.png");
+                                    "ressources/sprite/squirtle.png", State.LOCKED);
                             Tower t4 = new Tower("venusaur", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/venusaur.png");
+                                    "ressources/sprite/venusaur.png", State.LOCKED);
                             Tower t5 = new Tower("ivysaur", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/ivysaur.png");
+                                    "ressources/sprite/ivysaur.png", State.LOCKED);
 
-                            p.addteam(t, 0);
-                            p.addteam(t1, 1);
-                            p.addteam(t2, 2);
-                            p.addteam(t3, 3);
+                            p.getObtainedPokemon().add(t);
+                            p.getObtainedPokemon().add(t1);
+                            p.getObtainedPokemon().add(t2);
+                            p.getObtainedPokemon().add(t3);
+                            p.getObtainedPokemon().add(t4);
+                            p.getObtainedPokemon().add(t5);
+                            for (Tower pkm : p.getObtainedPokemon()) {
+                                pkm.setState(State.PC);
+                            }
+
+                            p.addteam(t);
+                            p.addteam(t1);
+                            p.addteam(t2);
+                            p.addteam(t3);
 
                             p.getPc().add(t4);
                             p.getPc().add(t5);

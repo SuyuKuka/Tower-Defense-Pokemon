@@ -7,7 +7,7 @@ import model.Types;
 public class Chartor extends Tower implements TowerLoader {
 
     public Chartor(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Chartor", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/torkoal.png");
+        super("Chartor", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/torkoal.png", State.LOCKED);
         primarySkill();
     }
 

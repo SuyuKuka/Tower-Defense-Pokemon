@@ -3,6 +3,8 @@ package graphics;
 import main.Game;
 import model.Player;
 import model.Pokemon;
+import model.Tower;
+import model.Pokemon.State;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,7 +26,9 @@ import java.util.ArrayList;
 import javax.swing.border.EmptyBorder;
 
 public class MainMenu extends JPanel {
+
     private Player user;
+
     private ButtonManager manager = new ButtonManager();
     private GraphicsMaker maker = new GraphicsMaker();
 
@@ -64,11 +68,13 @@ public class MainMenu extends JPanel {
         rightSidePanel.setOpaque(false);
 
         teamPanel.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println(user.getPc());
                 if (displayPcPanel) {
-                    cdL.show(rightSidePanel, "button");
 
+                    cdL.show(rightSidePanel, "button");
                     displayPcPanel = false;
                 } else {
 
@@ -90,6 +96,7 @@ public class MainMenu extends JPanel {
         JPanel pcPanel = new JPanel();
         JPanel heading = imagePanel("ressources/background/pcheading.png");
         JLabel pcTitle = new JLabel("   PC   ");
+        GridLayout gridBox = new GridLayout(5, 5);
         heading.add(pcTitle);
         heading.setBorder(new LineBorder(Color.BLACK, 5));
         pcTitle.setForeground(Color.WHITE);
@@ -99,18 +106,16 @@ public class MainMenu extends JPanel {
 
         JPanel box = imagePanel("ressources/background/pc.png");
 
-        box.setLayout(new GridLayout(3, 3));
-        for (Pokemon pkm : user.getPc()) {
+        box.setLayout(gridBox);
 
-            Slot slot = new Slot(pkm);
-
-            Slot slot1 = new Slot(pkm);
-            Slot slot2 = new Slot(pkm);
+        for (int i = 0; i < gridBox.getColumns() * gridBox.getRows(); i++) {
+            Slot slot = new Slot();
+            if (user.getPc().size() > i) {
+                slot = new Slot(user.getPc().get(i));
+            }
             box.add(slot);
-            box.add(slot1);
-            box.add(slot2);
-
         }
+
         box.setPreferredSize(new Dimension(300, 200));
         box.setBorder(new EmptyBorder(40, 20, 40, 20));
 
@@ -135,15 +140,14 @@ public class MainMenu extends JPanel {
         teamPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         teamPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-        for (Pokemon pkm : user.getTeam()) {
-            if (pkm != null) {
-
-                Slot slot = new Slot(pkm);
-
-                teamPanel.add(slot);
-
+        for (int i = 0; i < 6; i++) {
+            Slot slot = new Slot();
+            if (user.getTeam()[i] != null) {
+                slot = new Slot(user.getTeam()[i]);
             }
+            teamPanel.add(slot);
         }
+
         teamPanel.setOpaque(false);
         teamPanel.setBorder(new EmptyBorder(0, 70, 0, 30));
 
@@ -357,19 +361,20 @@ public class MainMenu extends JPanel {
 
     public class Slot extends JPanel {
 
-        private Pokemon pkm;
+        private Tower pkm;
         private boolean selected = false;
         private static ArrayList<Slot> exchange = new ArrayList<>();
 
-        public Slot(Pokemon pkm) {
+        public Slot(Tower pkm) {
             this.pkm = pkm;
             BufferedImage resize = loadImage(pkm.getSprite());
-            Image resized = resize.getScaledInstance(60, 60, Image.SCALE_SMOOTH); // RESIZE
+            Image resized = resize.getScaledInstance(40, 40, Image.SCALE_SMOOTH); // RESIZE
             JLabel pokeicon = new JLabel(new ImageIcon(resized));
 
             add(pokeicon);
             setOpaque(false);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            setBorder(new EmptyBorder(1, 1, 1, 1));
 
             pokeicon.setOpaque(false);
 
@@ -382,12 +387,46 @@ public class MainMenu extends JPanel {
                         selected = true;
                         waitForExchange();
                     } else {
+                        setBorder(new EmptyBorder(1, 1, 1, 1));
                         selected = false;
-                        setBorder(new LineBorder(Color.RED, 0));
+                        removeExchange();
                     }
                 }
             });
+        }
 
+        public Slot() {
+
+            BufferedImage resize = loadImage("ressources/sprite/blank.png");
+            Image resized = resize.getScaledInstance(40, 40, Image.SCALE_SMOOTH); // RESIZE
+            JLabel pokeicon = new JLabel(new ImageIcon(resized));
+
+            add(pokeicon);
+            setOpaque(false);
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            setBorder(new EmptyBorder(1, 1, 1, 1));
+
+            pokeicon.setOpaque(false);
+
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (!selected) {
+
+                        setBorder(new LineBorder(Color.RED, 1));
+                        selected = true;
+                        waitForExchange();
+                    } else {
+                        setBorder(new EmptyBorder(1, 1, 1, 1));
+                        selected = false;
+                        removeExchange();
+                    }
+                }
+            });
+        }
+
+        private void removeExchange() {
+            exchange.remove(this);
         }
 
         private void waitForExchange() {
@@ -395,10 +434,38 @@ public class MainMenu extends JPanel {
                 exchange.add(this);
                 if (exchange.size() == 2) {
                     System.out.println("echange");
-
-                    Timer timer = new Timer(400, new ActionListener() {
+                    Timer timer = new Timer(200, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent arg0) {
+
+                            Slot slot1 = exchange.get(0);
+                            Slot slot2 = exchange.get(1);
+
+                            Container parent1 = slot1.getParent();
+                            Container parent2 = slot2.getParent();
+
+                            parent1.remove(slot1);
+                            parent2.remove(slot2);
+
+                            parent1.add(slot2);
+                            parent2.add(slot1);
+
+                            parent1.revalidate();
+                            parent2.revalidate();
+
+                            for (Slot slot : exchange) {
+                                if (slot.getPkm() != null) {
+
+                                    if (slot.getPkm().getState() == State.PC) {
+                                        user.getPc().remove(slot.getPkm());
+                                        user.addteam(slot.getPkm());
+                                    } else {
+                                        user.getPc().add(slot.getPkm());
+                                        user.removeTeam(slot.getPkm());
+                                    }
+                                }
+                            }
+
                             exchange.get(0).setBorder(new LineBorder(Color.RED, 0));
                             exchange.get(0).setSelected(false);
                             exchange.get(1).setBorder(new LineBorder(Color.RED, 0));
@@ -412,10 +479,11 @@ public class MainMenu extends JPanel {
                     timer.start();
                 }
             }
+            repaint();
 
         }
 
-        public Pokemon getPkm() {
+        public Tower getPkm() {
             return pkm;
         }
 
