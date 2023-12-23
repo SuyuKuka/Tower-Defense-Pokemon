@@ -15,20 +15,24 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.border.EmptyBorder;
 
-public class TowerPresent extends JPanel{
+public class TowerPresent extends JPanel {
     private Tower[] team = Player.INSTANCE.getTeam();
     private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
 
-    public TowerPresent(){
-        setPreferredSize(new Dimension(354, 1000)); //taille parfaite
+    public TowerPresent() {
+        setPreferredSize(new Dimension(354, 1000)); // taille parfaite
         setOpaque(false);
 
         add(initiateTitle());
 
-        JPanel heroPanel = new JPanel(new GridLayout(1, 2));
+        GridLayout heroLayout = new GridLayout(1, 2);
+        heroLayout.setHgap(10);
+        heroLayout.setVgap(10);
+        JPanel heroPanel = new JPanel(heroLayout);
         heroPanel.setOpaque(false);
         TowerManagement hero1 = new TowerManagement(hero[0], 7);
         TowerManagement hero2 = new TowerManagement(hero[1], 8);
@@ -37,17 +41,20 @@ public class TowerPresent extends JPanel{
 
         add(heroPanel);
 
-        setLayout(new GridLayout(8,1));
-        for(int i=0; i<team.length; i=i+1){
+        GridLayout normalLayout = new GridLayout(8, 1);
+        normalLayout.setHgap(10);
+        normalLayout.setVgap(10);
+        setLayout(normalLayout);
+        for (int i = 0; i < team.length; i = i + 1) {
             try {
-                initiateTeam(team[i], i+1);
+                initiateTeam(team[i], i + 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -60,7 +67,7 @@ public class TowerPresent extends JPanel{
 
     }
 
-    public JPanel initiateTitle(){
+    public JPanel initiateTitle() {
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
         JLabel logoPokeball = new JLabel(new ImageIcon("ressources/team/pokeball.png"));
@@ -75,31 +82,32 @@ public class TowerPresent extends JPanel{
         return titlePanel;
     }
 
-    public void initiateTeam(Tower tower, int numero) throws IOException{
+    public void initiateTeam(Tower tower, int numero) throws IOException {
         TowerManagement pokemon = new TowerManagement(tower, numero);
         add(pokemon);
         pokemon.setEnabled(true);
-    
+        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+
         pokemon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")){
-                    if(pokemon.isSelected()) {
-                        if(selectedPokemon!=null){
-                        selectedPokemon.setBorder(BorderFactory.createEmptyBorder());
+                if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
+                    if (pokemon.isSelected()) {
+                        if (selectedPokemon != null) {
+                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
                         }
                         pokemon.setBorder(new MatteBorder(2, 2, 2, 2, Color.RED));
-                        selectedPokemon=pokemon;
+                        selectedPokemon = pokemon;
                     } else {
-                        pokemon.setBorder(BorderFactory.createEmptyBorder());
-                        selectedPokemon=null;
+                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+                        selectedPokemon = null;
                     }
                 }
             }
         });
     }
-   
-    public Tower getTower(){
+
+    public Tower getTower() {
         return selectedPokemon.getPokemon();
     }
 

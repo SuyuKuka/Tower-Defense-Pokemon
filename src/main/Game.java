@@ -123,7 +123,7 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        if (args.length != 0 && args[0].equals("[terminal]")) {
+        if (args.length != 0 && args[0].equals("[terqsdminal]")) {
             MapState terminal = new MapState();
             terminal.startTerminal();
         } else {
@@ -131,36 +131,6 @@ public class Game extends JFrame {
                     new Runnable() {
                         public void run() {
                             Player p = new Player();
-                            Tower t = new Tower("charmander", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charmander.png", State.LOCKED);
-                            Tower t1 = new Tower("charmeleon", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charmeleon.png", State.LOCKED);
-                            Tower t2 = new Tower("charizard", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/charizard.png", State.LOCKED);
-                            Tower t3 = new Tower("squirtle", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/squirtle.png", State.LOCKED);
-                            Tower t4 = new Tower("venusaur", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/venusaur.png", State.LOCKED);
-                            Tower t5 = new Tower("ivysaur", ALLBITS, ABORT, null, null,
-                                    "ressources/sprite/ivysaur.png", State.LOCKED);
-
-                            p.getObtainedPokemon().add(t);
-                            p.getObtainedPokemon().add(t1);
-                            p.getObtainedPokemon().add(t2);
-                            p.getObtainedPokemon().add(t3);
-                            p.getObtainedPokemon().add(t4);
-                            p.getObtainedPokemon().add(t5);
-                            for (Tower pkm : p.getObtainedPokemon()) {
-                                pkm.setState(State.PC);
-                            }
-
-                            p.addteam(t);
-                            p.addteam(t1);
-                            p.addteam(t2);
-                            p.addteam(t3);
-
-                            p.getPc().add(t4);
-                            p.getPc().add(t5);
 
                             Game game = new Game(p);
                             game.setVisible(true);

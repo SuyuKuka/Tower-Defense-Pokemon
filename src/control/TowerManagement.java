@@ -8,15 +8,17 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import graphics.GraphicsMaker;
 import model.Tower;
 
-public class TowerManagement extends JPanel{
+public class TowerManagement extends JPanel {
     private Tower pokemon;
     private int numero;
     private boolean isSelected;
     private JPanel spritePanel = new JPanel();
     private JPanel infoPanel = new JPanel();
     private boolean isPlaced = false;
+    private GraphicsMaker maker = new GraphicsMaker();
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
@@ -36,23 +38,23 @@ public class TowerManagement extends JPanel{
     private JPanel addInfoPanel() {
         infoPanel.setLayout(new BorderLayout());
         infoPanel.setOpaque(false);
-    
+
         infoPanel.add(addNameLabel(), BorderLayout.NORTH);
-    
+
         // Ajoutez une vérification pour afficher le niveau ou le prix
         if (isPlaced) {
             infoPanel.add(addLevelLabel(), BorderLayout.SOUTH);
         } else {
             infoPanel.add(addPriceLabel(), BorderLayout.SOUTH);
         }
-    
+
         return infoPanel;
     }
-    
 
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
         try {
+            System.out.println(new File(pokemon.getSprite()).getAbsolutePath());
             BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
             Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
@@ -69,7 +71,7 @@ public class TowerManagement extends JPanel{
         namePanel.setOpaque(false);
         JLabel nameLabel = new JLabel(pokemon.getName());
         nameLabel.setForeground(Color.WHITE);
-        nameLabel.setFont(getFont().deriveFont(Font.PLAIN, 24f));
+        nameLabel.setFont(maker.getCustomFont().deriveFont(24f));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         namePanel.add(nameLabel);
         return namePanel;
@@ -79,8 +81,9 @@ public class TowerManagement extends JPanel{
         JPanel pricePanel = new JPanel();
         pricePanel.setOpaque(false);
         JLabel priceLabel = new JLabel("Prix : " + String.valueOf(pokemon.getPrice()) + "$");
+        priceLabel.setFont(maker.getCustomFont().deriveFont(20f));
         priceLabel.setForeground(Color.WHITE);
-        priceLabel.setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
         pricePanel.add(priceLabel);
         return pricePanel;
     }
@@ -96,20 +99,24 @@ public class TowerManagement extends JPanel{
         super.paintComponent(g);
         if (numero > 6) {
             if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
-                g.drawImage(new ImageIcon("ressources/team/rectanglehero.png").getImage(), 10, 10, getWidth(), getHeight(), this);
+                g.drawImage(new ImageIcon("ressources/team/rectanglehero.png").getImage(), 0, 0, getWidth(),
+                        getHeight(), this);
             } else {
-                g.drawImage(new ImageIcon("ressources/team/rectanglehero_locked.png").getImage(), 10, 10, getWidth(), getHeight(), this);
+                g.drawImage(new ImageIcon("ressources/team/rectanglehero_locked.png").getImage(), 0, 0, getWidth(),
+                        getHeight(), this);
             }
         } else {
             if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
-                g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 10, 10, getWidth(), getHeight(), this);
+                g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 0, 0, getWidth(),
+                        getHeight(), this);
             } else {
-                g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 10, 10, getWidth(), getHeight(), this);
+                g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 0, 0, getWidth(),
+                        getHeight(), this);
             }
         }
     }
 
-    public String getSprite(){
+    public String getSprite() {
         return pokemon.getSprite();
     }
 
@@ -118,10 +125,10 @@ public class TowerManagement extends JPanel{
     }
 
     public boolean isSelected() {
-        if(isSelected){
+        if (isSelected) {
             isSelected = false;
             return isSelected;
-        }else{
+        } else {
             isSelected = true;
             return isSelected;
         }
@@ -138,7 +145,7 @@ public class TowerManagement extends JPanel{
     public Tower getPokemon() {
         return pokemon;
     }
-    
+
     public boolean isPlaced() {
         return isPlaced;
     }
@@ -146,5 +153,5 @@ public class TowerManagement extends JPanel{
     public void setPlaced(boolean placed) {
         isPlaced = placed;
     }
-    
+
 }
