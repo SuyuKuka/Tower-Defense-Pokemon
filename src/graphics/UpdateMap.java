@@ -28,10 +28,10 @@ public class UpdateMap extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if(!tPresent.getSelectedPokemon().isPlaced()){
-                    int row = evt.getY() / cellSize;
-                    int col = evt.getX() / cellSize;
-                    if (tPresent.getSelectedPokemon() != null) {
+                if(tPresent.getSelectedPokemon()!=null){
+                    if(!tPresent.getSelectedPokemon().isPlaced()){
+                        int row = evt.getY() / cellSize;
+                        int col = evt.getX() / cellSize;
                         if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
                                 && col < state.getMap().getConfig()[0].length) {
                             state.setTower(new int[] { row, col }, Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1]);
