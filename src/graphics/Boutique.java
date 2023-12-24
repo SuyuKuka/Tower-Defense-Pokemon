@@ -1,14 +1,10 @@
 package graphics;
 
-import main.Game;
-
 import javax.swing.*;
 
 import control.Control;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Boutique extends JPanel {
 

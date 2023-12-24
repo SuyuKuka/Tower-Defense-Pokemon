@@ -1,20 +1,15 @@
 package model;
 
+import model.InitWaves.Difficulty;
+import characters.Starter;
+import characters.Starter.Salameche;
+import graphics.GameScreen;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
-import model.InitWaves.Difficulty;
-
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import characters.Starter;
-import characters.Starter.Salameche;
-import graphics.EnnemiPresent;
-
-import graphics.GameScreen;
-import graphics.UpdateMap;
 
 public class MapState {
 

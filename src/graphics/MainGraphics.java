@@ -1,20 +1,8 @@
 package graphics;
 
-import graphics.Boutique;
-import graphics.Classique;
-
-import graphics.MainMenu;
-import graphics.Marathon;
-import graphics.Options;
-import graphics.GameScreen;
-import graphics.UpdateMap;
 import main.Game;
 import model.MapState;
 import model.Player;
-import model.Pokemon;
-import model.Tower;
-import model.InitWaves.Difficulty;
-import model.Pokemon.State;
 
 import java.awt.CardLayout;
 import java.awt.Graphics;

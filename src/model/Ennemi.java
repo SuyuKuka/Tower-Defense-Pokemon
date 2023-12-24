@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Map.Corner;
-
 public class Ennemi extends Pokemon {
 
     private Map map;

@@ -1,11 +1,8 @@
 package graphics;
 
-import main.Game;
 import model.Player;
 import model.Tower;
-import model.Pokemon.State;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -16,9 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;

@@ -1,10 +1,8 @@
 package graphics;
 
-import javax.swing.*;
-
 import control.Control;
-import main.Game;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Marathon extends JPanel {

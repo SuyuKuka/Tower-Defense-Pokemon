@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
-import main.Game;
+
 import model.Pokemon.State;
 import model.MapState;
 import model.Player;

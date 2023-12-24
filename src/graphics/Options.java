@@ -1,11 +1,8 @@
 package graphics;
 
-import main.Game;
-
-import javax.swing.*;
-
 import control.Control;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Options extends JPanel {

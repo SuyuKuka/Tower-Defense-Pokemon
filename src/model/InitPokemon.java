@@ -2,10 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 public class InitPokemon {
 

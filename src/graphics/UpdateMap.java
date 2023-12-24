@@ -79,7 +79,6 @@ public class UpdateMap extends JPanel {
         if (color == Color.BLUE) {
             if (tPresent.getSelectedPokemon() != null) {
                 try {
-                    JLabel tmp = new JLabel();
                     BufferedImage image = ImageIO.read(new File(
                             Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1].getSprite()));
                     g.drawImage(image, j * scale, i * scale, scale, scale, null);

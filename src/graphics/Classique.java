@@ -1,11 +1,9 @@
 package graphics;
 
 import javax.swing.*;
+import java.awt.*;
 
 import control.Control;
-import main.Game;
-
-import java.awt.*;
 
 public class Classique extends JPanel {
 
