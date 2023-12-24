@@ -300,7 +300,7 @@ public class Tower extends Pokemon {
             if (skill != null) {
                 result.append(skill.toString()).append("#");
             } else {
-                result.append("null,");
+                result.append("null#");
             }
         }
         return result.toString();

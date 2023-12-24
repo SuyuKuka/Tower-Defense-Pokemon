@@ -24,10 +24,11 @@ public class Skill {
 
     public String toString(){
         return this.getName()
-        +"#"+this.getType()
         +"#"+this.getPhysicalDamage() 
         +"#"+this.getSpecialDamage() 
+        +"#"+this.getType()
         +"#"+this.getSpeedAtk()
+        +"#"+this.getEffect()
         +"#"+this.getUnique()
         +"#"+this.getDescription();
     }

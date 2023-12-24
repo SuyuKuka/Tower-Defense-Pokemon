@@ -204,8 +204,26 @@ public class Player {
 
     }
 
-    private void parseSkill(String dataTowerSkill){
-        String[] pokemonDataArray = dataTowerSkill.split("#");
+    private void parseSkill(String skillData, int i){
+        String[] towerSkillData = skillData.split("#");
+
+        String skillName = towerSkillData[0];
+        int skillPhysicalDamage = Integer.parseInt(towerSkillData[1]);
+        int skillSpecialDamage = Integer.parseInt(towerSkillData[2]);
+        Types skillType = Types.stringToType(towerSkillData[3]);
+        double skillSpeedAtk = Double.parseDouble(towerSkillData[4]);
+        Effect skillEffect = null;
+        boolean skillUnique = 
+        
+        public String toString(){
+            return this.getName()
+            +"#"+this.getType()
+            +"#"+this.getPhysicalDamage() 
+            +"#"+this.getSpecialDamage() 
+            +"#"+this.getSpeedAtk()
+            +"#"+this.getUnique()
+            +"#"+this.getDescription();
+        }
 
     }
 
