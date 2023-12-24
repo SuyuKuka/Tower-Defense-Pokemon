@@ -196,7 +196,7 @@ public class Player {
         Tower tower = new Tower(nameTower, levelTower, expTower, firstTypeTower, secondTypeTower, spriteTower, State.PC);
         tower.setLevel(levelTower);
         tower.setExp(expTower);
-        parseSkill(pokemonDataArray[7], );
+        parseSkill(pokemonDataArray[7], tower);
 
         pc.add(tower);
     }
