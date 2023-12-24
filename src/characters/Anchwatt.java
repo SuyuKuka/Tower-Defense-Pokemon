@@ -66,7 +66,7 @@ public class Anchwatt extends Tower implements TowerLoader {
         }
         if (getLevel() == 38) {
             Skill a = new Skill("Eclair Fou", 90, 0, Types.ELECTRIQUE, 7, null, true,
-                    "Le lanceur fonce sur la cible en étant surchargé en electricité");
+                    "Le lanceur fonce sur la cible en etant surcharge en electricite");
             learnSkill(a);
         }
         if (getLevel() == 45) {

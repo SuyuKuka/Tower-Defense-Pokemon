@@ -134,7 +134,7 @@ public class Tower extends Pokemon {
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunisé");
+                    //System.out.println("Immunise");
                 } else {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                             * Types.typeChart(skills[select], uniqueTarget);
@@ -146,17 +146,17 @@ public class Tower extends Pokemon {
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
                         EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
-                        // Cas négatif donc retire special vie
+                        // Cas negatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + physical);
                         EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
                     }
-                    // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    //         getName() + " a inflige " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunisé");
+                    //System.out.println("Immunise");
                 } else {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Types.typeChart(skills[select], uniqueTarget));
@@ -168,13 +168,13 @@ public class Tower extends Pokemon {
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
                         EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
-                        // Cas négatif donc retire special vie
+                        // Cas negatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + special);
                         EnnemiPresent.updateEnnemiHealth(uniqueTarget, special);
                     }
-                    // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
+                    // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a infligé " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    //         getName() + " a inflige " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -188,7 +188,7 @@ public class Tower extends Pokemon {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunisé");
+                        //System.out.println("Immunise");
                     } else {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                                 * Types.typeChart(skills[select], e);
@@ -200,17 +200,17 @@ public class Tower extends Pokemon {
                             e.setPv(e.getPv() - 1);
                             EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                         } else {
-                            // Cas négatif donc retire special vie
+                            // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + physical);
                             EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
                         }
-                        // System.out.println(getName() + " a attaqué " + e.getName());
+                        // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
-                        //         .println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
+                        //         .println(getName() + " a inflige " + physical + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunisé");
+                        //System.out.println("Immunise");
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
@@ -222,13 +222,13 @@ public class Tower extends Pokemon {
                             e.setPv(e.getPv() - 1);
                             EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                         } else {
-                            // Cas négatif donc retire special vie
+                            // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + special);
                             EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) special);
                         }
-                        // System.out.println(getName() + " a attaqué " + e.getName());
+                        // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
-                        //         .println(getName() + " a infligé " + special + "pv, il lui reste " + e.getPv() + "pv");
+                        //         .println(getName() + " a inflige " + special + "pv, il lui reste " + e.getPv() + "pv");
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
@@ -260,7 +260,7 @@ public class Tower extends Pokemon {
             System.out.println("Probleme, il peut pas avoir + de 4 skills");
         } else {
             if (totalSkill == 4) {
-                System.out.println("Votre pokémon a 4 attaques.");
+                System.out.println("Votre pokemon a 4 attaques.");
                 System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
                 Scanner sc = new Scanner(System.in);
                 String st = sc.nextLine();
@@ -278,31 +278,45 @@ public class Tower extends Pokemon {
 
     private void replaceSkill(Skill newSkill, Scanner sc) {
         System.out.println("Par lequel souhaitez-vous remplacer? 1/2/3/4");
-        prinSkill();
+        printSkill();
         int skillIndex = sc.nextInt();
         if (skillIndex >= 1 && skillIndex <= totalSkill) {
-            System.out.println(skills[skillIndex - 1].getName() + " a bien été remplacé par " + newSkill.getName());
+            System.out.println(skills[skillIndex - 1].getName() + " a bien ete remplace par " + newSkill.getName());
             skills[skillIndex - 1] = newSkill;
         } else {
             System.out.println("Choix invalide.");
         }
     }
 
-    private void prinSkill() {
+    private void printSkill() {
         for (int i = 0; i < totalSkill; i++) {
             System.out.println(i + 1 + ". " + skills[i].getName());
         }
     }
 
+    private String arrayToString(Skill[] array) {
+        StringBuilder result = new StringBuilder();
+        for (Skill skill : array) {
+            if (skill != null) {
+                result.append(skill.toString()).append("#");
+            } else {
+                result.append("null,");
+            }
+        }
+        return result.toString();
+    }
+
     public String toString() {
         return getName()
-                + ";" + exp
-                + ";" + getPhysical()
-                + ";" + getSpecial()
-                + ";" + getType()[0] + ";" + getType()[1]
-                + ";" + getSpeed()
-                + ";" + rayon
-                + ";GENTIL";
+            + ";" + getLevel()
+            + ";" + exp
+            + ";" + getPhysical()
+            + ";" + getSpecial()
+            + ";" + getType()[0] 
+            + ";" + getType()[1]
+            + ";" + arrayToString(getSkills())
+            + ";" + getSprite()
+            + ";GENTIL";
     }
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
@@ -411,6 +425,14 @@ public class Tower extends Pokemon {
 
     public State getState() {
         return state;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setExp(double exp) {
+        this.exp = exp;
     }
 
 }

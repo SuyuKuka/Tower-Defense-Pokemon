@@ -25,7 +25,7 @@ public class GameScreen extends JPanel {
     private MapState state = new MapState();
     private ArrayList<Ennemi> ennemiPresent;
 
-    // Création des 3 catégories de panels
+    // Creation des 3 categories de panels
     private JPanel ennemiPanel;
     private JPanel mapPanel = new JPanel();
     private JPanel towerPanel;
@@ -104,7 +104,7 @@ public class GameScreen extends JPanel {
 
         // // Tour
 
-        // JLabel team = new JLabel("Ton équipe");
+        // JLabel team = new JLabel("Ton equipe");
         // team.setForeground(Color.WHITE);
         // team.setFont(new Font(Font.SERIF, Font.BOLD, 20));
         // team.setAlignmentX(Component.CENTER_ALIGNMENT);

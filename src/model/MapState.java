@@ -41,7 +41,7 @@ public class MapState {
         System.out.println(
                 "===============================================================================================================");
         System.out.println(
-                "Pour commencer à jouer, il faut placer une tours aux endroits qui contiennent des . sous la forme de coordonées");
+                "Pour commencer à jouer, il faut placer une tours aux endroits qui contiennent des . sous la forme de coordonees");
         System.out.println(
                 " - Exemple : F4 ou F04");
         System.out.println(

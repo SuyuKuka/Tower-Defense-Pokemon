@@ -2,17 +2,17 @@ package model;
 
 public class Effect {
     //stat baisse def phys/spe, speed (cumulable?)
-    //buff atk physique et speciale, atk speed, augmenter la portée (non cumulable)
-    //statut stun => immobile pdt x sec, paralysé => + lent, brulure => inflige x dégat/sec diminue sa def physique de -10%, poison => inflige x dégat mais progressive? (cumulable?)
+    //buff atk physique et speciale, atk speed, augmenter la portee (non cumulable)
+    //statut stun => immobile pdt x sec, paralyse => + lent, brulure => inflige x degat/sec diminue sa def physique de -10%, poison => inflige x degat mais progressive? (cumulable?)
     //reveal spectre
     //Debuff
-    //Ennemi e qui se prend l'effet, int i la reduction de défense physique
+    //Ennemi e qui se prend l'effet, int i la reduction de defense physique
     public void reducesPhysicalDefense(Ennemi e, int defense, int duration){
         //jusqu'a duration
         e.setPhysical(e.getPhysical()-defense);
     }
     
-    //Ennemi e qui se prend l'effet, int i la reduction de défense spéciale
+    //Ennemi e qui se prend l'effet, int i la reduction de defense speciale
     public void reducesSpecialDefense(Ennemi e, int defense, int duration){
         e.setSpecial(e.getSpecial()-defense);
     }
@@ -44,7 +44,7 @@ public class Effect {
     }
 
     //Statut
-    //Ennemi e qui se prend l'effet, int duration la durée du stun
+    //Ennemi e qui se prend l'effet, int duration la duree du stun
     public void statutStun(Ennemi e, int duration){
         
     }
@@ -54,12 +54,12 @@ public class Effect {
 
     }
 
-    //Ennemi e qui se prend l'effet, int i représente les dégats et diminue sa def physique de -10% sur x secondes
+    //Ennemi e qui se prend l'effet, int i represente les degats et diminue sa def physique de -10% sur x secondes
     public void statutBurn(Ennemi e, int damage, int duration){
 
     }
 
-    //Ennemi e qui se prend l'effet, int i représente les dégats, qui augmente petit a petit sur x secondes
+    //Ennemi e qui se prend l'effet, int i represente les degats, qui augmente petit a petit sur x secondes
     public void statutPoison(Ennemi e, int damage, int duration){
 
     }

@@ -548,7 +548,7 @@ public class Map {
         int posHead = 0;
         for (int i = 1; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                // Set le précédent, celui qui est à la case i-1
+                // Set le precedent, celui qui est à la case i-1
                 if (map[i - 1][j] != 0) {
                     posPrec = j;
                 }
@@ -558,11 +558,11 @@ public class Map {
                 }
 
             }
-            // Créer le chemin ssi le précédént du posHead est différent de 3
+            // Creer le chemin ssi le precedent du posHead est different de 3
             if (map[i - 1][posHead] != 3) {
-                // Cas négatif, création du chemin
+                // Cas negatif, creation du chemin
                 createLeftWay(i, posHead, posPrec);
-                // Cas positif, création du chemin
+                // Cas positif, creation du chemin
                 createRightWay(i, posHead, posPrec);
             }
         }

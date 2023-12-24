@@ -39,12 +39,12 @@ public class Nodulithe extends Tower implements TowerLoader {
     public void unlock() {
         if (getLevel() == 10) {
             Skill a = new Skill("Rayon Gemme", 0, 80, Types.ROCHE, 2, null, false,
-                    "Charge et tire un rayon minérale.");
+                    "Charge et tire un rayon minerale.");
             learnSkill(a);
         }
         if (getLevel() == 16) {
             Skill a = new Skill("Anti-Air", 40, 0, Types.ROCHE, 1.5, null, true,
-                    "Attaque tres efficace contre les unités volantes.");
+                    "Attaque tres efficace contre les unites volantes.");
             learnSkill(a);
         }
         if (getLevel() == 22) {
@@ -69,7 +69,7 @@ public class Nodulithe extends Tower implements TowerLoader {
         }
         if (getLevel() == 65) {
             Skill a = new Skill("Tete de fer", 85, 0, Types.ACIER, 4, null, true,
-                    "Coup de tete renforcé !.");
+                    "Coup de tete renforce !.");
             learnSkill(a);
         }
         if (getLevel() == 70) {

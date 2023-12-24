@@ -28,7 +28,7 @@ public class Ecrapince extends Tower implements TowerLoader {
         Skill pistoletAO = new Skill("Pistolet a O", 0, 40, Types.EAU, 0.5, null, true,
                 "Tire de l'eau sur sa cible.");
         Skill BulleO = new Skill("Bulles d'O", 0, 65, Types.EAU, 2, null, false,
-                "Lance une grosse bulle chargé d'eau.");
+                "Lance une grosse bulle charge d'eau.");
         learnSkill(pistoletAO);
         learnSkill(BulleO);
     }
@@ -41,7 +41,7 @@ public class Ecrapince extends Tower implements TowerLoader {
         }
         if (getLevel() == 22) {
             Skill a = new Skill("Coqui-Lame", 75, 0, Types.EAU, 0.8, null, true,
-                    "Tranche l'adversaire en utilisant un coquillage aiguisé.");
+                    "Tranche l'adversaire en utilisant un coquillage aiguise.");
             learnSkill(a);
         }
         if (getLevel() == 30) {
@@ -61,7 +61,7 @@ public class Ecrapince extends Tower implements TowerLoader {
         }
         if (getLevel() == 96) {
             Skill a = new Skill("Guillotine", 100000000, 0, Types.NORMAL, 600, null, true,
-                    "Annihile la cible d'un seul coup, mais necessite un temps de recharge considérable.");
+                    "Annihile la cible d'un seul coup, mais necessite un temps de recharge considerable.");
             learnSkill(a);
         }
     }

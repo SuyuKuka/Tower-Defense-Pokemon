@@ -39,12 +39,12 @@ public class Terhal extends Tower implements TowerLoader {
     public void unlock() {
         if (getLevel() == 20) {
             Skill a = new Skill("Choc Mental", 0, 50, Types.PSY, 2, null, true,
-                    "Utilise ses pouvoir télékinésique pour frapper a l'interieur de sa cible.");
+                    "Utilise ses pouvoir telekinesique pour frapper a l'interieur de sa cible.");
             learnSkill(a);
         }
         if (getLevel() == 22) {
             Skill a = new Skill("Griffe Acier", 60, 0, Types.ACIER, 1.2, null, true,
-                    "Griffe sa cible avec des griffes renforcées.");
+                    "Griffe sa cible avec des griffes renforcees.");
             learnSkill(a);
         }
         if (getLevel() == 30) {

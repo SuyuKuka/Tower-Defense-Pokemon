@@ -59,7 +59,7 @@ public class Ennemi extends Pokemon {
             if (!numPart.isEmpty()) {
                 posY = Integer.parseInt(numPart) - 1;
             } else {
-                posY = -1; // Si la partie numérique est vide, utilisezz 0 comme valeur par défaut.
+                posY = -1; // Si la partie numerique est vide, utilisezz 0 comme valeur par defaut.
             }
 
             int[] tab = { posX, posY };

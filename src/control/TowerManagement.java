@@ -41,7 +41,7 @@ public class TowerManagement extends JPanel {
 
         infoPanel.add(addNameLabel(), BorderLayout.NORTH);
 
-        // Ajoutez une vérification pour afficher le niveau ou le prix
+        // Ajoutez une verification pour afficher le niveau ou le prix
         if (isPlaced) {
             infoPanel.add(addLevelLabel(), BorderLayout.SOUTH);
         } else {

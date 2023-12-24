@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import characters.Starter;
 import characters.Starter.Salameche;
@@ -16,7 +17,7 @@ public class Player {
     private int lvl;
     private double exp;
 
-    private ArrayList<Tower> obtainedPokemon; //utilité?
+    private ArrayList<Tower> obtainedPokemon; //utilite?
    
     private ArrayList<Hero> heroContract = new ArrayList<>();
     private Hero[] hero = new Hero[2];
@@ -35,17 +36,24 @@ public class Player {
             obtainedPokemon = new ArrayList<>();
             pc = new ArrayList<>();
             Starter starterInstance = new Starter();
-            Salameche sala = starterInstance.new Salameche("Salameche", 20, 40, Types.FEU, Types.NONE); //il doit choisir
-            hero[0] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            hero[1] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[0] = sala;
-            team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            hero[0] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            hero[1] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            Salameche sala0 = starterInstance.new Salameche("arazf", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            Salameche sala1 = starterInstance.new Salameche("kaka", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            Salameche sala2 = starterInstance.new Salameche("zara", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            Salameche sala3 = starterInstance.new Salameche("fzaq", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            Salameche sala4 = starterInstance.new Salameche("vdqvs", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            Salameche sala5 = starterInstance.new Salameche("gaqgj", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            hero[0] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[0] = sala0;
+            team[1] = sala1;
+            team[2] = sala2;
+            team[3] = sala3;
+            team[4] = sala4;
+            team[5] = sala5;
+            //new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            for(Tower tower : team){
+                System.out.println(tower.toString());
+            }
         }else{
             loadData();
         }
@@ -84,11 +92,10 @@ public class Player {
 
     public void saveData(){
         try (FileWriter writer = new FileWriter(file, false)) {
-            // Écrit l'en-tête du fichier
             writer.append("Pseudo,Money,Level,Exp,Contrat_Hero,Pokemon,Pc");
             writer.append("\n");
 
-            // Écrit les données du joueur
+            //ecris les donnees
             String data = pseudo + "," + money + "," + lvl + "," + exp + "," + heroContract.toString() + "," +
                     arrayToString(team) + "," + pc.toString() + "\n";
             writer.append(data);
@@ -111,7 +118,94 @@ public class Player {
         return result.toString();
     }
 
-    private void loadData(){
+   private void loadData() {
+        try (Scanner scanner = new Scanner(file)) {
+            // Ignore la premiere ligne (en-tête)
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+
+            // Si la ligne suivante existe, analyse les donnees
+            if (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] fields = line.split("[,]");
+
+                // Assurez-vous que le nombre de champs est correct
+                if (fields.length == 7) {
+                    pseudo = fields[0];
+                    money = Integer.parseInt(fields[1]);
+                    lvl = Integer.parseInt(fields[2]);
+                    exp = Double.parseDouble(fields[3]);
+
+                    // Contrat_Hero (champ 4) peut necessiter un traitement special
+                    // Vous devrez implementer la logique en fonction de la structure reelle des donnees
+                    // Dans cet exemple, nous laissons Contrat_Hero tel quel
+
+                    parseTeam(fields[5]);
+                    parsePc(fields[6]);
+                } else {
+                    System.out.println("Invalid data format in the file.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseTeam(String teamData) {
+        String[] pokemonDataArray = teamData.split(";");
+        
+        int teamLimit = 6; // Limite du nombre de Pokemon dans l'equipe
+        for (int i = 0; i < pokemonDataArray.length; i += 9) {
+            if (i / 9 < teamLimit) {
+                // Ajoute à l'equipe
+                addTeamFromData(pokemonDataArray, i);
+            } else {
+                // Ajoute au PC
+                addPokemonToPC(pokemonDataArray);
+            }
+        }
+    }
+    
+    private void addTeamFromData(String[] pokemonDataArray, int i) {
+        String nameTower = pokemonDataArray[0];
+        int levelTower = Integer.parseInt(pokemonDataArray[1]);
+        double expTower = Double.parseDouble(pokemonDataArray[2]);
+        double physicalTower = Double.parseDouble(pokemonDataArray[3]);
+        double specialTower = Double.parseDouble(pokemonDataArray[4]);
+        Types firstTypeTower = Types.stringToType(pokemonDataArray[5]);
+        Types secondTypeTower = Types.stringToType(pokemonDataArray[6]);
+        parseSkill(pokemonDataArray[7]);
+        String spriteTower = pokemonDataArray[8];
+
+        team[i] = new Tower(nameTower, physicalTower, specialTower, firstTypeTower, secondTypeTower, spriteTower, State.TEAM);
+        team[i].setLevel(levelTower);
+        team[i].setExp(expTower);
+    }
+    
+    private void addPokemonToPC(String[] pokemonDataArray) {
+        String nameTower = pokemonDataArray[0];
+        int levelTower = Integer.parseInt(pokemonDataArray[1]);
+        double expTower = Double.parseDouble(pokemonDataArray[2]);
+        double physicalTower = Double.parseDouble(pokemonDataArray[3]);
+        double specialTower = Double.parseDouble(pokemonDataArray[4]);
+        Types firstTypeTower = Types.stringToType(pokemonDataArray[5]);
+        Types secondTypeTower = Types.stringToType(pokemonDataArray[6]);
+        parseSkill(pokemonDataArray[7]);
+        String spriteTower = pokemonDataArray[8];
+        Tower tower = new Tower(nameTower, levelTower, expTower, firstTypeTower, secondTypeTower, spriteTower, State.PC);
+        tower.setLevel(levelTower);
+        tower.setExp(expTower);
+
+        pc.add(tower);
+    }
+
+    private void parsePc(String pcData) {
+
+    }
+
+    private void parseSkill(String dataTowerSkill){
+        String[] pokemonDataArray = dataTowerSkill.split("#");
 
     }
 

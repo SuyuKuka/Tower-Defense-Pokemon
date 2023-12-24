@@ -22,6 +22,16 @@ public class Skill {
         this.description = description;
     }
 
+    public String toString(){
+        return this.getName()
+        +"#"+this.getType()
+        +"#"+this.getPhysicalDamage() 
+        +"#"+this.getSpecialDamage() 
+        +"#"+this.getSpeedAtk()
+        +"#"+this.getUnique()
+        +"#"+this.getDescription();
+    }
+
     public String getName() {
         return name;
     }
