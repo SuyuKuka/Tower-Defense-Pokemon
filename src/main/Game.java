@@ -37,7 +37,7 @@ public class Game extends JFrame {
     private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    public Game(Player p) {
+    public Game() {
 
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ressources/icon.png").getImage(),
                 new Point(0, 0), "POKEMONGOOOOO"));
@@ -79,7 +79,7 @@ public class Game extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        MainMenu menu = new MainMenu(this, p);
+        MainMenu menu = new MainMenu(this, Player.INSTANCE);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Boutique boutique = new Boutique(this);
@@ -129,10 +129,8 @@ public class Game extends JFrame {
         } else {
             javax.swing.SwingUtilities.invokeLater(
                     new Runnable() {
-                        public void run() {
-                            Player p = new Player();
-
-                            Game game = new Game(p);
+                        public void run() {      
+                            Game game = new Game();
                             game.setVisible(true);
                         }
                     });

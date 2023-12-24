@@ -295,14 +295,14 @@ public class Tower extends Pokemon {
     }
 
     public String toString() {
-        return "NOM: " + getName()
-                + "\nEXP: " + exp
-                + " \nATK PHYSIQUE: " + getPhysical()
-                + " \nATK SPECIAL: " + getSpecial()
-                + " \nTYPE: " + getType()[0] + " et " + getType()[1]
-                + " \nVITESSE: " + getSpeed()
-                + " \nPORTEE " + rayon
-                + "\nGENTIL\n";
+        return getName()
+                + ";" + exp
+                + ";" + getPhysical()
+                + ";" + getSpecial()
+                + ";" + getType()[0] + ";" + getType()[1]
+                + ";" + getSpeed()
+                + ";" + rayon
+                + ";GENTIL";
     }
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL

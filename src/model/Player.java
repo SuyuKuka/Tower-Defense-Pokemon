@@ -1,5 +1,8 @@
 package model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import characters.Starter;
@@ -8,39 +11,108 @@ import model.Hero;
 import model.Pokemon.State;
 
 public class Player {
-
     private String pseudo;
     private int money;
-    private double exp;
     private int lvl;
+    private double exp;
 
-    private ArrayList<Tower> obtainedPokemon;
-
-    private ArrayList<Tower> pc;
-    private Tower[] team = new Tower[6];
-
+    private ArrayList<Tower> obtainedPokemon; //utilité?
+   
     private ArrayList<Hero> heroContract = new ArrayList<>();
-    private Tower[] hero = new Tower[2];
+    private Hero[] hero = new Hero[2];
+    private Tower[] team = new Tower[6];
+    private ArrayList<Tower> pc;
 
     public static final Player INSTANCE = new Player();
+    private File file = new File("ressources/config/data.csv");
 
     public Player() {
-        this.pseudo = "Joueur";
-        money = 1000;
-        exp = 0;
-        lvl = 1;
-        obtainedPokemon = new ArrayList<>();
-        pc = new ArrayList<>();
-        Starter starterInstance = new Starter();
-        Salameche sala = starterInstance.new Salameche("Salameche", 20, 40, Types.FEU, Types.NONE);
-        team[0] = sala;
-        team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        hero[0] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        hero[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        if(createData()){
+            this.pseudo = "Joueur";
+            money = 1000;
+            exp = 0;
+            lvl = 1;
+            obtainedPokemon = new ArrayList<>();
+            pc = new ArrayList<>();
+            Starter starterInstance = new Starter();
+            Salameche sala = starterInstance.new Salameche("Salameche", 20, 40, Types.FEU, Types.NONE); //il doit choisir
+            hero[0] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[1] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[0] = sala;
+            team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[0] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[1] = new Hero("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        }else{
+            loadData();
+        }
+        saveData();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Saving player data before shutting down...");
+
+            saveData();
+        }));
+    }
+
+    private boolean createData(){
+        boolean result;  
+        try {  
+            result = file.createNewFile();
+            if(result){
+                //Nouveau Joueur
+                System.out.println("file created "+file.getCanonicalPath());
+                FileWriter writer = new FileWriter(file, true);
+                writer.append("Pseudo,Money,Level,Exp,Contrat_Hero,Team,Pc");
+                writer.append("\n");
+                writer.close();
+
+                System.out.println("Data written to file successfully.");
+            }else{
+                //Ancien Joueur
+                System.out.println("File already exist at location: " + file.getCanonicalPath());  
+            }
+            return result;
+        } catch (IOException e){  
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveData(){
+        try (FileWriter writer = new FileWriter(file, false)) {
+            // Écrit l'en-tête du fichier
+            writer.append("Pseudo,Money,Level,Exp,Contrat_Hero,Pokemon,Pc");
+            writer.append("\n");
+
+            // Écrit les données du joueur
+            String data = pseudo + "," + money + "," + lvl + "," + exp + "," + heroContract.toString() + "," +
+                    arrayToString(team) + "," + pc.toString() + "\n";
+            writer.append(data);
+
+            System.out.println("Player data saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String arrayToString(Tower[] array) {
+        StringBuilder result = new StringBuilder();
+        for (Tower tower : array) {
+            if (tower != null) {
+                result.append(tower.toString()).append(";");
+            } else {
+                result.append("null,");
+            }
+        }
+        return result.toString();
+    }
+
+    private void loadData(){
+
     }
 
     public String getPseudo() {
