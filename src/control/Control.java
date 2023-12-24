@@ -19,6 +19,7 @@ import model.InitWaves.Difficulty;
 import java.awt.Cursor;
 
 public class Control {
+
     private Player user;
 
     public Control(Player p) {
@@ -62,21 +63,20 @@ public class Control {
             } else {
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
 
-                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
 
-                    System.out.println(buttonName.substring(13, buttonName.length()));
-                    main.setmState(new MapState(diff));
-                    main.setScreen(new GameScreen(main.getMState()));
-
+                    GameScreen screen = new GameScreen();
+                    MapState mState = new MapState(diff);
+                    screen.setmState(mState);
+                    main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                         @Override
                         protected Void doInBackground() throws Exception {
-                            main.getMainPanel().add(main.getScreen(), "gameScreen");
-                            main.getMState().startGraphic(main.getScreen());
+                            mState.startGraphic(screen);
                             return null;
                         }
                     };
+                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
                     worker.execute();
                 } else {
                     main.getCardLayout().show(main.getMainPanel(), buttonName);

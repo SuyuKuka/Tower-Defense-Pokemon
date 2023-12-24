@@ -1,7 +1,7 @@
 package graphics;
 
 import main.Game;
-import model.MapState;
+
 import model.Player;
 
 import java.awt.CardLayout;
@@ -21,8 +21,6 @@ import javax.swing.JPanel;
 public class MainGraphics extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel;
-    private MapState mState;
-    private GameScreen screen;
     private BufferedImage backgroundImage;
 
     private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -91,19 +89,4 @@ public class MainGraphics extends JFrame {
         return mainPanel;
     }
 
-    public MapState getMState() {
-        return mState;
-    }
-
-    public GameScreen getScreen() {
-        return screen;
-    }
-
-    public void setmState(MapState mState) {
-        this.mState = mState;
-    }
-
-    public void setScreen(GameScreen screen) {
-        this.screen = screen;
-    }
 }

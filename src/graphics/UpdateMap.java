@@ -6,11 +6,15 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import model.Ennemi;
+import model.Map;
 import model.MapState;
 import model.Player;
 
@@ -20,14 +24,49 @@ public class UpdateMap extends JPanel {
     private int cellSize = 50;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
-        setBackground(new Color(111, 160, 83));
+
         this.state = state;
         this.tPresent = tPresent;
-        setLayout(new GridLayout(state.getMap().getConfig().length, state.getMap().getConfig()[0].length));
 
-        JLayeredPane layeredPane = new JLayeredPane();
-        // layeredPane.setLayout(new
-        // GridLayout(state.getMap().getConfig().length,state.getMap().getConfig().length));
+        int[][] map = state.getMap().getConfig();
+        int mapWidth = state.getMap().getConfig()[0].length;
+        int mapHeight = state.getMap().getConfig().length;
+
+        GridBagLayout gridConfiguration = new GridBagLayout();
+        GridBagConstraints constraints = new GridBagConstraints();
+        setLayout(gridConfiguration);
+
+        JPanel spritePanel = new JPanel(gridConfiguration);
+
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                JPanel tiles = new JPanel();
+                if (map[i][j] == 0) {
+                    tiles.setBackground(new Color(111, 160, 83));
+                }
+                if (map[i][j] == 3) {
+                    tiles.setBackground(new Color(165, 125, 49));
+                    JLabel pkm = new JLabel(new ImageIcon("ressources/sprite/rondoudou.gif"));
+                    tiles.add(pkm);
+
+                }
+                if (map[i][j] == 4) {
+                    tiles.setBackground(Color.CYAN);
+
+                }
+                if (map[i][j] == 5) {
+                    tiles.setBackground(Color.PINK);
+
+                }
+                constraints.gridy = i;
+                constraints.gridx = j;
+                constraints.weightx = cellSize;
+                constraints.weighty = cellSize;
+                constraints.fill = GridBagConstraints.BOTH;
+                add(tiles, constraints);
+
+            }
+        }
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -36,12 +75,13 @@ public class UpdateMap extends JPanel {
                     if (!tPresent.getSelectedPokemon().isPlaced()) {
                         int row = evt.getY() / cellSize;
                         int col = evt.getX() / cellSize;
-                        if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
-                                && col < state.getMap().getConfig()[0].length) {
+                        if (row >= 0
+                                && row < state.getMap().getConfig().length
+                                && col >= 0 && col < state.getMap().getConfig()[0].length) {
                             System.out.println(state.getMap().getConfig().length);
                             state.setTower(new int[] { row, col },
                                     Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1]);
-                            repaint();
+
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);
                                 tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
@@ -68,7 +108,7 @@ public class UpdateMap extends JPanel {
         int[][] map = state.getMap().getConfig();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                drawCell(g, i, j, map[i][j], scale);
+                // drawCell(g, i, j, map[i][j], scale);
                 drawEnnemi(g, i, j, scale);
             }
         }
