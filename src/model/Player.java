@@ -159,7 +159,7 @@ public class Player {
         for (int i = 0; i < pokemonDataArray.length; i += 9) {
             if (i / 9 < teamLimit) {
                 // Ajoute à l'equipe
-                addTeamFromData(pokemonDataArray, i);
+                addTeamFromData(pokemonDataArray, i/9);
             } else {
                 // Ajoute au PC
                 addPokemonToPC(pokemonDataArray);
@@ -175,12 +175,13 @@ public class Player {
         double specialTower = Double.parseDouble(pokemonDataArray[4]);
         Types firstTypeTower = Types.stringToType(pokemonDataArray[5]);
         Types secondTypeTower = Types.stringToType(pokemonDataArray[6]);
-        parseSkill(pokemonDataArray[7]);
         String spriteTower = pokemonDataArray[8];
 
         team[i] = new Tower(nameTower, physicalTower, specialTower, firstTypeTower, secondTypeTower, spriteTower, State.TEAM);
         team[i].setLevel(levelTower);
         team[i].setExp(expTower);
+        parseSkill(pokemonDataArray[7], team[i]);
+
     }
     
     private void addPokemonToPC(String[] pokemonDataArray) {
@@ -191,11 +192,11 @@ public class Player {
         double specialTower = Double.parseDouble(pokemonDataArray[4]);
         Types firstTypeTower = Types.stringToType(pokemonDataArray[5]);
         Types secondTypeTower = Types.stringToType(pokemonDataArray[6]);
-        parseSkill(pokemonDataArray[7]);
         String spriteTower = pokemonDataArray[8];
         Tower tower = new Tower(nameTower, levelTower, expTower, firstTypeTower, secondTypeTower, spriteTower, State.PC);
         tower.setLevel(levelTower);
         tower.setExp(expTower);
+        parseSkill(pokemonDataArray[7], );
 
         pc.add(tower);
     }
@@ -204,7 +205,7 @@ public class Player {
 
     }
 
-    private void parseSkill(String skillData, int i){
+    private void parseSkill(String skillData, Tower tower){
         String[] towerSkillData = skillData.split("#");
 
         String skillName = towerSkillData[0];
@@ -213,18 +214,15 @@ public class Player {
         Types skillType = Types.stringToType(towerSkillData[3]);
         double skillSpeedAtk = Double.parseDouble(towerSkillData[4]);
         Effect skillEffect = null;
-        boolean skillUnique = 
-        
-        public String toString(){
-            return this.getName()
-            +"#"+this.getType()
-            +"#"+this.getPhysicalDamage() 
-            +"#"+this.getSpecialDamage() 
-            +"#"+this.getSpeedAtk()
-            +"#"+this.getUnique()
-            +"#"+this.getDescription();
+        boolean skillUnique;
+        if(towerSkillData[5].contains("true")){
+            skillUnique = true;
+        }else{
+            skillUnique = false;
         }
+        String skillDescription = towerSkillData[6];
 
+        tower.learnSkill(new Skill(skillName, skillPhysicalDamage, skillSpecialDamage, skillType, skillSpeedAtk, skillEffect, skillUnique, skillDescription));
     }
 
     public String getPseudo() {
