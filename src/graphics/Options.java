@@ -13,14 +13,14 @@ public class Options extends JPanel {
     private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
-    public Options(Game main) {
+    public Options(MainGraphics main) {
         setOpaque(false);
         setLayout(new BorderLayout());
         // Titre
         JPanel titlePanel = titlePanel();
 
         // Back
-        JPanel backPanel = backButton(main);
+        JPanel backPanel = manager.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(backPanel, BorderLayout.SOUTH);
@@ -40,16 +40,4 @@ public class Options extends JPanel {
         return titlePanel;
     }
 
-    private JPanel backButton(Game main) {
-        JPanel backPanel = new JPanel();
-        backPanel.setOpaque(false);
-
-        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        manager.buttonPressed(backButton, "retour", main);
-
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
-        backPanel.add(backButton);
-
-        return backPanel;
-    }
 }

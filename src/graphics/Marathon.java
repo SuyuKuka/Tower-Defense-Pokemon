@@ -12,7 +12,7 @@ public class Marathon extends JPanel {
     private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
-    public Marathon(Game main) {
+    public Marathon(MainGraphics main) {
         setOpaque(false);
         setLayout(new BorderLayout());
         // Titre
@@ -23,7 +23,7 @@ public class Marathon extends JPanel {
         JPanel buttonPanel = buttonPanel(main);
 
         // Back
-        JPanel backPanel = backButton(main);
+        JPanel backPanel = manager.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
@@ -45,7 +45,7 @@ public class Marathon extends JPanel {
         return titlePanel;
     }
 
-    private JPanel buttonPanel(Game main) {
+    private JPanel buttonPanel(MainGraphics main) {
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
@@ -70,19 +70,6 @@ public class Marathon extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
         return buttonPanel;
-    }
-
-    private JPanel backButton(Game main) {
-        JPanel backPanel = new JPanel();
-        backPanel.setOpaque(false);
-
-        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        manager.buttonPressed(backButton, "retour", main);
-
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
-        backPanel.add(backButton);
-
-        return backPanel;
     }
 
 }

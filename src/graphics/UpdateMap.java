@@ -17,26 +17,32 @@ import model.Player;
 public class UpdateMap extends JPanel {
     private MapState state;
     private TowerPresent tPresent;
-    private int cellSize = 30;
+    private int cellSize = 50;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
         setBackground(new Color(111, 160, 83));
         this.state = state;
         this.tPresent = tPresent;
-        setLayout(new BorderLayout());
+        setLayout(new GridLayout(state.getMap().getConfig().length, state.getMap().getConfig()[0].length));
+
+        JLayeredPane layeredPane = new JLayeredPane();
+        // layeredPane.setLayout(new
+        // GridLayout(state.getMap().getConfig().length,state.getMap().getConfig().length));
 
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if(tPresent.getSelectedPokemon()!=null){
-                    if(!tPresent.getSelectedPokemon().isPlaced()){
+                if (tPresent.getSelectedPokemon() != null) {
+                    if (!tPresent.getSelectedPokemon().isPlaced()) {
                         int row = evt.getY() / cellSize;
                         int col = evt.getX() / cellSize;
                         if (row >= 0 && row < state.getMap().getConfig().length && col >= 0
                                 && col < state.getMap().getConfig()[0].length) {
-                            state.setTower(new int[] { row, col }, Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1]);
+                            System.out.println(state.getMap().getConfig().length);
+                            state.setTower(new int[] { row, col },
+                                    Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1]);
                             repaint();
-                            if(state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())){
+                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);
                                 tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
                             }
@@ -74,7 +80,8 @@ public class UpdateMap extends JPanel {
             if (tPresent.getSelectedPokemon() != null) {
                 try {
                     JLabel tmp = new JLabel();
-                    BufferedImage image = ImageIO.read(new File(Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero()-1].getSprite()));
+                    BufferedImage image = ImageIO.read(new File(
+                            Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1].getSprite()));
                     g.drawImage(image, j * scale, i * scale, scale, scale, null);
 
                 } catch (IOException e) {
@@ -85,7 +92,7 @@ public class UpdateMap extends JPanel {
             g.setColor(color);
             g.fillRect(j * scale, i * scale, scale, scale);
         }
-    }  
+    }
 
     private Color getCellColor(int cellValue) {
         switch (cellValue) {

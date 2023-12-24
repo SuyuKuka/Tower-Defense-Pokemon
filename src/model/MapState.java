@@ -12,8 +12,8 @@ import java.util.TimerTask;
 import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.EnnemiPresent;
+
 import graphics.GameScreen;
-import graphics.GameScreen2;
 import graphics.UpdateMap;
 
 public class MapState {
@@ -21,7 +21,7 @@ public class MapState {
     private Map m;
 
     private int[][] config;
-    private GameScreen2 screen;
+    private GameScreen screen;
 
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
@@ -32,9 +32,13 @@ public class MapState {
     private int pv = 3;
 
     private int limiteDeTemps = 30;
+    private Difficulty diff;
 
-    public MapState() {
-
+    public MapState(Difficulty difficulty) {
+        diff = difficulty;
+        Map map = new Map(20, 20, diff);
+        m = map;
+        config = m.getConfig();
     }
 
     private void infoTerminal() {
@@ -92,8 +96,6 @@ public class MapState {
             step = ennemiComing(step);
             step++;
 
-
-
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
@@ -111,14 +113,10 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(GameScreen2 screen, String difficulty) throws FileNotFoundException {
-
-        Map map = new Map(20, 20, stringToDifficulty(difficulty));
-        m = map;
-        config = m.getConfig();
+    public void startGraphic(GameScreen screen) throws FileNotFoundException {
 
         InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(stringToDifficulty(difficulty));
+        InitWaves w = new InitWaves(diff);
         Scanner sc = new Scanner(System.in);
         this.screen = screen;
 
@@ -206,7 +204,7 @@ public class MapState {
         }
         if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
             ennemiPresent.remove(escaped);
-            if(screen!=null){
+            if (screen != null) {
                 screen.getePresent().getEnnemiGone().add(escaped);
             }
             leaked = false;
@@ -255,7 +253,7 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
-        //System.out.println("DEAD:" + e);
+        // System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
@@ -272,19 +270,6 @@ public class MapState {
 
     public Map getMap() {
         return m;
-    }
-
-    public Difficulty stringToDifficulty(String difficulty) {
-        switch (difficulty) {
-            case "facile":
-                return Difficulty.EASY;
-            case "moyen":
-                return Difficulty.NORMAL;
-            case "difficile":
-                return Difficulty.HARD;
-            default:
-                return null;
-        }
     }
 
 }

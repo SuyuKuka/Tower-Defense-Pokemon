@@ -1,14 +1,20 @@
 package control;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
+import graphics.GameScreen;
+import graphics.MainGraphics;
 import main.Game;
 import model.Pokemon.State;
+import model.MapState;
 import model.Player;
 import model.Tower;
+import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
 
@@ -23,7 +29,7 @@ public class Control {
 
     }
 
-    public void buttonPressed(JButton button, String st, Game main) {
+    public void buttonPressed(JButton button, String st, MainGraphics main) {
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
@@ -42,11 +48,43 @@ public class Control {
                 } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
-                main.changePanel(st);
+                changePanel(st, main);
             });
             timer.setRepeats(false);
             timer.start();
         });
+    }
+
+    public void changePanel(String buttonName, MainGraphics main) {
+        Timer timer = new Timer(1, e1 -> {
+            if (buttonName.equals("retour")) {
+                main.getCardLayout().show(main.getMainPanel(), "menu");
+            } else {
+                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+
+                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
+                    Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
+
+                    System.out.println(buttonName.substring(13, buttonName.length()));
+                    main.setmState(new MapState(diff));
+                    main.setScreen(new GameScreen(main.getMState()));
+
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            main.getMainPanel().add(main.getScreen(), "gameScreen");
+                            main.getMState().startGraphic(main.getScreen());
+                            return null;
+                        }
+                    };
+                    worker.execute();
+                } else {
+                    main.getCardLayout().show(main.getMainPanel(), buttonName);
+                }
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public void switchPkm(Tower pkm) {
@@ -57,6 +95,19 @@ public class Control {
             user.getPc().add(pkm);
             user.removeTeam(pkm);
         }
+    }
+
+    public JPanel backButton(MainGraphics main) {
+        JPanel backPanel = new JPanel();
+        backPanel.setOpaque(false);
+
+        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
+        buttonPressed(backButton, "retour", main);
+
+        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
+        backPanel.add(backButton);
+
+        return backPanel;
     }
 
 }

@@ -3,7 +3,6 @@ package graphics;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 
-import control.TowerManagement;
 import model.Player;
 import model.Tower;
 

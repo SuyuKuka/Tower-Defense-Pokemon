@@ -15,7 +15,7 @@ public class Boutique extends JPanel {
     private Control manager = new Control();
     private GraphicsMaker maker = new GraphicsMaker();
 
-    public Boutique(Game main) {
+    public Boutique(MainGraphics main) {
 
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -23,7 +23,7 @@ public class Boutique extends JPanel {
         JPanel titlePanel = titlePanel();
 
         // Back
-        JPanel backPanel = backButton(main);
+        JPanel backPanel = manager.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(backPanel, BorderLayout.SOUTH);
@@ -45,16 +45,4 @@ public class Boutique extends JPanel {
         return titlePanel;
     }
 
-    private JPanel backButton(Game main) {
-        JPanel backPanel = new JPanel();
-        backPanel.setOpaque(false);
-
-        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
-        manager.buttonPressed(backButton, "retour", main);
-
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
-        backPanel.add(backButton);
-
-        return backPanel;
-    }
 }

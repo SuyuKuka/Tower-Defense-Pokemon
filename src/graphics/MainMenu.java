@@ -35,7 +35,7 @@ public class MainMenu extends JPanel {
 
     private boolean displayPcPanel = false;
 
-    public MainMenu(Game main, Player p) {
+    public MainMenu(MainGraphics main, Player p) {
         CardLayout cdL = new CardLayout();
         user = p;
         control = new Control(p);
@@ -91,7 +91,7 @@ public class MainMenu extends JPanel {
         JLabel pcTitle = new JLabel("PC");
         pcTitle.setFont(maker.getCustomFont());
         pcTitle.setForeground(Color.WHITE);
-        JPanel heading = imagePanel("ressources/background/pcheading.png");
+        JPanel heading = maker.imagePanel("ressources/background/pcheading.png");
         heading.setBorder(new LineBorder(Color.BLACK, 5));
         heading.add(pcTitle);
 
@@ -99,7 +99,7 @@ public class MainMenu extends JPanel {
         pcPanel.setLayout(new BorderLayout());
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
 
-        JPanel box = imagePanel("ressources/background/pc.png");
+        JPanel box = maker.imagePanel("ressources/background/pc.png");
         GridLayout gridBox = new GridLayout(5, 5);
         gridBox.setHgap(2);
         gridBox.setVgap(2);
@@ -121,10 +121,10 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel teamPanel(JPanel pcPanel) {
-        JLabel pcLabel = resizeJLabel("ressources/pc_sprite.png");
+        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 50);
         pcLabel.setOpaque(false);
 
-        JPanel teamPanel = imagePanel("ressources/background/teampanel.png");
+        JPanel teamPanel = maker.imagePanel("ressources/background/teampanel.png");
         teamPanel.setOpaque(false);
         teamPanel.add(pcLabel);
         teamPanel.setOpaque(false);
@@ -151,7 +151,7 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel titlePanel() {
-        JPanel titlePanel = imagePanel("ressources/background/banner.png");
+        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
         JLabel heading = new JLabel("POKEREVOLUTE");
         heading.setFont(maker.getCustomFont());
         heading.setForeground(Color.WHITE);
@@ -162,8 +162,8 @@ public class MainMenu extends JPanel {
         return titlePanel;
     }
 
-    private JPanel buttonPanel(Game main) {
-        JPanel buttonPanel = imagePanel("ressources/button/buttonpanel.png");
+    private JPanel buttonPanel(MainGraphics main) {
+        JPanel buttonPanel = maker.imagePanel("ressources/button/buttonpanel.png");
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
 
@@ -210,7 +210,7 @@ public class MainMenu extends JPanel {
         cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        JLabel profilPhoto = resizeJLabel("ressources/profile/profil_photo.png");
+        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 50);
 
         JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
@@ -231,7 +231,7 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel profilPanel(JPanel bigProfil) {
-        JPanel profilPanel = imagePanel("ressources/background/banner.png");
+        JPanel profilPanel = maker.imagePanel("ressources/background/banner.png");
         profilPanel.setLayout(new BorderLayout());
 
         JPanel infoPanel = new JPanel();
@@ -244,7 +244,7 @@ public class MainMenu extends JPanel {
         cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        JLabel profilPhoto = resizeJLabel("ressources/profile/profil_photo.png");
+        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 50);
 
         JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
@@ -304,48 +304,12 @@ public class MainMenu extends JPanel {
         return profilPanel;
     }
 
-    private BufferedImage loadImage(String path) {
-        BufferedImage backgroundImage = null;
-        if (backgroundImage == null) {
-            File file = new File(path);
-            try {
-                backgroundImage = ImageIO.read(file);
-                if (backgroundImage == null) {
-                    backgroundImage = ImageIO.read(file);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return backgroundImage;
-    }
-
-    private JPanel imagePanel(String path) {
-        BufferedImage backgroundImage = loadImage(path);
-        JPanel IPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        return IPanel;
-    }
-
     public boolean isDisplayProfile() {
         return displayProfile;
     }
 
     public void setDisplayProfile(boolean displayProfile) {
         this.displayProfile = displayProfile;
-    }
-
-    private JLabel resizeJLabel(String path) {
-        BufferedImage resize = loadImage(path);
-        Image resized = resize.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        JLabel res = new JLabel(new ImageIcon(resized));
-        res.setOpaque(false);
-        return res;
     }
 
     public class Slot extends JPanel {
@@ -356,7 +320,7 @@ public class MainMenu extends JPanel {
 
         public Slot(Tower pkm) {
             this.pkm = pkm;
-            JLabel pokeicon = resizeJLabel(pkm.getSprite());
+            JLabel pokeicon = new JLabel(new ImageIcon(pkm.getSprite()));
 
             add(pokeicon);
             setOpaque(true);
@@ -395,7 +359,7 @@ public class MainMenu extends JPanel {
 
         public Slot() {
 
-            JLabel pokeicon = resizeJLabel("ressources/sprite/blank.png");
+            JLabel pokeicon = maker.resizeJLabel("ressources/sprite/blank.png", 50);
 
             add(pokeicon);
             setOpaque(true);

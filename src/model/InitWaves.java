@@ -6,7 +6,20 @@ import java.util.Random;
 public class InitWaves {
 
     public enum Difficulty {
-        EASY, NORMAL, HARD
+        EASY, NORMAL, HARD;
+
+        public static Difficulty stringToDifficulty(String difficulty) {
+            switch (difficulty) {
+                case "facile":
+                    return Difficulty.EASY;
+                case "moyen":
+                    return Difficulty.NORMAL;
+                case "difficile":
+                    return Difficulty.HARD;
+                default:
+                    return null;
+            }
+        }
     }
 
     private int nbTotalEnnemi;
