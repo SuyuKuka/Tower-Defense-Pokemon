@@ -104,7 +104,6 @@ public class Control {
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         buttonPressed(backButton, "retour", main);
 
-        backPanel.setBorder(BorderFactory.createEmptyBorder(0, -1224 + backButton.getPreferredSize().width, 0, 0));
         backPanel.add(backButton);
 
         return backPanel;

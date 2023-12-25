@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.sound.midi.Track;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,8 +29,9 @@ public class MainGraphics extends JFrame {
 
     public MainGraphics(Player p, Game main) {
 
-        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ressources/icon.png").getImage(),
-                new Point(0, 0), "POKEMONGOOOOO"));
+        // setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new
+        // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
+        // "POKEMONGOOOOO"));
 
         setSize(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3);
         setLocationRelativeTo(null);
@@ -37,6 +39,9 @@ public class MainGraphics extends JFrame {
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // setResizable(false);
+        // setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // setUndecorated(true);
 
         // Background
         if (backgroundImage == null) {

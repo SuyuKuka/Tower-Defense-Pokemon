@@ -20,7 +20,7 @@ public class TowerPresent extends JPanel {
     private TowerManagement selectedPokemon;
 
     public TowerPresent() {
-        setPreferredSize(new Dimension(354, 1000)); // taille parfaite
+        setPreferredSize(new Dimension(390, 0)); // taille parfaite
         setOpaque(false);
 
         add(initiateTitle());

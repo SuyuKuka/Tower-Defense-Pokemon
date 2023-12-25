@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.swing.*;
+
 public class Ennemi extends Pokemon {
 
     private Map map;
@@ -17,6 +19,8 @@ public class Ennemi extends Pokemon {
     private static ArrayList<Ennemi> EBossList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
     public boolean boss;
+
+    private JLabel sprite;
 
     public Ennemi(String name, double pv, double defPhysical, double defSpecial, Types type1, Types type2, boolean boss,
             String sprite) {
@@ -68,7 +72,11 @@ public class Ennemi extends Pokemon {
         }
     }
 
-    public boolean move2() {
+    public void moveGraphic(JLabel sprite) {
+        sprite.setLocation((int) sprite.getLocation().getX() + 1, (int) sprite.getLocation().getY());
+    }
+
+    public boolean move() {
         char direction = ' ';
 
         boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
@@ -199,6 +207,14 @@ public class Ennemi extends Pokemon {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    public void setJLabelSprite(JLabel sprite) {
+        this.sprite = sprite;
+    }
+
+    public JLabel getJLabelSprite() {
+        return sprite;
     }
 
 }

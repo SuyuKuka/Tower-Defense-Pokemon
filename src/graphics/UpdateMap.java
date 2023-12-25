@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -17,13 +19,18 @@ import model.Ennemi;
 import model.Map;
 import model.MapState;
 import model.Player;
+import model.Tower;
 
-public class UpdateMap extends JPanel {
+public class UpdateMap extends JLayeredPane {
     private MapState state;
     private TowerPresent tPresent;
     private int cellSize = 50;
+    GraphicsMaker maker = new GraphicsMaker();
+    CardLayout card = new CardLayout();
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
+        setOpaque(false);
+        JPanel gameMap = new JPanel();
 
         this.state = state;
         this.tPresent = tPresent;
@@ -34,117 +41,56 @@ public class UpdateMap extends JPanel {
 
         GridBagLayout gridConfiguration = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
-        setLayout(gridConfiguration);
-
-        JPanel spritePanel = new JPanel(gridConfiguration);
+        gameMap.setLayout(gridConfiguration);
 
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                JPanel tiles = new JPanel();
-                if (map[i][j] == 0) {
-                    tiles.setBackground(new Color(111, 160, 83));
-                }
-                if (map[i][j] == 3) {
-                    tiles.setBackground(new Color(165, 125, 49));
-                    JLabel pkm = new JLabel(new ImageIcon("ressources/sprite/rondoudou.gif"));
-                    tiles.add(pkm);
 
-                }
-                if (map[i][j] == 4) {
+                Tiles tiles;
+                if (map[i][j] == 3) {
+                    tiles = new Tiles(new int[] { i, j });
+                    tiles.setBackground(new Color(165, 125, 49));
+                } else if (map[i][j] == 4) {
+                    tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.CYAN);
 
-                }
-                if (map[i][j] == 5) {
+                } else if (map[i][j] == 5) {
+                    tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.PINK);
 
+                } else {
+                    tiles = new Tiles(new int[] { i, j });
+                    tiles.setBackground(new Color(111, 160, 83));
                 }
-                constraints.gridy = i;
                 constraints.gridx = j;
-                constraints.weightx = cellSize;
-                constraints.weighty = cellSize;
+                constraints.gridy = i;
+                constraints.weightx = 1;
+                constraints.weighty = 1;
                 constraints.fill = GridBagConstraints.BOTH;
-                add(tiles, constraints);
 
+                gameMap.add(tiles, constraints);
             }
         }
+        add(gameMap);
+        setVisible(true);
 
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                if (tPresent.getSelectedPokemon() != null) {
-                    if (!tPresent.getSelectedPokemon().isPlaced()) {
-                        int row = evt.getY() / cellSize;
-                        int col = evt.getX() / cellSize;
-                        if (row >= 0
-                                && row < state.getMap().getConfig().length
-                                && col >= 0 && col < state.getMap().getConfig()[0].length) {
-                            System.out.println(state.getMap().getConfig().length);
-                            state.setTower(new int[] { row, col },
-                                    Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1]);
-
-                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
-                                tPresent.getSelectedPokemon().setPlaced(true);
-                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     private void drawEnnemi(Graphics g, int i, int j, int scale) {
+
         for (Ennemi e : state.getEnnemiPresent()) {
+
             if (i == e.getPos()[0] && j == e.getPos()[1]) {
+
+                Tiles tiles = getTiles(new int[] { i, j });
+
+                GridBagConstraints constraints = new GridBagConstraints();
+                constraints.insets = new Insets(-20, -30, -20, -30);
+
+                tiles.revalidate();
                 g.setColor(getEnnemiColor(e));
-                g.fillRect(j * scale, i * scale, scale, scale);
+                // g.fillRect(j * scale, i * scale, scale, scale);
             }
-        }
-    }
-
-    public void paintComponent(Graphics g) {
-        int scale = cellSize;
-        super.paintComponent(g);
-        int[][] map = state.getMap().getConfig();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                // drawCell(g, i, j, map[i][j], scale);
-                drawEnnemi(g, i, j, scale);
-            }
-        }
-    }
-
-    private void drawCell(Graphics g, int i, int j, int cellValue, int scale) {
-        Color color = getCellColor(cellValue);
-        if (color == Color.BLUE) {
-            if (tPresent.getSelectedPokemon() != null) {
-                try {
-                    BufferedImage image = ImageIO.read(new File(
-                            Player.INSTANCE.getTeam()[tPresent.getSelectedPokemon().getNumero() - 1].getSprite()));
-                    g.drawImage(image, j * scale, i * scale, scale, scale, null);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            g.setColor(color);
-            g.fillRect(j * scale, i * scale, scale, scale);
-        }
-    }
-
-    private Color getCellColor(int cellValue) {
-        switch (cellValue) {
-            case 2:
-                return Color.BLUE;
-            case 3:
-            case 4:
-            case 5:
-                return new Color(165, 125, 49);
-            case 9:
-                return new Color(138, 216, 93);
-            default:
-                return new Color(111, 160, 83);
         }
     }
 
@@ -153,6 +99,100 @@ public class UpdateMap extends JPanel {
             return new Color(225, 225, 225); // Couleur boss
         } else {
             return new Color(225, 0, 0); // Couleur normal
+        }
+    }
+
+    public void initSprite(Ennemi e) {
+
+        JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
+        e.setJLabelSprite(sprite);
+        sprite.setLocation(state.getMap().getFrontEntry()[0], state.getMap().getFrontEntry()[1]);
+        sprite.setBounds(state.getMap().getFrontEntry()[0], state.getMap().getFrontEntry()[1], 32, 32);
+        add(sprite);
+
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        moveSprite();
+
+    }
+
+    private void moveSprite() {
+        System.out.println("moving");
+        for (Ennemi e : state.getEnnemiPresent()) {
+            e.moveGraphic(e.getJLabelSprite());
+        }
+    }
+
+    public Tiles getTiles(int[] pos) {
+        for (Tiles tiles : Tiles.tilesList) {
+            if (tiles.getPos()[0] == pos[0] && tiles.getPos()[1] == pos[1]) {
+                return tiles;
+            }
+        }
+        return null;
+    }
+
+    public class Tiles extends JPanel {
+        private int[] pos;
+        public static ArrayList<Tiles> tilesList = new ArrayList<>();
+        private JLabel spriteOnIt;
+
+        public Tiles(int[] pos) {
+            this.pos = pos;
+            tilesList.add(this);
+            setLayout(new GridBagLayout());
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.insets = new Insets(5, 5, 5, 5);
+            JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
+
+            spriteOnIt = empty;
+            add(empty, constraints);
+            add(empty);
+
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent evt) {
+                    int row = pos[0];
+                    int col = pos[1];
+                    System.out.println(row);
+                    System.out.println(col);
+                    Tower[] team = Player.INSTANCE.getTeam();
+                    if (tPresent.getSelectedPokemon() != null) {
+                        if (!tPresent.getSelectedPokemon().isPlaced()) {
+                            //
+                            state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
+                            Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                            JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
+                            addSprite(sprite, constraints);
+
+                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
+                                tPresent.getSelectedPokemon().setPlaced(true);
+                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
+
+        public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
+
+            remove(spriteOnIt);
+            spriteOnIt = jlabel;
+            this.add(jlabel, constraints);
+            jlabel.getParent().revalidate();
+            state.getMap().affiche(state.getEnnemiPresent());
+        }
+
+        public int[] getPos() {
+            return pos;
+        }
+
+        public JLabel getSpriteOnIt() {
+            return spriteOnIt;
         }
     }
 

@@ -5,6 +5,7 @@ import model.Tower;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 import control.Control;
 import java.awt.*;
@@ -40,7 +41,9 @@ public class MainMenu extends JPanel {
         // Titre
         JPanel titlePanel = titlePanel();
         // Boutons
+
         JPanel buttonPanel = buttonPanel(main);
+        buttonPanel.setAlignmentY(CENTER_ALIGNMENT);
         // Team
         JPanel pcPanel = pcPanel();
         JPanel teamPanel = teamPanel(pcPanel);

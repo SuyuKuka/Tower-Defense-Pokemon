@@ -55,6 +55,11 @@ public class InitWaves {
             wave.add(new Ennemi(Ennemi.LIST.getList().get(randChar)));
         }
 
+        AllWaves.clear();
+        wave.clear();
+        wave.add(Ennemi.LIST.getList().get(0));
+        AllWaves.add(wave);
+
     }
 
     private Ennemi addBoss() {

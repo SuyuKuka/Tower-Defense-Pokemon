@@ -33,7 +33,7 @@ public class EnnemiPresent extends JPanel {
 
     public EnnemiPresent() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(254, 0));
+        setPreferredSize(new Dimension(354, 0));
 
         // Ennemi
         container.setOpaque(false);

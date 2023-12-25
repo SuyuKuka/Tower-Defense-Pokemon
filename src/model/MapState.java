@@ -129,21 +129,21 @@ public class MapState {
 
         int step = 0;
         Timer timer = new Timer();
+        for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                e.setPos(m.getFrontEntry());
+                screen.initSprite(e);
+            }
+
+        }
+
         while (gameContinue()) {
 
             screen.repaint();
 
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
-            moveOnMap();
             loadNextWave();
-            // m.affiche(ennemiPresent);
-            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            // System.out.println("Ennemie en attente:" + wave.size());
-            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 -
-            // step));
 
             step = ennemiComing(step);
             step++;
@@ -192,7 +192,7 @@ public class MapState {
         Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-            if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
+            if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
             }
