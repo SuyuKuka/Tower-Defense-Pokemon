@@ -1,6 +1,5 @@
 package control;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,6 +16,10 @@ import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
+
+import control.Control;
+
+import java.util.Scanner;
 
 public class Control {
 

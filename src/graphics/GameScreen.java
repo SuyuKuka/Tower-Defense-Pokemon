@@ -20,18 +20,13 @@ public class GameScreen extends JPanel {
     public void setmState(MapState mState) {
         UpdateMap uMap = new UpdateMap(mState, tPresent);
         this.uMap = uMap;
-        add(ePresent, BorderLayout.WEST);
+        /// add(ePresent, BorderLayout.WEST);
         add(uMap, BorderLayout.CENTER);
-        add(tPresent, BorderLayout.EAST);
+        // add(tPresent, BorderLayout.EAST);
     }
 
     public EnnemiPresent getePresent() {
         return ePresent;
-    }
-
-    public void initSprite(Ennemi e) {
-
-        uMap.initSprite(e);
     }
 
 }

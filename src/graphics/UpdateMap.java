@@ -21,16 +21,17 @@ import model.MapState;
 import model.Player;
 import model.Tower;
 
-public class UpdateMap extends JLayeredPane {
+public class UpdateMap extends JPanel {
     private MapState state;
     private TowerPresent tPresent;
     private int cellSize = 50;
     GraphicsMaker maker = new GraphicsMaker();
     CardLayout card = new CardLayout();
+    JPanel gameMap;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
-        setOpaque(false);
-        JPanel gameMap = new JPanel();
+
+        gameMap = new JPanel();
 
         this.state = state;
         this.tPresent = tPresent;
@@ -42,6 +43,14 @@ public class UpdateMap extends JLayeredPane {
         GridBagLayout gridConfiguration = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
         gameMap.setLayout(gridConfiguration);
+        gameMap.setBackground(new Color(165, 125, 49));
+
+        for (ArrayList<Ennemi> eList : state.getAllEnnemis()) {
+            System.out.println(eList);
+            for (Ennemi e : eList) {
+                initSprite(e);
+            }
+        }
 
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
@@ -49,7 +58,6 @@ public class UpdateMap extends JLayeredPane {
                 Tiles tiles;
                 if (map[i][j] == 3) {
                     tiles = new Tiles(new int[] { i, j });
-                    tiles.setBackground(new Color(165, 125, 49));
                 } else if (map[i][j] == 4) {
                     tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.CYAN);
@@ -68,7 +76,10 @@ public class UpdateMap extends JLayeredPane {
                 constraints.weighty = 1;
                 constraints.fill = GridBagConstraints.BOTH;
 
+                tiles.setOpaque(false);
                 gameMap.add(tiles, constraints);
+                // gameMap.add(new JLabel(new ImageIcon("ressources/sprite/magikarp.gif")),
+                // constraints);
             }
         }
         add(gameMap);
@@ -106,9 +117,10 @@ public class UpdateMap extends JLayeredPane {
 
         JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
         e.setJLabelSprite(sprite);
-        sprite.setLocation(state.getMap().getFrontEntry()[0], state.getMap().getFrontEntry()[1]);
-        sprite.setBounds(state.getMap().getFrontEntry()[0], state.getMap().getFrontEntry()[1], 32, 32);
-        add(sprite);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        gameMap.add(sprite, constraints);
 
     }
 
@@ -143,6 +155,9 @@ public class UpdateMap extends JLayeredPane {
             this.pos = pos;
             tilesList.add(this);
             setLayout(new GridBagLayout());
+
+            setBorder(new LineBorder(Color.RED));
+
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.insets = new Insets(5, 5, 5, 5);
             JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));

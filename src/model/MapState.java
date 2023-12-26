@@ -3,6 +3,8 @@ package model;
 import model.InitWaves.Difficulty;
 import characters.Starter;
 import characters.Starter.Salameche;
+import control.Control;
+import control.ControlTerminal;
 import graphics.GameScreen;
 
 import java.io.FileNotFoundException;
@@ -29,11 +31,25 @@ public class MapState {
     private int limiteDeTemps = 30;
     private Difficulty diff;
 
-    public MapState(Difficulty difficulty) {
+    private boolean endless;
+    private InitWaves w;
+
+    public MapState(Difficulty difficulty, int mode) throws FileNotFoundException {
+
+        Map map = new Map(20, 20, difficulty);
+        InitPokemon.loadingChar();
+        InitWaves w = new InitWaves(difficulty);
+        endless = mode == 1;
+        if (!endless) {
+
+            allEnnemis = w.getAllEnnemis();
+        }
+
+        this.w = w;
         diff = difficulty;
-        Map map = new Map(20, 20, diff);
         m = map;
         config = m.getConfig();
+
     }
 
     private void infoTerminal() {
@@ -52,24 +68,12 @@ public class MapState {
     }
 
     public void startTerminal() throws FileNotFoundException {
-        Map map = new Map(20, 20, Difficulty.EASY);
-        m = map;
-        config = m.getConfig();
 
-        InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(Difficulty.HARD);
         Scanner sc = new Scanner(System.in);
 
         int nbTour = 6; // AJUSTABLE
 
         infoTerminal();
-
-        allEnnemis = w.getAllEnnemis();
-        for (ArrayList<Ennemi> eList : allEnnemis) {
-            for (Ennemi e : eList) {
-                e.setMap(m);
-            }
-        }
 
         // A METTRE DANS /control
         // Tower terminal = new Tower("Terminal", 1,1, null, null);
@@ -77,16 +81,28 @@ public class MapState {
         Salameche sala = starterInstance.new Salameche("Salameche", 10, 0, Types.FEU, Types.NONE);
 
         int step = 0;
-        while (gameContinue()) {
+        int increment = 1;
+        if (endless) {
+            allEnnemis.add(w.initEndless(increment++));
+        }
+
+        while (gameContinue() || endless) {
+            if (endless && allEnnemis.size() == 1) {
+                allEnnemis.add(w.initEndless(increment++));
+
+            }
+
+            for (ArrayList<Ennemi> eList : allEnnemis) {
+                for (Ennemi e : eList) {
+                    e.setMap(m);
+                }
+            }
 
             moveOnMap();
             loadNextWave();
             m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            System.out.println("Ennemie en attente:" + wave.size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
-            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
+            info(step);
 
             step = ennemiComing(step);
             step++;
@@ -108,9 +124,17 @@ public class MapState {
         sc.close();
     }
 
+    private void info(int step) {
+        System.out.println("Vagues restantes: " + (allEnnemis.size()));
+        System.out.println("Ennemie en attente:" + wave.size());
+        System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+        System.out.println("PV: " + pv);
+        System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+    }
+
     public void startGraphic(GameScreen screen) throws FileNotFoundException {
 
-        InitPokemon.loadingChar();
+        // InitPokemon.loadingChar();
         InitWaves w = new InitWaves(diff);
         Scanner sc = new Scanner(System.in);
         this.screen = screen;
@@ -132,7 +156,7 @@ public class MapState {
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setPos(m.getFrontEntry());
-                screen.initSprite(e);
+
             }
 
         }
@@ -167,12 +191,13 @@ public class MapState {
     }
 
     private boolean gameContinue() {
-        if (allEnnemis.isEmpty()) {
+        if (allEnnemis.isEmpty() && !endless) {
             System.out.println("VOUS AVEZ GAGNEE");
             return false;
         }
         if (pv == 0) {
             System.out.println("VOUS AVEZ PERDU");
+            endless = false;
             return false;
         }
         return true;
@@ -265,6 +290,10 @@ public class MapState {
 
     public Map getMap() {
         return m;
+    }
+
+    public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
+        return allEnnemis;
     }
 
 }

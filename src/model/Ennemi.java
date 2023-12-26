@@ -22,7 +22,14 @@ public class Ennemi extends Pokemon {
 
     private JLabel sprite;
 
-    public Ennemi(String name, double pv, double defPhysical, double defSpecial, Types type1, Types type2, boolean boss,
+    public Ennemi(
+            String name,
+            double pv,
+            double defPhysical,
+            double defSpecial,
+            Types type1,
+            Types type2,
+            boolean boss,
             String sprite) {
         super(name, pv, defPhysical, defSpecial, type1, type2, false, sprite);
         if (boss) {
@@ -73,7 +80,8 @@ public class Ennemi extends Pokemon {
     }
 
     public void moveGraphic(JLabel sprite) {
-        sprite.setLocation((int) sprite.getLocation().getX() + 1, (int) sprite.getLocation().getY());
+        // sprite.setLocation((int) sprite.getLocation().getX() + 1, (int)
+        // sprite.getLocation().getY());
     }
 
     public boolean move() {
@@ -176,13 +184,16 @@ public class Ennemi extends Pokemon {
 
     public String toString() {
         return "NOM: " + getName()
-                + " \nPV: " + getPv()
-                + " \nDEF PHYSIQUE: " + getPhysical()
-                + " \nDEF SPECIAL: " + getSpecial()
-                + " \nTYPE: " + getType()[0] + " et " + getType()[1]
-                + " \nVITESSE: " + getSpeed()
-                + "\nMECHANT\n"
-                + "BOSS:" + isBoss() + "\n";
+
+                + " PV: " + getPv()
+                + " DEF PHYSIQUE: " + getPhysical()
+                + " DEF SPECIAL: " + getSpecial()
+                /*
+                 * + " \nTYPE: " + getType()[0] + " et " + getType()[1]
+                 * + " \nVITESSE: " + getSpeed()
+                 * + "\nMECHANT\n"
+                 */
+                + " BOSS:" + isBoss() + "\n";
     }
 
     public ArrayList<Ennemi> getList() {
@@ -215,6 +226,12 @@ public class Ennemi extends Pokemon {
 
     public JLabel getJLabelSprite() {
         return sprite;
+    }
+
+    public void buffAllStat(double multipler) {
+        setPv(getPv() * multipler);
+        setPhysical(getPhysical() * multipler);
+        setSpecial(getSpecial() * multipler);
     }
 
 }

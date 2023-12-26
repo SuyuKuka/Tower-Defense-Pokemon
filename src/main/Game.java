@@ -1,11 +1,17 @@
 package main;
 
 import graphics.MainGraphics;
+import model.Ennemi;
+import model.InitPokemon;
+import model.InitWaves;
+import model.Map;
 import model.MapState;
 import model.Player;
 import model.InitWaves.Difficulty;
 
 import java.io.FileNotFoundException;
+
+import control.ControlTerminal;
 
 public class Game {
 
@@ -16,14 +22,18 @@ public class Game {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        if (args.length != 0 && args[0].equals("[terqsdminal]")) {
-            MapState terminal = new MapState(Difficulty.EASY);
-            terminal.startTerminal();
+
+        if (args.length != 0 && args[0].equals("[terminal]")) {
+
+            // PLACER QQL CHOSE QUI LOAD LE COMPTE SAUVGARDEE
+            ControlTerminal terminalControl = new ControlTerminal();
+            terminalControl.initTerminal();
         } else {
 
             Game game = new Game();
 
         }
+
     }
 
 }
