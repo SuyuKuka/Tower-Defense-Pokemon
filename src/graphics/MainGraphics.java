@@ -5,6 +5,7 @@ import main.Game;
 import model.Player;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -33,7 +34,7 @@ public class MainGraphics extends JFrame {
         // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
         // "POKEMONGOOOOO"));
 
-        setSize(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3);
+        setMinimumSize(new Dimension(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3));
         setLocationRelativeTo(null);
 
         setTitle("PokeRevolute");

@@ -69,7 +69,7 @@ public class Control {
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
 
                     GameScreen screen = new GameScreen();
-                    MapState mState = new MapState(diff);
+                    MapState mState = new MapState(diff, 0);
                     screen.setmState(mState);
                     main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {

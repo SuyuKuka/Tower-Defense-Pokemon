@@ -3,20 +3,15 @@ package graphics;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+
 import javax.swing.border.LineBorder;
 
 import model.Ennemi;
-import model.Map;
+
 import model.MapState;
 import model.Player;
 import model.Tower;
@@ -30,7 +25,8 @@ public class UpdateMap extends JPanel {
     JPanel gameMap;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
-
+        setLayout(new BorderLayout());
+        setBackground(new Color(165, 125, 49));
         gameMap = new JPanel();
 
         this.state = state;
@@ -43,14 +39,8 @@ public class UpdateMap extends JPanel {
         GridBagLayout gridConfiguration = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
         gameMap.setLayout(gridConfiguration);
-        gameMap.setBackground(new Color(165, 125, 49));
-
-        for (ArrayList<Ennemi> eList : state.getAllEnnemis()) {
-            System.out.println(eList);
-            for (Ennemi e : eList) {
-                initSprite(e);
-            }
-        }
+        gameMap.setOpaque(false);
+        gameMap.setBorder(new LineBorder(Color.magenta));
 
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
@@ -58,6 +48,7 @@ public class UpdateMap extends JPanel {
                 Tiles tiles;
                 if (map[i][j] == 3) {
                     tiles = new Tiles(new int[] { i, j });
+                    tiles.setOpaque(false);
                 } else if (map[i][j] == 4) {
                     tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.CYAN);
@@ -76,13 +67,12 @@ public class UpdateMap extends JPanel {
                 constraints.weighty = 1;
                 constraints.fill = GridBagConstraints.BOTH;
 
-                tiles.setOpaque(false);
                 gameMap.add(tiles, constraints);
                 // gameMap.add(new JLabel(new ImageIcon("ressources/sprite/magikarp.gif")),
                 // constraints);
             }
         }
-        add(gameMap);
+        add(gameMap, BorderLayout.CENTER);
         setVisible(true);
 
     }
@@ -131,7 +121,7 @@ public class UpdateMap extends JPanel {
     }
 
     private void moveSprite() {
-        System.out.println("moving");
+
         for (Ennemi e : state.getEnnemiPresent()) {
             e.moveGraphic(e.getJLabelSprite());
         }
@@ -159,7 +149,7 @@ public class UpdateMap extends JPanel {
             setBorder(new LineBorder(Color.RED));
 
             GridBagConstraints constraints = new GridBagConstraints();
-            constraints.insets = new Insets(5, 5, 5, 5);
+
             JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
 
             spriteOnIt = empty;

@@ -34,14 +34,17 @@ public class MapState {
     private boolean endless;
     private InitWaves w;
 
-    public MapState(Difficulty difficulty, int mode) throws FileNotFoundException {
+    public MapState(Difficulty difficulty, int mode) {
 
-        Map map = new Map(20, 20, difficulty);
-        InitPokemon.loadingChar();
+        Map map = new Map(15, 25, difficulty);
+        try {
+            InitPokemon.loadingChar();
+        } catch (FileNotFoundException e) {
+
+        }
         InitWaves w = new InitWaves(difficulty);
         endless = mode == 1;
         if (!endless) {
-
             allEnnemis = w.getAllEnnemis();
         }
 
@@ -134,55 +137,45 @@ public class MapState {
 
     public void startGraphic(GameScreen screen) throws FileNotFoundException {
 
-        // InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(diff);
-        Scanner sc = new Scanner(System.in);
         this.screen = screen;
 
-        int nbTour = 6; // AJUSTABLE
-
-        // infoTerminal();
+        Scanner sc = new Scanner(System.in);
 
         allEnnemis = w.getAllEnnemis();
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setMap(m);
+                e.setPos(m.getFrontEntry());
             }
-
         }
 
         int step = 0;
         Timer timer = new Timer();
-        for (ArrayList<Ennemi> eList : allEnnemis) {
-            for (Ennemi e : eList) {
-                e.setPos(m.getFrontEntry());
 
-            }
-
-        }
-
-        while (gameContinue()) {
+        while (gameContinue() || endless) {
 
             screen.repaint();
-
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
+            System.out.println(ennemiPresent);
+            moveOnMap();
             loadNextWave();
-
             step = ennemiComing(step);
             step++;
 
             Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
+
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                     }
                 }
             };
             task.run();
+
         }
         sc.close();
         for (Ennemi e : screen.getePresent().getEnnemiGone()) {

@@ -20,7 +20,7 @@ public class TowerPresent extends JPanel {
     private TowerManagement selectedPokemon;
 
     public TowerPresent() {
-        setPreferredSize(new Dimension(390, 0)); // taille parfaite
+        setPreferredSize(new Dimension(350, 0)); // taille parfaite
         setOpaque(false);
 
         add(initiateTitle());
@@ -92,7 +92,7 @@ public class TowerPresent extends JPanel {
                         if (selectedPokemon != null) {
                             selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
                         }
-                        pokemon.setBorder(new MatteBorder(2, 2, 2, 2, Color.RED));
+                        pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
                         selectedPokemon = pokemon;
                     } else {
                         pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));

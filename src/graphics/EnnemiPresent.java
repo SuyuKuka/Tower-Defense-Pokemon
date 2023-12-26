@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import model.Ennemi;
 
+import javax.swing.border.LineBorder;
+
 public class EnnemiPresent extends JPanel {
     private static GraphicsMaker maker = new GraphicsMaker();
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
@@ -22,7 +24,7 @@ public class EnnemiPresent extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             try {
-                g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 1000, this);
+                g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 700, 1000, this);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -33,7 +35,8 @@ public class EnnemiPresent extends JPanel {
 
     public EnnemiPresent() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(354, 0));
+        setPreferredSize(new Dimension(250, 0));
+        setBorder(new LineBorder(Color.RED, 50));
 
         // Ennemi
         container.setOpaque(false);
@@ -53,7 +56,7 @@ public class EnnemiPresent extends JPanel {
 
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
-        ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
@@ -91,7 +94,7 @@ public class EnnemiPresent extends JPanel {
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
         ennemiInfo.setOpaque(false);
 
-        JLabel profilPhoto = new JLabel(new ImageIcon("ressources/profile/profil_photo.png"));
+        JLabel profilPhoto = new JLabel(new ImageIcon(e.getSprite()));
         profilPhoto.setOpaque(false);
         profilPhoto.setPreferredSize(new Dimension(50, 50));
 
