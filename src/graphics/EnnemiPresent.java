@@ -19,24 +19,13 @@ public class EnnemiPresent extends JPanel {
     private static GraphicsMaker maker = new GraphicsMaker();
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
-    private static JPanel container = new JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            try {
-                g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 700, 1000, this);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    };
+    private static JPanel container = new JPanel();
 
     public EnnemiPresent() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(250, 0));
         setBorder(new LineBorder(Color.RED, 50));
+        setOpaque(false);
 
         // Ennemi
         container.setOpaque(false);
@@ -51,27 +40,33 @@ public class EnnemiPresent extends JPanel {
         box.add(Box.createHorizontalGlue());
         box.add(ennemiLabel);
         box.add(Box.createHorizontalGlue());
+        box.setOpaque(false);
 
         add(box, BorderLayout.NORTH);
 
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
+        JViewport viewport = ennemiList.getViewport();
+        viewport.setOpaque(false);
         // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        add(ennemiList);
+        add(ennemiList, BorderLayout.CENTER);
+        setVisible(true);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
-            g.drawImage(ImageIO.read(new File("ressources/template/ennemi.png")), 0, 0, 600, 720, this);
+            g.drawImage(ImageIO.read(new File("ressources/team/ennemiside.png")), 0, 0, getWidth(), getHeight(), this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {

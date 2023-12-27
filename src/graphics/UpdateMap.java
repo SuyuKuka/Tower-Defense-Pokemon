@@ -16,6 +16,10 @@ import model.MapState;
 import model.Player;
 import model.Tower;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class UpdateMap extends JPanel {
     private MapState state;
     private TowerPresent tPresent;
@@ -26,29 +30,43 @@ public class UpdateMap extends JPanel {
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
         setLayout(new BorderLayout());
-        setBackground(new Color(165, 125, 49));
+
+        setOpaque(false);
         gameMap = new JPanel();
 
         this.state = state;
         this.tPresent = tPresent;
 
         int[][] map = state.getMap().getConfig();
-        int mapWidth = state.getMap().getConfig()[0].length;
-        int mapHeight = state.getMap().getConfig().length;
+        int mapWidth = map[0].length;
+        int mapHeight = map.length;
 
         GridBagLayout gridConfiguration = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
         gameMap.setLayout(gridConfiguration);
         gameMap.setOpaque(false);
-        gameMap.setBorder(new LineBorder(Color.magenta));
 
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
 
                 Tiles tiles;
                 if (map[i][j] == 3) {
-                    tiles = new Tiles(new int[] { i, j });
+                    tiles = new Tiles(new int[] { i, j }) {
+                        @Override
+                        protected void paintComponent(Graphics g) {
+                            super.paintComponent(g);
+                            try {
+                                g.drawImage(ImageIO.read(new File("ressources/tiles/pathtiles.png")), 0, 0, 64, 64,
+                                        this);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
                     tiles.setOpaque(false);
+
                 } else if (map[i][j] == 4) {
                     tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.CYAN);
@@ -57,10 +75,27 @@ public class UpdateMap extends JPanel {
                     tiles = new Tiles(new int[] { i, j });
                     tiles.setBackground(Color.PINK);
 
+                } else if (map[i][j] == 9) {
+                    tiles = new Tiles(new int[] { i, j }) {
+                        @Override
+                        protected void paintComponent(Graphics g) {
+                            super.paintComponent(g);
+                            try {
+                                g.drawImage(ImageIO.read(new File("ressources/tiles/obstacle.png")), 0, 0, 32, 32,
+                                        this);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
+                    tiles.setOpaque(false);
                 } else {
                     tiles = new Tiles(new int[] { i, j });
-                    tiles.setBackground(new Color(111, 160, 83));
+                    tiles.setOpaque(false);
                 }
+
                 constraints.gridx = j;
                 constraints.gridy = i;
                 constraints.weightx = 1;
@@ -72,6 +107,7 @@ public class UpdateMap extends JPanel {
                 // constraints);
             }
         }
+        add(new JLabel(new ImageIcon("ressources/sprite/rondoudou.gif")), BorderLayout.CENTER);
         add(gameMap, BorderLayout.CENTER);
         setVisible(true);
 
@@ -145,8 +181,6 @@ public class UpdateMap extends JPanel {
             this.pos = pos;
             tilesList.add(this);
             setLayout(new GridBagLayout());
-
-            setBorder(new LineBorder(Color.RED));
 
             GridBagConstraints constraints = new GridBagConstraints();
 
