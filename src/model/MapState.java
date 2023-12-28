@@ -154,17 +154,6 @@ public class MapState {
 
         while (gameContinue() || endless) {
 
-            screen.repaint();
-            screen.getePresent().setEnnemiPresent(ennemiPresent);
-
-            System.out.println(ennemiPresent);
-            moveOnMap();
-            loadNextWave();
-            step = ennemiComing(step);
-            step++;
-
-            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
-
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
@@ -175,6 +164,17 @@ public class MapState {
                 }
             };
             task.run();
+
+            screen.getuMap().repaint();
+            screen.getePresent().setEnnemiPresent(ennemiPresent);
+
+            // System.out.println(ennemiPresent);
+            moveOnMap();
+            loadNextWave();
+            step = ennemiComing(step);
+            step++;
+
+            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
         }
         sc.close();

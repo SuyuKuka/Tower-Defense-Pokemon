@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import graphics.Classique;
 import model.InitWaves.Difficulty;
 
 //GENERE UNE MAP ALEATOIRE
@@ -10,6 +11,7 @@ public class Map {
     // ATTRIBUT
     public int[][] map;
     public static RoadMap roadMap;
+    private Tiles[][] tilesTab;
 
     private int[] entry;
     private int[] exit;
@@ -25,6 +27,8 @@ public class Map {
     public Map(int height, int width, Difficulty diff) {
 
         map = new int[height][width];
+        tilesTab = new Tiles[height][width];
+
         entry = new int[] { 0, rand.nextInt(width - 2) + 1 };
         exit = new int[] { height - 1, rand.nextInt(width - 2) + 1 };
 
@@ -55,6 +59,30 @@ public class Map {
         // AJOUTE DES OBSTACLES
         addObstacles();
         deployObstacles();
+
+        for (int i = 0; i < tilesTab.length; i++) {
+            for (int j = 0; j < tilesTab[0].length; j++) {
+                if (tilesTab[i][j] == null) {
+                    System.out.print("  ");
+                } else if (tilesTab[i][j].getType() == TilesType.A) {
+                    System.out.print("A ");
+                } else if (tilesTab[i][j].getType() == TilesType.S) {
+                    System.out.print("S ");
+                } else if (tilesTab[i][j].getType() == TilesType.Q) {
+                    System.out.print("Q ");
+                } else if (tilesTab[i][j].getType() == TilesType.Z) {
+                    System.out.print("Z ");
+                } else if (tilesTab[i][j].getType() == TilesType.H) {
+                    System.out.print("H ");
+                } else if (tilesTab[i][j].getType() == TilesType.V) {
+                    System.out.print("V ");
+                } else if (tilesTab[i][j].getType() == TilesType.X) {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+
     }
 
     private void wayFinder() {
@@ -83,6 +111,7 @@ public class Map {
                 }
             }
             map[i][posPrec] = 3;
+            tilesTab[i][posPrec] = new Tiles(TilesType.V);
         }
     }
 
@@ -116,6 +145,7 @@ public class Map {
             for (int j = posHead; j <= posPrec; j = j + 1) {
                 if (map[i][j] != map[exit[0]][exit[1]]) {
                     map[i][j] = 3;
+                    tilesTab[i][j] = new Tiles(TilesType.H);
                 }
             }
         }
@@ -126,6 +156,7 @@ public class Map {
             for (int j = posHead; j >= posPrec; j = j - 1) {
                 if (map[i][j] != map[exit[0]][exit[1]]) {
                     map[i][j] = 3;
+                    tilesTab[i][j] = new Tiles(TilesType.H);
                 }
             }
         }
@@ -146,29 +177,33 @@ public class Map {
     }
 
     private void makeTopRightCorner(int i, int j) {
-        if (map[i - 1][j] == 3 && map[i][j + 1] == 3) {
+        if ((map[i - 1][j] == 3 || map[i - 1][j] == 4) && map[i][j + 1] == 3) {
             map[i][j] = 1;
+            tilesTab[i][j] = new Tiles(TilesType.Q);
             cornerList.add(new Corner(new int[] { i, j }, true, true));
         }
     }
 
     private void makeTopLeftCorner(int i, int j) {
-        if (map[i - 1][j] == 3 && map[i][j - 1] == 3) {
+        if ((map[i - 1][j] == 3 || map[i - 1][j] == 4) && map[i][j - 1] == 3) {
             map[i][j] = 1;
+            tilesTab[i][j] = new Tiles(TilesType.S);
             cornerList.add(new Corner(new int[] { i, j }, true, false));
         }
     }
 
     private void makeBotLeftCorner(int i, int j) {
-        if (map[i + 1][j] == 3 && map[i][j + 1] == 3) {
+        if ((map[i + 1][j] == 3 || map[i + 1][j] == 5) && map[i][j + 1] == 3) {
             map[i][j] = 1;
+            tilesTab[i][j] = new Tiles(TilesType.A);
             cornerList.add(new Corner(new int[] { i, j }, false, true));
         }
     }
 
     private void makeBotRightCorner(int i, int j) {
-        if (map[i + 1][j] == 3 && map[i][j - 1] == 3) {
+        if ((map[i + 1][j] == 3 || map[i + 1][j] == 5) && map[i][j - 1] == 3) {
             map[i][j] = 1;
+            tilesTab[i][j] = new Tiles(TilesType.Z);
             cornerList.add(new Corner(new int[] { i, j }, false, false));
         }
     }
@@ -186,6 +221,7 @@ public class Map {
         for (int i = 0; i < cornerList.size(); i++) {
             if (chance) {
                 cornerList.get(i).beALoop(map);
+
             }
         }
 
@@ -392,6 +428,11 @@ public class Map {
         return frontEntry;
     }
 
+    public int[] getFrontExit() {
+        int[] frontExit = { map.length - 2, exit[1] };
+        return frontExit;
+    }
+
     public int[] getExit() {
         return exit;
     }
@@ -431,15 +472,19 @@ public class Map {
                 if (topOrientation && rightOrientation) {
                     makeAQLoop();
                     haveLoop = true;
+
                 } else if (topOrientation) {
                     makeASLoop();
                     haveLoop = true;
+
                 } else if (rightOrientation) {
                     makeAALoop();
                     haveLoop = true;
+
                 } else {
                     makeAZLoop();
                     haveLoop = true;
+
                 }
             }
 
@@ -543,7 +588,28 @@ public class Map {
                     }
                 }
             }
+            taille = taille - 1;
             map[x][y] = 1;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x + i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.X);
+            x = x + taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y - i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.S);
+            y = y - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x - i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Q);
+            x = x - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y + i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.A);
+
         }
 
         private void makeASLoop() {
@@ -557,7 +623,28 @@ public class Map {
                     }
                 }
             }
+            taille = taille - 1;
             map[x][y] = 1;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x + i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.X);
+            x = x + taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y + i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Q);
+            y = y + taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x - i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.S);
+            x = x - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y - i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Z);
+
         }
 
         private void makeAALoop() {
@@ -571,7 +658,28 @@ public class Map {
                     }
                 }
             }
+            taille = taille - 1;
             map[x][y] = 1;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y - i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.X);
+            y = y - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x - i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Q);
+            x = x - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y + i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.A);
+            y = y + taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x + i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Z);
+
         }
 
         private void makeAZLoop() {
@@ -586,6 +694,27 @@ public class Map {
                 }
             }
             map[x][y] = 1;
+            taille = taille - 1;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y + i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.X);
+            y = y + taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x - i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.S);
+            x = x - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x][y - i] = new Tiles(TilesType.H);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.Z);
+            y = y - taille;
+            for (int i = 0; i < taille; i++) {
+                tilesTab[x + i][y] = new Tiles(TilesType.V);
+            }
+            tilesTab[x][y] = new Tiles(TilesType.A);
+
         }
 
         public String toString() {
@@ -864,4 +993,23 @@ public class Map {
             /////////////////////////////////////////////////////////////
         }
     }
+
+    public enum TilesType {
+        H, V, A, Z, Q, S, X;
+    }
+
+    public class Tiles {
+
+        private TilesType type;
+
+        public Tiles(TilesType type) {
+
+            this.type = type;
+        }
+
+        public TilesType getType() {
+            return type;
+        }
+    }
+
 }

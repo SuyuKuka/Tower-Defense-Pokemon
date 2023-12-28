@@ -21,10 +21,15 @@ public class EnnemiPresent extends JPanel {
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
     private static JPanel container = new JPanel();
 
+    private JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
+
     public EnnemiPresent() {
         setLayout(new BorderLayout());
+        bg.setOpaque(false);
+        add(bg, BorderLayout.CENTER);
+
+        bg.setLayout(new BorderLayout());
         setPreferredSize(new Dimension(250, 0));
-        setBorder(new LineBorder(Color.RED, 50));
         setOpaque(false);
 
         // Ennemi
@@ -41,8 +46,9 @@ public class EnnemiPresent extends JPanel {
         box.add(ennemiLabel);
         box.add(Box.createHorizontalGlue());
         box.setOpaque(false);
+        box.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        add(box, BorderLayout.NORTH);
+        bg.add(box, BorderLayout.NORTH);
 
         JScrollPane ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
@@ -51,22 +57,9 @@ public class EnnemiPresent extends JPanel {
         // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        add(ennemiList, BorderLayout.CENTER);
+        bg.add(ennemiList, BorderLayout.CENTER);
         setVisible(true);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        try {
-            g.drawImage(ImageIO.read(new File("ressources/team/ennemiside.png")), 0, 0, getWidth(), getHeight(), this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void setEnnemiPresent(ArrayList<Ennemi> ennemiPresent) {

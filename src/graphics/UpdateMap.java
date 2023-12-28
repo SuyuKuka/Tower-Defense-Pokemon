@@ -8,22 +8,17 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import javax.swing.border.LineBorder;
-
 import model.Ennemi;
 
 import model.MapState;
 import model.Player;
 import model.Tower;
-
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import javax.swing.border.*;
 
 public class UpdateMap extends JPanel {
     private MapState state;
     private TowerPresent tPresent;
-    private int cellSize = 50;
+
     GraphicsMaker maker = new GraphicsMaker();
     CardLayout card = new CardLayout();
     JPanel gameMap;
@@ -48,23 +43,13 @@ public class UpdateMap extends JPanel {
 
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-
                 Tiles tiles;
                 if (map[i][j] == 3) {
-                    tiles = new Tiles(new int[] { i, j }) {
-                        @Override
-                        protected void paintComponent(Graphics g) {
-                            super.paintComponent(g);
-                            try {
-                                g.drawImage(ImageIO.read(new File("ressources/tiles/pathtiles.png")), 0, 0, 64, 64,
-                                        this);
+                    tiles = new Tiles(new int[] { i, j });
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    };
+                    JLabel bg = maker.resizeJLabel("ressources/tiles/pathtiles.png", 60);
+                    GridBagConstraints constraints2 = new GridBagConstraints();
+                    tiles.addSprite(bg, constraints2);
                     tiles.setOpaque(false);
 
                 } else if (map[i][j] == 4) {
@@ -76,20 +61,11 @@ public class UpdateMap extends JPanel {
                     tiles.setBackground(Color.PINK);
 
                 } else if (map[i][j] == 9) {
-                    tiles = new Tiles(new int[] { i, j }) {
-                        @Override
-                        protected void paintComponent(Graphics g) {
-                            super.paintComponent(g);
-                            try {
-                                g.drawImage(ImageIO.read(new File("ressources/tiles/obstacle.png")), 0, 0, 32, 32,
-                                        this);
+                    tiles = new Tiles(new int[] { i, j });
+                    JLabel bg = maker.resizeJLabel("ressources/tiles/obstacle.png", 32);
+                    GridBagConstraints constraints2 = new GridBagConstraints();
+                    tiles.addSprite(bg, constraints2);
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    };
                     tiles.setOpaque(false);
                 } else {
                     tiles = new Tiles(new int[] { i, j });
@@ -150,18 +126,21 @@ public class UpdateMap extends JPanel {
 
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        moveSprite();
-
-    }
-
-    private void moveSprite() {
-
-        for (Ennemi e : state.getEnnemiPresent()) {
-            e.moveGraphic(e.getJLabelSprite());
-        }
-    }
+    /*
+     * 
+     * public void paintComponent(Graphics g) {
+     * super.paintComponent(g);
+     * moveSprite();
+     * 
+     * }
+     * 
+     * private void moveSprite() {
+     * 
+     * for (Ennemi e : state.getEnnemiPresent()) {
+     * e.moveGraphic(e.getJLabelSprite());
+     * }
+     * }
+     */
 
     public Tiles getTiles(int[] pos) {
         for (Tiles tiles : Tiles.tilesList) {
@@ -176,6 +155,7 @@ public class UpdateMap extends JPanel {
         private int[] pos;
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
+        JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
 
         public Tiles(int[] pos) {
             this.pos = pos;
@@ -183,20 +163,28 @@ public class UpdateMap extends JPanel {
             setLayout(new GridBagLayout());
 
             GridBagConstraints constraints = new GridBagConstraints();
-
-            JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
+            setBorder(new EmptyBorder(1, 1, 1, 1));
 
             spriteOnIt = empty;
             add(empty, constraints);
-            add(empty);
-
             addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent evt) {
+                    if (spriteOnIt == empty) {
+                        setBorder(new LineBorder(Color.RED, 1));
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent evt) {
+                    setBorder(new EmptyBorder(1, 1, 1, 1));
+                }
+
                 @Override
                 public void mouseClicked(MouseEvent evt) {
                     int row = pos[0];
                     int col = pos[1];
-                    System.out.println(row);
-                    System.out.println(col);
+
                     Tower[] team = Player.INSTANCE.getTeam();
                     if (tPresent.getSelectedPokemon() != null) {
                         if (!tPresent.getSelectedPokemon().isPlaced()) {
@@ -219,11 +207,12 @@ public class UpdateMap extends JPanel {
 
         public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
 
-            remove(spriteOnIt);
-            spriteOnIt = jlabel;
-            this.add(jlabel, constraints);
-            jlabel.getParent().revalidate();
-            state.getMap().affiche(state.getEnnemiPresent());
+            if (spriteOnIt == empty) {
+                remove(spriteOnIt);
+                spriteOnIt = jlabel;
+                this.add(jlabel, constraints);
+                jlabel.getParent().revalidate();
+            }
         }
 
         public int[] getPos() {
