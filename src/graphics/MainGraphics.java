@@ -20,6 +20,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import javax.swing.border.EmptyBorder;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class MainGraphics extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel;
@@ -34,9 +40,17 @@ public class MainGraphics extends JFrame {
         // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
         // "POKEMONGOOOOO"));
 
-        setMinimumSize(new Dimension(screenWidth - screenHeight / 3, screenHeight - screenHeight / 3));
-        setLocationRelativeTo(null);
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
 
+            }
+        });
+
+        setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
+        setResizable(false);
+
+        setLocationRelativeTo(null);
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);

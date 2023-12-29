@@ -13,7 +13,19 @@ import model.Ennemi;
 import model.MapState;
 import model.Player;
 import model.Tower;
+import model.Map.TilesType;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 import javax.swing.border.*;
+
+import control.Control;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class UpdateMap extends JPanel {
     private MapState state;
@@ -22,12 +34,18 @@ public class UpdateMap extends JPanel {
     GraphicsMaker maker = new GraphicsMaker();
     CardLayout card = new CardLayout();
     JPanel gameMap;
+    Control control = new Control();
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
-        setLayout(new BorderLayout());
 
+        setLayout(new BorderLayout());
         setOpaque(false);
+
         gameMap = new JPanel();
+        GridBagLayout gridConfiguration = new GridBagLayout();
+        gameMap.setLayout(gridConfiguration);
+        gameMap.setOpaque(false);
+        GridBagConstraints constraints = new GridBagConstraints();
 
         this.state = state;
         this.tPresent = tPresent;
@@ -36,21 +54,13 @@ public class UpdateMap extends JPanel {
         int mapWidth = map[0].length;
         int mapHeight = map.length;
 
-        GridBagLayout gridConfiguration = new GridBagLayout();
-        GridBagConstraints constraints = new GridBagConstraints();
-        gameMap.setLayout(gridConfiguration);
-        gameMap.setOpaque(false);
-
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
                 Tiles tiles;
                 if (map[i][j] == 3) {
+                    // File img = getPathTiles2(i, j);
                     tiles = new Tiles(new int[] { i, j });
-
-                    JLabel bg = maker.resizeJLabel("ressources/tiles/pathtiles.png", 60);
-                    GridBagConstraints constraints2 = new GridBagConstraints();
-                    tiles.addSprite(bg, constraints2);
-                    tiles.setOpaque(false);
+                    drawPathTiles(tiles, 35);
 
                 } else if (map[i][j] == 4) {
                     tiles = new Tiles(new int[] { i, j });
@@ -126,21 +136,18 @@ public class UpdateMap extends JPanel {
 
     }
 
-    /*
-     * 
-     * public void paintComponent(Graphics g) {
-     * super.paintComponent(g);
-     * moveSprite();
-     * 
-     * }
-     * 
-     * private void moveSprite() {
-     * 
-     * for (Ennemi e : state.getEnnemiPresent()) {
-     * e.moveGraphic(e.getJLabelSprite());
-     * }
-     * }
-     */
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        moveSprite();
+
+    }
+
+    private void moveSprite() {
+
+        for (Ennemi e : state.getEnnemiPresent()) {
+            e.moveGraphic(e.getJLabelSprite());
+        }
+    }
 
     public Tiles getTiles(int[] pos) {
         for (Tiles tiles : Tiles.tilesList) {
@@ -156,17 +163,18 @@ public class UpdateMap extends JPanel {
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
         JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
+        GridBagConstraints constraints = new GridBagConstraints();
 
         public Tiles(int[] pos) {
             this.pos = pos;
             tilesList.add(this);
             setLayout(new GridBagLayout());
-
-            GridBagConstraints constraints = new GridBagConstraints();
+            setMinimumSize(new Dimension(30, 30));
             setBorder(new EmptyBorder(1, 1, 1, 1));
 
             spriteOnIt = empty;
             add(empty, constraints);
+
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
@@ -182,25 +190,14 @@ public class UpdateMap extends JPanel {
 
                 @Override
                 public void mouseClicked(MouseEvent evt) {
-                    int row = pos[0];
-                    int col = pos[1];
-
                     Tower[] team = Player.INSTANCE.getTeam();
-                    if (tPresent.getSelectedPokemon() != null) {
-                        if (!tPresent.getSelectedPokemon().isPlaced()) {
-                            //
-                            state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
-                            Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
-                            JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
-                            addSprite(sprite, constraints);
 
-                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
-                                tPresent.getSelectedPokemon().setPlaced(true);
-                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
-                            }
+                    control.setTowerOnMap(pos, tPresent, state, team);
 
-                        }
-                    }
+                    Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                    JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
+                    addSprite(sprite, constraints);
+
                 }
             });
         }
@@ -222,6 +219,42 @@ public class UpdateMap extends JPanel {
         public JLabel getSpriteOnIt() {
             return spriteOnIt;
         }
+    }
+
+    private void drawPathTiles(Tiles tiles, int size) {
+        JLabel bg;
+        model.Map.Tiles[][] tilesPathMap = state.getMap().getTilesPathMap();
+
+        switch (tilesPathMap[tiles.getPos()[0]][tiles.getPos()[1]].getType()) {
+            case X:
+                bg = maker.resizeJLabel("ressources/tiles/xTiles.png", size);
+                break;
+            case H:
+                bg = maker.resizeJLabel("ressources/tiles/hTiles.png", size);
+                break;
+            case V:
+                bg = maker.resizeJLabel("ressources/tiles/vTiles.png", size);
+                break;
+            case A:
+                bg = maker.resizeJLabel("ressources/tiles/aTiles.png", size);
+                break;
+            case Z:
+                bg = maker.resizeJLabel("ressources/tiles/zTiles.png", size);
+                break;
+            case Q:
+                bg = maker.resizeJLabel("ressources/tiles/qTiles.png", size);
+                break;
+            case S:
+                bg = maker.resizeJLabel("ressources/tiles/sTiles.png", size);
+                break;
+            default:
+                bg = maker.resizeJLabel("ressources/tiles/xTiles.png", size);
+                break;
+        }
+
+        GridBagConstraints constraints2 = new GridBagConstraints();
+        tiles.addSprite(bg, constraints2);
+        tiles.setOpaque(false);
     }
 
 }

@@ -17,6 +17,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainMenu extends JPanel {
 
@@ -31,6 +35,7 @@ public class MainMenu extends JPanel {
     private boolean displayPcPanel = false;
 
     public MainMenu(MainGraphics main, Player p) {
+
         CardLayout cdL = new CardLayout();
         user = p;
         control = new Control(p);
@@ -40,6 +45,7 @@ public class MainMenu extends JPanel {
 
         // Titre
         JPanel titlePanel = titlePanel();
+
         // Boutons
 
         JPanel buttonPanel = buttonPanel(main);

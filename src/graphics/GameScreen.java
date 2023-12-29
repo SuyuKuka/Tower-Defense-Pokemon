@@ -28,10 +28,10 @@ public class GameScreen extends JPanel {
         this.uMap = uMap;
 
         JPanel borderbot = maker.imagePanel("ressources/background/banner.png");
-        borderbot.setPreferredSize(new Dimension(0, 70));
+        borderbot.setPreferredSize(new Dimension(0, 75));
 
         JPanel bordertop = maker.imagePanel("ressources/background/banner.png");
-        bordertop.setPreferredSize(new Dimension(0, 70));
+        bordertop.setPreferredSize(new Dimension(0, 75));
 
         container.add(ePresent, BorderLayout.WEST);
         container.add(borderbot, BorderLayout.SOUTH);

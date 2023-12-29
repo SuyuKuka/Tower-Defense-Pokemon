@@ -25,7 +25,7 @@ public class TowerPresent extends JPanel {
         bg.setOpaque(false);
         add(bg, BorderLayout.CENTER);
 
-        setPreferredSize(new Dimension(350, 0)); // taille parfaite
+        setPreferredSize(new Dimension(250, 0)); // taille parfaite
         setOpaque(false);
         GridLayout normalLayout = new GridLayout(8, 1);
         normalLayout.setHgap(10);

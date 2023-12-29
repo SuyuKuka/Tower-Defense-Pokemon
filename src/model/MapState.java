@@ -165,7 +165,7 @@ public class MapState {
             };
             task.run();
 
-            screen.getuMap().repaint();
+            // screen.getuMap().repaint();
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
             // System.out.println(ennemiPresent);

@@ -8,7 +8,8 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
-
+import graphics.TowerPresent;
+import graphics.UpdateMap.Tiles;
 import model.Pokemon.State;
 import model.MapState;
 import model.Player;
@@ -20,6 +21,29 @@ import java.awt.Cursor;
 import control.Control;
 
 import java.util.Scanner;
+
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import model.Ennemi;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+import model.Map.TilesType;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import javax.swing.border.*;
+
+import control.Control;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Control {
 
@@ -110,6 +134,24 @@ public class Control {
         backPanel.add(backButton);
 
         return backPanel;
+    }
+
+    public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
+        int row = pos[0];
+        int col = pos[1];
+
+        if (tPresent.getSelectedPokemon() != null) {
+            if (!tPresent.getSelectedPokemon().isPlaced()) {
+                //
+                state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
+
+                if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
+                    tPresent.getSelectedPokemon().setPlaced(true);
+                    tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                }
+
+            }
+        }
     }
 
 }
