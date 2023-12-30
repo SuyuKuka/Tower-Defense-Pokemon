@@ -58,32 +58,13 @@ public class Map {
 
         // PATHFINDING
         roadMap = new RoadMap();
-        System.out.println(this);
-        unify();
 
-        System.out.println(roadMap.toString());
-        for (int i = 0; i < tilesPathMap.length; i++) {
-            for (int j = 0; j < tilesPathMap[0].length; j++) {
-                if (tilesPathMap[i][j] == null) {
-                    System.out.print("  ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.A) {
-                    System.out.print("A ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.S) {
-                    System.out.print("S ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.Q) {
-                    System.out.print("Q ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.Z) {
-                    System.out.print("Z ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.H) {
-                    System.out.print("H ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.V) {
-                    System.out.print("V ");
-                } else if (tilesPathMap[i][j].getType() == TilesType.X) {
-                    System.out.print("X ");
-                }
-            }
-            System.out.println();
-        }
+        // debug
+        // System.out.println(this);
+        // System.out.println(roadMap.toString());
+        // debugTilesMap();
+
+        unify();
 
         // AJOUTE DES OBSTACLES
         addObstacles();
@@ -1023,6 +1004,32 @@ public class Map {
         public TilesType getType() {
             return type;
         }
+    }
+
+    private void debugTilesMap() {
+        for (int i = 0; i < tilesPathMap.length; i++) {
+            for (int j = 0; j < tilesPathMap[0].length; j++) {
+                if (tilesPathMap[i][j] == null) {
+                    System.out.print("  ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.A) {
+                    System.out.print("A ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.S) {
+                    System.out.print("S ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.Q) {
+                    System.out.print("Q ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.Z) {
+                    System.out.print("Z ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.H) {
+                    System.out.print("H ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.V) {
+                    System.out.print("V ");
+                } else if (tilesPathMap[i][j].getType() == TilesType.X) {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+
     }
 
 }

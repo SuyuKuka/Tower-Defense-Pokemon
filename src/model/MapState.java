@@ -154,6 +154,8 @@ public class MapState {
         int step = 0;
         Timer timer = new Timer();
 
+        // m.affiche(ennemiPresent);
+
         while (gameContinue() || endless) {
 
             TimerTask task = new TimerTask() {

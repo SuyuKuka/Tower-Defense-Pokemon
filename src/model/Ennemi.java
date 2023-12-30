@@ -20,7 +20,7 @@ public class Ennemi extends Pokemon {
 
     private Map map;
     private int[][] roadMap = Map.roadMap.readableMap();
-    private int pas = 1;
+    private int pas = 2;
 
     private int[] pos;
 
@@ -99,31 +99,30 @@ public class Ennemi extends Pokemon {
         int[] spritePos = { (int) sprite.getLocation().getX() / cellSize,
                 (int) sprite.getLocation().getY() / cellSize };
 
-        if (spritePos[0] != getPos()[0]) {
+        if (spritePos[0] != getPos()[0] || spritePos[1] != getPos()[1]) {
             setPos(spritePos);
         }
 
         if (exit) {
             return true;
         }
-        // sprite.setLocation((int) sprite.getLocation().getX(), (int)
-        // sprite.getLocation().getY() + 1);
         sprite.setLocation((int) sprite.getLocation().getX() - 1, (int) sprite.getLocation().getY());
+        System.out.println(map.getConfig()[getPos()[1]][getPos()[0]]);
+        // sprite.setLocation((int) sprite.getLocation().getX() - 1, (int)
+        // sprite.getLocation().getY());
         // sprite.setLocation((int) sprite.getLocation().getX() + 1, (int)
         // sprite.getLocation().getY());
         // sprite.setLocation((int) sprite.getLocation().getX(), (int)
         // sprite.getLocation().getY() - 1);
 
+        // System.out.println("moving");
         return false;
     }
 
     public boolean move() {
         char direction = ' ';
-
         boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
-
         int nbMove = 0;
-
         if (getSpeed() == Speed.STUN) {
             nbMove = 0;
         } else if (getSpeed() == Speed.FAST) {
@@ -133,10 +132,8 @@ public class Ennemi extends Pokemon {
         } else {
             nbMove = 1;
         }
-
         for (int i = 0; i < nbMove; i++) {
             try {
-
                 if (exit) {
                     return true;
                 }
@@ -169,7 +166,6 @@ public class Ennemi extends Pokemon {
             } catch (Exception e) {
 
             }
-
         }
         return false;
     }
@@ -177,19 +173,15 @@ public class Ennemi extends Pokemon {
     private void keepDirection() {
         switch (prevDirection) {
             case 'b':
-
                 moveBot();
                 break;
             case 't':
-
                 moveTop();
                 break;
             case 'r':
-
                 moveRight();
                 break;
             case 'l':
-
                 moveLeft();
                 break;
         }
