@@ -5,6 +5,11 @@ import javax.swing.*;
 
 import model.MapState;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class GameScreen extends JPanel {
     private EnnemiPresent ePresent = new EnnemiPresent();
     private TowerPresent tPresent = new TowerPresent();
@@ -28,10 +33,10 @@ public class GameScreen extends JPanel {
         this.uMap = uMap;
 
         JPanel borderbot = maker.imagePanel("ressources/background/banner.png");
-        borderbot.setPreferredSize(new Dimension(0, 75));
+        borderbot.setPreferredSize(new Dimension(0, 52));
 
         JPanel bordertop = maker.imagePanel("ressources/background/banner.png");
-        bordertop.setPreferredSize(new Dimension(0, 75));
+        bordertop.setPreferredSize(new Dimension(0, 53));
 
         container.add(ePresent, BorderLayout.WEST);
         container.add(borderbot, BorderLayout.SOUTH);

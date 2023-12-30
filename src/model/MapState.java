@@ -6,6 +6,7 @@ import characters.Starter.Salameche;
 import control.Control;
 import control.ControlTerminal;
 import graphics.GameScreen;
+import graphics.UpdateMap;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MapState {
 
     public MapState(Difficulty difficulty, int mode) {
 
-        Map map = new Map(15, 25, difficulty);
+        Map map = new Map(18, 24, difficulty);
         try {
             InitPokemon.loadingChar();
         } catch (FileNotFoundException e) {
@@ -145,6 +146,7 @@ public class MapState {
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setMap(m);
+                screen.getuMap().setSpriteEntry(e);
                 e.setPos(m.getFrontEntry());
             }
         }
@@ -158,7 +160,7 @@ public class MapState {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(50);
                     } catch (InterruptedException e) {
                     }
                 }
@@ -166,21 +168,24 @@ public class MapState {
             task.run();
 
             // screen.getuMap().repaint();
+
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
             // System.out.println(ennemiPresent);
-            moveOnMap();
+            // m.affiche(ennemiPresent);
+            moveOnMapGraphic(screen.getuMap());
             loadNextWave();
+
             step = ennemiComing(step);
             step++;
 
             Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
+            for (Ennemi e : screen.getePresent().getEnnemiGone()) {
+                screen.getuMap().remove(e.getJLabelSprite());
+            }
         }
         sc.close();
-        for (Ennemi e : screen.getePresent().getEnnemiGone()) {
-            screen.getePresent().deleteEnnemiLabel(e);
-        }
     }
 
     private boolean gameContinue() {
@@ -197,11 +202,14 @@ public class MapState {
     }
 
     private int ennemiComing(int pas) {
-        if (pas == 2 && !wave.isEmpty() || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
+        if (!wave.isEmpty()) {
 
-            setEnnemi(m.getFrontEntry(), wave.get(0));
-            wave.remove(0);
-            return 0;
+            if (pas == 2 || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
+
+                setEnnemi(m.getFrontEntry(), wave.get(0));
+                wave.remove(0);
+                return 0;
+            }
         }
         return pas;
     }
@@ -210,6 +218,7 @@ public class MapState {
         Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+
             if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
@@ -224,6 +233,28 @@ public class MapState {
             pv--;
         }
 
+    }
+
+    private void moveOnMapGraphic(UpdateMap uMap) {
+        Ennemi escaped = null;
+        boolean leaked = false;
+        for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+            e.getJLabelSprite().setVisible(true);
+            if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
+                leaked = true;
+                escaped = e;
+            }
+        }
+
+        if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
+            ennemiPresent.remove(escaped);
+            if (screen != null) {
+                screen.getePresent().getEnnemiGone().add(escaped);
+            }
+            // screen.getuMap().remove(escaped.getJLabelSprite());
+            leaked = false;
+            pv--;
+        }
     }
 
     private void loadNextWave() {

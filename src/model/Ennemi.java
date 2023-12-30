@@ -4,6 +4,18 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import graphics.UpdateMap;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Ennemi extends Pokemon {
 
     private Map map;
@@ -79,9 +91,30 @@ public class Ennemi extends Pokemon {
         }
     }
 
-    public void moveGraphic(JLabel sprite) {
+    public boolean moveGraphic(JLabel sprite, UpdateMap uMap) {
+
+        boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
+        int cellSize = uMap.getCellSize();
+
+        int[] spritePos = { (int) sprite.getLocation().getX() / cellSize,
+                (int) sprite.getLocation().getY() / cellSize };
+
+        if (spritePos[0] != getPos()[0]) {
+            setPos(spritePos);
+        }
+
+        if (exit) {
+            return true;
+        }
+        // sprite.setLocation((int) sprite.getLocation().getX(), (int)
+        // sprite.getLocation().getY() + 1);
+        sprite.setLocation((int) sprite.getLocation().getX() - 1, (int) sprite.getLocation().getY());
         // sprite.setLocation((int) sprite.getLocation().getX() + 1, (int)
         // sprite.getLocation().getY());
+        // sprite.setLocation((int) sprite.getLocation().getX(), (int)
+        // sprite.getLocation().getY() - 1);
+
+        return false;
     }
 
     public boolean move() {
@@ -144,15 +177,19 @@ public class Ennemi extends Pokemon {
     private void keepDirection() {
         switch (prevDirection) {
             case 'b':
+
                 moveBot();
                 break;
             case 't':
+
                 moveTop();
                 break;
             case 'r':
+
                 moveRight();
                 break;
             case 'l':
+
                 moveLeft();
                 break;
         }

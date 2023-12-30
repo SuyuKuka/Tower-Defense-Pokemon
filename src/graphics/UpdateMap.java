@@ -27,21 +27,23 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class UpdateMap extends JPanel {
+public class UpdateMap extends JLayeredPane {
     private MapState state;
     private TowerPresent tPresent;
 
-    GraphicsMaker maker = new GraphicsMaker();
-    CardLayout card = new CardLayout();
-    JPanel gameMap;
-    Control control = new Control();
+    private GraphicsMaker maker = new GraphicsMaker();
+
+    private JPanel gameMap;
+
+    private int cellSize = 32;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
-
-        setLayout(new BorderLayout());
-        setOpaque(false);
-
+        JPanel mapLayer = new JPanel();
+        mapLayer.setLayout(new BorderLayout());
+        mapLayer.setOpaque(false);
+        setBounds(0, 0, 764, 531);
         gameMap = new JPanel();
+
         GridBagLayout gridConfiguration = new GridBagLayout();
         gameMap.setLayout(gridConfiguration);
         gameMap.setOpaque(false);
@@ -58,9 +60,9 @@ public class UpdateMap extends JPanel {
             for (int j = 0; j < mapWidth; j++) {
                 Tiles tiles;
                 if (map[i][j] == 3) {
-                    // File img = getPathTiles2(i, j);
+
                     tiles = new Tiles(new int[] { i, j });
-                    drawPathTiles(tiles, 35);
+                    drawPathTiles(tiles, cellSize);
 
                 } else if (map[i][j] == 4) {
                     tiles = new Tiles(new int[] { i, j });
@@ -72,11 +74,11 @@ public class UpdateMap extends JPanel {
 
                 } else if (map[i][j] == 9) {
                     tiles = new Tiles(new int[] { i, j });
-                    JLabel bg = maker.resizeJLabel("ressources/tiles/obstacle.png", 32);
+                    JLabel bg = maker.resizeJLabel("ressources/tiles/obstacle.png", cellSize);
                     GridBagConstraints constraints2 = new GridBagConstraints();
                     tiles.addSprite(bg, constraints2);
-
                     tiles.setOpaque(false);
+
                 } else {
                     tiles = new Tiles(new int[] { i, j });
                     tiles.setOpaque(false);
@@ -84,69 +86,32 @@ public class UpdateMap extends JPanel {
 
                 constraints.gridx = j;
                 constraints.gridy = i;
-                constraints.weightx = 1;
-                constraints.weighty = 1;
-                constraints.fill = GridBagConstraints.BOTH;
+
+                constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
                 gameMap.add(tiles, constraints);
-                // gameMap.add(new JLabel(new ImageIcon("ressources/sprite/magikarp.gif")),
-                // constraints);
+
+                mapLayer.setBounds(0, 0, mapWidth * cellSize, mapHeight * cellSize);
             }
         }
-        add(new JLabel(new ImageIcon("ressources/sprite/rondoudou.gif")), BorderLayout.CENTER);
-        add(gameMap, BorderLayout.CENTER);
+
+        mapLayer.add(gameMap, BorderLayout.CENTER);
         setVisible(true);
+        add(mapLayer, DEFAULT_LAYER);
 
     }
 
-    private void drawEnnemi(Graphics g, int i, int j, int scale) {
-
-        for (Ennemi e : state.getEnnemiPresent()) {
-
-            if (i == e.getPos()[0] && j == e.getPos()[1]) {
-
-                Tiles tiles = getTiles(new int[] { i, j });
-
-                GridBagConstraints constraints = new GridBagConstraints();
-                constraints.insets = new Insets(-20, -30, -20, -30);
-
-                tiles.revalidate();
-                g.setColor(getEnnemiColor(e));
-                // g.fillRect(j * scale, i * scale, scale, scale);
-            }
-        }
-    }
-
-    private Color getEnnemiColor(Ennemi e) {
-        if (e.isBoss()) {
-            return new Color(225, 225, 225); // Couleur boss
-        } else {
-            return new Color(225, 0, 0); // Couleur normal
-        }
-    }
-
-    public void initSprite(Ennemi e) {
+    public void setSpriteEntry(Ennemi e) {
 
         JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
         e.setJLabelSprite(sprite);
+        sprite.setBounds(0, 0, cellSize, cellSize);
+        sprite.setBorder(new LineBorder(Color.red));
+        sprite.setLocation(
+                new Point(state.getMap().getFrontEntry()[1] * cellSize, state.getMap().getFrontEntry()[0] * cellSize));
+        sprite.setVisible(false);
+        add(sprite, PALETTE_LAYER);
 
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        gameMap.add(sprite, constraints);
-
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        moveSprite();
-
-    }
-
-    private void moveSprite() {
-
-        for (Ennemi e : state.getEnnemiPresent()) {
-            e.moveGraphic(e.getJLabelSprite());
-        }
     }
 
     public Tiles getTiles(int[] pos) {
@@ -156,69 +121,6 @@ public class UpdateMap extends JPanel {
             }
         }
         return null;
-    }
-
-    public class Tiles extends JPanel {
-        private int[] pos;
-        public static ArrayList<Tiles> tilesList = new ArrayList<>();
-        private JLabel spriteOnIt;
-        JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        public Tiles(int[] pos) {
-            this.pos = pos;
-            tilesList.add(this);
-            setLayout(new GridBagLayout());
-            setMinimumSize(new Dimension(30, 30));
-            setBorder(new EmptyBorder(1, 1, 1, 1));
-
-            spriteOnIt = empty;
-            add(empty, constraints);
-
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent evt) {
-                    if (spriteOnIt == empty) {
-                        setBorder(new LineBorder(Color.RED, 1));
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent evt) {
-                    setBorder(new EmptyBorder(1, 1, 1, 1));
-                }
-
-                @Override
-                public void mouseClicked(MouseEvent evt) {
-                    Tower[] team = Player.INSTANCE.getTeam();
-
-                    control.setTowerOnMap(pos, tPresent, state, team);
-
-                    Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
-                    JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
-                    addSprite(sprite, constraints);
-
-                }
-            });
-        }
-
-        public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
-
-            if (spriteOnIt == empty) {
-                remove(spriteOnIt);
-                spriteOnIt = jlabel;
-                this.add(jlabel, constraints);
-                jlabel.getParent().revalidate();
-            }
-        }
-
-        public int[] getPos() {
-            return pos;
-        }
-
-        public JLabel getSpriteOnIt() {
-            return spriteOnIt;
-        }
     }
 
     private void drawPathTiles(Tiles tiles, int size) {
@@ -255,6 +157,86 @@ public class UpdateMap extends JPanel {
         GridBagConstraints constraints2 = new GridBagConstraints();
         tiles.addSprite(bg, constraints2);
         tiles.setOpaque(false);
+    }
+
+    public int getCellSize() {
+        return cellSize;
+    }
+
+    public class Tiles extends JPanel {
+        private int[] pos;
+        public static ArrayList<Tiles> tilesList = new ArrayList<>();
+        private JLabel spriteOnIt;
+        JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        public Tiles(int[] pos) {
+            this.pos = pos;
+            tilesList.add(this);
+            setLayout(new GridBagLayout());
+            setMinimumSize(new Dimension(cellSize, cellSize));
+            setBorder(new EmptyBorder(1, 1, 1, 1));
+
+            spriteOnIt = empty;
+            add(empty, constraints);
+
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent evt) {
+                    if (spriteOnIt == empty) {
+                        setBorder(new LineBorder(Color.RED, 1));
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent evt) {
+                    setBorder(new EmptyBorder(1, 1, 1, 1));
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent evt) {
+                    Tower[] team = Player.INSTANCE.getTeam();
+
+                    int row = pos[0];
+                    int col = pos[1];
+
+                    if (tPresent.getSelectedPokemon() != null) {
+                        if (!tPresent.getSelectedPokemon().isPlaced()) {
+                            //
+                            state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
+                            Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                            JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
+                            addSprite(sprite, constraints);
+
+                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
+                                tPresent.getSelectedPokemon().setPlaced(true);
+                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                            }
+
+                        }
+                    }
+
+                }
+            });
+        }
+
+        public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
+
+            if (spriteOnIt == empty) {
+                remove(spriteOnIt);
+                spriteOnIt = jlabel;
+                this.add(jlabel, constraints);
+                jlabel.getParent().revalidate();
+            }
+        }
+
+        public int[] getPos() {
+            return pos;
+        }
+
+        public JLabel getSpriteOnIt() {
+            return spriteOnIt;
+        }
     }
 
 }

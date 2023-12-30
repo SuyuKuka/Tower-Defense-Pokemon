@@ -137,21 +137,7 @@ public class Control {
     }
 
     public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
-        int row = pos[0];
-        int col = pos[1];
 
-        if (tPresent.getSelectedPokemon() != null) {
-            if (!tPresent.getSelectedPokemon().isPlaced()) {
-                //
-                state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
-
-                if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
-                    tPresent.getSelectedPokemon().setPlaced(true);
-                    tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
-                }
-
-            }
-        }
     }
 
 }

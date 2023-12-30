@@ -48,7 +48,7 @@ public class MainGraphics extends JFrame {
         });
 
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
-        setResizable(false);
+        // setResizable(false);
 
         setLocationRelativeTo(null);
         setTitle("PokeRevolute");

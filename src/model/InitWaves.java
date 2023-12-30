@@ -64,7 +64,7 @@ public class InitWaves {
         }
         // debug();
 
-        // test(wave);
+        test(wave);
 
     }
 
@@ -96,23 +96,26 @@ public class InitWaves {
         AllWaves.clear();
         wave.clear();
         wave.add(Ennemi.LIST.getList().get(0));
-        wave.add(Ennemi.LIST.getList().get(1));
-        wave.add(Ennemi.LIST.getList().get(2));
-        wave.add(Ennemi.LIST.getList().get(3));
-        wave.add(Ennemi.LIST.getList().get(4));
-        wave.add(Ennemi.LIST.getList().get(5));
-        wave.add(Ennemi.LIST.getList().get(6));
-        wave.add(Ennemi.LIST.getList().get(7));
-        wave.add(Ennemi.LIST.getList().get(8));
-        wave.add(Ennemi.LIST.getList().get(9));
-        wave.add(Ennemi.LIST.getList().get(10));
-        wave.add(Ennemi.LIST.getList().get(11));
-        wave.add(Ennemi.LIST.getList().get(12));
-        wave.add(Ennemi.LIST.getList().get(13));
-        wave.add(Ennemi.LIST.getList().get(14));
-        wave.add(Ennemi.LIST.getList().get(15));
-        wave.add(Ennemi.LIST.getList().get(16));
-        wave.add(Ennemi.LIST.getList().get(17));
+        /*
+         * 
+         * wave.add(Ennemi.LIST.getList().get(1));
+         * wave.add(Ennemi.LIST.getList().get(2));
+         * wave.add(Ennemi.LIST.getList().get(3));
+         * wave.add(Ennemi.LIST.getList().get(4));
+         * wave.add(Ennemi.LIST.getList().get(5));
+         * wave.add(Ennemi.LIST.getList().get(6));
+         * wave.add(Ennemi.LIST.getList().get(7));
+         * wave.add(Ennemi.LIST.getList().get(8));
+         * wave.add(Ennemi.LIST.getList().get(9));
+         * wave.add(Ennemi.LIST.getList().get(10));
+         * wave.add(Ennemi.LIST.getList().get(11));
+         * wave.add(Ennemi.LIST.getList().get(12));
+         * wave.add(Ennemi.LIST.getList().get(13));
+         * wave.add(Ennemi.LIST.getList().get(14));
+         * wave.add(Ennemi.LIST.getList().get(15));
+         * wave.add(Ennemi.LIST.getList().get(16));
+         * wave.add(Ennemi.LIST.getList().get(17));
+         */
         AllWaves.add(wave);
     }
 

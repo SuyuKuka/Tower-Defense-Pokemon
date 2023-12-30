@@ -58,11 +58,10 @@ public class Map {
 
         // PATHFINDING
         roadMap = new RoadMap();
+        System.out.println(this);
         unify();
 
-        // AJOUTE DES OBSTACLES
-        addObstacles();
-        deployObstacles();
+        System.out.println(roadMap.toString());
         for (int i = 0; i < tilesPathMap.length; i++) {
             for (int j = 0; j < tilesPathMap[0].length; j++) {
                 if (tilesPathMap[i][j] == null) {
@@ -86,6 +85,9 @@ public class Map {
             System.out.println();
         }
 
+        // AJOUTE DES OBSTACLES
+        addObstacles();
+        deployObstacles();
     }
 
     private void wayFinder() {
@@ -436,6 +438,10 @@ public class Map {
         return frontExit;
     }
 
+    public int[] getEntry() {
+        return entry;
+    }
+
     public int[] getExit() {
         return exit;
     }
@@ -616,7 +622,7 @@ public class Map {
                 tilesPathMap[x][y + i] = new Tiles(TilesType.H);
             }
             tilesPathMap[x][y] = new Tiles(TilesType.A);
-
+            taille = taille + 1;
         }
 
         private void makeASLoop() {
@@ -651,7 +657,7 @@ public class Map {
                 tilesPathMap[x][y - i] = new Tiles(TilesType.H);
             }
             tilesPathMap[x][y] = new Tiles(TilesType.Z);
-
+            taille = taille + 1;
         }
 
         private void makeAALoop() {
@@ -686,7 +692,7 @@ public class Map {
                 tilesPathMap[x + i][y] = new Tiles(TilesType.V);
             }
             tilesPathMap[x][y] = new Tiles(TilesType.Z);
-
+            taille = taille + 1;
         }
 
         private void makeAZLoop() {
@@ -721,7 +727,7 @@ public class Map {
                 tilesPathMap[x + i][y] = new Tiles(TilesType.V);
             }
             tilesPathMap[x][y] = new Tiles(TilesType.A);
-
+            taille = taille + 1;
         }
 
         public String toString() {
@@ -750,12 +756,12 @@ public class Map {
         private int[][] roadMap = new int[map.length][map[0].length];
 
         public RoadMap() {
-            int[] pos = getFrontEntry();
-            roadMap[getFrontEntry()[0]][getFrontEntry()[1]] = increment++;
+            int[] pos = getEntry();
+            roadMap[getEntry()[0]][getEntry()[1]] = increment++;
 
             while (!atEnd(pos)) {
 
-                // debug(pos);
+                debug(pos);
                 pos = straightBot(pos);
                 pos = straightLeft(pos);
                 pos = straightRight(pos);
