@@ -106,10 +106,10 @@ public class UpdateMap extends JLayeredPane {
         JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
 
         e.setJLabelSprite(sprite);
-        sprite.setBounds(cellSize / 2, cellSize / 2, cellSize, cellSize);
+        sprite.setBounds(0, 0, cellSize, cellSize);
         sprite.setBorder(new LineBorder(Color.red));
         sprite.setLocation(
-                new Point(state.getMap().getFrontEntry()[1] * cellSize, state.getMap().getFrontEntry()[0] * cellSize));
+                new Point(state.getMap().getEntry()[1] * cellSize, state.getMap().getEntry()[0] * cellSize));
         sprite.setVisible(false);
         add(sprite, PALETTE_LAYER);
 
@@ -126,7 +126,7 @@ public class UpdateMap extends JLayeredPane {
 
     private void drawPathTiles(Tiles tiles, int size) {
         JLabel bg;
-        model.Map.Tiles[][] tilesPathMap = state.getMap().getTilesPathMap();
+        model.Map.DirectionTiles[][] tilesPathMap = state.getMap().getDirMapWithCorner();
 
         switch (tilesPathMap[tiles.getPos()[0]][tiles.getPos()[1]].getType()) {
             case X:

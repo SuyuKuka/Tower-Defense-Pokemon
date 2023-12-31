@@ -146,8 +146,9 @@ public class MapState {
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setMap(m);
+                e.setTilesMap(m.getdirMap());
                 screen.getuMap().setSpriteEntry(e);
-                e.setPos(m.getFrontEntry());
+                e.setPos(m.getEntry());
             }
         }
 
@@ -162,7 +163,7 @@ public class MapState {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(5);
                     } catch (InterruptedException e) {
                     }
                 }
