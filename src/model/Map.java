@@ -5,6 +5,8 @@ import java.util.Random;
 
 import graphics.Classique;
 import model.InitWaves.Difficulty;
+import model.Map.DirectionTiles;
+
 import java.awt.Rectangle;
 
 //GENERE UNE MAP ALEATOIRE
@@ -73,8 +75,8 @@ public class Map {
         unify();
 
         // AJOUTE DES OBSTACLES
-        addObstacles();
-        deployObstacles();
+        // addObstacles();
+        // deployObstacles();
     }
 
     private void wayFinder() {
@@ -172,7 +174,11 @@ public class Map {
         if ((map[i - 1][j] == 3 || map[i - 1][j] == 4) && (map[i][j + 1] == 3 || map[i][j + 1] == 1)) {
             map[i][j] = 1;
             dirMap[i][j] = new DirectionTiles(TilesType.H, i, j);
-            cornerList.add(new Corner(new int[] { i, j }, true, true));
+            Corner c = new Corner(new int[] { i, j }, true, true);
+            if (map[i - 1][j] == 4) {
+                c.setLoopLocked(true);
+            }
+            cornerList.add(c);
         }
     }
 
@@ -180,7 +186,11 @@ public class Map {
         if ((map[i - 1][j] == 3 || map[i - 1][j] == 4) && (map[i][j - 1] == 3 || map[i][j - 1] == 1)) {
             map[i][j] = 1;
             dirMap[i][j] = new DirectionTiles(TilesType.H, i, j);
-            cornerList.add(new Corner(new int[] { i, j }, true, false));
+            Corner c = new Corner(new int[] { i, j }, true, false);
+            if (map[i - 1][j] == 4) {
+                c.setLoopLocked(true);
+            }
+            cornerList.add(c);
         }
     }
 
@@ -188,7 +198,12 @@ public class Map {
         if ((map[i + 1][j] == 3 || map[i + 1][j] == 5) && (map[i][j + 1] == 3 || map[i][j + 1] == 1)) {
             map[i][j] = 1;
             dirMap[i][j] = new DirectionTiles(TilesType.V, i, j);
-            cornerList.add(new Corner(new int[] { i, j }, false, true));
+
+            Corner c = new Corner(new int[] { i, j }, false, true);
+            if (map[i + 1][j] == 5) {
+                c.setLoopLocked(true);
+            }
+            cornerList.add(c);
         }
     }
 
@@ -196,7 +211,12 @@ public class Map {
         if ((map[i + 1][j] == 3 || map[i + 1][j] == 5) && (map[i][j - 1] == 3 || map[i][j - 1] == 1)) {
             map[i][j] = 1;
             dirMap[i][j] = new DirectionTiles(TilesType.V, i, j);
-            cornerList.add(new Corner(new int[] { i, j }, false, false));
+
+            Corner c = new Corner(new int[] { i, j }, false, false);
+            if (map[i + 1][j] == 5) {
+                c.setLoopLocked(true);
+            }
+            cornerList.add(c);
         }
     }
 
@@ -458,6 +478,7 @@ public class Map {
         private int taille = rand.nextInt(3) + 3;
 
         private boolean haveLoop = false;
+        private boolean loopLocked = false;
 
         public Corner(int[] pos, boolean top, boolean right) {
             this.pos = pos;
@@ -466,25 +487,33 @@ public class Map {
 
         }
 
+        public void setLoopLocked(boolean loopLocked) {
+            this.loopLocked = loopLocked;
+        }
+
         private void beALoop(int[][] map) {
+            if (map[pos[0]][pos[1] + 1] == 5 || map[pos[0]][pos[1] - 1] == 4) {
+                haveLoop = false;
+            } else {
 
-            if (enoughtSpace()) {
-                if (topOrientation && rightOrientation) {
-                    makeAQLoop();
-                    haveLoop = true;
+                if (enoughtSpace() && !loopLocked) {
+                    if (topOrientation && rightOrientation) {
+                        makeAQLoop();
+                        haveLoop = true;
 
-                } else if (topOrientation) {
-                    makeASLoop();
-                    haveLoop = true;
+                    } else if (topOrientation) {
+                        makeASLoop();
+                        haveLoop = true;
 
-                } else if (rightOrientation) {
-                    makeAALoop();
-                    haveLoop = true;
+                    } else if (rightOrientation) {
+                        makeAALoop();
+                        haveLoop = true;
 
-                } else {
-                    makeAZLoop();
-                    haveLoop = true;
+                    } else {
+                        makeAZLoop();
+                        haveLoop = true;
 
+                    }
                 }
             }
 
@@ -1024,6 +1053,10 @@ public class Map {
         public Rectangle getBox() {
             return box;
         }
+
+        public void setType(TilesType type) {
+            this.type = type;
+        }
     }
 
     private DirectionTiles[][] spriteTilesMap() {
@@ -1044,6 +1077,40 @@ public class Map {
             }
         }
         return withCorner;
+    }
+
+    public DirectionTiles[][] copyTiles(DirectionTiles[][] tilesMap) {
+        DirectionTiles[][] res = new DirectionTiles[tilesMap.length][tilesMap[0].length];
+        for (int i = 0; i < tilesMap.length; i++) {
+            for (int j = 0; j < tilesMap[0].length; j++) {
+                if (tilesMap[i][j] != null) {
+                    switch (tilesMap[i][j].getType()) {
+                        case X:
+                            res[i][j] = new DirectionTiles(TilesType.X, i, j);
+                            break;
+                        case H:
+                            res[i][j] = new DirectionTiles(TilesType.H, i, j);
+                            break;
+                        case V:
+                            res[i][j] = new DirectionTiles(TilesType.V, i, j);
+                            break;
+                        case A:
+                            res[i][j] = new DirectionTiles(TilesType.A, i, j);
+                            break;
+                        case Z:
+                            res[i][j] = new DirectionTiles(TilesType.Z, i, j);
+                            break;
+                        case Q:
+                            res[i][j] = new DirectionTiles(TilesType.Q, i, j);
+                            break;
+                        case S:
+                            res[i][j] = new DirectionTiles(TilesType.S, i, j);
+                            break;
+                    }
+                }
+            }
+        }
+        return res;
     }
 
     private void debugTilesMap() {

@@ -104,7 +104,6 @@ public class UpdateMap extends JLayeredPane {
     public void setSpriteEntry(Ennemi e) {
 
         JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
-
         e.setJLabelSprite(sprite);
         sprite.setBounds(0, 0, cellSize, cellSize);
         sprite.setBorder(new LineBorder(Color.red));

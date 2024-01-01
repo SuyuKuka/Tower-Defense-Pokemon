@@ -153,9 +153,8 @@ public class MapState {
         }
 
         int step = 0;
-        Timer timer = new Timer();
 
-        // m.affiche(ennemiPresent);
+        m.affiche(ennemiPresent);
 
         while (gameContinue() || endless) {
 
@@ -163,11 +162,12 @@ public class MapState {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(5);
+                        Thread.sleep(15);
                     } catch (InterruptedException e) {
                     }
                 }
             };
+
             task.run();
 
             // screen.getuMap().repaint();
@@ -207,7 +207,7 @@ public class MapState {
     private int ennemiComing(int pas) {
         if (!wave.isEmpty()) {
 
-            if (pas == 2 || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
+            if (pas == 200 || pas > limiteDeTemps * 100 && ennemiPresent.isEmpty()) {
 
                 setEnnemi(m.getFrontEntry(), wave.get(0));
                 wave.remove(0);
