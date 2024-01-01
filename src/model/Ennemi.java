@@ -4,21 +4,12 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import characters.Tylton;
 import graphics.UpdateMap;
-import graphics.UpdateMap.Tiles;
+
 import model.Map.DirectionTiles;
 import model.Map.TilesType;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Ennemi extends Pokemon {
 

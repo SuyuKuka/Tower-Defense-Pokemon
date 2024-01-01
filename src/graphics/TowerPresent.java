@@ -21,6 +21,7 @@ public class TowerPresent extends JPanel {
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
 
     public TowerPresent() {
+
         setLayout(new BorderLayout());
         bg.setOpaque(false);
         add(bg, BorderLayout.CENTER);
@@ -64,9 +65,14 @@ public class TowerPresent extends JPanel {
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 24f));
 
-        titlePanel.add(logoPokeball);
-        titlePanel.add(titleLabel);
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        JPanel title = new JPanel();
+        title.setOpaque(false);
+        title.add(logoPokeball);
+        title.add(titleLabel);
+        title.setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
+
+        titlePanel.add(title);
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         return titlePanel;
     }

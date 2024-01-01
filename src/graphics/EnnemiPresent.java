@@ -12,8 +12,10 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 import model.Ennemi;
-
+import javax.swing.border.*;
 import javax.swing.border.LineBorder;
+
+import control.Control;
 
 public class EnnemiPresent extends JPanel {
     private static GraphicsMaker maker = new GraphicsMaker();
@@ -39,6 +41,7 @@ public class EnnemiPresent extends JPanel {
         JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
         ennemiLabel.setOpaque(false);
         ennemiLabel.setForeground(Color.WHITE);
+        ennemiLabel.setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
         ennemiLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 26f));
 
         Box box = Box.createHorizontalBox();
@@ -80,6 +83,7 @@ public class EnnemiPresent extends JPanel {
 
     public void createEnnemiLabel(Ennemi e) {
         JPanel ennemiInfo = new JPanel(new GridBagLayout());
+
         ennemiInfo.setOpaque(false);
 
         JLabel profilPhoto = new JLabel(new ImageIcon(e.getSprite()));
