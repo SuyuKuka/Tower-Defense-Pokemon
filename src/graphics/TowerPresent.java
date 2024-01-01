@@ -1,17 +1,13 @@
 package graphics;
 
-import javax.swing.*;
-import javax.swing.border.MatteBorder;
-
-import control.TowerManagement;
 import model.Player;
 import model.Tower;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
+import javax.swing.border.MatteBorder;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -22,12 +18,21 @@ public class TowerPresent extends JPanel {
     private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
+    private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
 
     public TowerPresent() {
-        setPreferredSize(new Dimension(354, 1000)); // taille parfaite
-        setOpaque(false);
+        setLayout(new BorderLayout());
+        bg.setOpaque(false);
+        add(bg, BorderLayout.CENTER);
 
-        add(initiateTitle());
+        setPreferredSize(new Dimension(250, 0)); // taille parfaite
+        setOpaque(false);
+        GridLayout normalLayout = new GridLayout(8, 1);
+        normalLayout.setHgap(10);
+        normalLayout.setVgap(10);
+        bg.setLayout(normalLayout);
+
+        bg.add(initiateTitle());
 
         GridLayout heroLayout = new GridLayout(1, 2);
         heroLayout.setHgap(10);
@@ -39,30 +44,14 @@ public class TowerPresent extends JPanel {
         heroPanel.add(hero1);
         heroPanel.add(hero2);
 
-        add(heroPanel);
+        bg.add(heroPanel);
 
-        GridLayout normalLayout = new GridLayout(8, 1);
-        normalLayout.setHgap(10);
-        normalLayout.setVgap(10);
-        setLayout(normalLayout);
         for (int i = 0; i < team.length; i = i + 1) {
             try {
                 initiateTeam(team[i], i + 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        try {
-            g.drawImage(ImageIO.read(new File("ressources/team/towerside.png")), 0, 0, getWidth(), getHeight(), this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
@@ -84,7 +73,7 @@ public class TowerPresent extends JPanel {
 
     public void initiateTeam(Tower tower, int numero) throws IOException {
         TowerManagement pokemon = new TowerManagement(tower, numero);
-        add(pokemon);
+        bg.add(pokemon);
         pokemon.setEnabled(true);
         pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
 
@@ -96,7 +85,7 @@ public class TowerPresent extends JPanel {
                         if (selectedPokemon != null) {
                             selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
                         }
-                        pokemon.setBorder(new MatteBorder(2, 2, 2, 2, Color.RED));
+                        pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
                         selectedPokemon = pokemon;
                     } else {
                         pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "graphics.test",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
             "name": "SuperposedPanelsExample",
             "request": "launch",
             "mainClass": "graphics.SuperposedPanelsExample",

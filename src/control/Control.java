@@ -2,17 +2,51 @@ package control;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
-import main.Game;
+import graphics.GameScreen;
+import graphics.MainGraphics;
+import graphics.TowerPresent;
+import graphics.UpdateMap.Tiles;
 import model.Pokemon.State;
+import model.MapState;
 import model.Player;
 import model.Tower;
+import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
 
+import control.Control;
+
+import java.util.Scanner;
+
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import model.Ennemi;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+import model.Map.TilesType;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import javax.swing.border.*;
+
+import control.Control;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class Control {
+
     private Player user;
 
     public Control(Player p) {
@@ -23,7 +57,7 @@ public class Control {
 
     }
 
-    public void buttonPressed(JButton button, String st, Game main) {
+    public void buttonPressed(JButton button, String st, MainGraphics main) {
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
@@ -42,11 +76,42 @@ public class Control {
                 } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
-                main.changePanel(st);
+                changePanel(st, main);
             });
             timer.setRepeats(false);
             timer.start();
         });
+    }
+
+    public void changePanel(String buttonName, MainGraphics main) {
+        Timer timer = new Timer(1, e1 -> {
+            if (buttonName.equals("retour")) {
+                main.getCardLayout().show(main.getMainPanel(), "menu");
+            } else {
+                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+
+                    Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
+
+                    GameScreen screen = new GameScreen();
+                    MapState mState = new MapState(diff, 0);
+                    screen.setmState(mState);
+                    main.getMainPanel().add(screen, "gameScreen");
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            mState.startGraphic(screen);
+                            return null;
+                        }
+                    };
+                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
+                    worker.execute();
+                } else {
+                    main.getCardLayout().show(main.getMainPanel(), buttonName);
+                }
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public void switchPkm(Tower pkm) {
@@ -57,6 +122,22 @@ public class Control {
             user.getPc().add(pkm);
             user.removeTeam(pkm);
         }
+    }
+
+    public JPanel backButton(MainGraphics main) {
+        JPanel backPanel = new JPanel();
+        backPanel.setOpaque(false);
+
+        JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
+        buttonPressed(backButton, "retour", main);
+
+        backPanel.add(backButton);
+
+        return backPanel;
+    }
+
+    public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
+
     }
 
 }

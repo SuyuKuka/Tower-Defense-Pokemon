@@ -1,27 +1,25 @@
 package model;
 
+import model.InitWaves.Difficulty;
+import characters.Starter;
+import characters.Starter.Salameche;
+import control.Control;
+import control.ControlTerminal;
+import graphics.GameScreen;
+import graphics.UpdateMap;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
-import model.InitWaves.Difficulty;
-
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import characters.Starter;
-import characters.Starter.Salameche;
-import graphics.EnnemiPresent;
-import graphics.GameScreen;
-import graphics.GameScreen2;
-import graphics.UpdateMap;
 
 public class MapState {
 
     private Map m;
 
     private int[][] config;
-    private GameScreen2 screen;
+    private GameScreen screen;
 
     private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
@@ -32,8 +30,29 @@ public class MapState {
     private int pv = 3;
 
     private int limiteDeTemps = 30;
+    private Difficulty diff;
 
-    public MapState() {
+    private boolean endless;
+    private InitWaves w;
+
+    public MapState(Difficulty difficulty, int mode) {
+
+        Map map = new Map(18, 24, difficulty);
+        try {
+            InitPokemon.loadingChar();
+        } catch (FileNotFoundException e) {
+
+        }
+        InitWaves w = new InitWaves(difficulty);
+        endless = mode == 1;
+        if (!endless) {
+            allEnnemis = w.getAllEnnemis();
+        }
+
+        this.w = w;
+        diff = difficulty;
+        m = map;
+        config = m.getConfig();
 
     }
 
@@ -53,24 +72,12 @@ public class MapState {
     }
 
     public void startTerminal() throws FileNotFoundException {
-        Map map = new Map(20, 20, Difficulty.EASY);
-        m = map;
-        config = m.getConfig();
 
-        InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(Difficulty.HARD);
         Scanner sc = new Scanner(System.in);
 
         int nbTour = 6; // AJUSTABLE
 
         infoTerminal();
-
-        allEnnemis = w.getAllEnnemis();
-        for (ArrayList<Ennemi> eList : allEnnemis) {
-            for (Ennemi e : eList) {
-                e.setMap(m);
-            }
-        }
 
         // A METTRE DANS /control
         // Tower terminal = new Tower("Terminal", 1,1, null, null);
@@ -78,21 +85,31 @@ public class MapState {
         Salameche sala = starterInstance.new Salameche("Salameche", 10, 0, Types.FEU, Types.NONE);
 
         int step = 0;
-        while (gameContinue()) {
+        int increment = 1;
+        if (endless) {
+            allEnnemis.add(w.initEndless(increment++));
+        }
+
+        while (gameContinue() || endless) {
+            if (endless && allEnnemis.size() == 1) {
+                allEnnemis.add(w.initEndless(increment++));
+
+            }
+
+            for (ArrayList<Ennemi> eList : allEnnemis) {
+                for (Ennemi e : eList) {
+                    e.setMap(m);
+                }
+            }
 
             moveOnMap();
             loadNextWave();
             m.affiche(ennemiPresent);
-            System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            System.out.println("Ennemie en attente:" + wave.size());
-            System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            System.out.println("PV: " + pv);
-            System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+
+            info(step);
 
             step = ennemiComing(step);
             step++;
-
-
 
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
@@ -111,86 +128,91 @@ public class MapState {
         sc.close();
     }
 
-    public void startGraphic(GameScreen2 screen, String difficulty) throws FileNotFoundException {
+    private void info(int step) {
+        System.out.println("Vagues restantes: " + (allEnnemis.size()));
+        System.out.println("Ennemie en attente:" + wave.size());
+        System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
+        System.out.println("PV: " + pv);
+        System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+    }
 
-        Map map = new Map(20, 20, stringToDifficulty(difficulty));
-        m = map;
-        config = m.getConfig();
+    public void startGraphic(GameScreen screen) throws FileNotFoundException {
 
-        InitPokemon.loadingChar();
-        InitWaves w = new InitWaves(stringToDifficulty(difficulty));
-        Scanner sc = new Scanner(System.in);
         this.screen = screen;
 
-        int nbTour = 6; // AJUSTABLE
-
-        // infoTerminal();
+        Scanner sc = new Scanner(System.in);
 
         allEnnemis = w.getAllEnnemis();
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setMap(m);
+                e.setTilesMap(m.getdirMap());
+                screen.getuMap().setSpriteEntry(e);
+                e.setPos(m.getEntry());
             }
-
         }
 
         int step = 0;
-        Timer timer = new Timer();
-        while (gameContinue()) {
 
-            screen.repaint();
+        m.affiche(ennemiPresent);
+
+        while (gameContinue() || endless) {
+
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(15);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+
+            task.run();
+
+            // screen.getuMap().repaint();
 
             screen.getePresent().setEnnemiPresent(ennemiPresent);
 
-            moveOnMap();
-            loadNextWave();
+            // System.out.println(ennemiPresent);
             // m.affiche(ennemiPresent);
-            // System.out.println("Vagues restantes: " + (allEnnemis.size()));
-            // System.out.println("Ennemie en attente:" + wave.size());
-            // System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
-            // System.out.println("PV: " + pv);
-            // System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 -
-            // step));
+            moveOnMapGraphic(screen.getuMap());
+            loadNextWave();
 
             step = ennemiComing(step);
             step++;
 
             Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            };
-            task.run();
+
+            for (Ennemi e : screen.getePresent().getEnnemiGone()) {
+                screen.getuMap().remove(e.getJLabelSprite());
+            }
         }
         sc.close();
-        for (Ennemi e : screen.getePresent().getEnnemiGone()) {
-            screen.getePresent().deleteEnnemiLabel(e);
-        }
     }
 
     private boolean gameContinue() {
-        if (allEnnemis.isEmpty()) {
+        if (allEnnemis.isEmpty() && !endless) {
             System.out.println("VOUS AVEZ GAGNEE");
             return false;
         }
         if (pv == 0) {
             System.out.println("VOUS AVEZ PERDU");
+            endless = false;
             return false;
         }
         return true;
     }
 
     private int ennemiComing(int pas) {
-        if (pas == 2 && !wave.isEmpty() || pas > limiteDeTemps && ennemiPresent.isEmpty()) {
+        if (!wave.isEmpty()) {
 
-            setEnnemi(m.getFrontEntry(), wave.get(0));
-            wave.remove(0);
-            return 0;
+            if (pas == 200 || pas > limiteDeTemps * 100 && ennemiPresent.isEmpty()) {
+
+                setEnnemi(m.getFrontEntry(), wave.get(0));
+                wave.remove(0);
+                return 0;
+            }
         }
         return pas;
     }
@@ -199,20 +221,43 @@ public class MapState {
         Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-            if (e.move2()) { // SI LA PROCHAINE CASE EST LA SORTIS
+
+            if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
             }
         }
         if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
             ennemiPresent.remove(escaped);
-            if(screen!=null){
+            if (screen != null) {
                 screen.getePresent().getEnnemiGone().add(escaped);
             }
             leaked = false;
             pv--;
         }
 
+    }
+
+    private void moveOnMapGraphic(UpdateMap uMap) {
+        Ennemi escaped = null;
+        boolean leaked = false;
+        for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+            e.getJLabelSprite().setVisible(true);
+            if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
+                leaked = true;
+                escaped = e;
+            }
+        }
+
+        if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
+            ennemiPresent.remove(escaped);
+            if (screen != null) {
+                screen.getePresent().getEnnemiGone().add(escaped);
+            }
+            // screen.getuMap().remove(escaped.getJLabelSprite());
+            leaked = false;
+            pv--;
+        }
     }
 
     private void loadNextWave() {
@@ -255,7 +300,7 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
-        //System.out.println("DEAD:" + e);
+        // System.out.println("DEAD:" + e);
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
@@ -274,17 +319,8 @@ public class MapState {
         return m;
     }
 
-    public Difficulty stringToDifficulty(String difficulty) {
-        switch (difficulty) {
-            case "facile":
-                return Difficulty.EASY;
-            case "moyen":
-                return Difficulty.NORMAL;
-            case "difficile":
-                return Difficulty.HARD;
-            default:
-                return null;
-        }
+    public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
+        return allEnnemis;
     }
 
 }

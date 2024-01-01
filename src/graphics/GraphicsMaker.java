@@ -2,8 +2,16 @@ package graphics;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.swing.*;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import javax.swing.JPanel;
+
+import java.awt.*;
 
 public class GraphicsMaker {
 
@@ -23,6 +31,47 @@ public class GraphicsMaker {
 
     public Font getCustomFont() {
         return customFont;
+    }
+
+    public JPanel imagePanel(String path) {
+        BufferedImage backgroundImage = loadImage(path);
+        JPanel IPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
+            }
+        };
+
+        return IPanel;
+    }
+
+    public BufferedImage loadImage(String path) {
+        BufferedImage backgroundImage = null;
+        if (backgroundImage == null) {
+            File file = new File(path);
+            try {
+                backgroundImage = ImageIO.read(file);
+                if (backgroundImage == null) {
+                    backgroundImage = ImageIO.read(file);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return backgroundImage;
+    }
+
+    public JLabel resizeJLabel(String path, int size) {
+        BufferedImage resize = loadImage(path);
+        Image resized = resize.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+        JLabel res = new JLabel(new ImageIcon(resized));
+        res.setOpaque(false);
+        return res;
     }
 
 }

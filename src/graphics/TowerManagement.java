@@ -1,14 +1,9 @@
-package control;
+package graphics;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import graphics.GraphicsMaker;
 import model.Tower;
 
 public class TowerManagement extends JPanel {
@@ -53,15 +48,11 @@ public class TowerManagement extends JPanel {
 
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
-        try {
-            System.out.println(new File(pokemon.getSprite()).getAbsolutePath());
-            BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
-            Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-            JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
-            spritePanel.add(spriteLabel, BorderLayout.SOUTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        JLabel spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
+
+        spritePanel.add(spriteLabel, BorderLayout.SOUTH);
+
         spritePanel.setBorder(BorderFactory.createEmptyBorder(5, 28, 0, 0));
         return spritePanel;
     }
