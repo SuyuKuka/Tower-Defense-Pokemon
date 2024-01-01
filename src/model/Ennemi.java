@@ -133,16 +133,16 @@ public class Ennemi extends Pokemon {
             takeLoop(spritePos, tileLocation);
         }
 
-        if (incrementY == 1) {
+        if (incrementY == numericSpeed) {
             sprite.setIcon(new ImageIcon(getSprite()));
         }
-        if (incrementY == -1) {
+        if (incrementY == -numericSpeed) {
             sprite.setIcon(new ImageIcon(getSprite().substring(0, getSprite().length() - 4) + "T.gif"));
         }
-        if (incrementX == 1) {
+        if (incrementX == numericSpeed) {
             sprite.setIcon(new ImageIcon(getSprite().substring(0, getSprite().length() - 4) + "D.gif"));
         }
-        if (incrementX == -1) {
+        if (incrementX == -numericSpeed) {
             sprite.setIcon(new ImageIcon(getSprite().substring(0, getSprite().length() - 4) + "G.gif"));
         }
 

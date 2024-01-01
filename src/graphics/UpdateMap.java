@@ -106,7 +106,6 @@ public class UpdateMap extends JLayeredPane {
         JLabel sprite = new JLabel(new ImageIcon(e.getSprite()));
         e.setJLabelSprite(sprite);
         sprite.setBounds(0, 0, cellSize, cellSize);
-        sprite.setBorder(new LineBorder(Color.red));
         sprite.setLocation(
                 new Point(state.getMap().getEntry()[1] * cellSize, state.getMap().getEntry()[0] * cellSize));
         sprite.setVisible(false);

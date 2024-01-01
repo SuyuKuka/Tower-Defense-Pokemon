@@ -75,8 +75,8 @@ public class Map {
         unify();
 
         // AJOUTE DES OBSTACLES
-        // addObstacles();
-        // deployObstacles();
+        addObstacles();
+        deployObstacles();
     }
 
     private void wayFinder() {

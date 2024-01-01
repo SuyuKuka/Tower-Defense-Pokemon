@@ -84,7 +84,7 @@ public class EnnemiPresent extends JPanel {
 
         JLabel profilPhoto = new JLabel(new ImageIcon(e.getSprite()));
         profilPhoto.setOpaque(false);
-        profilPhoto.setPreferredSize(new Dimension(50, 50));
+        profilPhoto.setPreferredSize(new Dimension(40, 40));
 
         JLabel nameLabel = new JLabel(e.getName());
         nameLabel.setOpaque(false);
@@ -104,7 +104,7 @@ public class EnnemiPresent extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 2;
-        gbc.ipadx = 10;
+        gbc.ipadx = 5;
         ennemiInfo.add(profilPhoto, gbc);
 
         gbc.gridx = 1;

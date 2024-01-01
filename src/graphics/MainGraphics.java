@@ -40,15 +40,8 @@ public class MainGraphics extends JFrame {
         // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
         // "POKEMONGOOOOO"));
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-
-            }
-        });
-
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
-        // setResizable(false);
+        setResizable(false);
 
         setLocationRelativeTo(null);
         setTitle("PokeRevolute");
