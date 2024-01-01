@@ -13,10 +13,13 @@ import java.awt.event.ComponentEvent;
 public class GameScreen extends JPanel {
     private EnnemiPresent ePresent = new EnnemiPresent();
     private TowerPresent tPresent = new TowerPresent();
+    private InGameMenu inGameButton;
+    private InGameMenu inGameInfo;
+
     private UpdateMap uMap;
     private GraphicsMaker maker = new GraphicsMaker();
 
-    private JPanel container = maker.imagePanel("ressources/tiles/grass.png");// TODO REFAIRE COLLAGE
+    private JPanel container = maker.imagePanel("ressources/tiles/grass.png");
 
     public GameScreen() {
 
@@ -32,15 +35,12 @@ public class GameScreen extends JPanel {
         UpdateMap uMap = new UpdateMap(mState, tPresent);
         this.uMap = uMap;
 
-        JPanel borderbot = maker.imagePanel("ressources/background/banner.png");
-        borderbot.setPreferredSize(new Dimension(0, 52));
-
-        JPanel bordertop = maker.imagePanel("ressources/background/banner.png");
-        bordertop.setPreferredSize(new Dimension(0, 53));
+        inGameButton = new InGameMenu(true, mState);
+        inGameInfo = new InGameMenu(false, mState);
 
         container.add(ePresent, BorderLayout.WEST);
-        container.add(borderbot, BorderLayout.SOUTH);
-        container.add(bordertop, BorderLayout.NORTH);
+        container.add(inGameInfo, BorderLayout.SOUTH);
+        container.add(inGameButton, BorderLayout.NORTH);
         container.add(uMap, BorderLayout.CENTER);
         container.add(tPresent, BorderLayout.EAST);
 
@@ -53,6 +53,10 @@ public class GameScreen extends JPanel {
 
     public UpdateMap getuMap() {
         return uMap;
+    }
+
+    public InGameMenu getInGameInfo() {
+        return inGameInfo;
     }
 
 }

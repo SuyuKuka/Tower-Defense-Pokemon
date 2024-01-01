@@ -13,19 +13,8 @@ import model.Ennemi;
 import model.MapState;
 import model.Player;
 import model.Tower;
-import model.Map.TilesType;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 import javax.swing.border.*;
-
-import control.Control;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class UpdateMap extends JLayeredPane {
     private MapState state;

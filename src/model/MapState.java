@@ -28,8 +28,11 @@ public class MapState {
     private ArrayList<Ennemi> wave = new ArrayList<>();
 
     private int pv = 3;
-
     private int limiteDeTemps = 30;
+    private int gameSpeed = 15; // GRAPHIC ONLY
+    private boolean pause = false;
+    private long money = 0;
+
     private Difficulty diff;
 
     private boolean endless;
@@ -154,7 +157,7 @@ public class MapState {
 
         int step = 0;
 
-        m.affiche(ennemiPresent);
+        // m.affiche(ennemiPresent);
 
         while (gameContinue() || endless) {
 
@@ -162,26 +165,25 @@ public class MapState {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(15);
+                        Thread.sleep(gameSpeed);
                     } catch (InterruptedException e) {
                     }
                 }
             };
-
             task.run();
 
-            // screen.getuMap().repaint();
+            while (pause) {
+                task.run();
+            }
 
-            screen.getePresent().setEnnemiPresent(ennemiPresent);
+            money++;
+            UpdateGraphic();
 
-            // System.out.println(ennemiPresent);
-            // m.affiche(ennemiPresent);
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
 
             step = ennemiComing(step);
             step++;
-
             Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -189,6 +191,7 @@ public class MapState {
             }
         }
         sc.close();
+        UpdateGraphic();
     }
 
     private boolean gameContinue() {
@@ -254,9 +257,9 @@ public class MapState {
             if (screen != null) {
                 screen.getePresent().getEnnemiGone().add(escaped);
             }
-            // screen.getuMap().remove(escaped.getJLabelSprite());
             leaked = false;
             pv--;
+            screen.getuMap().repaint();
         }
     }
 
@@ -307,6 +310,11 @@ public class MapState {
         }
     }
 
+    public void UpdateGraphic() {
+        screen.getePresent().setEnnemiPresent(ennemiPresent);
+        screen.getInGameInfo().UpdateInfo();
+    }
+
     public ArrayList<Ennemi> getEnnemiPresent() {
         return ennemiPresent;
     }
@@ -321,6 +329,30 @@ public class MapState {
 
     public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
         return allEnnemis;
+    }
+
+    public void setGameSpeed(int gameSpeed) {
+        this.gameSpeed = gameSpeed;
+    }
+
+    public int getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
+    public boolean getPause() {
+        return pause;
+    }
+
+    public long getMoney() {
+        return money;
+    }
+
+    public int getPv() {
+        return pv;
     }
 
 }

@@ -9,7 +9,6 @@ import javax.swing.Timer;
 import graphics.GameScreen;
 import graphics.MainGraphics;
 import graphics.TowerPresent;
-import graphics.UpdateMap.Tiles;
 import model.Pokemon.State;
 import model.MapState;
 import model.Player;
@@ -18,42 +17,37 @@ import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
 
-import control.Control;
-
-import java.util.Scanner;
-
-import java.util.ArrayList;
-
-import javax.swing.*;
-
-import model.Ennemi;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
-import model.Map.TilesType;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
-import javax.swing.border.*;
-
-import control.Control;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 public class Control {
 
     private Player user;
+    private MapState ms;
 
     public Control(Player p) {
         user = p;
     }
 
+    public Control(MapState ms) {
+        this.ms = ms;
+    }
+
     public Control() {
+
+    }
+
+    public void gamePause() {
+        if (ms.getPause() == true) {
+            ms.setPause(false);
+        } else {
+            ms.setPause(true);
+        }
+    }
+
+    public void gameDoubleSpeed() {
+        if (ms.getGameSpeed() == 15) {
+            ms.setGameSpeed(5);
+        } else if (ms.getGameSpeed() == 7) {
+            ms.setGameSpeed(15);
+        }
 
     }
 
