@@ -4,17 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 
 import model.MapState;
-
 import control.Control;
-import control.ControlTerminal;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.concurrent.Flow;
-
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 public class InGameMenu extends JPanel {
 
@@ -25,6 +18,7 @@ public class InGameMenu extends JPanel {
     private JLabel pv;
     private JLabel money;
     private JLabel compteur;
+    private JLabel waveTimer;
 
     public InGameMenu(boolean topPanel, MapState ms) {
 
@@ -50,7 +44,7 @@ public class InGameMenu extends JPanel {
     }
 
     public JPanel createTopPanel() {
-
+        // LES BOUTONS
         JButton speed = new JButton();
         speed.setPreferredSize(new Dimension(42, 42));
         speed.addMouseListener(new MouseAdapter() {
@@ -75,8 +69,8 @@ public class InGameMenu extends JPanel {
         buttonsPanel.add(pause);
         buttonsPanel.setOpaque(false);
 
+        // COMPTER DE WAVE
         compteur = new JLabel();
-
         compteur.setFont(maker.getCustomFont().deriveFont(30f));
         compteur.setForeground(Color.WHITE);
 
@@ -85,11 +79,29 @@ public class InGameMenu extends JPanel {
         nbWave.setOpaque(false);
         nbWave.add(compteur, BorderLayout.CENTER);
 
+        // TIMER DE VAGUE
+        JLabel timerName = new JLabel();
+        timerName.setText("Prochaine vague dans: ");
+        timerName.setFont(maker.getCustomFont().deriveFont(30f));
+        timerName.setForeground(Color.WHITE);
+
+        waveTimer = new JLabel();
+        waveTimer.setFont(maker.getCustomFont().deriveFont(30f));
+        waveTimer.setForeground(Color.WHITE);
+
+        JPanel timer = new JPanel();
+        timer.setLayout(new BorderLayout());
+        timer.setOpaque(false);
+        timer.add(waveTimer, BorderLayout.CENTER);
+        timer.add(timerName, BorderLayout.WEST);
+
+        // PANEL QUI RETIENT TOUT
         JPanel display = new JPanel();
-        display.setLayout(new BorderLayout());
+        display.setLayout(new GridLayout(1, 3));
         display.setOpaque(false);
 
-        display.add(nbWave, BorderLayout.WEST);
+        display.add(nbWave, BorderLayout.CENTER);
+        display.add(timer, BorderLayout.WEST);
         display.add(buttonsPanel, BorderLayout.EAST);
 
         return display;
@@ -144,11 +156,18 @@ public class InGameMenu extends JPanel {
 
     public void UpdateInfo() {
         pv.setText(ms.getPv() + "");
-        money.setText(ms.getMoney() + "");
+        money.setText((int) ms.getMoney() + "");
+
     }
 
-    public void updateNbWave() {
-        compteur.setText("Vagues restants: " + ms.getAllEnnemis().size());
+    public void updateButton(int pas, int limiteDeTemps) {
+        compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+
+        if (pas >= limiteDeTemps * 100) {
+            pas = limiteDeTemps * 100;
+        }
+        waveTimer.setText(pas + "/" + limiteDeTemps * 100);
+
     }
 
 }

@@ -3,9 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import graphics.Classique;
 import model.InitWaves.Difficulty;
-import model.Map.DirectionTiles;
 
 import java.awt.Rectangle;
 
@@ -52,13 +50,10 @@ public class Map {
         wayFinder();
         wayBuilderV();
         wayBuilderH();
-        if (getFrontEntry()[1] + 1 != 3 && getFrontEntry()[1] - 1 != 3
-                && dirMap[getFrontEntry()[0]][getFrontEntry()[1]].getType() == TilesType.H) {
-            dirMap[getFrontEntry()[0]][getFrontEntry()[1]] = new DirectionTiles(TilesType.V, getFrontEntry()[0],
-                    getFrontEntry()[1]);
-        }
+
         dirMap[getEntry()[0]][getEntry()[1]] = new DirectionTiles(TilesType.V, getEntry()[0], getEntry()[1]);
         dirMap[getExit()[0]][getExit()[1]] = new DirectionTiles(TilesType.V, getExit()[0], getExit()[1]);
+        dirMap[getFrontEntry()[0]][getFrontEntry()[1]] = new DirectionTiles(TilesType.V, getEntry()[0], getEntry()[1]);
         // AJOUTE DES LOOPING
         findCorner();
         makeLoop();

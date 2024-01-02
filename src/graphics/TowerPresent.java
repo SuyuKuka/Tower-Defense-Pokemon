@@ -8,9 +8,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
-import java.io.File;
+
 import java.io.IOException;
-import javax.imageio.ImageIO;
+
 import javax.swing.border.EmptyBorder;
 
 public class TowerPresent extends JPanel {

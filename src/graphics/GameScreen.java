@@ -5,11 +5,6 @@ import javax.swing.*;
 
 import model.MapState;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 public class GameScreen extends JPanel {
     private EnnemiPresent ePresent = new EnnemiPresent();
     private TowerPresent tPresent = new TowerPresent();

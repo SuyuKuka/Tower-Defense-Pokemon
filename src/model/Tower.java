@@ -71,30 +71,29 @@ public class Tower extends Pokemon {
         try {
             String alphaPart = st.replaceAll("[^A-Za-z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
-    
+
             int posX;
             int posY;
-    
+
             if (!st.matches("[A-Za-z]+\\d+")) {
                 posX = -1;
             } else {
                 posX = alphaPart.toUpperCase().charAt(0) - 'A';
             }
-    
+
             if (!numPart.isEmpty()) {
                 posY = Integer.parseInt(numPart) - 1;
             } else {
                 posY = -1;
             }
-    
-            int[] tab = {posY, posX};
+
+            int[] tab = { posY, posX };
             return tab;
         } catch (Exception e) {
-            int[] tab = {-1, -1};
+            int[] tab = { -1, -1 };
             return tab;
         }
     }
-    
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
@@ -107,7 +106,7 @@ public class Tower extends Pokemon {
                         m.isDead(tower.uniqueTarget);
                         tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
-                        tower.uniqueTarget=null;
+                        tower.uniqueTarget = null;
                     }
                 }
             } else {
@@ -130,11 +129,11 @@ public class Tower extends Pokemon {
 
     private void attackUnique() {
         if (uniqueTarget == null) {
-            //System.out.println("Pas de cible");
+            // System.out.println("Pas de cible");
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunisé");
+                    // System.out.println("Immunisé");
                 } else {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                             * Types.typeChart(skills[select], uniqueTarget);
@@ -152,11 +151,12 @@ public class Tower extends Pokemon {
                     }
                     // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a infligé " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // getName() + " a infligé " + physical + "pv, il lui reste " +
+                    // uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunisé");
+                    // System.out.println("Immunisé");
                 } else {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Types.typeChart(skills[select], uniqueTarget));
@@ -174,7 +174,8 @@ public class Tower extends Pokemon {
                     }
                     // System.out.println(getName() + " a attaqué " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a infligé " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // getName() + " a infligé " + special + "pv, il lui reste " +
+                    // uniqueTarget.getPv() + "pv");
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -188,7 +189,7 @@ public class Tower extends Pokemon {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunisé");
+                        // System.out.println("Immunisé");
                     } else {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                                 * Types.typeChart(skills[select], e);
@@ -206,11 +207,12 @@ public class Tower extends Pokemon {
                         }
                         // System.out.println(getName() + " a attaqué " + e.getName());
                         // System.out
-                        //         .println(getName() + " a infligé " + physical + "pv, il lui reste " + e.getPv() + "pv");
+                        // .println(getName() + " a infligé " + physical + "pv, il lui reste " +
+                        // e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunisé");
+                        // System.out.println("Immunisé");
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
@@ -228,7 +230,8 @@ public class Tower extends Pokemon {
                         }
                         // System.out.println(getName() + " a attaqué " + e.getName());
                         // System.out
-                        //         .println(getName() + " a infligé " + special + "pv, il lui reste " + e.getPv() + "pv");
+                        // .println(getName() + " a infligé " + special + "pv, il lui reste " +
+                        // e.getPv() + "pv");
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
@@ -337,7 +340,6 @@ public class Tower extends Pokemon {
             }
         }
     }
-    
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {

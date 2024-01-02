@@ -43,10 +43,10 @@ public class Control {
     }
 
     public void gameDoubleSpeed() {
-        if (ms.getGameSpeed() == 15) {
+        if (ms.getGameSpeed() == 20) {
             ms.setGameSpeed(5);
-        } else if (ms.getGameSpeed() == 7) {
-            ms.setGameSpeed(15);
+        } else if (ms.getGameSpeed() == 5) {
+            ms.setGameSpeed(20);
         }
 
     }

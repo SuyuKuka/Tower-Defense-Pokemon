@@ -1,6 +1,5 @@
 package characters;
 
-import model.Effect;
 import model.Skill;
 import model.Tower;
 import model.Types;

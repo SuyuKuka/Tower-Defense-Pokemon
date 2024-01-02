@@ -5,7 +5,6 @@ import model.Tower;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 
 import control.Control;
 import java.awt.*;
@@ -17,10 +16,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MainMenu extends JPanel {
 
