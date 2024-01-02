@@ -32,6 +32,7 @@ public class MapState {
     private int gameSpeed = 15; // GRAPHIC ONLY
     private boolean pause = false;
     private long money = 0;
+    private int nbTotalWave;
 
     private Difficulty diff;
 
@@ -156,7 +157,7 @@ public class MapState {
         }
 
         int step = 0;
-
+        nbTotalWave = allEnnemis.size();
         // m.affiche(ennemiPresent);
 
         while (gameContinue() || endless) {
@@ -266,6 +267,7 @@ public class MapState {
     private void loadNextWave() {
         if (wave.isEmpty() && ennemiPresent.isEmpty()) {
             allEnnemis.remove(wave);
+            screen.getInGameButton().updateNbWave();
         }
         if (!allEnnemis.isEmpty()) {
             wave = allEnnemis.get(0);
@@ -353,6 +355,10 @@ public class MapState {
 
     public int getPv() {
         return pv;
+    }
+
+    public int getNbTotalWave() {
+        return nbTotalWave;
     }
 
 }

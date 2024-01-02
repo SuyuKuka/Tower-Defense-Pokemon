@@ -59,4 +59,8 @@ public class GameScreen extends JPanel {
         return inGameInfo;
     }
 
+    public InGameMenu getInGameButton() {
+        return inGameButton;
+    }
+
 }

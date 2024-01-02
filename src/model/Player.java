@@ -32,9 +32,9 @@ public class Player {
         obtainedPokemon = new ArrayList<>();
         pc = new ArrayList<>();
         Starter starterInstance = new Starter();
-        Salameche sala = starterInstance.new Salameche("Salameche", 10, 40, Types.FEU, Types.NONE);
+        Salameche sala = starterInstance.new Salameche("Salameche", 10000000, 40, Types.FEU, Types.NONE);
         team[0] = sala;
-        team[1] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[1] = sala;
         team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);

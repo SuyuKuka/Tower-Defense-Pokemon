@@ -6,6 +6,8 @@ import javax.swing.*;
 import model.MapState;
 
 import control.Control;
+import control.ControlTerminal;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,9 +24,7 @@ public class InGameMenu extends JPanel {
     private MapState ms;
     private JLabel pv;
     private JLabel money;
-
-    private JPanel buttonsPanel;
-    private JPanel info;
+    private JLabel compteur;
 
     public InGameMenu(boolean topPanel, MapState ms) {
 
@@ -40,16 +40,17 @@ public class InGameMenu extends JPanel {
         bg.setLayout(new BorderLayout());
 
         if (topPanel) {
-            buttonsPanel = createTopPanel();
-            bg.add(buttonsPanel, BorderLayout.EAST);
+            JPanel buttonsPanel = createTopPanel();
+            bg.add(buttonsPanel, BorderLayout.CENTER);
         } else {
-            info = createBotPanel();
+            JPanel info = createBotPanel();
             bg.add(info, BorderLayout.CENTER);
         }
         setVisible(true);
     }
 
     public JPanel createTopPanel() {
+
         JButton speed = new JButton();
         speed.setPreferredSize(new Dimension(42, 42));
         speed.addMouseListener(new MouseAdapter() {
@@ -74,11 +75,28 @@ public class InGameMenu extends JPanel {
         buttonsPanel.add(pause);
         buttonsPanel.setOpaque(false);
 
-        return buttonsPanel;
+        compteur = new JLabel();
+
+        compteur.setFont(maker.getCustomFont().deriveFont(30f));
+        compteur.setForeground(Color.WHITE);
+
+        JPanel nbWave = new JPanel();
+        nbWave.setLayout(new BorderLayout());
+        nbWave.setOpaque(false);
+        nbWave.add(compteur, BorderLayout.CENTER);
+
+        JPanel display = new JPanel();
+        display.setLayout(new BorderLayout());
+        display.setOpaque(false);
+
+        display.add(nbWave, BorderLayout.WEST);
+        display.add(buttonsPanel, BorderLayout.EAST);
+
+        return display;
     }
 
     public JPanel createBotPanel() {
-
+        // LA VIE
         JPanel heartIcon = maker.imagePanel("ressources/template/heart.png");
         heartIcon.setOpaque(false);
         heartIcon.setPreferredSize(new Dimension(42, 42));
@@ -96,6 +114,7 @@ public class InGameMenu extends JPanel {
         lifePanel.add(heartIcon);
         lifePanel.add(pv);
 
+        // L'ARGENT
         JPanel moneyIcon = maker.imagePanel("ressources/template/baie.png");
         moneyIcon.setOpaque(false);
         moneyIcon.setPreferredSize(new Dimension(42, 42));
@@ -112,32 +131,24 @@ public class InGameMenu extends JPanel {
         moneyPanel.add(moneyIcon);
         moneyPanel.add(money);
 
-        JPanel test = new JPanel();
-        test.setOpaque(false);
-
         JPanel info = new JPanel();
         info.setLayout(new BorderLayout());
         info.add(moneyPanel, BorderLayout.WEST);
         info.add(lifePanel, BorderLayout.EAST);
-        info.add(test, BorderLayout.CENTER);
+
         info.setOpaque(false);
 
         return info;
 
     }
 
-    public JPanel getInfo() {
-        return info;
-    }
-
     public void UpdateInfo() {
-
-        money.setText(ms.getMoney() + "");
         pv.setText(ms.getPv() + "");
+        money.setText(ms.getMoney() + "");
     }
 
-    public JPanel getButtonsPanel() {
-        return buttonsPanel;
+    public void updateNbWave() {
+        compteur.setText("Vagues restants: " + ms.getAllEnnemis().size());
     }
 
 }

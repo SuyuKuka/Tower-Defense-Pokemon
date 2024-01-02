@@ -69,7 +69,7 @@ public class Map {
         // debug
         // System.out.println(this);
         // System.out.println(roadMap.toString());
-        debugTilesMap();
+        // debugTilesMap();
         dirMapWithCorner = spriteTilesMap();
 
         unify();
