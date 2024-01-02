@@ -13,8 +13,7 @@ import control.ControlTerminal;
 public class Game {
 
     public Game() {
-        Player p = new Player();
-        MainGraphics graph = new MainGraphics(p, this);
+        MainGraphics graph = new MainGraphics(Player.INSTANCE, this);
     }
 
     public static void main(String[] args) throws FileNotFoundException {

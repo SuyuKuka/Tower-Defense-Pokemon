@@ -28,8 +28,6 @@ public class Player {
     private File file = new File("ressources/config/data.csv");
 
     public Player() {
-        hero[0]=new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-        hero[1]=new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         if(createData()){
             this.pseudo = "Joueur";
             money = 1000;
