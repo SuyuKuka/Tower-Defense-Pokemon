@@ -14,7 +14,7 @@ public class Pokemon {
     private double totalPv;
     private double pv; // pv
     private double physical; // tour -> atk physical, bad -> def physique
-    private double special; // tour -> atk spécial, bad -> def special
+    private double special; // tour -> atk special, bad -> def special
     private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
     private Types[] type = new Types[2];
     private int lvl; // TODO+COMPETENCE

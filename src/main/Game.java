@@ -1,15 +1,12 @@
 package main;
 
-import graphics.MainGraphics;
-import model.Ennemi;
-import model.InitPokemon;
-import model.InitWaves;
-import model.Map;
-import model.MapState;
-import model.Player;
-import model.InitWaves.Difficulty;
+import graphics.*;
+import model.*;
+
 
 import java.io.FileNotFoundException;
+
+import javax.swing.SwingUtilities;
 
 import control.ControlTerminal;
 
@@ -18,7 +15,6 @@ public class Game {
     public Game() {
         Player p = new Player();
         MainGraphics graph = new MainGraphics(p, this);
-
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -30,9 +26,13 @@ public class Game {
             terminalControl.initTerminal();
 
         } else {
-
-            Game game = new Game();
-
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run(){
+                    Game game = new Game();
+                }
+            });
+            
+            
         }
 
     }
