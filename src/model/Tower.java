@@ -4,7 +4,25 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
+import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
+import characters.Ningale;
+import characters.Nodulithe;
+import characters.Obalie;
+import characters.Rozbouton;
+import characters.Starter;
+import characters.Tarsal;
+import characters.Terhal;
+import characters.Tylton;
 import graphics.EnnemiPresent;
+import graphics.UpdateMap;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +33,29 @@ public class Tower extends Pokemon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
+    // ref vers tout les this
+    /*
+     * 
+     * private Starter starter;
+     * private Anchwatt anchwatt;
+     * private Chartor chartor;
+     * private Ecrapince ecrapince;
+     * private Escargaume escargaume;
+     * private Gringolem gringolem;
+     * private Lilia lilia;
+     * private Makuhita makuhita;
+     * private MotismaFroid motismaFroid;
+     * private Mysdibule mysdibule;
+     * private Ningale ningale;
+     * private Nodulithe nodulithe;
+     * private Obalie obalie;
+     * private Rozbouton rozbouton;
+     * private Tarsal tarsal;
+     * private Terhal terhal;
+     * private Tylton tylton;
+     */
+    //
+    private UpdateMap.Tiles tiles;
     private Rayon rayon;
     private double exp;
     private Ennemi uniqueTarget;
@@ -132,7 +173,7 @@ public class Tower extends Pokemon {
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunise");
+                    // System.out.println("Immunise");
                 } else {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                             * Types.typeChart(skills[select], uniqueTarget);
@@ -150,11 +191,12 @@ public class Tower extends Pokemon {
                     }
                     // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a inflige " + physical + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // getName() + " a inflige " + physical + "pv, il lui reste " +
+                    // uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    //System.out.println("Immunise");
+                    // System.out.println("Immunise");
                 } else {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Types.typeChart(skills[select], uniqueTarget));
@@ -172,7 +214,8 @@ public class Tower extends Pokemon {
                     }
                     // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
-                    //         getName() + " a inflige " + special + "pv, il lui reste " + uniqueTarget.getPv() + "pv");
+                    // getName() + " a inflige " + special + "pv, il lui reste " +
+                    // uniqueTarget.getPv() + "pv");
                 }
             } else {
                 // Attaque de statut donc effect?
@@ -186,7 +229,7 @@ public class Tower extends Pokemon {
             for (Ennemi e : zoneTarget) {
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunise");
+                        // System.out.println("Immunise");
                     } else {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                                 * Types.typeChart(skills[select], e);
@@ -204,11 +247,12 @@ public class Tower extends Pokemon {
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
-                        //         .println(getName() + " a inflige " + physical + "pv, il lui reste " + e.getPv() + "pv");
+                        // .println(getName() + " a inflige " + physical + "pv, il lui reste " +
+                        // e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
-                        //System.out.println("Immunise");
+                        // System.out.println("Immunise");
                     } else {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
@@ -226,7 +270,8 @@ public class Tower extends Pokemon {
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
-                        //         .println(getName() + " a inflige " + special + "pv, il lui reste " + e.getPv() + "pv");
+                        // .println(getName() + " a inflige " + special + "pv, il lui reste " +
+                        // e.getPv() + "pv");
                     }
                 } else {
                     // Attaque de statut donc juste applique effet?
@@ -243,25 +288,17 @@ public class Tower extends Pokemon {
     private void levelUp() {
         Random r = new Random();
         if (exp > 5 * level) {
-            System.out.println("levelUp " + level);
             level++;
+            System.out.println("levelUp " + level);
             int addPhysical = r.nextInt(5);
             int addSpecial = r.nextInt(5);// fois un multiplicateur?
             setPhysical(getPhysical() + addPhysical);
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
+            updatePokemon();
         }
     }
 
-    public void evolution(String sprite, String nom,int physicalDamage, int specialDamage, Types firstTypes, Types secondTypes){
-        setSprite(sprite);
-        setName(nom);
-        setPhysical(getPhysical() + physicalDamage);
-        setSpecial(getSpecial() + specialDamage);
-        setFirstType(firstTypes);
-        setSecondType(secondTypes);
-    }
-    
     public int getTotalSkill() {
         return totalSkill;
     }
@@ -319,14 +356,14 @@ public class Tower extends Pokemon {
 
     public String toString() {
         return getName()
-            + ";" + getLevel()
-            + ";" + exp
-            + ";" + getPhysical()
-            + ";" + getSpecial()
-            + ";" + getType()[0] 
-            + ";" + getType()[1]
-            + ";" + arrayToString(getSkills())
-            + ";" + getSprite();
+                + ";" + getLevel()
+                + ";" + exp
+                + ";" + getPhysical()
+                + ";" + getSpecial()
+                + ";" + getType()[0]
+                + ";" + getType()[1]
+                + ";" + arrayToString(getSkills())
+                + ";" + getSprite();
     }
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
@@ -375,6 +412,76 @@ public class Tower extends Pokemon {
 
             }
         }
+    }
+
+    private void updatePokemon() {
+        // TODO IL MANQUE POUR LES STARTERS
+
+        if (this instanceof Anchwatt) {
+            ((Anchwatt) this).evolution();
+            ((Anchwatt) this).unlock();
+        }
+        if (this instanceof Obalie) {
+            ((Obalie) this).evolution();
+            ((Obalie) this).unlock();
+        }
+        if (this instanceof Tylton) {
+            ((Tylton) this).evolution();
+            ((Tylton) this).unlock();
+        }
+        if (this instanceof Terhal) {
+            ((Terhal) this).evolution();
+            ((Terhal) this).unlock();
+        }
+        if (this instanceof Tarsal) {
+            ((Tarsal) this).evolution();
+            ((Tarsal) this).unlock();
+        }
+        if (this instanceof Rozbouton) {
+            ((Rozbouton) this).evolution();
+            ((Rozbouton) this).unlock();
+        }
+        if (this instanceof Ningale) {
+            ((Ningale) this).evolution();
+            ((Ningale) this).unlock();
+        }
+        if (this instanceof Nodulithe) {
+            ((Nodulithe) this).evolution();
+            ((Nodulithe) this).unlock();
+        }
+        if (this instanceof Mysdibule) {
+            ((Mysdibule) this).evolution();
+            ((Mysdibule) this).unlock();
+        }
+        if (this instanceof MotismaFroid) {
+            ((MotismaFroid) this).evolution();
+            ((MotismaFroid) this).unlock();
+        }
+        if (this instanceof Makuhita) {
+            ((Makuhita) this).evolution();
+            ((Makuhita) this).unlock();
+        }
+        if (this instanceof Lilia) {
+            ((Lilia) this).evolution();
+            ((Lilia) this).unlock();
+        }
+        if (this instanceof Gringolem) {
+            ((Gringolem) this).evolution();
+            ((Gringolem) this).unlock();
+        }
+        if (this instanceof Escargaume) {
+            ((Escargaume) this).evolution();
+            ((Escargaume) this).unlock();
+        }
+        if (this instanceof Ecrapince) {
+            ((Ecrapince) this).evolution();
+            ((Ecrapince) this).unlock();
+        }
+        if (this instanceof Chartor) {
+            ((Chartor) this).evolution();
+            ((Chartor) this).unlock();
+        }
+
     }
 
     private boolean isInRayon(Tower tower, Ennemi ennemi) {
@@ -442,6 +549,18 @@ public class Tower extends Pokemon {
 
     public void setExp(double exp) {
         this.exp = exp;
+    }
+
+    public void setTiles(UpdateMap.Tiles tiles) {
+        this.tiles = tiles;
+    }
+
+    public UpdateMap.Tiles getTiles() {
+        return tiles;
+    }
+
+    public static ArrayList<Tower> getTList() {
+        return TList;
     }
 
 }

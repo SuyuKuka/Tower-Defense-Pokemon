@@ -8,26 +8,26 @@ import model.Types;
 public class Obalie extends Tower implements TowerLoader {
 
     public Obalie() {
-        super("Obalie", 40, 55, Types.EAU, Types.NONE, "ressources/sprite/spheal/spheal.gif",
+        super("Obalie", 40, 55, Types.EAU, Types.GLACE, "ressources/sprite/spheal/spheal.gif",
                 State.LOCKED);
         primarySkill();
     }
 
     @Override
     public void evolution() {
-        if (getLevel() == 30) {
-            setSprite("ressouces/sprite/spheal/sealeo.gif");
-            setName("Colhomard");
+        if (getLevel() == 5 && getName().equals("Obalie")) {
+            setSprite("ressources/sprite/spheal/sealeo.gif");
+            setName("Phogleur");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
-            setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
-        if (getLevel() == 50) {
-            setSprite("ressouces/sprite/spheal/walrein.gif");
-            setName("Colhomard");
+        if (getLevel() == 6 && getName().equals("Phogleur")) {
+            setSprite("ressources/sprite/spheal/walrein.gif");
+            setName("Kaimorse");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
-            setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

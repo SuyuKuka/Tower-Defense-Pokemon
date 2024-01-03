@@ -1,18 +1,46 @@
 package model;
 
 import model.InitWaves.Difficulty;
+import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
+import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
+import characters.Ningale;
+import characters.Nodulithe;
+import characters.Obalie;
+import characters.Rozbouton;
 import characters.Starter;
+import characters.Tarsal;
+import characters.Terhal;
+import characters.Tylton;
 import characters.Starter.Salameche;
-
+import control.Control;
 import graphics.GameScreen;
 import graphics.UpdateMap;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import java.util.TimerTask;
 import java.util.*;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import model.Ennemi;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+
+import javax.swing.border.*;
 
 public class MapState {
 

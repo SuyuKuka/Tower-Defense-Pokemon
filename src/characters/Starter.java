@@ -21,8 +21,6 @@ public class Starter {
                 setName("Reptincel");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                super.evolution("ressources/sprite/charmander/charmeleon.gif", "Reptincel", 15, 15, Types.FEU,
-                        Types.NONE);
             }
             if (getLevel() == 36) {
                 // Methode 1
@@ -31,9 +29,6 @@ public class Starter {
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
                 setSecondType(Types.VOL);
-                // methode 2
-                super.evolution("ressources/sprite/charmander/charizard.gif", "Dracaufeu", 30, 30, Types.FEU,
-                        Types.VOL);
             }
         }
 
@@ -100,7 +95,7 @@ public class Starter {
                 setName("Massko");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                super.evolution("ressources/sprite/treecko/grovyle.gif", "Massko", 15, 15, Types.PLANTE, Types.NONE);
+
             }
             if (getLevel() == 36) {
                 // Methode 1
@@ -108,8 +103,7 @@ public class Starter {
                 setName("Jungko");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
-                // methode 2
-                super.evolution("ressources/sprite/treecko/sceptile.gif", "Jungko", 30, 30, Types.PLANTE, Types.NONE);
+
             }
         }
 
@@ -176,7 +170,7 @@ public class Starter {
                 setName("Croaporal");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                super.evolution("ressources/sprite/frogadier.png", "Croaporal", 15, 15, Types.EAU, Types.NONE);
+
             }
             if (getLevel() == 36) {
                 // Methode 1
@@ -184,8 +178,7 @@ public class Starter {
                 setName("Amphinobi");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
-                // methode 2
-                super.evolution("ressources/sprite/greninja.png", "Amphinobi", 30, 30, Types.EAU, Types.NONE);
+
             }
         }
 

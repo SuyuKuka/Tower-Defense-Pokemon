@@ -7,7 +7,7 @@ import model.Types;
 public class Terhal extends Tower implements TowerLoader {
 
     public Terhal() {
-        super("Terhal", 55, 35, Types.PSY, Types.ACIER, "ressouces/sprite/beldum/beldum.gif",
+        super("Terhal", 55, 35, Types.PSY, Types.ACIER, "ressources/sprite/beldum/beldum.gif",
                 State.LOCKED);
         primarySkill();
     }
@@ -15,13 +15,13 @@ public class Terhal extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 20) {
-            setSprite("ressouces/sprite/beldum/metang.gif");
+            setSprite("ressources/sprite/beldum/metang.gif");
             setName("Metang");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 45) {
-            setSprite("ressouces/sprite/beldum/metagross.gif");
+            setSprite("ressources/sprite/beldum/metagross.gif");
             setName("Metalosse");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);

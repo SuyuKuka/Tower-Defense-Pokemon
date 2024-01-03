@@ -15,7 +15,7 @@ public class Tylton extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            setSprite("ressouces/sprite/swablu/altaria.gif");
+            setSprite("ressources/sprite/swablu/altaria.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
