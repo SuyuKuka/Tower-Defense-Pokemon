@@ -15,19 +15,21 @@ public class Rozbouton extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            setSprite("ressouces/sprite/budew/roselia.gif");
+            setSprite("ressources/sprite/budew/roselia.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
 
         if (getLevel() == 50) {
-            setSprite("ressouces/sprite/budew/roserade.gif");
+            setSprite("ressources/sprite/budew/roserade.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

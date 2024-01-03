@@ -33,7 +33,6 @@ public class Anchwatt extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        // Manque les effets
         Skill Acide = new Skill("Acide", 0, 40, Types.POISON, 1.5, true,
                 "Attaque la cible avec un jet d'accide corrosif.");
         Skill CoupBoule = new Skill("Coup d'Boule", 70, 0, Types.NORMAL, 2, true,

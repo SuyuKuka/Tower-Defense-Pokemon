@@ -16,10 +16,11 @@ public class Makuhita extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 16) {
-            setSprite("ressouces/sprite/makuhita/hariyama.gif");
+            setSprite("ressources/sprite/makuhita/hariyama.gif");
             setName("Hariyama");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial());
+            getTiles().replaceSprite(getSprite());
         }
     }
 

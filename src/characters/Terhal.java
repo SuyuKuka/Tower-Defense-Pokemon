@@ -19,12 +19,14 @@ public class Terhal extends Tower implements TowerLoader {
             setName("Metang");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
+            getTiles().replaceSprite(getSprite());
         }
         if (getLevel() == 45) {
             setSprite("ressources/sprite/beldum/metagross.gif");
             setName("Metalosse");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

@@ -179,7 +179,12 @@ public class InGameMenu extends JPanel {
     }
 
     public void updateButton(int pas, int limiteDeTemps) {
-        compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+        if ((ms.getAllEnnemis().size() - 1) < 0) {
+            compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+        } else {
+
+            compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+        }
 
         if (pas >= limiteDeTemps * 100) {
             pas = limiteDeTemps * 100;

@@ -416,7 +416,18 @@ public class Tower extends Pokemon {
 
     private void updatePokemon() {
         // TODO IL MANQUE POUR LES STARTERS
-
+        if (this instanceof Starter.Salameche) {
+            ((Starter.Salameche) this).evolution();
+            ((Starter.Salameche) this).unlock();
+        }
+        if (this instanceof Starter.Arcko) {
+            ((Starter.Arcko) this).evolution();
+            ((Starter.Arcko) this).unlock();
+        }
+        if (this instanceof Starter.Tiplouf) {
+            ((Starter.Tiplouf) this).evolution();
+            ((Starter.Tiplouf) this).unlock();
+        }
         if (this instanceof Anchwatt) {
             ((Anchwatt) this).evolution();
             ((Anchwatt) this).unlock();

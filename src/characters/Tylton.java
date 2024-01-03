@@ -20,6 +20,7 @@ public class Tylton extends Tower implements TowerLoader {
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

@@ -14,28 +14,31 @@ public class Tarsal extends Tower implements TowerLoader {
 
     @Override
     public void evolution() {
-        if (getLevel() == 30) {
-            setSprite("ressouces/sprite/ralts/kirlia.gif");
+        if (getLevel() == 20) {
+            setSprite("ressources/sprite/ralts/kirlia.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
 
         if (getLevel() == 50) {
             boolean choix = true;
             if (choix) { // CONTROLE DE CHOIX
-                setSprite("ressouces/sprite/ralts/gardevoir.gif");
+                setSprite("ressources/sprite/ralts/gardevoir.gif");
                 setName("Colhomard");
                 setPhysical(getPhysical() + 40);
                 setSpecial(getSpecial() + 40);
                 setSecondType(Types.TENEBRE);
+                getTiles().replaceSprite(getSprite());
             } else {
-                setSprite("ressouces/sprite/ralts/gallade.gif");
+                setSprite("ressources/sprite/ralts/gallade.gif");
                 setName("Colhomard");
                 setPhysical(getPhysical() + 40);
                 setSpecial(getSpecial() + 40);
                 setSecondType(Types.TENEBRE);
+                getTiles().replaceSprite(getSprite());
             }
 
         }

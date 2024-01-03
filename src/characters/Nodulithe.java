@@ -21,12 +21,14 @@ public class Nodulithe extends Tower implements TowerLoader {
             setName("Geolithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 10);
+            getTiles().replaceSprite(getSprite());
         }
         if (getLevel() == 50) {
             setSprite("ressources/sprite/roggenrola/gigalith.gif");
             setName("Gigalithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 20);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

@@ -21,6 +21,7 @@ public class Starter {
                 setName("Reptincel");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
+                getTiles().replaceSprite(getSprite());
             }
             if (getLevel() == 36) {
                 // Methode 1
@@ -29,6 +30,7 @@ public class Starter {
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
                 setSecondType(Types.VOL);
+                getTiles().replaceSprite(getSprite());
             }
         }
 
@@ -95,6 +97,7 @@ public class Starter {
                 setName("Massko");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
+                getTiles().replaceSprite(getSprite());
 
             }
             if (getLevel() == 36) {
@@ -103,6 +106,7 @@ public class Starter {
                 setName("Jungko");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
+                getTiles().replaceSprite(getSprite());
 
             }
         }
@@ -155,21 +159,21 @@ public class Starter {
         }
     }
 
-    public class Grenousse extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
-        public Grenousse() {
-            super("Grenousse", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/froakie.png", State.LOCKED);
+    public class Tiplouf extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
+        public Tiplouf() {
+            super("Tiplouf", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/froakie.png", State.LOCKED);
             primarySkill();
         }
 
         @Override
         public void evolution() { // marche pas
-            System.out.println("j'ai le niveau?");
             if (getLevel() == 16) {
                 System.out.println("j'ai évolué");
                 setSprite("ressources/sprite/frogadier.png");
                 setName("Croaporal");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
+                getTiles().replaceSprite(getSprite());
 
             }
             if (getLevel() == 36) {
@@ -178,6 +182,7 @@ public class Starter {
                 setName("Amphinobi");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
+                getTiles().replaceSprite(getSprite());
 
             }
         }
