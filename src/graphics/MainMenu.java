@@ -364,7 +364,7 @@ public class MainMenu extends JPanel {
 
         public Slot() {
 
-            JLabel pokeicon = maker.resizeJLabel("ressources/sprite/blank.png", 50);
+            JLabel pokeicon = maker.resizeJLabel("ressources/sprite/nothing.png", 32);
 
             add(pokeicon);
             setOpaque(true);

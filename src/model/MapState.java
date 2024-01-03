@@ -315,7 +315,8 @@ public class MapState {
     }
 
     public void isDead(Ennemi e) {
-        System.out.println("DEAD:" + e);
+        // System.out.println("DEAD:" + e);
+        screen.getuMap().repaint();
         if (e.isBoss()) {
             money = money + 100;
         } else {

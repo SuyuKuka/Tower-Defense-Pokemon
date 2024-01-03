@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import characters.Ningale;
+import characters.Obalie;
 import characters.Starter;
 import characters.Starter.Salameche;
 
@@ -34,10 +35,11 @@ public class Player {
         pc = new ArrayList<>();
         Starter starterInstance = new Starter();
         Salameche sala = starterInstance.new Salameche("Salameche", 1, 40, Types.FEU, Types.NONE);
-        Ningale ningale = new Ningale(20, 20);
+        Ningale ningale = new Ningale();
+        Obalie obalie = new Obalie();
         team[0] = sala;
         team[1] = ningale;
-        team[2] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[2] = obalie;
         team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
