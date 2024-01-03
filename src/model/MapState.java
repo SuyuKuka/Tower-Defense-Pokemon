@@ -199,7 +199,7 @@ public class MapState {
     }
 
     private boolean gameContinue() {
-        if (allEnnemis.isEmpty() && !endless) {
+        if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
             System.out.println("VOUS AVEZ GAGNEE");
             return false;
         }

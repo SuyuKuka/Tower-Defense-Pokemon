@@ -81,24 +81,27 @@ public class TowerPresent extends JPanel {
         TowerManagement pokemon = new TowerManagement(tower, numero);
         bg.add(pokemon);
         pokemon.setEnabled(true);
-        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
 
         pokemon.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
                     if (pokemon.isSelected()) {
                         if (selectedPokemon != null) {
-                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
                         }
                         pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
                         selectedPokemon = pokemon;
                     } else {
-                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
                         selectedPokemon = null;
                     }
                 }
+
             }
+
         });
     }
 

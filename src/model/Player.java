@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import characters.Anchwatt;
 import characters.Ningale;
 import characters.Obalie;
 import characters.Starter;
@@ -37,10 +38,11 @@ public class Player {
         Salameche sala = starterInstance.new Salameche("Salameche", 1, 40, Types.FEU, Types.NONE);
         Ningale ningale = new Ningale();
         Obalie obalie = new Obalie();
+        Anchwatt anchwatt = new Anchwatt();
         team[0] = sala;
         team[1] = ningale;
         team[2] = obalie;
-        team[3] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+        team[3] = anchwatt;
         team[4] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         team[5] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
         hero[0] = new Tower("", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);

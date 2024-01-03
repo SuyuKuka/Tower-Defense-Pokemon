@@ -18,6 +18,7 @@ public class EnnemiPresent extends JPanel {
     private static JPanel container = new JPanel();
     private JPanel ennemiInfoPanel;
     private JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
+    JScrollPane ennemiList;
 
     public EnnemiPresent() {
         bg.setOpaque(false);
@@ -46,9 +47,10 @@ public class EnnemiPresent extends JPanel {
         box.setOpaque(false);
         box.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        JScrollPane ennemiList = new JScrollPane(container);
+        ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
-        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        // ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 100, 0));
         // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         JViewport viewport = ennemiList.getViewport();
@@ -57,7 +59,7 @@ public class EnnemiPresent extends JPanel {
         // ENNEMI INFO CADRE
         ennemiInfoPanel = new JPanel();
         ennemiInfoPanel.setPreferredSize(new Dimension(400, 100));
-        ennemiInfoPanel.setVisible(true);
+        ennemiInfoPanel.setVisible(false);
 
         bg.add(ennemiInfoPanel, BorderLayout.SOUTH);
         bg.add(box, BorderLayout.NORTH);
@@ -106,22 +108,21 @@ public class EnnemiPresent extends JPanel {
         healthBar.setName(e.getName());
         healthBar.setBorder(new EmptyBorder(2, 2, 2, 2));
         ennemiInfo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                System.out.println(e.getName());
-            }
 
             @Override
             public void mouseEntered(MouseEvent event) {
                 healthBar.setBorder(new LineBorder(Color.WHITE, 2));
                 ennemiInfo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 configEnnemiInfoPanel(e);
-
+                ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+                ennemiInfoPanel.setVisible(true);
             }
 
             @Override
             public void mouseExited(MouseEvent event) {
                 healthBar.setBorder(new EmptyBorder(2, 2, 2, 2));
+                ennemiInfoPanel.setVisible(false);
+                ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 100, 0));
             }
         });
 
@@ -141,6 +142,8 @@ public class EnnemiPresent extends JPanel {
         name.setText(e.getName() + e.getPv() + e.getSpeed() + e.getType()[0] + e.getType()[1]);
 
         ennemiInfoPanel.add(name);
+        ennemiInfoPanel.revalidate();
+        ennemiInfoPanel.repaint();
     }
 
     public void deleteEnnemiLabel(Ennemi e) {
@@ -150,12 +153,12 @@ public class EnnemiPresent extends JPanel {
                 if (panel.getComponent(1) instanceof JProgressBar
                         && (panel.getComponent(1).getName().equals(e.getName()))) {
                     container.remove(panel);
+
                     break;
                 }
             }
         }
         ennemiDisplayed.remove(e);
-
         container.revalidate();
         container.repaint();
     }
@@ -174,6 +177,7 @@ public class EnnemiPresent extends JPanel {
                 }
             }
         }
+
         container.revalidate();
         container.repaint();
     }
