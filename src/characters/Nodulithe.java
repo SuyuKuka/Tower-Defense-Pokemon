@@ -6,8 +6,10 @@ import model.Types;
 
 public class Nodulithe extends Tower implements TowerLoader {
 
-    public Nodulithe(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Nodulithe", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/roggenrola.png", State.LOCKED);
+    public Nodulithe() {
+        super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE,
+                "ressouces/sprite/roggenrola/roggenrola.gif",
+                State.LOCKED);
         System.out.println("Charge le sprite");
         primarySkill();
     }
@@ -15,13 +17,13 @@ public class Nodulithe extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 25) {
-            setSprite("ressouces/sprite/boldore.png");
+            setSprite("ressouces/sprite/roggenrola/boldore.gif");
             setName("Geolithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 50) {
-            setSprite("ressouces/sprite/gigalith.png");
+            setSprite("ressouces/sprite/roggenrola/gigalith.gif");
             setName("Gigalithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 20);

@@ -6,21 +6,22 @@ import model.Types;
 
 public class Anchwatt extends Tower implements TowerLoader {
 
-    public Anchwatt(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Anchwatt", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/tynamo.png", State.LOCKED);
+    public Anchwatt() {
+        super("Anchwatt", 55, 45, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
+                State.LOCKED);
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 39) {
-            setSprite("ressources/sprite/eelektrik.png");
+            setSprite("ressources/sprite/tynamo/eelektrik.gif");
             setName("Lamperoie");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 45) {
-            setSprite("ressources/sprite/eelektross.png");
+            setSprite("ressources/sprite/tynamo/eelektross.gif");
             setName("Ohmassacre");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);

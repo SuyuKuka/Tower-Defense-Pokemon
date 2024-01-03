@@ -7,7 +7,6 @@ import model.Player;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,16 +14,10 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.sound.midi.Track;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import javax.swing.border.EmptyBorder;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MainGraphics extends JFrame {
     private CardLayout cardLayout = new CardLayout();
@@ -40,15 +33,8 @@ public class MainGraphics extends JFrame {
         // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
         // "POKEMONGOOOOO"));
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-
-            }
-        });
-
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
-        // setResizable(false);
+        setResizable(false);
 
         setLocationRelativeTo(null);
         setTitle("PokeRevolute");

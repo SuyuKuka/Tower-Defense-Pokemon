@@ -71,30 +71,29 @@ public class Tower extends Pokemon {
         try {
             String alphaPart = st.replaceAll("[^A-Za-z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
-    
+
             int posX;
             int posY;
-    
+
             if (!st.matches("[A-Za-z]+\\d+")) {
                 posX = -1;
             } else {
                 posX = alphaPart.toUpperCase().charAt(0) - 'A';
             }
-    
+
             if (!numPart.isEmpty()) {
                 posY = Integer.parseInt(numPart) - 1;
             } else {
                 posY = -1;
             }
-    
-            int[] tab = {posY, posX};
+
+            int[] tab = { posY, posX };
             return tab;
         } catch (Exception e) {
-            int[] tab = {-1, -1};
+            int[] tab = { -1, -1 };
             return tab;
         }
     }
-    
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
@@ -107,7 +106,7 @@ public class Tower extends Pokemon {
                         m.isDead(tower.uniqueTarget);
                         tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
-                        tower.uniqueTarget=null;
+                        tower.uniqueTarget = null;
                     }
                 }
             } else {
@@ -129,7 +128,7 @@ public class Tower extends Pokemon {
 
     private void attackUnique() {
         if (uniqueTarget == null) {
-            //System.out.println("Pas de cible");
+            // System.out.println("Pas de cible");
         } else {
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
@@ -362,7 +361,6 @@ public class Tower extends Pokemon {
             }
         }
     }
-    
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {

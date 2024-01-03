@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import characters.Anchwatt;
+import characters.Ningale;
+import characters.Obalie;
 import characters.Starter;
 import characters.Starter.Salameche;
-import model.Hero;
+
 import model.Pokemon.State;
 
 public class Player {

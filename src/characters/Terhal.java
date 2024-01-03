@@ -1,27 +1,27 @@
 package characters;
 
-import model.Effect;
 import model.Skill;
 import model.Tower;
 import model.Types;
 
 public class Terhal extends Tower implements TowerLoader {
 
-    public Terhal(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Terhal", atkPhysical, atkSpecial, Types1, Types2, "ressouces/sprite/beldum.png", State.LOCKED);
+    public Terhal() {
+        super("Terhal", 55, 35, Types.PSY, Types.ACIER, "ressouces/sprite/beldum/beldum.gif",
+                State.LOCKED);
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 20) {
-            setSprite("ressouces/sprite/metang.png");
+            setSprite("ressouces/sprite/beldum/metang.gif");
             setName("Metang");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
         }
         if (getLevel() == 45) {
-            setSprite("ressouces/sprite/metagross.png");
+            setSprite("ressouces/sprite/beldum/metagross.gif");
             setName("Metalosse");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);

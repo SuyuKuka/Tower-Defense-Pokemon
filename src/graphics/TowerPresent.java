@@ -8,9 +8,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
-import java.io.File;
+
 import java.io.IOException;
-import javax.imageio.ImageIO;
+
 import javax.swing.border.EmptyBorder;
 
 public class TowerPresent extends JPanel {
@@ -21,6 +21,7 @@ public class TowerPresent extends JPanel {
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
 
     public TowerPresent() {
+
         setLayout(new BorderLayout());
         bg.setOpaque(false);
         add(bg, BorderLayout.CENTER);
@@ -64,9 +65,14 @@ public class TowerPresent extends JPanel {
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 24f));
 
-        titlePanel.add(logoPokeball);
-        titlePanel.add(titleLabel);
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        JPanel title = new JPanel();
+        title.setOpaque(false);
+        title.add(logoPokeball);
+        title.add(titleLabel);
+        title.setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
+
+        titlePanel.add(title);
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         return titlePanel;
     }
@@ -75,24 +81,27 @@ public class TowerPresent extends JPanel {
         TowerManagement pokemon = new TowerManagement(tower, numero);
         bg.add(pokemon);
         pokemon.setEnabled(true);
-        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
 
         pokemon.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
                     if (pokemon.isSelected()) {
                         if (selectedPokemon != null) {
-                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
                         }
                         pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
                         selectedPokemon = pokemon;
                     } else {
-                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 2));
+                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
                         selectedPokemon = null;
                     }
                 }
+
             }
+
         });
     }
 

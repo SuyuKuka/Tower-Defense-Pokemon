@@ -5,7 +5,6 @@ import model.Tower;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 
 import control.Control;
 import java.awt.*;
@@ -17,10 +16,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MainMenu extends JPanel {
 
@@ -200,8 +195,10 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel bigProfilPanel() {
+
         JPanel profilPanel = new JPanel();
         profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        profilPanel.setOpaque(false);
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
@@ -210,7 +207,7 @@ public class MainMenu extends JPanel {
         JPanel cadrePanel = new JPanel();
         cadrePanel.setLayout(new BorderLayout());
         cadrePanel.setBackground(Color.BLACK);
-        cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
+        cadrePanel.setBorder(new LineBorder(Color.GRAY, 1));
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 50);
@@ -230,7 +227,12 @@ public class MainMenu extends JPanel {
         cadrePanel.add(infoPanel, BorderLayout.CENTER);
         profilPanel.add(cadrePanel);
 
-        return profilPanel;
+        JPanel bigProfilePanel = maker.imagePanel("ressources/profile/profilebg.png");
+        bigProfilePanel.setOpaque(false);
+
+        bigProfilePanel.add(profilPanel);
+
+        return bigProfilePanel;
     }
 
     private JPanel profilPanel(JPanel bigProfil) {
@@ -362,7 +364,7 @@ public class MainMenu extends JPanel {
 
         public Slot() {
 
-            JLabel pokeicon = maker.resizeJLabel("ressources/sprite/blank.png", 50);
+            JLabel pokeicon = maker.resizeJLabel("ressources/sprite/nothing.png", 32);
 
             add(pokeicon);
             setOpaque(true);

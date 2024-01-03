@@ -1,22 +1,22 @@
 package characters;
 
-import model.Effect;
 import model.Skill;
 import model.Tower;
 import model.Types;
 
 public class Makuhita extends Tower implements TowerLoader {
 
-    public Makuhita(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Makuhita", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/makuhita.png", State.LOCKED);
-        System.out.println("Charge le sprite"); // ressouces/sprite/makuhita.png
+    public Makuhita() {
+        super("Makuhita", 60, 20, Types.COMBAT, Types.NONE, "ressources/sprite/makuhita/makuhita.gif",
+                State.LOCKED);
+        System.out.println("Charge le sprite");
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 16) {
-            setSprite("ressouces/sprite/hariyama.png");
+            setSprite("ressouces/sprite/makuhita/hariyama.gif");
             setName("Hariyama");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial());
