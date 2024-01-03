@@ -82,7 +82,7 @@ public class MapState {
         // A METTRE DANS /control
         // Tower terminal = new Tower("Terminal", 1,1, null, null);
         Starter starterInstance = new Starter();
-        Salameche sala = starterInstance.new Salameche("Salameche", 10, 0, Types.FEU, Types.NONE);
+        Salameche sala = starterInstance.new Salameche();
 
         int step = 0;
         int increment = 1;
