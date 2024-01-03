@@ -6,21 +6,29 @@ public class Skill {
     private int specialDamage;
     private Types type;
     private double speedAtk;
-    private Effect effect;
     private boolean unique;
     private String description;
 
-    public Skill(String name, int physicalDamage, int specialDamage, Types type, double speedAtk, Effect effect,
-            boolean unique, String description) {
+    public Skill(String name, int physicalDamage, int specialDamage, Types type, double speedAtk, boolean unique, String description) {
         this.name = name;
         this.physicalDamage = physicalDamage;
         this.specialDamage = specialDamage;
         this.type = type;
         this.speedAtk = speedAtk;
-        this.effect = effect;
         this.unique = unique;
         this.description = description;
     }
+
+    public String toString(){
+        return this.getName()
+        +"#"+this.getPhysicalDamage() 
+        +"#"+this.getSpecialDamage() 
+        +"#"+this.getType()
+        +"#"+this.getSpeedAtk()
+        +"#"+this.getUnique()
+        +"#"+this.getDescription();
+    }
+    //tower.learnSkill(new Skill(skillName, skillPhysicalDamage, skillSpecialDamage, skillType, skillSpeedAtk, skillUnique, skillDescription));
 
     public String getName() {
         return name;
@@ -40,10 +48,6 @@ public class Skill {
 
     public double getSpeedAtk() {
         return speedAtk;
-    }
-
-    public Effect getEffect() {
-        return effect;
     }
 
     public boolean getUnique() {

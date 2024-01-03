@@ -36,7 +36,7 @@ public class TowerManagement extends JPanel {
 
         infoPanel.add(addNameLabel(), BorderLayout.NORTH);
 
-        // Ajoutez une vérification pour afficher le niveau ou le prix
+        // Ajoutez une verification pour afficher le niveau ou le prix
         if (isPlaced) {
             infoPanel.add(addLevelLabel(), BorderLayout.SOUTH);
         } else {
@@ -53,6 +53,14 @@ public class TowerManagement extends JPanel {
 
         spritePanel.add(spriteLabel, BorderLayout.SOUTH);
 
+        // try {
+        //     BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
+        //     Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        //     JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
+        //     spritePanel.add(spriteLabel, BorderLayout.SOUTH);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
         spritePanel.setBorder(BorderFactory.createEmptyBorder(5, 28, 0, 0));
         return spritePanel;
     }

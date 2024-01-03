@@ -1,19 +1,19 @@
 package main;
 
-import graphics.MainGraphics;
+import graphics.*;
+import model.*;
 
-import model.Player;
 
 import java.io.FileNotFoundException;
+
+import javax.swing.SwingUtilities;
 
 import control.ControlTerminal;
 
 public class Game {
 
     public Game() {
-        Player p = new Player();
-        new MainGraphics(p, this);
-
+        MainGraphics graph = new MainGraphics(Player.INSTANCE, this);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -25,9 +25,13 @@ public class Game {
             terminalControl.initTerminal();
 
         } else {
-
-            new Game();
-
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run(){
+                    Game game = new Game();
+                }
+            });
+            
+            
         }
 
     }
