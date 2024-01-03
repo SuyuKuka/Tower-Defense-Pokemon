@@ -6,15 +6,16 @@ import model.Types;
 
 public class Ecrapince extends Tower implements TowerLoader {
 
-    public Ecrapince(String name, int atkPhysical, int atkSpecial, Types Types1, Types Types2) {
-        super("Ecrapince", atkPhysical, atkSpecial, Types1, Types2, "ressources/sprite/torkoal.png", State.LOCKED);
+    public Ecrapince() {
+        super("Ecrapince", 80, 50, Types.EAU, Types.NONE, "ressources/sprite/corphish/corphish.gif",
+                State.LOCKED);
         primarySkill();
     }
 
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            setSprite("ressouces/sprite/crawdaunt.png");
+            setSprite("ressouces/sprite/corphish/crawdaunt.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);

@@ -131,7 +131,11 @@ public class Control {
     }
 
     public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
+        // TODO C'EST QUOI CA ???????
+    }
 
+    public void openPC() {
+        // TODO OPEN THE PC
     }
 
 }

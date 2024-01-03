@@ -8,6 +8,7 @@ import control.Control;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.EmptyBorder;
 
 public class InGameMenu extends JPanel {
 
@@ -19,6 +20,7 @@ public class InGameMenu extends JPanel {
     private JLabel money;
     private JLabel compteur;
     private JLabel waveTimer;
+    private JButton pc;
 
     public InGameMenu(boolean topPanel, MapState ms) {
 
@@ -45,7 +47,7 @@ public class InGameMenu extends JPanel {
 
     public JPanel createTopPanel() {
         // LES BOUTONS
-        JButton speed = new JButton();
+        JButton speed = new JButton("S");
         speed.setPreferredSize(new Dimension(42, 42));
         speed.addMouseListener(new MouseAdapter() {
             @Override
@@ -54,7 +56,7 @@ public class InGameMenu extends JPanel {
             }
         });
 
-        JButton pause = new JButton();
+        JButton pause = new JButton("P");
         pause.setPreferredSize(new Dimension(42, 42));
         pause.addMouseListener(new MouseAdapter() {
             @Override
@@ -108,6 +110,18 @@ public class InGameMenu extends JPanel {
     }
 
     public JPanel createBotPanel() {
+        // PC BUTTON
+        pc = new JButton("LE PCCCCCCC");
+        pc.setBorder(new EmptyBorder(0, 0, 0, 0));
+        pc.setPreferredSize(new Dimension(126, 42));
+        pc.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("LE PCCCCCCCCCCCCCC");
+                control.openPC();
+            }
+        });
+
         // LA VIE
         JPanel heartIcon = maker.imagePanel("ressources/template/heart.png");
         heartIcon.setOpaque(false);
@@ -122,7 +136,7 @@ public class InGameMenu extends JPanel {
         lifePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         lifePanel.setOpaque(false);
 
-        lifePanel.setPreferredSize(new Dimension(84, 42));
+        lifePanel.add(pc);
         lifePanel.add(heartIcon);
         lifePanel.add(pv);
 
@@ -146,7 +160,7 @@ public class InGameMenu extends JPanel {
         JPanel info = new JPanel();
         info.setLayout(new BorderLayout());
         info.add(moneyPanel, BorderLayout.WEST);
-        info.add(lifePanel, BorderLayout.EAST);
+        info.add(lifePanel, BorderLayout.CENTER);
 
         info.setOpaque(false);
 
@@ -157,7 +171,11 @@ public class InGameMenu extends JPanel {
     public void UpdateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
-
+        if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
+            pc.setVisible(true);
+        } else {
+            pc.setVisible(false);
+        }
     }
 
     public void updateButton(int pas, int limiteDeTemps) {
