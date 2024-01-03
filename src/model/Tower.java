@@ -244,7 +244,7 @@ public class Tower extends Pokemon {
     private void levelUp() {
         Random r = new Random();
         if (exp > 5 * level) {
-            System.out.println("levelUp");
+            System.out.println("levelUp " + level);
             level++;
             int addPhysical = r.nextInt(5);
             int addSpecial = r.nextInt(5);// fois un multiplicateur?
