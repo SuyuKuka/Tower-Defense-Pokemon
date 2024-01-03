@@ -3,7 +3,6 @@ package main;
 import graphics.*;
 import model.*;
 
-
 import java.io.FileNotFoundException;
 
 import javax.swing.SwingUtilities;
@@ -13,6 +12,7 @@ import control.ControlTerminal;
 public class Game {
 
     public Game() {
+
         MainGraphics graph = new MainGraphics(Player.INSTANCE, this);
     }
 
@@ -26,12 +26,11 @@ public class Game {
 
         } else {
             SwingUtilities.invokeLater(new Runnable() {
-                public void run(){
+                public void run() {
                     Game game = new Game();
                 }
             });
-            
-            
+
         }
 
     }

@@ -40,6 +40,7 @@ public class TowerPresent extends JPanel {
         heroLayout.setVgap(10);
         JPanel heroPanel = new JPanel(heroLayout);
         heroPanel.setOpaque(false);
+        System.out.println(hero[0]);
         TowerManagement hero1 = new TowerManagement(hero[0], 7);
         TowerManagement hero2 = new TowerManagement(hero[1], 8);
         heroPanel.add(hero1);
