@@ -167,7 +167,7 @@ public class UpdateMap extends JLayeredPane {
         private int[] pos;
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
-        JLabel empty = new JLabel(new ImageIcon("ressources/type/blank2.png"));
+        JLabel empty = new JLabel(new ImageIcon("ressources/sprite/blank2.png"));
         GridBagConstraints constraints = new GridBagConstraints();
 
         public Tiles(int[] pos) {
