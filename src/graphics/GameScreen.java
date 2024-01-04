@@ -14,7 +14,7 @@ public class GameScreen extends JPanel {
     private UpdateMap uMap;
     private GraphicsMaker maker = new GraphicsMaker();
 
-    private JPanel container = maker.imagePanel("ressources/tiles/grass.png");
+    private JPanel container = maker.imagePanel("ressources/tiles/ete/grass.png");
 
     public GameScreen() {
 
