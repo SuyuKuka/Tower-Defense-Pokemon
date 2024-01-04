@@ -14,7 +14,6 @@ public class Starter {
 
         @Override
         public void evolution() { // marche pas
-            System.out.println("j'ai le niveau?");
             if (getLevel() == 16) {
                 System.out.println("j'ai évolué");
                 setSprite("ressources/sprite/charmander/charmeleon.gif");

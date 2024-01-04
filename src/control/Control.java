@@ -85,9 +85,13 @@ public class Control {
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
 
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
-
+                    MapState mState;
+                    if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
+                        mState = new MapState(diff, 0);
+                    } else {
+                        mState = new MapState(diff, 1);
+                    }
                     GameScreen screen = new GameScreen();
-                    MapState mState = new MapState(diff, 0);
                     screen.setmState(mState);
                     main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {

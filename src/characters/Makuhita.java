@@ -9,7 +9,6 @@ public class Makuhita extends Tower implements TowerLoader {
     public Makuhita() {
         super("Makuhita", 60, 20, Types.COMBAT, Types.NONE, "ressources/sprite/makuhita/makuhita.gif",
                 State.LOCKED);
-        System.out.println("Charge le sprite");
         primarySkill();
     }
 

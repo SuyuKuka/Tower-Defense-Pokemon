@@ -178,12 +178,17 @@ public class InGameMenu extends JPanel {
         }
     }
 
-    public void updateButton(int pas, int limiteDeTemps) {
-        if ((ms.getAllEnnemis().size() - 1) < 0) {
-            compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+    public void updateButton(int pas, int limiteDeTemps, int count) {
+        // System.out.println(ms.getEndless());
+        if (ms.getEndless()) {
+            compteur.setText("Vague: " + count);
         } else {
 
-            compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+            if ((ms.getAllEnnemis().size() - 1) < 0) {
+                compteur.setText("Vagues restants: " + 0);
+            } else {
+                compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+            }
         }
 
         if (pas >= limiteDeTemps * 100) {
