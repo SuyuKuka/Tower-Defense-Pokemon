@@ -11,6 +11,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class GameScreen extends JPanel {
+    private CardLayout towerCardLayout= new CardLayout();
     private EnnemiPresent ePresent = new EnnemiPresent();
     private TowerPresent tPresent = new TowerPresent();
     private UpdateMap uMap;

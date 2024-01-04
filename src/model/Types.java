@@ -162,4 +162,10 @@ public enum Types {
         // si il a un double type
         return (typeWeakness[attakerInt][defenderInt1] * typeWeakness[attakerInt][defenderInt2]);
     }
+
+    public static String typeToImg(){
+        //TODO
+        return null;
+    }
+
 }

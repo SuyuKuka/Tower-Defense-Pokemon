@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import characters.Starter;
+import characters.Starter.Arcko;
+import characters.Starter.Grenousse;
 import characters.Starter.Salameche;
 import model.Hero;
 import model.Pokemon.State;
@@ -36,23 +38,17 @@ public class Player {
             obtainedPokemon = new ArrayList<>();
             pc = new ArrayList<>();
             Starter starterInstance = new Starter();
-            Salameche sala0 = starterInstance.new Salameche(); //il doit choisir
-            Salameche sala1 = starterInstance.new Salameche(); //il doit choisir
-            Salameche sala2 = starterInstance.new Salameche(); //il doit choisir
-            Salameche sala3 = starterInstance.new Salameche(); //il doit choisir
-            Salameche sala4 = starterInstance.new Salameche(); //il doit choisir
-            Salameche sala5 = starterInstance.new Salameche(); //il doit choisir
-            Tower nothingTower0 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            Tower nothingTower1 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            Tower nothingTower2 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            Salameche salameche = starterInstance.new Salameche(); //il doit choisir
+            Arcko arcko = starterInstance.new Arcko();
+            Grenousse grenousse = starterInstance.new Grenousse();
             Tower nothingTower3 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
             Tower nothingTower4 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
             Tower nothingTower5 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
             hero[0] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
             hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            team[0] = sala0;
-            team[1] = nothingTower1;
-            team[2] = nothingTower2;
+            team[0] = salameche;
+            team[1] = arcko;
+            team[2] = grenousse;
             team[3] = nothingTower3;
             team[4] = nothingTower4;
             team[5] = nothingTower5;
@@ -61,6 +57,9 @@ public class Player {
             //NOTHING skill
             // new Skill(" ", -1, -1, Types.NONE, -1, false, " ");
         }else{
+            //temporaire psk pas encore implementer les heros
+            hero[0] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
             loadData();
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

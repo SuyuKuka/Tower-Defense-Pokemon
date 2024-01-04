@@ -7,11 +7,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import java.io.IOException;
 
 public class TowerPresent extends JPanel {
     private Tower[] team = Player.INSTANCE.getTeam();
@@ -19,11 +17,14 @@ public class TowerPresent extends JPanel {
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
+    private JPanel infoPanel;
+
+    private CardLayout cardLayout = new CardLayout();
 
     public TowerPresent() {
-        setLayout(new BorderLayout());
+        setLayout(cardLayout);
+
         bg.setOpaque(false);
-        add(bg, BorderLayout.CENTER);
 
         setPreferredSize(new Dimension(250, 0)); // taille parfaite
         setOpaque(false);
@@ -46,7 +47,7 @@ public class TowerPresent extends JPanel {
 
         bg.add(heroPanel);
 
-        for (int i = 0; i < team.length; i = i + 1) {
+        for (int i = 0; i < team.length; i++) {
             try {
                 initiateTeam(team[i], i + 1);
             } catch (IOException e) {
@@ -54,6 +55,11 @@ public class TowerPresent extends JPanel {
             }
         }
 
+        infoPanel = new JPanel(cardLayout);
+        infoPanel.setOpaque(false);
+        infoPanel.add(bg, "main");
+
+        add(infoPanel, BorderLayout.CENTER);
     }
 
     public JPanel initiateTitle() {
@@ -80,6 +86,9 @@ public class TowerPresent extends JPanel {
         pokemon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
+                    showPokemonInfo(pokemon.getPokemon());
+                }
                 if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
                     if (pokemon.isSelected()) {
                         if (selectedPokemon != null) {
@@ -94,6 +103,40 @@ public class TowerPresent extends JPanel {
                 }
             }
         });
+    }
+
+    private void showPokemonInfo(Tower tower) {
+        cardLayout.show(infoPanel, "pokemonInfo");
+
+        JPanel pokemonInfoPanel = maker.imagePanel("ressources/team/towerside.png");
+        pokemonInfoPanel.setOpaque(false);
+        
+        pokemonInfoPanel.add(initiateInfo(tower));
+
+        JButton backButton = new JButton("Retour");
+        backButton.addActionListener(e -> cardLayout.show(infoPanel, "main"));
+        pokemonInfoPanel.add(backButton);
+
+        infoPanel.add(pokemonInfoPanel, "pokemonInfo"); 
+        revalidate();
+        repaint();
+    }
+
+    private JPanel initiateInfo(Tower tower){
+        JPanel info = new JPanel();
+        info.setOpaque(false);
+        JLabel name = new JLabel(tower.getName());
+        JLabel level = new JLabel(String.valueOf(tower.getLevel()));
+        // titleLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 24f));
+        JLabel type = new JLabel(tower.getType()[0].toString());
+        JLabel stat = new JLabel("ATK PHY : " + String.valueOf(tower.getPhysical() + " ATK SPE : " + String.valueOf(tower.getSpecial())));
+
+        return null;
+    }
+
+    private JPanel initiateSkills(Tower tower){
+        //Afficher sur un 2x2 avec des JButton? ou des JLabel?
+        return null;
     }
 
     public Tower getTower() {
