@@ -163,9 +163,89 @@ public enum Types {
         return (typeWeakness[attakerInt][defenderInt1] * typeWeakness[attakerInt][defenderInt2]);
     }
 
-    public static String typeToImg(){
-        //TODO
-        return null;
+    public static String typeToImg(Types type){
+        switch (type) {
+            case NORMAL:
+                return "ressources/type/NORMAL.png";
+            case FEU:
+                return "ressources/type/FEU.png";
+            case EAU:
+                return "ressources/type/EAU.png";
+            case PLANTE:
+                return "ressources/type/PLANTE.png";
+            case ELECTRIQUE:
+                return "ressources/type/ELECTRIQUE.png";
+            case GLACE:
+                return "ressources/type/GLACE.png";
+            case COMBAT:
+                return "ressources/type/COMBAT.png";
+            case POISON:
+                return "ressources/type/POISON.png";
+            case SOL:
+                return "ressources/type/SOL.png";
+            case VOL:
+                return "ressources/type/VOL.png";
+            case PSY:
+                return "ressources/type/PSY.png";
+            case INSECTE:
+                return "ressources/type/INSECTE.png";
+            case ROCHE:
+                return "ressources/type/ROCHE.png";
+            case SPECTRE:
+                return "ressources/type/SPECTRE.png";
+            case DRAGON:
+                return "ressources/type/DRAGON.png";
+            case TENEBRE:
+                return "ressources/type/TENEBRE.png";
+            case ACIER:
+                return "ressources/type/ACIER.png";
+            case FEE:
+                return "ressources/type/FEE.png";
+            default:
+                return "ressources/sprite/nothing.png";
+        }
     }
 
+    public static String typeToString(Types type){
+        switch (type) {
+            case NORMAL:
+                return "NORMAL";
+            case FEU:
+                return "FEU";
+            case EAU:
+                return "EAU";
+            case PLANTE:
+                return "PLANTE";
+            case ELECTRIQUE:
+                return "ELECTRIQUE";
+            case GLACE:
+                return "GLACE";
+            case COMBAT:
+                return "COMBAT";
+            case POISON:
+                return "POISON";
+            case SOL:
+                return "SOL";
+            case VOL:
+                return "VOL";
+            case PSY:
+                return "PSY";
+            case INSECTE:
+                return "INSECTE";
+            case ROCHE:
+                return "ROCHE";
+            case SPECTRE:
+                return "SPECTRE";
+            case DRAGON:
+                return "DRAGON";
+            case TENEBRE:
+                return "TENEBRE";
+            case ACIER:
+                return "ACIER";
+            case FEE:
+                return "FEE";
+            default:
+                return "NOTHING";
+        }
+    }
 }

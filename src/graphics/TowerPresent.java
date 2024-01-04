@@ -1,6 +1,7 @@
 package graphics;
 
 import model.Player;
+import model.Skill;
 import model.Tower;
 
 import java.awt.*;
@@ -15,9 +16,9 @@ public class TowerPresent extends JPanel {
     private Tower[] team = Player.INSTANCE.getTeam();
     private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
-    private TowerManagement selectedPokemon;
+    private static TowerManagement selectedPokemon;
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
-    private JPanel infoPanel;
+    private static JPanel infoPanel;
 
     private CardLayout cardLayout = new CardLayout();
 
@@ -111,11 +112,11 @@ public class TowerPresent extends JPanel {
         JPanel pokemonInfoPanel = maker.imagePanel("ressources/team/towerside.png");
         pokemonInfoPanel.setOpaque(false);
         
-        pokemonInfoPanel.add(initiateInfo(tower));
+        pokemonInfoPanel.add(initiateInfo(tower), BorderLayout.NORTH);
 
         JButton backButton = new JButton("Retour");
         backButton.addActionListener(e -> cardLayout.show(infoPanel, "main"));
-        pokemonInfoPanel.add(backButton);
+        pokemonInfoPanel.add(backButton, BorderLayout.SOUTH);
 
         infoPanel.add(pokemonInfoPanel, "pokemonInfo"); 
         revalidate();
@@ -123,19 +124,70 @@ public class TowerPresent extends JPanel {
     }
 
     private JPanel initiateInfo(Tower tower){
-        JPanel info = new JPanel();
+        JPanel info = new JPanel(new GridLayout(5, 1));
         info.setOpaque(false);
-        JLabel name = new JLabel(tower.getName());
-        JLabel level = new JLabel(String.valueOf(tower.getLevel()));
-        // titleLabel.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 24f));
-        JLabel type = new JLabel(tower.getType()[0].toString());
-        JLabel stat = new JLabel("ATK PHY : " + String.valueOf(tower.getPhysical() + " ATK SPE : " + String.valueOf(tower.getSpecial())));
 
-        return null;
+        JLabel name = new JLabel(tower.getName());
+        name.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 26f));
+        name.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel level = new JLabel("Nv : " + String.valueOf(tower.getLevel()));
+        level.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 22f));
+        level.setHorizontalAlignment(SwingConstants.CENTER);
+        JPanel types = new JPanel(new FlowLayout());
+        types.setOpaque(false);
+        JLabel type0 = new JLabel("FEU");
+        type0.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel type1 = new JLabel("NONE");
+        type1.setHorizontalAlignment(SwingConstants.CENTER);
+        types.add(type0);
+        types.add(type1);
+        JLabel stat = new JLabel("ATK PHY : " + String.valueOf(tower.getPhysical() + " ATK SPE : " + String.valueOf(tower.getSpecial())));
+        stat.setFont(maker.getCustomFont().deriveFont(Font.PLAIN, 20f));
+        stat.setHorizontalAlignment(SwingConstants.CENTER);    
+
+        info.add(name);
+        info.add(level);
+        info.add(types);
+        info.add(stat);
+
+        return info;
+    }
+
+    public static void updateInfo(Tower tower){//casser
+        if(selectedPokemon != null && selectedPokemon.getPokemon() == tower){
+            Container infoContainer = (Container) infoPanel.getComponent(1);
+            
+            JLabel name = (JLabel) infoContainer.getComponent(0);
+            JLabel level = (JLabel) infoContainer.getComponent(1);
+            JLabel type0 = (JLabel) infoContainer.getComponent(2);
+            JLabel type1 = (JLabel) infoContainer.getComponent(3);
+            JLabel stat = (JLabel) infoContainer.getComponent(4);
+
+            name.setText(tower.getName());
+            level.setText("Nv : " + String.valueOf(tower.getLevel()));
+            type0.setText("FEU");
+            type1.setText("VOL");
+            stat.setText("ATK PHY : " + String.valueOf(tower.getPhysical() + " ATK SPE : " + String.valueOf(tower.getSpecial())));
+        }
     }
 
     private JPanel initiateSkills(Tower tower){
         //Afficher sur un 2x2 avec des JButton? ou des JLabel?
+        JPanel skill = new JPanel(new GridLayout(2, 2));
+        skill.setOpaque(false);
+
+        JPanel skill1 = new JPanel();
+        Skill tmp1 = tower.getSkills()[0];
+        JLabel name1 = new JLabel(tower.getSkills()[0].getName());
+
+
+
+        JPanel skill2 = new JPanel();
+
+        JPanel skill3 = new JPanel();
+
+        JPanel skill4 = new JPanel();
+
         return null;
     }
 
