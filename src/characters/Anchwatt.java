@@ -10,27 +10,29 @@ public class Anchwatt extends Tower implements TowerLoader {
         super("Anchwatt", 55, 45, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
                 State.LOCKED);
         primarySkill();
+
     }
 
     @Override
     public void evolution() {
-        if (getLevel() == 39) {
+        if (getLevel() == 5 && getName().equals("Anchwatt")) {
             setSprite("ressources/sprite/tynamo/eelektrik.gif");
             setName("Lamperoie");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
+            getTiles().replaceSprite(getSprite());
         }
-        if (getLevel() == 45) {
+        if (getLevel() == 7 && getName().equals("Lamperoie")) {
             setSprite("ressources/sprite/tynamo/eelektross.gif");
             setName("Ohmassacre");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);
+            getTiles().replaceSprite(getSprite());
         }
     }
 
     @Override
     public void primarySkill() {
-        // Manque les effets
         Skill Acide = new Skill("Acide", 0, 40, Types.POISON, 1.5, true,
                 "Attaque la cible avec un jet d'accide corrosif.");
         Skill CoupBoule = new Skill("Coup d'Boule", 70, 0, Types.NORMAL, 2, true,

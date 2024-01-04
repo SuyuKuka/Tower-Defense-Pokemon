@@ -15,11 +15,12 @@ public class Ecrapince extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            setSprite("ressouces/sprite/corphish/crawdaunt.gif");
+            setSprite("ressources/sprite/corphish/crawdaunt.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

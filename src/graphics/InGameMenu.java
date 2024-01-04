@@ -47,21 +47,25 @@ public class InGameMenu extends JPanel {
 
     public JPanel createTopPanel() {
         // LES BOUTONS
-        JButton speed = new JButton("S");
+        JButton speed = new JButton(new ImageIcon("ressources/template/normalButton.png"));
         speed.setPreferredSize(new Dimension(42, 42));
+        speed.setOpaque(false);
+        speed.setBackground(Color.BLACK);
         speed.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.gameDoubleSpeed();
+                control.gameDoubleSpeed(speed);
             }
         });
 
-        JButton pause = new JButton("P");
+        JButton pause = new JButton(new ImageIcon("ressources/template/pauseButton.png"));
         pause.setPreferredSize(new Dimension(42, 42));
+        pause.setOpaque(false);
+        pause.setBackground(Color.BLACK);
         pause.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.gamePause();
+                control.gamePause(pause);
             }
         });
 
@@ -178,8 +182,17 @@ public class InGameMenu extends JPanel {
         }
     }
 
-    public void updateButton(int pas, int limiteDeTemps) {
-        compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+    public void updateButton(int pas, int limiteDeTemps, int count) {
+        if (ms.getEndless()) {
+            compteur.setText("Vague: " + count);
+        } else {
+
+            if ((ms.getAllEnnemis().size() - 1) < 0) {
+                compteur.setText("Vagues restants: " + 0);
+            } else {
+                compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+            }
+        }
 
         if (pas >= limiteDeTemps * 100) {
             pas = limiteDeTemps * 100;

@@ -1,18 +1,28 @@
 package model;
 
 import model.InitWaves.Difficulty;
+
 import characters.Starter;
+
 import characters.Starter.Salameche;
 
 import graphics.GameScreen;
 import graphics.UpdateMap;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import java.util.TimerTask;
 import java.util.*;
+
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import model.Ennemi;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+
+import javax.swing.border.*;
 
 public class MapState {
 
@@ -30,7 +40,7 @@ public class MapState {
     private int pv = 3;
     private int limiteDeTemps = 30;
     private int gameSpeed = 20; // GRAPHIC ONLY
-    private boolean pause = true;
+    private boolean pause = false;
     private double money = 400;
     private double moneyIncrement = 0;
     private int nbTotalWave;
@@ -38,6 +48,7 @@ public class MapState {
     private Random rand = new Random();
 
     private boolean endless;
+    private int count = 0;
     private InitWaves w;
 
     public MapState(Difficulty difficulty, int mode) {
@@ -49,6 +60,17 @@ public class MapState {
 
         }
         InitWaves w = new InitWaves(difficulty);
+        if (difficulty == Difficulty.EASY) {
+            limiteDeTemps = 40;
+            money = 600;
+        } else if (difficulty == Difficulty.NORMAL) {
+            limiteDeTemps = 25;
+            money = 400;
+        } else if (difficulty == Difficulty.HARD) {
+            limiteDeTemps = 10;
+            money = 200;
+        }
+
         endless = mode == 1;
         if (!endless) {
             allEnnemis = w.getAllEnnemis();
@@ -147,7 +169,17 @@ public class MapState {
 
         Scanner sc = new Scanner(System.in);
 
-        allEnnemis = w.getAllEnnemis();
+        int step = 0;
+        int inc = 1;
+
+        // MODE ENDLESS
+        if (endless) {
+            allEnnemis.add(w.initEndless(inc++));
+            allEnnemis.add(w.initEndless(inc++));
+            allEnnemis.add(w.initEndless(inc++));
+            allEnnemis.add(w.initEndless(inc++));
+        }
+        //
         for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 e.setMap(m);
@@ -156,11 +188,7 @@ public class MapState {
                 e.setPos(m.getEntry());
             }
         }
-
-        int step = 0;
-
         nbTotalWave = allEnnemis.size();
-        // m.affiche(ennemiPresent);
 
         while (gameContinue() || endless) {
             TimerTask task = new TimerTask() {
@@ -174,13 +202,23 @@ public class MapState {
             };
             task.run();
 
+            // ENDLESS
+            if (endless && allEnnemis.size() == 3) {
+                allEnnemis.add(w.initEndless(inc++));
+                for (ArrayList<Ennemi> eList : allEnnemis) {
+                    for (Ennemi e : eList) {
+                        e.setMap(m);
+                        e.setTilesMap(m.getdirMap());
+                        screen.getuMap().setSpriteEntry(e);
+                        e.setPos(m.getEntry());
+                    }
+                }
+            }
+            //
             money = money + 0.01 * 1 + moneyIncrement;
-            // System.out.println(moneyIncrement);
             UpdateGraphic(nextWaveIn);
-
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
-
             step = ennemiComing(step);
             step++;
             nextWaveIn++;
@@ -195,16 +233,18 @@ public class MapState {
             }
         }
         sc.close();
-        UpdateGraphic(0);
+
     }
 
     private boolean gameContinue() {
         if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
             System.out.println("VOUS AVEZ GAGNEE");
+            UpdateGraphic(0);
             return false;
         }
         if (pv == 0) {
             System.out.println("VOUS AVEZ PERDU");
+            UpdateGraphic(0);
             endless = false;
             return false;
         }
@@ -269,18 +309,21 @@ public class MapState {
 
     private void loadNextWave() {
         if (nextWaveIn > limiteDeTemps * 100) {
+
+            count++;
             nextWaveIn = 0;
             for (Ennemi e : wave) {
                 setEnnemi(m.getEntry(), e);
             }
             wave.clear();
             allEnnemis.remove(wave);
+
             moneyIncrement = moneyIncrement + 0.01;
 
         }
-
         if (!allEnnemis.isEmpty()) {
             wave = allEnnemis.get(0);
+
         }
     }
 
@@ -331,7 +374,7 @@ public class MapState {
     public void UpdateGraphic(int pas) {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
-        screen.getInGameButton().updateButton(pas, limiteDeTemps);
+        screen.getInGameButton().updateButton(pas, limiteDeTemps, count);
 
     }
 
@@ -377,6 +420,10 @@ public class MapState {
 
     public int getNbTotalWave() {
         return nbTotalWave;
+    }
+
+    public boolean getEndless() {
+        return endless;
     }
 
 }

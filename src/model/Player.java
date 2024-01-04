@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import characters.Anchwatt;
+import characters.Makuhita;
 import characters.Ningale;
 import characters.Obalie;
+import characters.Rozbouton;
 import characters.Starter;
+import characters.Tarsal;
+import characters.Tylton;
 import characters.Starter.Salameche;
-
+import graphics.UpdateMap.Tiles;
 import model.Pokemon.State;
 
 public class Player {
@@ -31,7 +35,7 @@ public class Player {
     private File file = new File("ressources/config/data.csv");
 
     public Player() {
-        if (createData()) {
+        if (true) {
             this.pseudo = "Joueur";
             money = 1000;
             exp = 0;
@@ -40,6 +44,14 @@ public class Player {
             pc = new ArrayList<>();
             Starter starterInstance = new Starter();
             Salameche sala0 = starterInstance.new Salameche(); // il doit choisir
+
+            Anchwatt anchwatt = new Anchwatt();
+            Obalie obalie = new Obalie();
+            Tylton tylton = new Tylton();
+            Tarsal tarsal = new Tarsal();
+            Makuhita makuhita = new Makuhita();
+            Rozbouton rozbouton = new Rozbouton();
+
             Salameche sala1 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala2 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala3 = starterInstance.new Salameche(); // il doit choisir
@@ -61,11 +73,11 @@ public class Player {
             hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
 
             team[0] = sala0;
-            team[1] = nothingTower1;
-            team[2] = nothingTower2;
-            team[3] = nothingTower3;
-            team[4] = nothingTower4;
-            team[5] = nothingTower5;
+            team[1] = anchwatt;
+            team[2] = tarsal;
+            team[3] = makuhita;
+            team[4] = rozbouton;
+            team[5] = obalie;
             // nothing tower
             // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
             // "ressources/sprite/nothing.png", State.TEAM);

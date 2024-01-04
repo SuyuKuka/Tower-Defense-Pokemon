@@ -16,11 +16,12 @@ public class Lilia extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-            setSprite("ressouces/sprite/lileep/cradily.gif");
+            setSprite("ressources/sprite/lileep/cradily.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 40);
             setSecondType(Types.TENEBRE);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

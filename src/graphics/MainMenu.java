@@ -44,16 +44,17 @@ public class MainMenu extends JPanel {
         // Boutons
 
         JPanel buttonPanel = buttonPanel(main);
-        buttonPanel.setAlignmentY(CENTER_ALIGNMENT);
+
         // Team
         JPanel pcPanel = pcPanel();
-        JPanel teamPanel = teamPanel(pcPanel);
         pcPanel.setVisible(false);
+        JPanel teamPanel = teamPanel(pcPanel);
 
         // Profil
         JPanel bigProfil = bigProfilPanel();
-        JPanel profilPanel = profilPanel(bigProfil);
         bigProfil.setVisible(false);
+
+        JPanel profilPanel = profilPanel(bigProfil);
         profilPanel.add(teamPanel, BorderLayout.EAST);
 
         // right
@@ -89,6 +90,7 @@ public class MainMenu extends JPanel {
         JLabel pcTitle = new JLabel("PC");
         pcTitle.setFont(maker.getCustomFont());
         pcTitle.setForeground(Color.WHITE);
+
         JPanel heading = maker.imagePanel("ressources/background/pcheading.png");
         heading.setBorder(new LineBorder(Color.BLACK, 5));
         heading.add(pcTitle);
@@ -119,13 +121,12 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel teamPanel(JPanel pcPanel) {
-        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 50);
+        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
 
-        JPanel teamPanel = maker.imagePanel("ressources/background/teampanel.png");
-        teamPanel.setOpaque(false);
+        JPanel teamPanel = new JPanel();
+        teamPanel.setBackground(new Color(40, 40, 40));
         teamPanel.add(pcLabel);
-        teamPanel.setOpaque(false);
 
         if (user.getTeam()[0] == null) {
             JLabel pokeicon = new JLabel("Vous n'avez aucun Pokemon dans votre equipe.");
@@ -149,13 +150,15 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel titlePanel() {
-        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
+
         JLabel heading = new JLabel("POKEREVOLUTE");
-        heading.setFont(maker.getCustomFont());
+        heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
 
-        titlePanel.add(heading, new GridBagConstraints());
+        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
+        titlePanel.setPreferredSize(new Dimension(0, 52));
         titlePanel.setBackground(Color.BLACK);
+        titlePanel.add(heading);
 
         return titlePanel;
     }
@@ -238,6 +241,7 @@ public class MainMenu extends JPanel {
     private JPanel profilPanel(JPanel bigProfil) {
         JPanel profilPanel = maker.imagePanel("ressources/background/banner.png");
         profilPanel.setLayout(new BorderLayout());
+        profilPanel.setPreferredSize(new Dimension(0, 52));
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
@@ -249,7 +253,7 @@ public class MainMenu extends JPanel {
         cadrePanel.setBorder(new LineBorder(Color.WHITE, 2));
         cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 50);
+        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 32);
 
         JLabel pseudo = new JLabel("  " + user.getPseudo());
         pseudo.setForeground(Color.WHITE);
@@ -259,7 +263,7 @@ public class MainMenu extends JPanel {
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
 
-        profilPanel.setBorder(new EmptyBorder(10, 10, 10, 0));
+        profilPanel.setBorder(new EmptyBorder(2, 5, 2, 5));
         cadrePanel.add(profilPhoto, BorderLayout.WEST);
         infoPanel.add(pseudo, BorderLayout.NORTH);
         infoPanel.add(levelAccount, BorderLayout.CENTER);
@@ -325,15 +329,15 @@ public class MainMenu extends JPanel {
 
         public Slot(Tower pkm) {
             this.pkm = pkm;
-            JLabel pokeicon = new JLabel(new ImageIcon(pkm.getSprite()));
 
-            add(pokeicon);
+            JLabel pokeicon = new JLabel(new ImageIcon(pkm.getSprite()));
+            pokeicon.setOpaque(false);
+
             setOpaque(true);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             setBorder(new EmptyBorder(1, 1, 1, 1));
             setBackground(new Color(50, 50, 50));
-
-            pokeicon.setOpaque(false);
+            add(pokeicon);
 
             addMouseListener(new MouseAdapter() {
                 @Override

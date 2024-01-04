@@ -33,8 +33,9 @@ public class Classique extends JPanel {
 
     private JPanel titlePanel() {
         JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
+        titlePanel.setPreferredSize(new Dimension(0, 52));
         JLabel heading = new JLabel("Choisis la difficulte");
-        heading.setFont(maker.getCustomFont());
+        heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
 
         titlePanel.add(heading, new GridBagConstraints());
@@ -75,6 +76,7 @@ public class Classique extends JPanel {
     private JPanel bottomPanel(MainGraphics main) {
         JPanel bottomPanel = maker.imagePanel("ressources/background/banner.png");
         bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        bottomPanel.setPreferredSize(new Dimension(0, 52));
 
         JPanel backPanel = manager.backButton(main);
         bottomPanel.add(backPanel, BorderLayout.WEST);

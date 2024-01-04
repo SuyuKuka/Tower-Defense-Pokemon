@@ -7,7 +7,7 @@ import model.Types;
 public class Chartor extends Tower implements TowerLoader {
 
     public Chartor() {
-        super("Chartor", 85, 85, Types.FEE, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
+        super("Chartor", 85, 85, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
                 State.LOCKED);
         primarySkill();
     }
@@ -20,18 +20,18 @@ public class Chartor extends Tower implements TowerLoader {
     @Override
     public void primarySkill() {
         // Manque les effets
-        Skill Acide = new Skill("Acide", 0, 40, Types.POISON, 1.5, true,
-                "Attaque la cible avec un jet d'accide corrosif.");
+        Skill Flammeche = new Skill("Flammeche", 0, 40, Types.FEU, 1, true,
+                "Attaque avec une faible flamme");
         Skill CoupBoule = new Skill("Coup d'Boule", 70, 0, Types.NORMAL, 2, true,
                 "Donne un gros coup de tete.");
-        learnSkill(Acide);
+        learnSkill(Flammeche);
         learnSkill(CoupBoule);
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            Skill a = new Skill("Coup d'jus", 0, 60, Types.ELECTRIQUE, 0.9, false,
-                    "Electrocute toutes les cibles autour.");
+            Skill a = new Skill("Puredpois", 0, 30, Types.POISON, 1.8, false,
+                    "Gaz toxique");
             learnSkill(a);
         }
         if (getLevel() == 16) {
@@ -45,8 +45,8 @@ public class Chartor extends Tower implements TowerLoader {
             learnSkill(a);
         }
         if (getLevel() == 25) {
-            Skill a = new Skill("Elecanon", 0, 175, Types.ELECTRIQUE, 100, false,
-                    "Charge et lance un puissant rayon electrique");
+            Skill a = new Skill("Roue de Feu", 60, 0, Types.FEU, 3, true,
+                    "S'entoure de feu et charge la cible");
             learnSkill(a);
         }
         if (getLevel() == 30) {
@@ -55,8 +55,8 @@ public class Chartor extends Tower implements TowerLoader {
             learnSkill(a);
         }
         if (getLevel() == 38) {
-            Skill a = new Skill("Eclair Fou", 90, 0, Types.ELECTRIQUE, 7, true,
-                    "Le lanceur fonce sur la cible en etant surcharge en electricite");
+            Skill a = new Skill("Abime", 90, 0, Types.SOL, 60, false,
+                    "Gross fissure sur toute la zone");
             learnSkill(a);
         }
         if (getLevel() == 45) {

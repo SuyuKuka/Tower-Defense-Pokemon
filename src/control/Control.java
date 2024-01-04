@@ -34,19 +34,23 @@ public class Control {
 
     }
 
-    public void gamePause() {
+    public void gamePause(JButton pause) {
         if (ms.getPause() == true) {
             ms.setPause(false);
+            pause.setIcon(new ImageIcon("ressources/template/pauseButton.png"));
         } else {
             ms.setPause(true);
+            pause.setIcon(new ImageIcon("ressources/template/resumeButton.png"));
         }
     }
 
-    public void gameDoubleSpeed() {
+    public void gameDoubleSpeed(JButton speed) {
         if (ms.getGameSpeed() == 20) {
             ms.setGameSpeed(5);
+            speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
         } else if (ms.getGameSpeed() == 5) {
             ms.setGameSpeed(20);
+            speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
         }
 
     }
@@ -85,9 +89,13 @@ public class Control {
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
 
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
-
+                    MapState mState;
+                    if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
+                        mState = new MapState(diff, 0);
+                    } else {
+                        mState = new MapState(diff, 1);
+                    }
                     GameScreen screen = new GameScreen();
-                    MapState mState = new MapState(diff, 0);
                     screen.setmState(mState);
                     main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -119,12 +127,12 @@ public class Control {
     }
 
     public JPanel backButton(MainGraphics main) {
-        JPanel backPanel = new JPanel();
-        backPanel.setOpaque(false);
 
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         buttonPressed(backButton, "retour", main);
 
+        JPanel backPanel = new JPanel();
+        backPanel.setOpaque(false);
         backPanel.add(backButton);
 
         return backPanel;

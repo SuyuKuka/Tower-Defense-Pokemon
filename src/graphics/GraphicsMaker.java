@@ -1,17 +1,13 @@
 package graphics;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.*;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-import javax.swing.JPanel;
-
 import java.awt.*;
+import javax.swing.border.*;
 
 public class GraphicsMaker {
 

@@ -8,7 +8,7 @@ public class Nodulithe extends Tower implements TowerLoader {
 
     public Nodulithe() {
         super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE,
-                "ressouces/sprite/roggenrola/roggenrola.gif",
+                "ressources/sprite/roggenrola/roggenrola.gif",
                 State.LOCKED);
         System.out.println("Charge le sprite");
         primarySkill();
@@ -17,16 +17,18 @@ public class Nodulithe extends Tower implements TowerLoader {
     @Override
     public void evolution() {
         if (getLevel() == 25) {
-            setSprite("ressouces/sprite/roggenrola/boldore.gif");
+            setSprite("ressources/sprite/roggenrola/boldore.gif");
             setName("Geolithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 10);
+            getTiles().replaceSprite(getSprite());
         }
         if (getLevel() == 50) {
-            setSprite("ressouces/sprite/roggenrola/gigalith.gif");
+            setSprite("ressources/sprite/roggenrola/gigalith.gif");
             setName("Gigalithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 20);
+            getTiles().replaceSprite(getSprite());
         }
     }
 

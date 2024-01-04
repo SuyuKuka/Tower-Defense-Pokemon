@@ -195,6 +195,7 @@ public class UpdateMap extends JLayeredPane {
                             Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
                             addSprite(sprite, constraints);
+                            giveTiles(pkm);
 
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);
@@ -218,6 +219,19 @@ public class UpdateMap extends JLayeredPane {
             }
         }
 
+        private void giveTiles(Tower pkm) {
+            pkm.setTiles(this);
+        }
+
+        public void replaceSprite(String spritePath) {
+
+            JLabel jlabel = new JLabel(new ImageIcon(spritePath));
+            remove(spriteOnIt);
+            spriteOnIt = jlabel;
+            this.add(jlabel, new GridBagConstraints());
+            jlabel.getParent().revalidate();
+        }
+
         public int[] getPos() {
             return pos;
         }
@@ -225,6 +239,7 @@ public class UpdateMap extends JLayeredPane {
         public JLabel getSpriteOnIt() {
             return spriteOnIt;
         }
+
     }
 
 }

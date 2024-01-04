@@ -19,18 +19,20 @@ public class Ningale extends Tower implements TowerLoader {
             boolean choix = true;
             if (choix) { // CONTROLE DE CHOIX
 
-                setSprite("ressouces/sprite/nincada/ninjask.gif");
+                setSprite("ressources/sprite/nincada/ninjask.gif");
                 setName("Colhomard");
                 setPhysical(getPhysical() + 40);
                 setSpecial(getSpecial() + 40);
                 setSecondType(Types.TENEBRE);
+                getTiles().replaceSprite(getSprite());
             } else {
 
-                setSprite("ressouces/sprite/nincada/shedinja.gif");
+                setSprite("ressources/sprite/nincada/shedinja.gif");
                 setName("Colhomard");
                 setPhysical(getPhysical() + 40);
                 setSpecial(getSpecial() + 40);
                 setSecondType(Types.TENEBRE);
+                getTiles().replaceSprite(getSprite());
             }
         }
     }
