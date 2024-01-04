@@ -34,19 +34,23 @@ public class Control {
 
     }
 
-    public void gamePause() {
+    public void gamePause(JButton pause) {
         if (ms.getPause() == true) {
             ms.setPause(false);
+            pause.setIcon(new ImageIcon("ressources/template/pauseButton.png"));
         } else {
             ms.setPause(true);
+            pause.setIcon(new ImageIcon("ressources/template/resumeButton.png"));
         }
     }
 
-    public void gameDoubleSpeed() {
+    public void gameDoubleSpeed(JButton speed) {
         if (ms.getGameSpeed() == 20) {
             ms.setGameSpeed(5);
+            speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
         } else if (ms.getGameSpeed() == 5) {
             ms.setGameSpeed(20);
+            speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
         }
 
     }

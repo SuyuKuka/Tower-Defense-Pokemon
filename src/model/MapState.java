@@ -40,7 +40,7 @@ public class MapState {
     private int pv = 3;
     private int limiteDeTemps = 30;
     private int gameSpeed = 20; // GRAPHIC ONLY
-    private boolean pause = true;
+    private boolean pause = false;
     private double money = 400;
     private double moneyIncrement = 0;
     private int nbTotalWave;

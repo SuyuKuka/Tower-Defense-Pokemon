@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 import model.Ennemi;
+import model.Types;
+import model.Pokemon.Speed;
+
 import javax.swing.border.*;
 
 public class EnnemiPresent extends JPanel {
@@ -17,6 +20,8 @@ public class EnnemiPresent extends JPanel {
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
     private static JPanel container = new JPanel();
     private JPanel ennemiInfoPanel;
+    private Ennemi ennemiInInfoPanel;
+
     private JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
     JScrollPane ennemiList;
 
@@ -57,7 +62,7 @@ public class EnnemiPresent extends JPanel {
         viewport.setOpaque(false);
 
         // ENNEMI INFO CADRE
-        ennemiInfoPanel = new JPanel();
+        ennemiInfoPanel = maker.imagePanel("ressources/template/ennemiInfoBg.png");
         ennemiInfoPanel.setPreferredSize(new Dimension(400, 100));
         ennemiInfoPanel.setVisible(false);
 
@@ -135,15 +140,93 @@ public class EnnemiPresent extends JPanel {
     }
 
     private void configEnnemiInfoPanel(Ennemi e) {
-        // TODO:AMELIORER AFFICHAGE INFO DES ENNEMIES
         ennemiInfoPanel.removeAll();
+        ennemiInInfoPanel = e;
+        ennemiInfoPanel.setBackground(Color.WHITE);
+        ennemiInfoPanel.setBorder(new LineBorder(Color.WHITE));
+        GridLayout grid = new GridLayout(5, 1);
+        ennemiInfoPanel.setLayout(grid);
 
         JLabel name = new JLabel();
-        name.setText(e.getName() + e.getPv() + e.getSpeed() + e.getType()[0] + e.getType()[1]);
+        if (e.isBoss()) {
+            name.setText("Nom: " + e.getName() + " (BOSS)");
+        } else {
+
+            name.setText("Nom: " + e.getName());
+        }
+        name.setFont(maker.getCustomFont().deriveFont(20f));
+        name.setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
+        name.setForeground(Color.WHITE);
+
+        JLabel pv = new JLabel();
+        pv.setText("Vie: " + e.getPv() + "/" + e.getTotalPv());
+        pv.setFont(maker.getCustomFont().deriveFont(17f));
+        pv.setForeground(Color.WHITE);
+
+        JLabel speed = new JLabel();
+        if (e.getSpeed() == Speed.CLASSIC) {
+            speed.setText("Vitesse: Normal");
+        }
+        if (e.getSpeed() == Speed.FAST) {
+            speed.setText("Vitesse: Rapide");
+        }
+        if (e.getSpeed() == Speed.SLOW) {
+            speed.setText("Vitesse: Lent");
+        }
+        speed.setFont(maker.getCustomFont().deriveFont(17f));
+        speed.setForeground(Color.WHITE);
+
+        JLabel types = new JLabel();
+        if (e.getType()[1] == Types.NONE) {
+            types.setText("Type: " + e.getType()[0]);
+        } else {
+            types.setText("Types: " + e.getType()[0] + ", " + e.getType()[1]);
+        }
+        types.setFont(maker.getCustomFont().deriveFont(17f));
+        types.setForeground(Color.WHITE);
+
+        JLabel infoSuppl = new JLabel();
+        infoSuppl.setText(setInfoText(e));
+        if (!setInfoText(e).equals("")) {
+            infoSuppl.setBorder(new LineBorder(Color.RED, 2));
+        }
+        infoSuppl.setFont(maker.getCustomFont().deriveFont(15f));
+        infoSuppl.setForeground(Color.WHITE);
 
         ennemiInfoPanel.add(name);
+        ennemiInfoPanel.add(types);
+        ennemiInfoPanel.add(pv);
+        ennemiInfoPanel.add(speed);
+        ennemiInfoPanel.add(infoSuppl);
+
         ennemiInfoPanel.revalidate();
         ennemiInfoPanel.repaint();
+    }
+
+    private String setInfoText(Ennemi e) {
+        if (e.getType()[0] == Types.SPECTRE || e.getType()[1] == Types.SPECTRE) {
+            return "IMM contre les atk Normal et Combat";
+        }
+        if (e.getType()[0] == Types.SOL || e.getType()[1] == Types.SOL) {
+            return "IMM contre les atk Electric";
+        }
+        if (e.getType()[0] == Types.ACIER || e.getType()[1] == Types.ACIER) {
+            return "IMM contre les atk Poison";
+        }
+        if (e.getType()[0] == Types.VOL || e.getType()[1] == Types.VOL) {
+            return "IMM contre les atk Sol";
+        }
+        if (e.getType()[0] == Types.TENEBRE || e.getType()[1] == Types.TENEBRE) {
+            return "IMM contre les atk Psy";
+        }
+        if (e.getType()[0] == Types.FEE || e.getType()[1] == Types.FEE) {
+            return "IMM contre les atk Dragon";
+        }
+        if (e.getType()[0] == Types.NORMAL || e.getType()[1] == Types.NORMAL) {
+            return "IMM contre les atk Spectre";
+        }
+        return "";
+
     }
 
     public void deleteEnnemiLabel(Ennemi e) {
@@ -153,10 +236,12 @@ public class EnnemiPresent extends JPanel {
                 if (panel.getComponent(1) instanceof JProgressBar
                         && (panel.getComponent(1).getName().equals(e.getName()))) {
                     container.remove(panel);
-
                     break;
                 }
             }
+        }
+        if (ennemiInInfoPanel == e) {
+            ennemiInfoPanel.setVisible(false);
         }
         ennemiDisplayed.remove(e);
         container.revalidate();

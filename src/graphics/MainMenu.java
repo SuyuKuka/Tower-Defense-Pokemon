@@ -44,16 +44,17 @@ public class MainMenu extends JPanel {
         // Boutons
 
         JPanel buttonPanel = buttonPanel(main);
-        buttonPanel.setAlignmentY(CENTER_ALIGNMENT);
+
         // Team
         JPanel pcPanel = pcPanel();
-        JPanel teamPanel = teamPanel(pcPanel);
         pcPanel.setVisible(false);
+        JPanel teamPanel = teamPanel(pcPanel);
 
         // Profil
         JPanel bigProfil = bigProfilPanel();
-        JPanel profilPanel = profilPanel(bigProfil);
         bigProfil.setVisible(false);
+
+        JPanel profilPanel = profilPanel(bigProfil);
         profilPanel.add(teamPanel, BorderLayout.EAST);
 
         // right
@@ -149,13 +150,15 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel titlePanel() {
-        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
+
         JLabel heading = new JLabel("POKEREVOLUTE");
         heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
+
+        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
         titlePanel.setPreferredSize(new Dimension(0, 52));
-        titlePanel.add(heading, new GridBagConstraints());
         titlePanel.setBackground(Color.BLACK);
+        titlePanel.add(heading);
 
         return titlePanel;
     }
