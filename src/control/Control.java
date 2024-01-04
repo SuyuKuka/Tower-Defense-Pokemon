@@ -123,12 +123,12 @@ public class Control {
     }
 
     public JPanel backButton(MainGraphics main) {
-        JPanel backPanel = new JPanel();
-        backPanel.setOpaque(false);
 
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         buttonPressed(backButton, "retour", main);
 
+        JPanel backPanel = new JPanel();
+        backPanel.setOpaque(false);
         backPanel.add(backButton);
 
         return backPanel;
