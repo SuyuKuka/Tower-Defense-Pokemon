@@ -15,6 +15,9 @@ public class TowerManagement extends JPanel {
     private boolean isPlaced = false;
     private GraphicsMaker maker = new GraphicsMaker();
 
+    private JLabel nameLabel;
+    private JLabel spriteLabel;
+
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
         this.numero = numero;
@@ -49,17 +52,19 @@ public class TowerManagement extends JPanel {
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
 
-        JLabel spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
+        spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
+        pokemon.setManager(this);
 
         spritePanel.add(spriteLabel, BorderLayout.SOUTH);
 
         // try {
-        //     BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
-        //     Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-        //     JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
-        //     spritePanel.add(spriteLabel, BorderLayout.SOUTH);
+        // BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
+        // Image spriteResized = spriteImage.getScaledInstance(60, 60,
+        // Image.SCALE_SMOOTH);
+        // JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
+        // spritePanel.add(spriteLabel, BorderLayout.SOUTH);
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
         spritePanel.setBorder(BorderFactory.createEmptyBorder(5, 28, 0, 0));
         return spritePanel;
@@ -68,7 +73,8 @@ public class TowerManagement extends JPanel {
     private JPanel addNameLabel() {
         JPanel namePanel = new JPanel();
         namePanel.setOpaque(false);
-        JLabel nameLabel = new JLabel(pokemon.getName());
+
+        nameLabel = new JLabel(pokemon.getName());
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(maker.getCustomFont().deriveFont(24f));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -151,6 +157,11 @@ public class TowerManagement extends JPanel {
 
     public void setPlaced(boolean placed) {
         isPlaced = placed;
+    }
+
+    public void updateManager(Tower tower) {
+        spriteLabel.setIcon(new ImageIcon(tower.getSprite()));
+        nameLabel.setText(tower.getName());
     }
 
 }

@@ -7,8 +7,10 @@ import characters.Starter;
 import characters.Starter.Salameche;
 
 import graphics.GameScreen;
+import graphics.GameoverScreen;
 import graphics.UpdateMap;
 
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -21,7 +23,16 @@ import model.Ennemi;
 import model.MapState;
 import model.Player;
 import model.Tower;
+import java.awt.*;
+import javax.swing.*;
 
+import model.MapState;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+
+import javax.swing.border.*;
 import javax.swing.border.*;
 
 public class MapState {
@@ -51,6 +62,11 @@ public class MapState {
     private int count = 0;
     private InitWaves w;
 
+    // STATS
+    private double countMoney;
+    private ArrayList<Ennemi> ennemiEscaped = new ArrayList<>();
+
+    //
     public MapState(Difficulty difficulty, int mode) {
 
         Map map = new Map(18, 24, difficulty);
@@ -70,7 +86,7 @@ public class MapState {
             limiteDeTemps = 10;
             money = 200;
         }
-
+        countMoney = money; // STATS
         endless = mode == 1;
         if (!endless) {
             allEnnemis = w.getAllEnnemis();
@@ -167,8 +183,6 @@ public class MapState {
 
         this.screen = screen;
 
-        Scanner sc = new Scanner(System.in);
-
         int step = 0;
         int inc = 1;
 
@@ -216,7 +230,8 @@ public class MapState {
             }
             //
             money = money + 0.01 * 1 + moneyIncrement;
-            UpdateGraphic(nextWaveIn);
+            countMoney = money;
+            UpdateGraphic(nextWaveIn, false);
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
             step = ennemiComing(step);
@@ -232,23 +247,29 @@ public class MapState {
                 task.run();
             }
         }
-        sc.close();
 
     }
 
     private boolean gameContinue() {
+
         if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
             System.out.println("VOUS AVEZ GAGNEE");
-            UpdateGraphic(0);
+            gameOverScreen(true);
             return false;
         }
         if (pv == 0) {
             System.out.println("VOUS AVEZ PERDU");
-            UpdateGraphic(0);
             endless = false;
+            gameOverScreen(false);
             return false;
         }
         return true;
+    }
+
+    private void gameOverScreen(boolean win) {
+        UpdateGraphic(0, true);
+        new GameoverScreen(this, screen, win);
+
     }
 
     private int ennemiComing(int pas) {
@@ -293,6 +314,7 @@ public class MapState {
             if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
+                ennemiEscaped.add(e);
             }
         }
 
@@ -308,7 +330,7 @@ public class MapState {
     }
 
     private void loadNextWave() {
-        if (nextWaveIn > limiteDeTemps * 100) {
+        if (nextWaveIn > limiteDeTemps * 100 || ennemiPresent.isEmpty() && wave.isEmpty()) {
 
             count++;
             nextWaveIn = 0;
@@ -365,16 +387,17 @@ public class MapState {
         } else {
             money = money + 10;
         }
+        countMoney = money;
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
         }
     }
 
-    public void UpdateGraphic(int pas) {
+    public void UpdateGraphic(int pas, boolean lose) {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
-        screen.getInGameButton().updateButton(pas, limiteDeTemps, count);
+        screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
 
     }
 
@@ -424,6 +447,18 @@ public class MapState {
 
     public boolean getEndless() {
         return endless;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public double getCountMoney() {
+        return countMoney;
+    }
+
+    public ArrayList<Ennemi> getEnnemiEscaped() {
+        return ennemiEscaped;
     }
 
 }

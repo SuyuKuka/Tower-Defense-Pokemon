@@ -46,6 +46,10 @@ public class GameScreen extends JPanel {
         return ePresent;
     }
 
+    public TowerPresent gettPresent() {
+        return tPresent;
+    }
+
     public UpdateMap getuMap() {
         return uMap;
     }

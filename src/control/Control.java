@@ -138,6 +138,19 @@ public class Control {
         return backPanel;
     }
 
+    public void goHome(JPanel screen) {
+        screen.setVisible(false);
+
+    }
+
+    public void restart() {
+
+    }
+
+    public void freeplay() {
+
+    }
+
     public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
         // TODO C'EST QUOI CA ???????
     }

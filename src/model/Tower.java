@@ -22,8 +22,14 @@ import characters.Tarsal;
 import characters.Terhal;
 import characters.Tylton;
 import graphics.EnnemiPresent;
+import graphics.TowerManagement;
 import graphics.UpdateMap;
 
+import java.awt.*;
+
+import javax.swing.*;
+
+import model.Tower;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -33,28 +39,6 @@ public class Tower extends Pokemon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
-    // ref vers tout les this
-    /*
-     * 
-     * private Starter starter;
-     * private Anchwatt anchwatt;
-     * private Chartor chartor;
-     * private Ecrapince ecrapince;
-     * private Escargaume escargaume;
-     * private Gringolem gringolem;
-     * private Lilia lilia;
-     * private Makuhita makuhita;
-     * private MotismaFroid motismaFroid;
-     * private Mysdibule mysdibule;
-     * private Ningale ningale;
-     * private Nodulithe nodulithe;
-     * private Obalie obalie;
-     * private Rozbouton rozbouton;
-     * private Tarsal tarsal;
-     * private Terhal terhal;
-     * private Tylton tylton;
-     */
-    //
     private UpdateMap.Tiles tiles;
     private Rayon rayon;
     private double exp;
@@ -68,8 +52,13 @@ public class Tower extends Pokemon {
     private int price;
     private State state = State.LOCKED;
 
+    private TowerManagement manager;
+
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
+
+    // STATS
+    private int killCount = 0;
 
     public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
             State state) {
@@ -148,6 +137,7 @@ public class Tower extends Pokemon {
                         tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
                         tower.uniqueTarget = null;
+                        killCount++;
                     }
                 }
             } else {
@@ -160,6 +150,7 @@ public class Tower extends Pokemon {
                             tower.winExp(e);
                             tower.levelUp();
                             tower.zoneTarget.remove(e);
+                            killCount++;
                         }
                     }
                 }
@@ -296,6 +287,7 @@ public class Tower extends Pokemon {
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
             updatePokemon();
+            manager.updateManager(this);
         }
     }
 
@@ -572,6 +564,14 @@ public class Tower extends Pokemon {
 
     public static ArrayList<Tower> getTList() {
         return TList;
+    }
+
+    public int getKillCount() {
+        return killCount;
+    }
+
+    public void setManager(TowerManagement manager) {
+        this.manager = manager;
     }
 
 }
