@@ -8,7 +8,7 @@ public class Starter {
     public class Salameche extends Tower implements TowerLoader {
         public Salameche() {
             super("Salameche", 22, 38, Types.FEU, Types.NONE, "ressources/sprite/charmander/charmander.gif",
-                    State.LOCKED);
+                    State.LOCKED, 100, Tower.Rayon.SMALL);
             primarySkill();
         }
 
@@ -17,22 +17,23 @@ public class Starter {
         }
 
         @Override
-        public void evolution() { // marche pas
-            if (getLevel() == 16) {
-                System.out.println("j'ai évolué");
+        public void evolution() {
+            if (getLevel() == 5) {
                 setSprite("ressources/sprite/charmander/charmeleon.gif");
                 setName("Reptincel");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
+                setAtkCd(80);
                 getTiles().replaceSprite(getSprite());
             }
-            if (getLevel() == 36) {
-                // Methode 1
+            if (getLevel() == 10) {
                 setSprite("ressources/sprite/charmander/charizard.gif");
                 setName("Dracaufeu");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
                 setSecondType(Types.VOL);
+                setAtkCd(150);
+                setRayon(Tower.Rayon.LARGE);
                 getTiles().replaceSprite(getSprite());
             }
         }

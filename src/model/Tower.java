@@ -36,6 +36,9 @@ public class Tower extends Pokemon {
     private int totalSkill = 0;
     private int price;
     private State state = State.LOCKED;
+    private int atkCd;
+    private int baseCd;
+    private Rayon r;
 
     private TowerManagement manager;
 
@@ -46,12 +49,13 @@ public class Tower extends Pokemon {
     private int killCount = 0;
 
     public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
-            State state) {
+            State state, int atkCd, Tower.Rayon r) {
         super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
-        this.rayon = Rayon.SMALL;
+        this.rayon = r;
         exp = 0;
         TList.add(this);
         level = 1;
+        baseCd = atkCd;
     }
 
     private Tower() {
@@ -108,6 +112,38 @@ public class Tower extends Pokemon {
             int[] tab = { -1, -1 };
             return tab;
         }
+    }
+
+    public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
+
+        if (skills[select].getUnique()) {
+            getUniqueTarget(this, ennemiInMap);
+            attackUnique();
+            if (uniqueTarget != null) {
+                if (uniqueTarget.getPv() <= 0) {
+                    m.isDead(uniqueTarget);
+                    winExp(uniqueTarget);
+                    levelUp();
+                    uniqueTarget = null;
+                    killCount++;
+                }
+            }
+        } else {
+            getZoneTarget(this, ennemiInMap);
+            if (zoneTarget.size() != 0) {
+                attackZone();
+                for (Ennemi e : zoneTarget) {
+                    if (e.getPv() <= 0) {
+                        m.isDead(e);
+                        winExp(e);
+                        levelUp();
+                        zoneTarget.remove(e);
+                        killCount++;
+                    }
+                }
+            }
+        }
+
     }
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
@@ -367,12 +403,18 @@ public class Tower extends Pokemon {
     }
 
     public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
+
         tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
-            if (tower.isInRayon(tower, e)) {
+            if (tower.isInRayon(tower, e) && atkCd <= 0) {
+
                 tower.uniqueTarget = e;
+                atkCd = baseCd;
                 break;
+            } else {
+                atkCd = atkCd - 1;
             }
+
         }
     }
 
@@ -556,6 +598,14 @@ public class Tower extends Pokemon {
 
     public void setManager(TowerManagement manager) {
         this.manager = manager;
+    }
+
+    public int getAtkCd() {
+        return atkCd;
+    }
+
+    public void setAtkCd(int atkCd) {
+        this.atkCd = atkCd;
     }
 
 }

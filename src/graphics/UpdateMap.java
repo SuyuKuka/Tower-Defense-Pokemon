@@ -27,6 +27,7 @@ public class UpdateMap extends JLayeredPane {
     private int cellSize = 32;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
+
         JPanel mapLayer = new JPanel();
         mapLayer.setLayout(new BorderLayout());
         mapLayer.setOpaque(false);
@@ -75,7 +76,6 @@ public class UpdateMap extends JLayeredPane {
 
                 constraints.gridx = j;
                 constraints.gridy = i;
-
                 constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
                 gameMap.add(tiles, constraints);
@@ -195,6 +195,7 @@ public class UpdateMap extends JLayeredPane {
                             Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
                             addSprite(sprite, constraints);
+
                             giveTiles(pkm);
 
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
@@ -215,6 +216,7 @@ public class UpdateMap extends JLayeredPane {
                 remove(spriteOnIt);
                 spriteOnIt = jlabel;
                 this.add(jlabel, constraints);
+
                 jlabel.getParent().revalidate();
             }
         }

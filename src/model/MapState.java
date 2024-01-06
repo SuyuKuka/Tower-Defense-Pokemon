@@ -230,7 +230,11 @@ public class MapState {
             step++;
             nextWaveIn++;
 
-            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
+            for (Tower t : towerPresent) {
+                t.attack2(ennemiPresent, this);
+
+            }
+            // Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
                 screen.getuMap().remove(e.getJLabelSprite());

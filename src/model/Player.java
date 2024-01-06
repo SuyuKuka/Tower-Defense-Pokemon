@@ -52,23 +52,16 @@ public class Player {
             lvl = 1;
             obtainedPokemon = new ArrayList<>();
             pc = new ArrayList<>();
-            Starter starterInstance = new Starter();
-            Salameche sala0 = starterInstance.new Salameche(); // il doit choisir
-            Salameche sala1 = starterInstance.new Salameche(); // il doit choisir
-            Salameche sala2 = starterInstance.new Salameche(); // il doit choisir
-            Salameche sala3 = starterInstance.new Salameche(); // il doit choisir
-            Salameche sala4 = starterInstance.new Salameche(); // il doit choisir
-            Salameche sala5 = starterInstance.new Salameche(); // il doit choisir
 
             hero[0] = null;
             hero[1] = null;
 
-            team[0] = new Nodulithe();
-            team[1] = new Terhal();
-            team[2] = new Gringolem();
-            team[3] = new Tylton();
-            team[4] = new Starter().new Arcko();
-            team[5] = new Starter().new Moustillon();
+            team[0] = new Anchwatt();
+            team[1] = new Starter().new Salameche();
+            team[2] = null;
+            team[3] = null;
+            team[4] = null;
+            team[5] = null;
             // nothing tower
             // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
             // "ressources/sprite/nothing.png", State.TEAM);
@@ -140,85 +133,114 @@ public class Player {
                 lvl = Integer.parseInt(fields[2]);
                 exp = Double.parseDouble(fields[3]);
                 // parseHeroContract (fields[4]);
-                hero[0] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-                hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-                parseTeam(fields[5]);
-                parsePc(fields[6]);
+                hero[0] = null;
+                hero[1] = null;
+                // parseTeam(fields[5]);
+                // parsePc(fields[6]);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void parseTeam(String teamData) {
-        String[] teamArrayData = teamData.split(";");
-        int teamLimit = team.length;
-        int towerArg = 9;
-        int i = 0;
-
-        for (int j = 0; j < teamLimit; j = j + 1) {
-            if (i < teamLimit) {
-                if (teamArrayData[j * towerArg + 8].contains("ressources/sprite/nothing.png")) {
-                    team[i] = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                            State.TEAM);
-                } else {
-                    String nameTower = teamArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 - 45
-                    int levelTower = Integer.parseInt(teamArrayData[j * towerArg + 1]); // 1 - 10 - 19 - 28 - 37 - 46
-                    double expTower = Double.parseDouble(teamArrayData[j * towerArg + 2]); // 2 - 11 - 20 - 29 - 38 - 47
-                    double physicalTower = Double.parseDouble(teamArrayData[j * towerArg + 3]); // 3 - 12 - 21 - 30 - 39
-                                                                                                // - 48
-                    double specialTower = Double.parseDouble(teamArrayData[j * towerArg + 4]); // 4 - 13 - 22 - 31 - 40
-                                                                                               // - 49
-                    Types firstTypeTower = Types.stringToType(teamArrayData[j * towerArg + 5]); // 5 - 14 - 23 - 32 - 41
-                                                                                                // - 50
-                    Types secondTypeTower = Types.stringToType(teamArrayData[j * towerArg + 6]); // 6 - 15 - 24 - 33 -
-                                                                                                 // 42 - 51
-                    String spriteTower = teamArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 - 44 - 53
-
-                    team[i] = new Tower(nameTower, physicalTower, specialTower, firstTypeTower, secondTypeTower,
-                            spriteTower, State.TEAM);
-                    team[i].setLevel(levelTower);
-                    team[i].setExp(expTower);
-                    parseSkill(teamArrayData[j * towerArg + 7], team[i]); // 7 - 16 - 25 - 34 - 43 - 52
-                }
-                i++;
-            }
-        }
-    }
-
-    private void parsePc(String pcData) {
-        String[] pcArrayData = pcData.split(";");
-        int towerArg = 9;
-
-        if (pcArrayData.length > 1) {
-            for (int j = 0; j < pc.size(); j = j + 1) {
-                if (pcArrayData[j * towerArg + 8].contains("ressources/sprite/nothing.png")) {
-                    pc.add(new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM));
-                } else {
-                    String nameTower = pcArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 - 45
-                    int levelTower = Integer.parseInt(pcArrayData[j * towerArg + 1]); // 1 - 10 - 19 - 28 - 37 - 46
-                    double expTower = Double.parseDouble(pcArrayData[j * towerArg + 2]); // 2 - 11 - 20 - 29 - 38 - 47
-                    double physicalTower = Double.parseDouble(pcArrayData[j * towerArg + 3]); // 3 - 12 - 21 - 30 - 39 -
-                                                                                              // 48
-                    double specialTower = Double.parseDouble(pcArrayData[j * towerArg + 4]); // 4 - 13 - 22 - 31 - 40 -
-                                                                                             // 49
-                    Types firstTypeTower = Types.stringToType(pcArrayData[j * towerArg + 5]); // 5 - 14 - 23 - 32 - 41 -
-                                                                                              // 50
-                    Types secondTypeTower = Types.stringToType(pcArrayData[j * towerArg + 6]); // 6 - 15 - 24 - 33 - 42
-                                                                                               // - 51
-                    String spriteTower = pcArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 - 44 - 53
-
-                    Tower tmp = new Tower(nameTower, physicalTower, specialTower, firstTypeTower, secondTypeTower,
-                            spriteTower, State.TEAM);
-                    tmp.setLevel(levelTower);
-                    tmp.setExp(expTower);
-                    parseSkill(pcArrayData[j * towerArg + 7], tmp); // 7 - 16 - 25 - 34 - 43 - 52
-                    pc.add(tmp);
-                }
-            }
-        }
-    }
-
+    /*
+     * 
+     * 
+     * private void parseTeam(String teamData) {
+     * String[] teamArrayData = teamData.split(";");
+     * int teamLimit = team.length;
+     * int towerArg = 9;
+     * int i = 0;
+     * 
+     * for (int j = 0; j < teamLimit; j = j + 1) {
+     * if (i < teamLimit) {
+     * if (teamArrayData[j * towerArg +
+     * 8].contains("ressources/sprite/nothing.png")) {
+     * team[i] = new Tower(" ", -1, -1, Types.NONE, Types.NONE,
+     * "ressources/sprite/nothing.png",
+     * State.TEAM);
+     * } else {
+     * String nameTower = teamArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 -
+     * 45
+     * int levelTower = Integer.parseInt(teamArrayData[j * towerArg + 1]); // 1 - 10
+     * - 19 - 28 - 37 - 46
+     * double expTower = Double.parseDouble(teamArrayData[j * towerArg + 2]); // 2 -
+     * 11 - 20 - 29 - 38 - 47
+     * double physicalTower = Double.parseDouble(teamArrayData[j * towerArg + 3]);
+     * // 3 - 12 - 21 - 30 - 39
+     * // - 48
+     * double specialTower = Double.parseDouble(teamArrayData[j * towerArg + 4]); //
+     * 4 - 13 - 22 - 31 - 40
+     * // - 49
+     * Types firstTypeTower = Types.stringToType(teamArrayData[j * towerArg + 5]);
+     * // 5 - 14 - 23 - 32 - 41
+     * // - 50
+     * Types secondTypeTower = Types.stringToType(teamArrayData[j * towerArg + 6]);
+     * // 6 - 15 - 24 - 33 -
+     * // 42 - 51
+     * String spriteTower = teamArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 -
+     * 44 - 53
+     * 
+     * team[i] = new Tower(nameTower, physicalTower, specialTower, firstTypeTower,
+     * secondTypeTower,
+     * spriteTower, State.TEAM);
+     * team[i].setLevel(levelTower);
+     * team[i].setExp(expTower);
+     * parseSkill(teamArrayData[j * towerArg + 7], team[i]); // 7 - 16 - 25 - 34 -
+     * 43 - 52
+     * }
+     * i++;
+     * }
+     * }
+     * }
+     */
+    /*
+     * 
+     * 
+     * private void parsePc(String pcData) {
+     * String[] pcArrayData = pcData.split(";");
+     * int towerArg = 9;
+     * 
+     * if (pcArrayData.length > 1) {
+     * for (int j = 0; j < pc.size(); j = j + 1) {
+     * if (pcArrayData[j * towerArg + 8].contains("ressources/sprite/nothing.png"))
+     * {
+     * pc.add(new Tower(" ", -1, -1, Types.NONE, Types.NONE,
+     * "ressources/sprite/nothing.png", State.TEAM));
+     * } else {
+     * String nameTower = pcArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 -
+     * 45
+     * int levelTower = Integer.parseInt(pcArrayData[j * towerArg + 1]); // 1 - 10 -
+     * 19 - 28 - 37 - 46
+     * double expTower = Double.parseDouble(pcArrayData[j * towerArg + 2]); // 2 -
+     * 11 - 20 - 29 - 38 - 47
+     * double physicalTower = Double.parseDouble(pcArrayData[j * towerArg + 3]); //
+     * 3 - 12 - 21 - 30 - 39 -
+     * // 48
+     * double specialTower = Double.parseDouble(pcArrayData[j * towerArg + 4]); // 4
+     * - 13 - 22 - 31 - 40 -
+     * // 49
+     * Types firstTypeTower = Types.stringToType(pcArrayData[j * towerArg + 5]); //
+     * 5 - 14 - 23 - 32 - 41 -
+     * // 50
+     * Types secondTypeTower = Types.stringToType(pcArrayData[j * towerArg + 6]); //
+     * 6 - 15 - 24 - 33 - 42
+     * // - 51
+     * String spriteTower = pcArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 - 44
+     * - 53
+     * 
+     * Tower tmp = new Tower(nameTower, physicalTower, specialTower, firstTypeTower,
+     * secondTypeTower,
+     * spriteTower, State.TEAM);
+     * tmp.setLevel(levelTower);
+     * tmp.setExp(expTower);
+     * parseSkill(pcArrayData[j * towerArg + 7], tmp); // 7 - 16 - 25 - 34 - 43 - 52
+     * pc.add(tmp);
+     * }
+     * }
+     * }
+     * }
+     */
     private void parseSkill(String skillData, Tower tower) {
         String[] skillArrayData = skillData.split("#");
         int skillLimit = tower.getSkills().length;

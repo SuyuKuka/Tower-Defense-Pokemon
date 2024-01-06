@@ -7,8 +7,9 @@ import model.Types;
 public class Anchwatt extends Tower implements TowerLoader {
 
     public Anchwatt() {
-        super("Anchwatt", 55, 45, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
-                State.LOCKED);
+
+        super("Anchwatt", 55.0, 45.0, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
+                State.LOCKED, 500, Tower.Rayon.SMALL);
         primarySkill();
 
     }
@@ -31,6 +32,8 @@ public class Anchwatt extends Tower implements TowerLoader {
             setName("Ohmassacre");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);
+            setAtkCd(200);
+            setRayon(Tower.Rayon.MEDIUM);
             getTiles().replaceSprite(getSprite());
         }
     }
