@@ -3,13 +3,19 @@ package graphics;
 import model.Player;
 import model.Skill;
 import model.Tower;
+import model.Types;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import java.io.File;
 import java.io.IOException;
 
 public class TowerPresent extends JPanel {
@@ -88,7 +94,11 @@ public class TowerPresent extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
-                    showPokemonInfo(pokemon.getPokemon());
+                    try {
+                        showPokemonInfo(pokemon.getPokemon());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
                     if (pokemon.isSelected()) {
@@ -106,7 +116,7 @@ public class TowerPresent extends JPanel {
         });
     }
 
-    private void showPokemonInfo(Tower tower) {
+    private void showPokemonInfo(Tower tower) throws IOException {
         cardLayout.show(infoPanel, "pokemonInfo");
 
         JPanel pokemonInfoPanel = maker.imagePanel("ressources/team/towerside.png");
@@ -123,7 +133,7 @@ public class TowerPresent extends JPanel {
         repaint();
     }
 
-    private JPanel initiateInfo(Tower tower){
+    private JPanel initiateInfo(Tower tower) throws IOException{
         JPanel info = new JPanel(new GridLayout(5, 1));
         info.setOpaque(false);
 
@@ -135,9 +145,11 @@ public class TowerPresent extends JPanel {
         level.setHorizontalAlignment(SwingConstants.CENTER);
         JPanel types = new JPanel(new FlowLayout());
         types.setOpaque(false);
-        JLabel type0 = new JLabel("FEU");
+        BufferedImage type0Img = ImageIO.read(new File(Types.typeToImg(tower.getType()[0])));
+
+        JLabel type0 = new JLabel(new ImageIcon(Types.typeToImg(tower.getType()[0])));
         type0.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel type1 = new JLabel("NONE");
+        JLabel type1 = new JLabel(new ImageIcon(Types.typeToImg(tower.getType()[1])));
         type1.setHorizontalAlignment(SwingConstants.CENTER);
         types.add(type0);
         types.add(type1);
