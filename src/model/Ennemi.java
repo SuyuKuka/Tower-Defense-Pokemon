@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import graphics.UpdateMap;
-
+import graphics.UpdateMap.Tiles;
 import model.Map.DirectionTiles;
 import model.Map.TilesType;
 
@@ -96,6 +96,8 @@ public class Ennemi extends Pokemon {
 
     public boolean moveGraphic(JLabel sprite, UpdateMap uMap) {
 
+        // debugTilesMap(tilesMap);
+
         cellSize = uMap.getCellSize();
         exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
 
@@ -108,10 +110,10 @@ public class Ennemi extends Pokemon {
             numericSpeed = 0;
         } else if (getSpeed() == Speed.FAST) {
             numericSpeed = 3;
-        } else if (getSpeed() == Speed.SLOW) {
-            numericSpeed = 1;
-        } else {
+        } else if (getSpeed() == Speed.CLASSIC) {
             numericSpeed = 2;
+        } else {
+            numericSpeed = 1;
         }
 
         if (exit) {
@@ -152,6 +154,7 @@ public class Ennemi extends Pokemon {
                 Xpos[0] = getPos()[0];
                 Xpos[1] = getPos()[1];
                 getActualLoop();
+
                 break;
             case V:
                 calibrateX(spritePos, tileLocation);
@@ -201,17 +204,17 @@ public class Ennemi extends Pokemon {
     private void cornerA() {
         if (corner.getTopOrientation() && corner.getRightOrientation()) {
             incrementX = numericSpeed;
-            incrementY = -numericSpeed;
+            incrementY = -numericSpeed / 2;
             tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.H);
             switcher = true;
         } else if (corner.getTopOrientation()) {
             // NOTHING
         } else if (corner.getRightOrientation()) {
             incrementX = numericSpeed;
-            incrementY = -numericSpeed;
+            incrementY = -numericSpeed / 2;
         } else {
             incrementY = numericSpeed;
-            incrementX = -numericSpeed;
+            incrementX = -numericSpeed / 2;
             tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.V);
             switcher = true;
         }
@@ -220,13 +223,13 @@ public class Ennemi extends Pokemon {
     private void cornerQ() {
         if (corner.getTopOrientation() && corner.getRightOrientation()) {
             incrementY = -numericSpeed;
-            incrementX = -numericSpeed;
+            incrementX = -numericSpeed / 2;
         } else if (corner.getTopOrientation()) {
             incrementX = numericSpeed;
-            incrementY = numericSpeed;
+            incrementY = numericSpeed / 2;
         } else if (corner.getRightOrientation()) {
             incrementY = -numericSpeed;
-            incrementX = -numericSpeed;
+            incrementX = -numericSpeed / 2;
         } else {
             // NOTHING
         }
@@ -235,16 +238,16 @@ public class Ennemi extends Pokemon {
 
     private void cornerS() {
         if (corner.getTopOrientation() && corner.getRightOrientation()) {
-            incrementY = numericSpeed;
+            incrementY = numericSpeed / 2;
             incrementX = -numericSpeed;
         } else if (corner.getTopOrientation()) {
             incrementY = -numericSpeed;
-            incrementX = numericSpeed;
+            incrementX = numericSpeed / 2;
         } else if (corner.getRightOrientation()) {
             // NOTHING
         } else {
             incrementY = -numericSpeed;
-            incrementX = numericSpeed;
+            incrementX = numericSpeed / 2;
         }
     }
 
@@ -253,16 +256,16 @@ public class Ennemi extends Pokemon {
             // NOTHING
         } else if (corner.getTopOrientation()) {
             incrementX = -numericSpeed;
-            incrementY = -numericSpeed;
+            incrementY = -numericSpeed / 2;
             tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.H);
             switcher = true;
         } else if (corner.getRightOrientation()) {
             incrementY = numericSpeed;
-            incrementX = numericSpeed;
+            incrementX = numericSpeed / 2;
             tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.V);
             switcher = true;
         } else {
-            incrementY = -numericSpeed;
+            incrementY = -numericSpeed / 2;
             incrementX = -numericSpeed;
         }
     }
@@ -285,18 +288,18 @@ public class Ennemi extends Pokemon {
                 break;
             case A:
                 incrementY = numericSpeed;
-                incrementX = -numericSpeed;
+                incrementX = -numericSpeed / 2;
                 break;
             case Z:
                 incrementY = numericSpeed;
-                incrementX = numericSpeed;
+                incrementX = numericSpeed / 2;
                 break;
             case Q:
-                incrementY = numericSpeed;
+                incrementY = numericSpeed / 2;
                 incrementX = numericSpeed;
                 break;
             case S:
-                incrementY = numericSpeed;
+                incrementY = numericSpeed / 2;
                 incrementX = -numericSpeed;
                 break;
         }
@@ -501,6 +504,32 @@ public class Ennemi extends Pokemon {
             }
         }
         this.tilesMap = res;
+    }
+
+    private void debugTilesMap(DirectionTiles[][] dirMap) {
+        for (int i = 0; i < dirMap.length; i++) {
+            for (int j = 0; j < dirMap[0].length; j++) {
+                if (dirMap[i][j] == null) {
+                    System.out.print("  ");
+                } else if (dirMap[i][j].getType() == TilesType.A) {
+                    System.out.print("A ");
+                } else if (dirMap[i][j].getType() == TilesType.S) {
+                    System.out.print("S ");
+                } else if (dirMap[i][j].getType() == TilesType.Q) {
+                    System.out.print("Q ");
+                } else if (dirMap[i][j].getType() == TilesType.Z) {
+                    System.out.print("Z ");
+                } else if (dirMap[i][j].getType() == TilesType.H) {
+                    System.out.print("H ");
+                } else if (dirMap[i][j].getType() == TilesType.V) {
+                    System.out.print("V ");
+                } else if (dirMap[i][j].getType() == TilesType.X) {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+
     }
 
 }
