@@ -399,11 +399,11 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Starter.Arcko) {
             ((Starter.Arcko) this).evolution();
-            ((Starter.Arcko) this).unlock();
+            // ((Starter.Arcko) this).unlock();
         }
         if (this instanceof Starter.Moustillon) {
             ((Starter.Moustillon) this).evolution();
-            ((Starter.Moustillon) this).unlock();
+            // ((Starter.Moustillon) this).unlock();
         }
         if (this instanceof Anchwatt) {
             ((Anchwatt) this).evolution();
@@ -415,11 +415,11 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Tylton) {
             ((Tylton) this).evolution();
-            ((Tylton) this).unlock();
+            // ((Tylton) this).unlock();
         }
         if (this instanceof Terhal) {
             ((Terhal) this).evolution();
-            ((Terhal) this).unlock();
+            // ((Terhal) this).unlock();
         }
         if (this instanceof Tarsal) {
             ((Tarsal) this).evolution();
@@ -435,7 +435,7 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Nodulithe) {
             ((Nodulithe) this).evolution();
-            ((Nodulithe) this).unlock();
+            // ((Nodulithe) this).unlock();
         }
         if (this instanceof Mysdibule) {
             ((Mysdibule) this).evolution();
@@ -455,7 +455,7 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Gringolem) {
             ((Gringolem) this).evolution();
-            ((Gringolem) this).unlock();
+            // ((Gringolem) this).unlock();
         }
         if (this instanceof Escargaume) {
             ((Escargaume) this).evolution();

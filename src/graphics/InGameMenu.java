@@ -216,10 +216,6 @@ public class InGameMenu extends JPanel {
                 pas = limiteDeTemps * 100;
             }
             waveTimer.setText(pas + "/" + limiteDeTemps * 100);
-        } else {
-            waveTimer.setText("");
-            timerName.setText("FIN DE PARTIE");
-
         }
 
     }

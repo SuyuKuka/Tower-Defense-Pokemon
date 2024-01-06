@@ -23,6 +23,7 @@ import characters.Starter;
 import characters.Tarsal;
 import characters.Terhal;
 import characters.Tylton;
+import characters.Starter.Arcko;
 import characters.Starter.Salameche;
 import graphics.UpdateMap.Tiles;
 import model.Pokemon.State;
@@ -53,33 +54,21 @@ public class Player {
             pc = new ArrayList<>();
             Starter starterInstance = new Starter();
             Salameche sala0 = starterInstance.new Salameche(); // il doit choisir
-
             Salameche sala1 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala2 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala3 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala4 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala5 = starterInstance.new Salameche(); // il doit choisir
-            Tower nothingTower0 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
-            Tower nothingTower1 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
-            Tower nothingTower2 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
-            Tower nothingTower3 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
-            Tower nothingTower4 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
-            Tower nothingTower5 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
-                    State.TEAM);
+
             hero[0] = null;
             hero[1] = null;
 
-            team[0] = sala0;
-            team[1] = new Anchwatt();
-            team[2] = null;
-            team[3] = null;
-            team[4] = null;
-            team[5] = null;
+            team[0] = new Nodulithe();
+            team[1] = new Terhal();
+            team[2] = new Gringolem();
+            team[3] = new Tylton();
+            team[4] = new Starter().new Arcko();
+            team[5] = new Starter().new Moustillon();
             // nothing tower
             // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
             // "ressources/sprite/nothing.png", State.TEAM);

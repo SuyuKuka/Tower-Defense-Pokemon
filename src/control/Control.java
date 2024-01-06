@@ -16,6 +16,7 @@ import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
+import java.io.FileNotFoundException;
 
 public class Control {
 
@@ -151,7 +152,6 @@ public class Control {
     }
 
     public void restart(GameScreen screen, MapState state) {
-        System.out.println("RESTART");
         screen.getePresent().reset();
         Player.INSTANCE.resetTeam();
 
@@ -161,7 +161,6 @@ public class Control {
         } else {
             prompt = prompt + "c_";
         }
-        System.out.println(state.getEndless());
         if (state.getDiff() == Difficulty.EASY) {
             prompt = prompt + "facile";
         }
@@ -176,7 +175,20 @@ public class Control {
 
     }
 
-    public void freeplay() {
+    public void freeplay(GameScreen screen, JPanel tmp, MapState state) {
+        screen.removeAll();
+        screen.add(tmp);
+        screen.setVisible(true);
+
+        screen.revalidate();
+        screen.repaint();
+
+        state.setEndless(true);
+        state.setInc(state.getCount());
+        try {
+            state.startGraphic(screen);
+        } catch (FileNotFoundException e) {
+        }
 
     }
 

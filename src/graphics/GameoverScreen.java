@@ -53,7 +53,7 @@ public class GameoverScreen extends JPanel {
     private GameScreen screen;
 
     public GameoverScreen(MapState state, GameScreen screen, boolean win) {
-
+        JPanel tmp = screen.getContainer();
         setLayout(new BorderLayout());
         setOpaque(false);
         // STATS
@@ -76,7 +76,7 @@ public class GameoverScreen extends JPanel {
         heading.add(headText);
         heading.setOpaque(false);
 
-        JPanel stats = middleScreen(win);
+        JPanel stats = middleScreen(win, tmp);
         JPanel bottom = maker.imagePanel("ressources/background/banner.png");
         bottom.setPreferredSize(new Dimension(0, 60));
 
@@ -95,7 +95,6 @@ public class GameoverScreen extends JPanel {
             if (pkm != null) {
                 JLabel pokeIcon = new JLabel(new ImageIcon(pkm.getSprite()));
                 pokeIcon.setBackground(Color.BLACK);
-                System.out.println(pkm.getName());
                 team.add(pokeIcon);
             }
         }
@@ -114,7 +113,7 @@ public class GameoverScreen extends JPanel {
 
     }
 
-    private JPanel middleScreen(boolean win) {
+    private JPanel middleScreen(boolean win, JPanel tmp) {
         JPanel statPanel = new JPanel();
         statPanel.setLayout(new GridLayout(6, 1));
         statPanel.setOpaque(false);
@@ -195,7 +194,7 @@ public class GameoverScreen extends JPanel {
         freeplay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.freeplay();
+                control.freeplay(screen, tmp, state);
             }
         });
 

@@ -477,4 +477,16 @@ public class MapState {
         return timer;
     }
 
+    public void setEndless(boolean endless) {
+        this.endless = endless;
+    }
+
+    public int getInc() {
+        return inc;
+    }
+
+    public void setInc(int inc) {
+        this.inc = inc;
+    }
+
 }

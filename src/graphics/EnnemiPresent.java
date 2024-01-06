@@ -250,7 +250,6 @@ public class EnnemiPresent extends JPanel {
 
     public void reset() {
         while (ennemiDisplayed.size() > 0) {
-            System.out.println(ennemiDisplayed.get(0).getName());
             deleteEnnemiLabel(ennemiDisplayed.get(ennemiDisplayed.size() - 1));
         }
 

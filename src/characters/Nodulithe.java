@@ -39,7 +39,7 @@ public class Nodulithe extends Tower implements TowerLoader {
     @Override
     public void primarySkill() {
         // Manque les effets
-        Skill charge = new Skill("Charge", 20, 0, Types.NORMAL, 1, true,
+        Skill charge = new Skill("Charge", 8000000, 0, Types.ROCHE, 1, true,
                 "Coups de tete !");
         learnSkill(charge);
     }
