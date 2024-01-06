@@ -18,6 +18,8 @@ public class Ennemi extends Pokemon {
     public static final Ennemi LIST = new Ennemi();
     public boolean boss;
     private JLabel sprite;
+    private JPanel ennemiInfo;
+
     // DEPLACEMENT
     private Map map;
     private boolean exit;
@@ -467,6 +469,7 @@ public class Ennemi extends Pokemon {
 
     public void buffAllStat(double multipler) {
         setPv(getPv() * multipler);
+        setTotalPv(getTotalPv() * multipler);
         setPhysical(getPhysical() * multipler);
         setSpecial(getSpecial() * multipler);
     }
@@ -532,4 +535,11 @@ public class Ennemi extends Pokemon {
 
     }
 
+    public void setEnnemiInfo(JPanel ennemiInfo) {
+        this.ennemiInfo = ennemiInfo;
+    }
+
+    public JPanel getEnnemiInfo() {
+        return ennemiInfo;
+    }
 }

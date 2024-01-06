@@ -38,6 +38,7 @@ public class EnnemiPresent extends JPanel {
         // Ennemi
         container.setOpaque(false);
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setBorder(new LineBorder(Color.red));
 
         JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
         ennemiLabel.setOpaque(false);
@@ -89,8 +90,8 @@ public class EnnemiPresent extends JPanel {
 
     public void createEnnemiLabel(Ennemi e) {
         JPanel ennemiInfo = new JPanel(new FlowLayout(FlowLayout.LEADING));
-
         ennemiInfo.setOpaque(false);
+        e.setEnnemiInfo(ennemiInfo);
 
         JLabel profilPhoto = new JLabel(new ImageIcon(e.getSprite()));
         profilPhoto.setOpaque(false);
@@ -113,7 +114,6 @@ public class EnnemiPresent extends JPanel {
         healthBar.setName(e.getName());
         healthBar.setBorder(new EmptyBorder(2, 2, 2, 2));
         ennemiInfo.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseEntered(MouseEvent event) {
                 healthBar.setBorder(new LineBorder(Color.WHITE, 2));
@@ -256,20 +256,15 @@ public class EnnemiPresent extends JPanel {
     }
 
     public static void updateEnnemiHealth(Ennemi ennemi, int damageTaken) {
-        for (Component c : container.getComponents()) {
-            if (c instanceof JPanel) {
-                JPanel panel = (JPanel) c;
-                if (panel.getComponent(1) instanceof JProgressBar
-                        && (((JProgressBar) panel.getComponent(1)).getName().equals(ennemi.getName()))) {
-                    JProgressBar healthBar = (JProgressBar) panel.getComponent(1);
-                    int currentHealth = healthBar.getValue();
-                    int newHealth = Math.max(currentHealth + damageTaken, 0);
-                    healthBar.setValue(newHealth);
-                    break;
-                }
+        for (Component compo : ennemi.getEnnemiInfo().getComponents()) {
+            if (compo instanceof JProgressBar) {
+                JProgressBar healthBar = (JProgressBar) compo;
+                int currentHealth = healthBar.getValue();
+                int newHealth = Math.max(currentHealth + damageTaken, 0);
+                healthBar.setValue(newHealth);
+                break;
             }
         }
-
         container.revalidate();
         container.repaint();
     }

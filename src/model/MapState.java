@@ -52,7 +52,7 @@ public class MapState {
     private int limiteDeTemps = 30;
     private int gameSpeed = 50; // GRAPHIC ONLY
     private boolean pause = false;
-    private double money = 400;
+    private double money;
     private double moneyIncrement = 0;
     private int nbTotalWave;
     private int nextWaveIn = 0;
@@ -73,7 +73,6 @@ public class MapState {
 
     //
     public MapState(Difficulty difficulty, int mode) {
-
         Map map = new Map(18, 24, difficulty);
         try {
             InitPokemon.loadingChar();
@@ -221,8 +220,9 @@ public class MapState {
                 }
             }
             //
+
             money = money + 0.01 * 1 + moneyIncrement;
-            countMoney = money;
+            countMoney = countMoney + 0.01 * 1 + moneyIncrement;
             UpdateGraphic(nextWaveIn, false);
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
@@ -389,10 +389,12 @@ public class MapState {
         screen.getuMap().repaint();
         if (e.isBoss()) {
             money = money + 100;
+            countMoney = countMoney + 100;
         } else {
             money = money + 10;
+            countMoney = countMoney + 10;
         }
-        countMoney = money;
+
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
@@ -423,8 +425,11 @@ public class MapState {
     }
 
     public void setGameSpeed(int gameSpeed) {
-        timer.setDelay(gameSpeed);
-        timer.restart();
+        if (timer != null) {
+
+            timer.setDelay(gameSpeed);
+            timer.restart();
+        }
         this.gameSpeed = gameSpeed;
     }
 
@@ -491,6 +496,10 @@ public class MapState {
 
     public void setInc(int inc) {
         this.inc = inc;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 
 }

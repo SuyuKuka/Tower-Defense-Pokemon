@@ -57,7 +57,7 @@ public class Player {
             hero[1] = null;
 
             team[0] = new Anchwatt();
-            team[1] = new Starter().new Salameche();
+            team[1] = null;
             team[2] = null;
             team[3] = null;
             team[4] = null;

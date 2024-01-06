@@ -121,4 +121,8 @@ public class Pokemon {
         return totalPv;
     }
 
+    public void setTotalPv(double totalPv) {
+        this.totalPv = totalPv;
+    }
+
 }

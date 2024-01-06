@@ -49,13 +49,15 @@ public class Tower extends Pokemon {
     private int killCount = 0;
 
     public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
-            State state, int atkCd, Tower.Rayon r) {
+            State state, int atkCd, Tower.Rayon r, int price) {
         super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
-        this.rayon = r;
         exp = 0;
         TList.add(this);
         level = 1;
+
         baseCd = atkCd;
+        this.rayon = r;
+        this.price = price;
     }
 
     private Tower() {
@@ -118,7 +120,12 @@ public class Tower extends Pokemon {
 
         if (skills[select].getUnique()) {
             getUniqueTarget(this, ennemiInMap);
-            attackUnique();
+            if (atkCd <= 0) {
+                atkCd = baseCd;
+                attackUnique();
+            } else {
+                atkCd = atkCd - 1;
+            }
             if (uniqueTarget != null) {
                 if (uniqueTarget.getPv() <= 0) {
                     m.isDead(uniqueTarget);
@@ -131,8 +138,16 @@ public class Tower extends Pokemon {
         } else {
             getZoneTarget(this, ennemiInMap);
             if (zoneTarget.size() != 0) {
-                attackZone();
-                for (Ennemi e : zoneTarget) {
+
+                if (atkCd <= 0) {
+
+                    atkCd = baseCd;
+                    attackZone();
+                } else {
+                    atkCd = atkCd - 1;
+                }
+                for (int i = 0; i < zoneTarget.size(); i++) {
+                    Ennemi e = zoneTarget.get(i);
                     if (e.getPv() <= 0) {
                         m.isDead(e);
                         winExp(e);
@@ -141,9 +156,10 @@ public class Tower extends Pokemon {
                         killCount++;
                     }
                 }
-            }
-        }
 
+            }
+
+        }
     }
 
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
@@ -239,6 +255,7 @@ public class Tower extends Pokemon {
     private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
+
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
                         // System.out.println("Immunise");
@@ -251,11 +268,11 @@ public class Tower extends Pokemon {
                         if (physical >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
-                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
+                            EnnemiPresent.updateEnnemiHealth(e, -1);
                         } else {
                             // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + physical);
-                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
+                            EnnemiPresent.updateEnnemiHealth(e, (int) physical);
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
@@ -274,11 +291,11 @@ public class Tower extends Pokemon {
                         if (special >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
-                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
+                            EnnemiPresent.updateEnnemiHealth(e, -1);
                         } else {
                             // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + special);
-                            EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) special);
+                            EnnemiPresent.updateEnnemiHealth(e, (int) special);
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
@@ -403,18 +420,10 @@ public class Tower extends Pokemon {
     }
 
     public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
-
         tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
-            if (tower.isInRayon(tower, e) && atkCd <= 0) {
-
-                tower.uniqueTarget = e;
-                atkCd = baseCd;
-                break;
-            } else {
-                atkCd = atkCd - 1;
-            }
-
+            tower.uniqueTarget = e;
+            break;
         }
     }
 
@@ -514,6 +523,7 @@ public class Tower extends Pokemon {
     }
 
     private boolean isInRayon(Tower tower, Ennemi ennemi) {
+
         int deltaX = Math.abs(ennemi.getPos()[0] - tower.getPos()[0]);
         int deltaY = Math.abs(ennemi.getPos()[1] - tower.getPos()[1]);
 
@@ -605,7 +615,7 @@ public class Tower extends Pokemon {
     }
 
     public void setAtkCd(int atkCd) {
-        this.atkCd = atkCd;
+        this.baseCd = atkCd;
     }
 
 }

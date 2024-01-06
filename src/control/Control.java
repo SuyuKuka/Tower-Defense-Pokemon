@@ -192,8 +192,10 @@ public class Control {
 
     }
 
-    public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
-        // TODO C'EST QUOI CA ???????
+    public void setTowerOnMap(int[] pos, Tower pkm, MapState state) {
+        state.setTower(pos, pkm);
+        state.setMoney(state.getMoney() - pkm.getPrice());
+        pkm.setPrice(pkm.getPrice() + pkm.getPrice() / 10);
     }
 
     public void openPC() {

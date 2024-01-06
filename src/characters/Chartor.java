@@ -7,6 +7,7 @@ import model.Types;
 public class Chartor extends Tower implements TowerLoader {
 
     public Chartor() {
+        // CROWD HAZARD GLOBAL DOT
         super("Chartor", 85, 85, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
                 State.LOCKED);
         primarySkill();

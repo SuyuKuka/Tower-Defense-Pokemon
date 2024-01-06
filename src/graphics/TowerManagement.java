@@ -17,6 +17,7 @@ public class TowerManagement extends JPanel {
 
     private JLabel nameLabel;
     private JLabel spriteLabel;
+    private JLabel priceLabel;
 
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
@@ -85,7 +86,7 @@ public class TowerManagement extends JPanel {
     private JPanel addPriceLabel() {
         JPanel pricePanel = new JPanel();
         pricePanel.setOpaque(false);
-        JLabel priceLabel = new JLabel("Prix : " + String.valueOf(pokemon.getPrice()) + "$");
+        priceLabel = new JLabel("Prix : " + String.valueOf(pokemon.getPrice()) + "$");
         priceLabel.setFont(maker.getCustomFont().deriveFont(20f));
         priceLabel.setForeground(Color.WHITE);
 
@@ -162,6 +163,9 @@ public class TowerManagement extends JPanel {
     public void updateManager(Tower tower) {
         spriteLabel.setIcon(new ImageIcon(tower.getSprite()));
         nameLabel.setText(tower.getName());
+        priceLabel.setText("Prix : " + pokemon.getPrice() + "$");
+        revalidate();
+        repaint();
     }
 
 }

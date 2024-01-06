@@ -16,12 +16,14 @@ import model.Tower;
 
 import javax.swing.border.*;
 
+import control.Control;
+
 public class UpdateMap extends JLayeredPane {
     private MapState state;
     private TowerPresent tPresent;
 
     private GraphicsMaker maker = new GraphicsMaker();
-
+    private Control control = new Control();
     private JPanel gameMap;
 
     private int cellSize = 32;
@@ -189,14 +191,15 @@ public class UpdateMap extends JLayeredPane {
                     int col = pos[1];
 
                     if (tPresent.getSelectedPokemon() != null) {
-                        if (!tPresent.getSelectedPokemon().isPlaced()) {
-                            //
-                            state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
-                            Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                        Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                        if (!tPresent.getSelectedPokemon().isPlaced() && pkm.getPrice() < state.getMoney()) {
+
+                            control.setTowerOnMap(new int[] { row, col }, pkm, state);
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
                             addSprite(sprite, constraints);
 
                             giveTiles(pkm);
+                            tPresent.getSelectedPokemon().updateManager(pkm);
 
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);

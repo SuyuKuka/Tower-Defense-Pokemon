@@ -87,7 +87,7 @@ public class TowerPresent extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!pokemon.isPlaced() && !pokemon.getSprite().equals("ressources/sprite/nothing.png")) {
+                if (!pokemon.isPlaced() && pokemon != null) {
                     if (pokemon.isSelected()) {
                         if (selectedPokemon != null) {
                             selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
