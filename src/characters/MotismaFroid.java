@@ -13,6 +13,10 @@ public class MotismaFroid extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public MotismaFroid reset() {
+        return new MotismaFroid();
+    }
+
     @Override
     public void evolution() {
         // NOTHING

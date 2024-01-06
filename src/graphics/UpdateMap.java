@@ -63,7 +63,7 @@ public class UpdateMap extends JLayeredPane {
 
                 } else if (map[i][j] == 9) {
                     tiles = new Tiles(new int[] { i, j });
-                    JLabel bg = maker.resizeJLabel("ressources/tiles/ete/obstacle.png", cellSize);
+                    JLabel bg = maker.resizeJLabel("ressources/tiles/automne/obstacle.png", cellSize);
                     GridBagConstraints constraints2 = new GridBagConstraints();
                     tiles.addSprite(bg, constraints2);
                     tiles.setOpaque(false);
@@ -117,28 +117,28 @@ public class UpdateMap extends JLayeredPane {
 
         switch (tilesPathMap[tiles.getPos()[0]][tiles.getPos()[1]].getType()) {
             case X:
-                bg = maker.resizeJLabel("ressources/tiles/ete/xTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/xTiles.png", size);
                 break;
             case H:
-                bg = maker.resizeJLabel("ressources/tiles/ete/hTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/hTiles.png", size);
                 break;
             case V:
-                bg = maker.resizeJLabel("ressources/tiles/ete/vTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/vTiles.png", size);
                 break;
             case A:
-                bg = maker.resizeJLabel("ressources/tiles/ete/aTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/aTiles.png", size);
                 break;
             case Z:
-                bg = maker.resizeJLabel("ressources/tiles/ete/zTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/zTiles.png", size);
                 break;
             case Q:
-                bg = maker.resizeJLabel("ressources/tiles/ete/qTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/qTiles.png", size);
                 break;
             case S:
-                bg = maker.resizeJLabel("ressources/tiles/ete/sTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/sTiles.png", size);
                 break;
             default:
-                bg = maker.resizeJLabel("ressources/tiles/ete/xTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/xTiles.png", size);
                 break;
         }
 

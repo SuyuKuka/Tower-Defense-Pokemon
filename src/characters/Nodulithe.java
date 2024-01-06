@@ -14,6 +14,10 @@ public class Nodulithe extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Nodulithe reset() {
+        return new Nodulithe();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 25) {

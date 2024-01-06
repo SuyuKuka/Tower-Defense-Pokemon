@@ -50,9 +50,12 @@ public class GameoverScreen extends JPanel {
     private ArrayList<Ennemi> ennemiEscaped;
 
     private MapState state;
-    private JPanel screen;
+    private GameScreen screen;
 
-    public GameoverScreen(MapState state, JPanel screen, boolean win) {
+    public GameoverScreen(MapState state, GameScreen screen, boolean win) {
+
+        setLayout(new BorderLayout());
+        setOpaque(false);
         // STATS
         totalWavePassed = state.getCount();
         totalMoneyEarned = (int) state.getCountMoney();
@@ -74,7 +77,6 @@ public class GameoverScreen extends JPanel {
         heading.setOpaque(false);
 
         JPanel stats = middleScreen(win);
-
         JPanel bottom = maker.imagePanel("ressources/background/banner.png");
         bottom.setPreferredSize(new Dimension(0, 60));
 
@@ -90,20 +92,26 @@ public class GameoverScreen extends JPanel {
         team.add(teamHeading);
 
         for (Tower pkm : Player.INSTANCE.getTeam()) {
-            JLabel pokeIcon = new JLabel(new ImageIcon(pkm.getSprite()));
-            pokeIcon.setBackground(Color.BLACK);
-            team.add(pokeIcon);
+            if (pkm != null) {
+                JLabel pokeIcon = new JLabel(new ImageIcon(pkm.getSprite()));
+                pokeIcon.setBackground(Color.BLACK);
+                System.out.println(pkm.getName());
+                team.add(pokeIcon);
+            }
         }
 
-        screen.removeAll();
-        screen.setOpaque(false);
-        screen.add(stats, BorderLayout.CENTER);
-        screen.add(heading, BorderLayout.NORTH);
-        screen.add(bottom, BorderLayout.SOUTH);
-        screen.add(team, BorderLayout.EAST);
+        add(stats, BorderLayout.CENTER);
+        add(heading, BorderLayout.NORTH);
+        add(bottom, BorderLayout.SOUTH);
+        add(team, BorderLayout.EAST);
 
+        screen.remove(screen.getContainer());
+        screen.setOpaque(false);
+
+        screen.add(this);
         screen.revalidate();
         screen.repaint();
+
     }
 
     private JPanel middleScreen(boolean win) {
@@ -123,13 +131,14 @@ public class GameoverScreen extends JPanel {
 
         int totalKill = 0;
         Tower topkill = Player.INSTANCE.getTeam()[0];
+
         for (Tower pkm : Player.INSTANCE.getTeam()) {
-
-            if (pkm.getKillCount() > topkill.getKillCount()) {
-                topkill = pkm;
+            if (pkm != null) {
+                if (pkm.getKillCount() > topkill.getKillCount()) {
+                    topkill = pkm;
+                }
+                totalKill = totalKill + pkm.getKillCount();
             }
-
-            totalKill = totalKill + pkm.getKillCount();
         }
 
         JLabel kill = new JLabel();
@@ -139,7 +148,8 @@ public class GameoverScreen extends JPanel {
 
         JLabel best = new JLabel();
         if (topkill.getKillCount() > 0) {
-            best.setText("Le meilleur pokemon est: " + topkill.getName());
+            best.setText("Le meilleur pokemon est: " + topkill.getName() + " avec " + topkill.getKillCount()
+                    + " pokemons vaincu!");
         } else {
             best.setText("Tout les pokemon sont a egalite");
         }
@@ -177,7 +187,7 @@ public class GameoverScreen extends JPanel {
         restart.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.restart();
+                control.restart(screen, state);
             }
         });
 

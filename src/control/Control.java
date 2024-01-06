@@ -45,11 +45,11 @@ public class Control {
     }
 
     public void gameDoubleSpeed(JButton speed) {
-        if (ms.getGameSpeed() == 20) {
-            ms.setGameSpeed(5);
+        if (ms.getGameSpeed() == 50) {
+            ms.setGameSpeed(1);
             speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
-        } else if (ms.getGameSpeed() == 5) {
-            ms.setGameSpeed(20);
+        } else if (ms.getGameSpeed() == 1) {
+            ms.setGameSpeed(50);
             speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
         }
 
@@ -86,6 +86,7 @@ public class Control {
             if (buttonName.equals("retour")) {
                 main.getCardLayout().show(main.getMainPanel(), "menu");
             } else {
+
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
 
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
@@ -95,7 +96,7 @@ public class Control {
                     } else {
                         mState = new MapState(diff, 1);
                     }
-                    GameScreen screen = new GameScreen();
+                    GameScreen screen = new GameScreen(main);
                     screen.setmState(mState);
                     main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -138,12 +139,40 @@ public class Control {
         return backPanel;
     }
 
-    public void goHome(JPanel screen) {
-        screen.setVisible(false);
+    public void goHome(GameScreen screen) {
+        screen.getePresent().reset();
+        Player.INSTANCE.resetTeam();
+
+        screen.getMain().getCardLayout().show(screen.getMain().getMainPanel(), "menu");
+
+        screen.revalidate();
+        screen.repaint();
 
     }
 
-    public void restart() {
+    public void restart(GameScreen screen, MapState state) {
+        System.out.println("RESTART");
+        screen.getePresent().reset();
+        Player.INSTANCE.resetTeam();
+
+        String prompt = "gameScreen_";
+        if (state.getEndless()) {
+            prompt = prompt + "e_";
+        } else {
+            prompt = prompt + "c_";
+        }
+        System.out.println(state.getEndless());
+        if (state.getDiff() == Difficulty.EASY) {
+            prompt = prompt + "facile";
+        }
+        if (state.getDiff() == Difficulty.NORMAL) {
+            prompt = prompt + "moyen";
+        }
+        if (state.getDiff() == Difficulty.HARD) {
+            prompt = prompt + "difficile";
+        }
+
+        changePanel(prompt, screen.getMain());
 
     }
 

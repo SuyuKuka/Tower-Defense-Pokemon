@@ -13,6 +13,10 @@ public class Lilia extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Lilia reset() {
+        return new Lilia();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 30) {

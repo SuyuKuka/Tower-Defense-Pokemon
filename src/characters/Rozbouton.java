@@ -12,6 +12,10 @@ public class Rozbouton extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Rozbouton reset() {
+        return new Rozbouton();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 30) {

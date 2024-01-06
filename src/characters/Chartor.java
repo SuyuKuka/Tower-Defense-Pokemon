@@ -12,6 +12,10 @@ public class Chartor extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Chartor reset() {
+        return new Chartor();
+    }
+
     @Override
     public void evolution() {
         // NOTHING

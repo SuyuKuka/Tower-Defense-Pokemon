@@ -13,6 +13,10 @@ public class Obalie extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Obalie reset() {
+        return new Obalie();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 5 && getName().equals("Obalie")) {

@@ -12,6 +12,10 @@ public class Terhal extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Terhal reset() {
+        return new Terhal();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 20) {

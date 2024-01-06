@@ -13,6 +13,10 @@ public class Gringolem extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Gringolem reset() {
+        return new Gringolem();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 30) {

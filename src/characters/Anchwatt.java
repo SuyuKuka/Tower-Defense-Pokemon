@@ -13,6 +13,10 @@ public class Anchwatt extends Tower implements TowerLoader {
 
     }
 
+    public Anchwatt reset() {
+        return new Anchwatt();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 5 && getName().equals("Anchwatt")) {

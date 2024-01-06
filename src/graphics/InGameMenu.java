@@ -206,7 +206,7 @@ public class InGameMenu extends JPanel {
             if ((ms.getAllEnnemis().size() - 1) < 0) {
                 compteur.setText("Vagues restants: " + 0);
             } else {
-                compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+                compteur.setText("Vagues restantes: " + (ms.getAllEnnemis().size() - 1));
             }
         }
 

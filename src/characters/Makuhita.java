@@ -12,6 +12,10 @@ public class Makuhita extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Makuhita reset() {
+        return new Makuhita();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 16) {

@@ -12,6 +12,10 @@ public class Ecrapince extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Ecrapince reset() {
+        return new Ecrapince();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 30) {

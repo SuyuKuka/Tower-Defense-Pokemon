@@ -26,7 +26,7 @@ public class TowerManagement extends JPanel {
 
         setLayout(new BorderLayout());
 
-        if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+        if (pokemon != null) {
             add(addSpriteLabel(), BorderLayout.WEST);
             add(addInfoPanel(), BorderLayout.CENTER);
         }
@@ -103,7 +103,7 @@ public class TowerManagement extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (numero > 6) {
-            if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+            if (pokemon != null) {
                 g.drawImage(new ImageIcon("ressources/team/rectanglehero.png").getImage(), 0, 0, getWidth(),
                         getHeight(), this);
             } else {
@@ -111,7 +111,7 @@ public class TowerManagement extends JPanel {
                         getHeight(), this);
             }
         } else {
-            if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+            if (pokemon != null) {
                 g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 0, 0, getWidth(),
                         getHeight(), this);
             } else {

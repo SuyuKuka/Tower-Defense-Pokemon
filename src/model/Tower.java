@@ -4,23 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import characters.Anchwatt;
-import characters.Chartor;
-import characters.Ecrapince;
-import characters.Escargaume;
-import characters.Gringolem;
-import characters.Lilia;
-import characters.Makuhita;
-import characters.MotismaFroid;
-import characters.Mysdibule;
-import characters.Ningale;
-import characters.Nodulithe;
-import characters.Obalie;
-import characters.Rozbouton;
-import characters.Starter;
-import characters.Tarsal;
-import characters.Terhal;
-import characters.Tylton;
+import characters.*;
+
 import graphics.EnnemiPresent;
 import graphics.TowerManagement;
 import graphics.UpdateMap;
@@ -137,7 +122,7 @@ public class Tower extends Pokemon {
                         tower.winExp(tower.uniqueTarget);
                         tower.levelUp();
                         tower.uniqueTarget = null;
-                        killCount++;
+                        tower.killCount++;
                     }
                 }
             } else {
@@ -150,7 +135,7 @@ public class Tower extends Pokemon {
                             tower.winExp(e);
                             tower.levelUp();
                             tower.zoneTarget.remove(e);
-                            killCount++;
+                            tower.killCount++;
                         }
                     }
                 }
@@ -280,7 +265,7 @@ public class Tower extends Pokemon {
         Random r = new Random();
         if (exp > 5 * level) {
             level++;
-            System.out.println("levelUp " + level);
+            // System.out.println("levelUp " + level);
             int addPhysical = r.nextInt(5);
             int addSpecial = r.nextInt(5);// fois un multiplicateur?
             setPhysical(getPhysical() + addPhysical);
@@ -410,15 +395,15 @@ public class Tower extends Pokemon {
         // TODO IL MANQUE POUR LES STARTERS
         if (this instanceof Starter.Salameche) {
             ((Starter.Salameche) this).evolution();
-            ((Starter.Salameche) this).unlock();
+            // ((Starter.Salameche) this).unlock();
         }
         if (this instanceof Starter.Arcko) {
             ((Starter.Arcko) this).evolution();
             ((Starter.Arcko) this).unlock();
         }
-        if (this instanceof Starter.Tiplouf) {
-            ((Starter.Tiplouf) this).evolution();
-            ((Starter.Tiplouf) this).unlock();
+        if (this instanceof Starter.Moustillon) {
+            ((Starter.Moustillon) this).evolution();
+            ((Starter.Moustillon) this).unlock();
         }
         if (this instanceof Anchwatt) {
             ((Anchwatt) this).evolution();
@@ -484,7 +469,6 @@ public class Tower extends Pokemon {
             ((Chartor) this).evolution();
             ((Chartor) this).unlock();
         }
-
     }
 
     private boolean isInRayon(Tower tower, Ennemi ennemi) {

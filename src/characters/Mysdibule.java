@@ -12,6 +12,10 @@ public class Mysdibule extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Mysdibule reset() {
+        return new Mysdibule();
+    }
+
     @Override
     public void evolution() {
         // NOTHING

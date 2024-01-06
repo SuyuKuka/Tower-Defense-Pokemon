@@ -12,6 +12,10 @@ public class Starter {
             primarySkill();
         }
 
+        public Salameche reset() {
+            return new Salameche();
+        }
+
         @Override
         public void evolution() { // marche pas
             if (getLevel() == 16) {
@@ -87,6 +91,10 @@ public class Starter {
             primarySkill();
         }
 
+        public Arcko reset() {
+            return new Arcko();
+        }
+
         @Override
         public void evolution() { // marche pas
             System.out.println("j'ai le niveau?");
@@ -158,17 +166,21 @@ public class Starter {
         }
     }
 
-    public class Tiplouf extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
-        public Tiplouf() {
-            super("Tiplouf", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/froakie.png", State.LOCKED);
+    public class Moustillon extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
+        public Moustillon() {
+            super("Moustillon", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/oshawott/oshawott.gif", State.LOCKED);
             primarySkill();
+        }
+
+        public Moustillon reset() {
+            return new Moustillon();
         }
 
         @Override
         public void evolution() { // marche pas
             if (getLevel() == 16) {
                 System.out.println("j'ai évolué");
-                setSprite("ressources/sprite/frogadier.png");
+                setSprite("ressources/sprite/oshawott/dewott.gif");
                 setName("Croaporal");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
@@ -177,7 +189,7 @@ public class Starter {
             }
             if (getLevel() == 36) {
                 // Methode 1
-                setSprite("ressources/sprite/greninja.png");
+                setSprite("ressources/sprite/oshawott/samurott.gif");
                 setName("Amphinobi");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);

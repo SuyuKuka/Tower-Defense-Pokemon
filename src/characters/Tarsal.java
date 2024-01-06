@@ -12,6 +12,10 @@ public class Tarsal extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Tarsal reset() {
+        return new Tarsal();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 20) {

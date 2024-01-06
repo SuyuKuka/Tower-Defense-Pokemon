@@ -7,12 +7,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
 import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
 import characters.Ningale;
+import characters.Nodulithe;
 import characters.Obalie;
 import characters.Rozbouton;
 import characters.Starter;
 import characters.Tarsal;
+import characters.Terhal;
 import characters.Tylton;
 import characters.Starter.Salameche;
 import graphics.UpdateMap.Tiles;
@@ -34,7 +43,7 @@ public class Player {
 
     private File file = new File("ressources/config/data.csv");
 
-    public Player() {
+    private Player() {
         if (true) {
             this.pseudo = "Joueur";
             money = 1000;
@@ -44,13 +53,6 @@ public class Player {
             pc = new ArrayList<>();
             Starter starterInstance = new Starter();
             Salameche sala0 = starterInstance.new Salameche(); // il doit choisir
-
-            Anchwatt anchwatt = new Anchwatt();
-            Obalie obalie = new Obalie();
-            Tylton tylton = new Tylton();
-            Tarsal tarsal = new Tarsal();
-            Makuhita makuhita = new Makuhita();
-            Rozbouton rozbouton = new Rozbouton();
 
             Salameche sala1 = starterInstance.new Salameche(); // il doit choisir
             Salameche sala2 = starterInstance.new Salameche(); // il doit choisir
@@ -69,15 +71,15 @@ public class Player {
                     State.TEAM);
             Tower nothingTower5 = new Tower(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png",
                     State.TEAM);
-            hero[0] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
-            hero[1] = new Hero(" ", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM);
+            hero[0] = null;
+            hero[1] = null;
 
             team[0] = sala0;
-            team[1] = anchwatt;
-            team[2] = tarsal;
-            team[3] = makuhita;
-            team[4] = rozbouton;
-            team[5] = obalie;
+            team[1] = new Anchwatt();
+            team[2] = null;
+            team[3] = null;
+            team[4] = null;
+            team[5] = null;
             // nothing tower
             // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
             // "ressources/sprite/nothing.png", State.TEAM);
@@ -303,7 +305,7 @@ public class Player {
         }
     }
 
-    public void removeTeam(Tower t) {
+    public void moveToPC(Tower t) {
         for (int i = 0; i < team.length; i++) {
             if (team[i] == t) {
                 team[i] = null;
@@ -311,6 +313,16 @@ public class Player {
             }
         }
         t.setState(State.PC);
+    }
+
+    public void removeTeam(Tower t) {
+        for (int i = 0; i < team.length; i++) {
+            if (team[i] == t) {
+                team[i] = null;
+                break;
+            }
+        }
+        // t.setState(State.PC);
     }
 
     public Tower[] getHero() {
@@ -324,5 +336,68 @@ public class Player {
     // TODO
     public void setPseudo(String pseudo) throws Exception {
 
+    }
+
+    public void resetTeam() {
+        for (Tower t : team) {
+            removeTeam(t);
+            if (t instanceof Starter.Salameche) {
+                addteam(((Starter.Salameche) t).reset());
+            }
+            if (t instanceof Starter.Arcko) {
+                addteam(((Starter.Arcko) t).reset());
+            }
+            if (t instanceof Starter.Moustillon) {
+                addteam(((Starter.Moustillon) t).reset());
+            }
+            if (t instanceof Anchwatt) {
+                addteam(((Anchwatt) t).reset());
+            }
+            if (t instanceof Obalie) {
+                addteam(((Obalie) t).reset());
+            }
+            if (t instanceof Tylton) {
+                addteam(((Tylton) t).reset());
+            }
+            if (t instanceof Terhal) {
+                addteam(((Terhal) t).reset());
+            }
+            if (t instanceof Tarsal) {
+                addteam(((Tarsal) t).reset());
+            }
+            if (t instanceof Rozbouton) {
+                addteam(((Rozbouton) t).reset());
+            }
+            if (t instanceof Ningale) {
+                addteam(((Ningale) t).reset());
+            }
+            if (t instanceof Nodulithe) {
+                addteam(((Nodulithe) t).reset());
+            }
+            if (t instanceof Mysdibule) {
+                addteam(((Mysdibule) t).reset());
+            }
+            if (t instanceof MotismaFroid) {
+                addteam(((MotismaFroid) t).reset());
+            }
+            if (t instanceof Makuhita) {
+                addteam(((Makuhita) t).reset());
+            }
+            if (t instanceof Lilia) {
+                addteam(((Lilia) t).reset());
+            }
+            if (t instanceof Gringolem) {
+                addteam(((Gringolem) t).reset());
+            }
+            if (t instanceof Escargaume) {
+                addteam(((Escargaume) t).reset());
+            }
+            if (t instanceof Ecrapince) {
+                addteam(((Ecrapince) t).reset());
+            }
+            if (t instanceof Chartor) {
+                addteam(((Chartor) t).reset());
+            }
+        }
     }
 }

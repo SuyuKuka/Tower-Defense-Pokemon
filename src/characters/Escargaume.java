@@ -12,6 +12,10 @@ public class Escargaume extends Tower implements TowerLoader {
         primarySkill();
     }
 
+    public Escargaume reset() {
+        return new Escargaume();
+    }
+
     @Override
     public void evolution() {
         if (getLevel() == 30) {
