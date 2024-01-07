@@ -7,9 +7,14 @@ import model.Types;
 public class Ecrapince extends Tower implements TowerLoader {
 
     public Ecrapince() {
-        super("Ecrapince", 80, 50, Types.EAU, Types.NONE, "ressources/sprite/corphish/corphish.gif",
-                State.LOCKED);
+        // MELEE BURST UNIQUE
+        super("Ecrapince", 80, 20, Types.EAU, Types.NONE, "ressources/sprite/corphish/corphish.gif",
+                State.LOCKED, 500, Tower.Rayon.SMALL, 200);
         primarySkill();
+    }
+
+    public Ecrapince reset() {
+        return new Ecrapince();
     }
 
     @Override
@@ -18,53 +23,46 @@ public class Ecrapince extends Tower implements TowerLoader {
             setSprite("ressources/sprite/corphish/crawdaunt.gif");
             setName("Colhomard");
             setPhysical(getPhysical() + 40);
-            setSpecial(getSpecial() + 40);
+            setSpecial(getSpecial() + 10);
             setSecondType(Types.TENEBRE);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill pistoletAO = new Skill("Pistolet a O", 0, 40, Types.EAU, 0.5, true,
-                "Tire de l'eau sur sa cible.");
-        Skill BulleO = new Skill("Bulles d'O", 0, 65, Types.EAU, 2, false,
-                "Lance une grosse bulle charge d'eau.");
-        learnSkill(pistoletAO);
-        learnSkill(BulleO);
+        learnSkill(new Skill("Tranche", 80, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            Skill a = new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, 0.3, true,
-                    "Lacere la cible avec une force obscure.");
-            learnSkill(a);
+            learnSkill(new Skill("Aqua-Breche", 50, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 22) {
-            Skill a = new Skill("Coqui-Lame", 75, 0, Types.EAU, 0.8, true,
-                    "Tranche l'adversaire en utilisant un coquillage aiguise.");
-            learnSkill(a);
+            learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 30) {
-            Skill a = new Skill("Machouille", 20, 0, Types.TENEBRE, 0.25, true,
-                    "Pince a plusieur reprise sa cible.");
-            learnSkill(a);
+            learnSkill(new Skill("Tranche-Nuit", 80, 0, Types.TENEBRE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 40) {
+            learnSkill(new Skill("Griffe Acier", 90, 0, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+        }
+        if (getLevel() == 45) {
+            learnSkill(new Skill("Plaie Croix", 90, 0, Types.INSECTE, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 50) {
-            Skill a = new Skill("Blizzard", 0, 90, Types.GLACE, 10, false,
-                    "Une violente tempete de glace s'abbat sur toute la carte");
-            learnSkill(a);
+            learnSkill(new Skill("Bombe Beurk", 0, 80, Types.POISON, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 55) {
-            Skill a = new Skill("Tir de boue", 0, 55, Types.SOL, 2, true,
-                    "Projette de la Boue sur sa cible");
-            learnSkill(a);
+            learnSkill(new Skill("Damoclès", 120, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 96) {
-            Skill a = new Skill("Guillotine", 100000000, 0, Types.NORMAL, 600, true,
-                    "Annihile la cible d'un seul coup, mais necessite un temps de recharge considerable.");
-            learnSkill(a);
+        if (getLevel() == 70) {
+            learnSkill(new Skill("Vent Glace", 0, 90, Types.GLACE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 80) {
+            learnSkill(new Skill("Pince-Masse", 200, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
         }
     }
 

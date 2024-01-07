@@ -14,10 +14,11 @@ public class GameScreen extends JPanel {
     private UpdateMap uMap;
     private GraphicsMaker maker = new GraphicsMaker();
 
-    private JPanel container = maker.imagePanel("ressources/tiles/grass.png");
+    private JPanel container = maker.imagePanel("ressources/tiles/automne/grass.png");
+    private MainGraphics main;
 
-    public GameScreen() {
-
+    public GameScreen(MainGraphics main) {
+        this.main = main;
         setLayout(new BorderLayout());
         setOpaque(true);
 
@@ -46,6 +47,10 @@ public class GameScreen extends JPanel {
         return ePresent;
     }
 
+    public TowerPresent gettPresent() {
+        return tPresent;
+    }
+
     public UpdateMap getuMap() {
         return uMap;
     }
@@ -56,6 +61,18 @@ public class GameScreen extends JPanel {
 
     public InGameMenu getInGameButton() {
         return inGameButton;
+    }
+
+    public MainGraphics getMain() {
+        return main;
+    }
+
+    public JPanel getContainer() {
+        return container;
+    }
+
+    public void setContainer(JPanel container) {
+        this.container = container;
     }
 
 }

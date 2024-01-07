@@ -7,64 +7,61 @@ import model.Types;
 public class Tylton extends Tower implements TowerLoader {
     // TODO
     public Tylton() {
-        super("Tylton", 40, 40, Types.NORMAL, Types.VOL, "ressources/sprite/swablu/swablu.gif",
-                State.LOCKED);
+        // LASER
+        super("Tylton", 1, 1, Types.VOL, Types.NORMAL, "ressources/sprite/swablu/swablu.gif",
+                State.LOCKED, 25, Tower.Rayon.MEDIUM, 1000);
         primarySkill();
+    }
+
+    public Tylton reset() {
+        return new Tylton();
     }
 
     @Override
     public void evolution() {
-        if (getLevel() == 30) {
+        if (getLevel() == 20) {
             setSprite("ressources/sprite/swablu/altaria.gif");
-            setName("Colhomard");
-            setPhysical(getPhysical() + 40);
-            setSpecial(getSpecial() + 40);
-            setSecondType(Types.TENEBRE);
-            getTiles().replaceSprite(getSprite());
+            setName("Altaria");
+            setPhysical(getPhysical() + 9);
+            setSpecial(getSpecial() + 9);
+            setRayon(Tower.Rayon.LARGE);
+            setSecondType(Types.DRAGON);
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill pistoletAO = new Skill("Pistolet a O", 0, 40, Types.EAU, 0.5, true,
-                "Tire de l'eau sur sa cible.");
-        Skill BulleO = new Skill("Bulles d'O", 0, 65, Types.EAU, 2, false,
-                "Lance une grosse bulle chargé d'eau.");
-        learnSkill(pistoletAO);
-        learnSkill(BulleO);
+        learnSkill(new Skill("Voix Enjoleuse", 0, 1, Types.FEE, Skill.Pattern.UNIQUE, ""));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            Skill a = new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, 0.3, true,
-                    "Lacere la cible avec une force obscure.");
-            learnSkill(a);
+            learnSkill(new Skill("Météores", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 22) {
-            Skill a = new Skill("Coqui-Lame", 75, 0, Types.EAU, 0.8, true,
-                    "Tranche l'adversaire en utilisant un coquillage aiguisé.");
-            learnSkill(a);
+        if (getLevel() == 16) {
+            learnSkill(new Skill("Chant Canon", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 30) {
-            Skill a = new Skill("Machouille", 20, 0, Types.TENEBRE, 0.25, true,
-                    "Pince a plusieur reprise sa cible.");
-            learnSkill(a);
+        if (getLevel() == 20) {
+            learnSkill(new Skill("Draco-Souffle", 0, 1, Types.DRAGON, Skill.Pattern.UNIQUE, ""));
+        }
+        if (getLevel() == 25) {
+            learnSkill(new Skill("Cri Draconique", 0, 1, Types.DRAGON, Skill.Pattern.UNIQUE, ""));
+        }
+        if (getLevel() == 37) {
+            learnSkill(new Skill("Laser Glace", 0, 1, Types.GLACE, Skill.Pattern.UNIQUE, ""));
+        }
+        if (getLevel() == 42) {
+            learnSkill(new Skill("Draco-Choc", 0, 1, Types.DRAGON, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 50) {
-            Skill a = new Skill("Blizzard", 0, 90, Types.GLACE, 10, false,
-                    "Une violente tempete de glace s'abbat sur toute la carte");
-            learnSkill(a);
+            learnSkill(new Skill("Lance-Soleil", 0, 1, Types.PLANTE, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 55) {
-            Skill a = new Skill("Tir de boue", 0, 55, Types.SOL, 2, true,
-                    "Projette de la Boue sur sa cible");
-            learnSkill(a);
+        if (getLevel() == 90) {
+            learnSkill(new Skill("Requiem", 0, 10, Types.NORMAL, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 96) {
-            Skill a = new Skill("Guillotine", 100000000, 0, Types.NORMAL, 600, true,
-                    "Annihile la cible d'un seul coup, mais necessite un temps de recharge considérable.");
-            learnSkill(a);
-        }
+
     }
 }

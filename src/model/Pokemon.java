@@ -6,18 +6,13 @@ public class Pokemon {
         FAST, CLASSIC, SLOW, STUN
     }
 
-    public enum State {
-        PC, TEAM, LOCKED
-    }
-
     private String name;
     private double totalPv;
     private double pv; // pv
     private double physical; // tour -> atk physical, bad -> def physique
     private double special; // tour -> atk special, bad -> def special
-    private Speed speed; // tour -> vitesse atk, bad -> vitesse deplace
+    private Speed speed; // VITESSE DE DEPLA POUR LES ENNEMIS
     private Types[] type = new Types[2];
-    private int lvl; // TODO+COMPETENCE
     private boolean isTower;
     private String sprite;
 
@@ -119,6 +114,10 @@ public class Pokemon {
 
     public double getTotalPv() {
         return totalPv;
+    }
+
+    public void setTotalPv(double totalPv) {
+        this.totalPv = totalPv;
     }
 
 }

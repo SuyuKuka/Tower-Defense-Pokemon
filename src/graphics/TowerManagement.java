@@ -15,6 +15,10 @@ public class TowerManagement extends JPanel {
     private boolean isPlaced = false;
     private GraphicsMaker maker = new GraphicsMaker();
 
+    private JLabel nameLabel;
+    private JLabel spriteLabel;
+    private JLabel priceLabel;
+
     public TowerManagement(Tower pokemon, int numero) {
         this.pokemon = pokemon;
         this.numero = numero;
@@ -23,7 +27,7 @@ public class TowerManagement extends JPanel {
 
         setLayout(new BorderLayout());
 
-        if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+        if (pokemon != null) {
             add(addSpriteLabel(), BorderLayout.WEST);
             add(addInfoPanel(), BorderLayout.CENTER);
         }
@@ -49,17 +53,19 @@ public class TowerManagement extends JPanel {
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
 
-        JLabel spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
+        spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
+        pokemon.setManager(this);
 
         spritePanel.add(spriteLabel, BorderLayout.SOUTH);
 
         // try {
-        //     BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
-        //     Image spriteResized = spriteImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-        //     JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
-        //     spritePanel.add(spriteLabel, BorderLayout.SOUTH);
+        // BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
+        // Image spriteResized = spriteImage.getScaledInstance(60, 60,
+        // Image.SCALE_SMOOTH);
+        // JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
+        // spritePanel.add(spriteLabel, BorderLayout.SOUTH);
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
         spritePanel.setBorder(BorderFactory.createEmptyBorder(5, 28, 0, 0));
         return spritePanel;
@@ -68,7 +74,8 @@ public class TowerManagement extends JPanel {
     private JPanel addNameLabel() {
         JPanel namePanel = new JPanel();
         namePanel.setOpaque(false);
-        JLabel nameLabel = new JLabel(pokemon.getName());
+
+        nameLabel = new JLabel(pokemon.getName());
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(maker.getCustomFont().deriveFont(24f));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -79,7 +86,7 @@ public class TowerManagement extends JPanel {
     private JPanel addPriceLabel() {
         JPanel pricePanel = new JPanel();
         pricePanel.setOpaque(false);
-        JLabel priceLabel = new JLabel("Prix : " + String.valueOf(pokemon.getPrice()) + "$");
+        priceLabel = new JLabel("Prix : " + String.valueOf(pokemon.getPrice()) + "$");
         priceLabel.setFont(maker.getCustomFont().deriveFont(20f));
         priceLabel.setForeground(Color.WHITE);
 
@@ -97,7 +104,7 @@ public class TowerManagement extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (numero > 6) {
-            if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+            if (pokemon != null) {
                 g.drawImage(new ImageIcon("ressources/team/rectanglehero.png").getImage(), 0, 0, getWidth(),
                         getHeight(), this);
             } else {
@@ -105,7 +112,7 @@ public class TowerManagement extends JPanel {
                         getHeight(), this);
             }
         } else {
-            if (!pokemon.getSprite().contains("ressources/sprite/nothing.png")) {
+            if (pokemon != null) {
                 g.drawImage(new ImageIcon("ressources/team/rectanglepkm.png").getImage(), 0, 0, getWidth(),
                         getHeight(), this);
             } else {
@@ -151,6 +158,14 @@ public class TowerManagement extends JPanel {
 
     public void setPlaced(boolean placed) {
         isPlaced = placed;
+    }
+
+    public void updateManager(Tower tower) {
+        spriteLabel.setIcon(new ImageIcon(tower.getSprite()));
+        nameLabel.setText(tower.getName());
+        priceLabel.setText("Prix : " + pokemon.getPrice() + "$");
+        revalidate();
+        repaint();
     }
 
 }

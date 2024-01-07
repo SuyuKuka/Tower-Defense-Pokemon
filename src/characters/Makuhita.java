@@ -7,53 +7,61 @@ import model.Types;
 public class Makuhita extends Tower implements TowerLoader {
 
     public Makuhita() {
+        // MELEE AURA
         super("Makuhita", 60, 20, Types.COMBAT, Types.NONE, "ressources/sprite/makuhita/makuhita.gif",
-                State.LOCKED);
+                State.LOCKED, 250, Tower.Rayon.SMALL, 100);
         primarySkill();
+    }
+
+    public Makuhita reset() {
+        return new Makuhita();
     }
 
     @Override
     public void evolution() {
-        if (getLevel() == 16) {
+        if (getLevel() == 40) {
             setSprite("ressources/sprite/makuhita/hariyama.gif");
             setName("Hariyama");
             setPhysical(getPhysical() + 60);
-            setSpecial(getSpecial());
-            getTiles().replaceSprite(getSprite());
+            setRayon(Tower.Rayon.MEDIUM);
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill cogne = new Skill("Cogne", 20, 0, Types.COMBAT, 0.5, true,
-                "Attaque rapidement la cible avec ses poings.");
-        Skill JetDeSable = new Skill("Jet de Sable", 0, 0, Types.SOL, 1, false,
-                "Baisse la Vitesse de la cible d'un niveau.");
-        learnSkill(cogne);
-        learnSkill(JetDeSable);
+        learnSkill(new Skill("Cogne", 30, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
     }
 
     public void unlock() {
-        if (getLevel() == 7) {
-            Skill a = new Skill("Bluff", 40, 0, Types.NORMAL, 1.5, true,
-                    "Met un coup discret aux pokemon adverse.");
-            learnSkill(a);
+        if (getLevel() == 10) {
+            learnSkill(new Skill("Cyclone", 50, 0, Types.NORMAL, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 16) {
-            Skill a = new Skill("Forte-Paume", 60, 0, Types.COMBAT, 2, true,
-                    "Frappe violemment avec la paume de la main.");
-            learnSkill(a);
+        if (getLevel() == 22) {
+            learnSkill(new Skill("Eboulement", 75, 0, Types.ROCHE, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 30) {
-            Skill a = new Skill("Tackle Lourd", 200, 0, Types.ACIER, 3, true,
-                    "Tackle brutalement l'adversaire mais prend du temps a se relever");
-            learnSkill(a);
+            learnSkill(new Skill("Close Combat", 50, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 40) {
+            learnSkill(new Skill("Forte-Paume", 60, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 45) {
+            learnSkill(new Skill("Tacle Lourd", 90, 0, Types.ACIER, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 50) {
-            Skill a = new Skill("Close Combat", 120, 0, Types.COMBAT, 1.8, true,
-                    "Une attaque rapide et puissante, parfait pour les combatants.");
-            learnSkill(a);
+            learnSkill(new Skill("Frappe Atlas", 80, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 55) {
+            learnSkill(new Skill("Mitra-Poing", 90, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 70) {
+            learnSkill(new Skill("Balayette", 120, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 80) {
+            learnSkill(new Skill("Exploforce", 200, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
         }
     }
 

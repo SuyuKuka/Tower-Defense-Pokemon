@@ -5,12 +5,15 @@ import model.Tower;
 import model.Types;
 
 public class MotismaFroid extends Tower implements TowerLoader {
-    // TODO
     public MotismaFroid() {
-        super("MotismaFroid", 65, 105, Types.ELECTRIQUE, Types.GLACE,
-                "ressources/sprite/frostrotom/frostrotom.gif",
-                State.LOCKED);
+        // CROWD HAZARD GLOBAL DOT ELEC/GLACE
+        super("MotismaFroid", 2, 105, Types.ELECTRIQUE, Types.GLACE, "ressources/sprite/frostrotom/frostrotom.gif",
+                State.LOCKED, 20, Tower.Rayon.GLOBAL, 900);
         primarySkill();
+    }
+
+    public MotismaFroid reset() {
+        return new MotismaFroid();
     }
 
     @Override
@@ -20,45 +23,33 @@ public class MotismaFroid extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill pistoletAO = new Skill("Pistolet a O", 0, 40, Types.EAU, 0.5, true,
-                "Tire de l'eau sur sa cible.");
-        Skill BulleO = new Skill("Bulles d'O", 0, 65, Types.EAU, 2, false,
-                "Lance une grosse bulle chargé d'eau.");
-        learnSkill(pistoletAO);
-        learnSkill(BulleO);
+        learnSkill(new Skill("Cage Eclair", 0, 2, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            Skill a = new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, 0.3, true,
-                    "Lacere la cible avec une force obscure.");
-            learnSkill(a);
+            learnSkill(new Skill("Brouhaha", 0, 10, Types.NORMAL, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 22) {
-            Skill a = new Skill("Coqui-Lame", 75, 0, Types.EAU, 0.8, true,
-                    "Tranche l'adversaire en utilisant un coquillage aiguisé.");
-            learnSkill(a);
+        if (getLevel() == 19) {
+            learnSkill(new Skill("Vibrobscur", 0, 10, Types.TENEBRE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 25) {
+            learnSkill(new Skill("Onde de Choc", 0, 30, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 30) {
-            Skill a = new Skill("Machouille", 20, 0, Types.TENEBRE, 0.25, true,
-                    "Pince a plusieur reprise sa cible.");
-            learnSkill(a);
+            learnSkill(new Skill("Champ Electrifie", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 38) {
+            learnSkill(new Skill("Vent Glace", 0, 30, Types.GLACE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 40) {
+            learnSkill(new Skill("Tonnerre", 0, 50, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 45) {
+            learnSkill(new Skill("Esprit Frappeur", 0, 30, Types.SPECTRE, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 50) {
-            Skill a = new Skill("Blizzard", 0, 90, Types.GLACE, 10, false,
-                    "Une violente tempete de glace s'abbat sur toute la carte");
-            learnSkill(a);
-        }
-        if (getLevel() == 55) {
-            Skill a = new Skill("Tir de boue", 0, 55, Types.SOL, 2, true,
-                    "Projette de la Boue sur sa cible");
-            learnSkill(a);
-        }
-        if (getLevel() == 96) {
-            Skill a = new Skill("Guillotine", 100000000, 0, Types.NORMAL, 600, true,
-                    "Annihile la cible d'un seul coup, mais necessite un temps de recharge considérable.");
-            learnSkill(a);
+            learnSkill(new Skill("Fatal-Foudre", 0, 140, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
         }
     }
 }

@@ -5,14 +5,14 @@ import model.InitWaves.Difficulty;
 import characters.Starter;
 
 import characters.Starter.Salameche;
-
+import graphics.EnnemiPresent;
 import graphics.GameScreen;
+import graphics.GameoverScreen;
 import graphics.UpdateMap;
 
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.*;
-
-import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -21,7 +21,16 @@ import model.Ennemi;
 import model.MapState;
 import model.Player;
 import model.Tower;
+import java.awt.*;
+import javax.swing.Timer;
 
+import model.MapState;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+
+import javax.swing.border.*;
 import javax.swing.border.*;
 
 public class MapState {
@@ -39,30 +48,40 @@ public class MapState {
 
     private int pv = 3;
     private int limiteDeTemps = 30;
-    private int gameSpeed = 20; // GRAPHIC ONLY
+    private int gameSpeed = 50; // GRAPHIC ONLY
     private boolean pause = false;
-    private double money = 400;
+    private double money;
     private double moneyIncrement = 0;
     private int nbTotalWave;
     private int nextWaveIn = 0;
     private Random rand = new Random();
-
+    private Timer timer;
     private boolean endless;
     private int count = 0;
     private InitWaves w;
 
-    public MapState(Difficulty difficulty, int mode) {
+    private Difficulty diff;
 
+    int step = 0;
+    int inc = 1;
+
+    // STATS
+    private double countMoney;
+    private ArrayList<Ennemi> ennemiEscaped = new ArrayList<>();
+
+    //
+    public MapState(Difficulty difficulty, int mode) {
         Map map = new Map(18, 24, difficulty);
         try {
             InitPokemon.loadingChar();
         } catch (FileNotFoundException e) {
 
         }
+        diff = difficulty;
         InitWaves w = new InitWaves(difficulty);
         if (difficulty == Difficulty.EASY) {
             limiteDeTemps = 40;
-            money = 600;
+            money = 8000;
         } else if (difficulty == Difficulty.NORMAL) {
             limiteDeTemps = 25;
             money = 400;
@@ -70,7 +89,7 @@ public class MapState {
             limiteDeTemps = 10;
             money = 200;
         }
-
+        countMoney = money; // STATS
         endless = mode == 1;
         if (!endless) {
             allEnnemis = w.getAllEnnemis();
@@ -117,7 +136,7 @@ public class MapState {
             allEnnemis.add(w.initEndless(increment++));
         }
 
-        while (gameContinue() || endless) {
+        while (!endGame() || endless) {
             if (endless && allEnnemis.size() == 1) {
                 allEnnemis.add(w.initEndless(increment++));
 
@@ -167,11 +186,6 @@ public class MapState {
 
         this.screen = screen;
 
-        Scanner sc = new Scanner(System.in);
-
-        int step = 0;
-        int inc = 1;
-
         // MODE ENDLESS
         if (endless) {
             allEnnemis.add(w.initEndless(inc++));
@@ -190,18 +204,7 @@ public class MapState {
         }
         nbTotalWave = allEnnemis.size();
 
-        while (gameContinue() || endless) {
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(gameSpeed);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            };
-            task.run();
-
+        timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
             // ENDLESS
             if (endless && allEnnemis.size() == 3) {
                 allEnnemis.add(w.initEndless(inc++));
@@ -215,40 +218,61 @@ public class MapState {
                 }
             }
             //
+
             money = money + 0.01 * 1 + moneyIncrement;
-            UpdateGraphic(nextWaveIn);
+            countMoney = countMoney + 0.01 * 1 + moneyIncrement;
+            UpdateGraphic(nextWaveIn, false);
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
             step = ennemiComing(step);
             step++;
             nextWaveIn++;
-            Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
+
+            for (Tower t : towerPresent) {
+                t.attack2(ennemiPresent, this);
+
+            }
+            // Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
                 screen.getuMap().remove(e.getJLabelSprite());
             }
 
-            while (pause) {
-                task.run();
+            if (endGame()) {
+                allEnnemis.clear();
+                ennemiPresent.clear();
+                wave.clear();
+                if (pv == 0) {
+                    System.out.println("VOUS AVEZ PERDU");
+                    gameOverScreen(false);
+                } else {
+                    System.out.println("VOUS AVEZ GAGNEE");
+                    gameOverScreen(true);
+                }
+                timer.stop();
             }
-        }
-        sc.close();
+        });
+
+        timer.start();
 
     }
 
-    private boolean gameContinue() {
+    private boolean endGame() {
+
         if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
-            System.out.println("VOUS AVEZ GAGNEE");
-            UpdateGraphic(0);
-            return false;
+            return true;
         }
         if (pv == 0) {
-            System.out.println("VOUS AVEZ PERDU");
-            UpdateGraphic(0);
-            endless = false;
-            return false;
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    private void gameOverScreen(boolean win) {
+        UpdateGraphic(0, true);
+        GameoverScreen fini = new GameoverScreen(this, screen, win);
+        fini.revalidate();
+        fini.repaint();
     }
 
     private int ennemiComing(int pas) {
@@ -293,6 +317,7 @@ public class MapState {
             if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;
                 escaped = e;
+                ennemiEscaped.add(e);
             }
         }
 
@@ -308,7 +333,7 @@ public class MapState {
     }
 
     private void loadNextWave() {
-        if (nextWaveIn > limiteDeTemps * 100) {
+        if (nextWaveIn > limiteDeTemps * 100 || ennemiPresent.isEmpty() && wave.isEmpty()) {
 
             count++;
             nextWaveIn = 0;
@@ -362,19 +387,25 @@ public class MapState {
         screen.getuMap().repaint();
         if (e.isBoss()) {
             money = money + 100;
+            countMoney = countMoney + 100;
         } else {
             money = money + 10;
+            countMoney = countMoney + 10;
         }
+
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
         }
     }
 
-    public void UpdateGraphic(int pas) {
+    public void UpdateGraphic(int pas, boolean lose) {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
-        screen.getInGameButton().updateButton(pas, limiteDeTemps, count);
+        screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
+        for (Ennemi e : ennemiPresent) {
+            EnnemiPresent.updateEnnemiHealth(e);
+        }
 
     }
 
@@ -395,6 +426,11 @@ public class MapState {
     }
 
     public void setGameSpeed(int gameSpeed) {
+        if (timer != null) {
+
+            timer.setDelay(gameSpeed);
+            timer.restart();
+        }
         this.gameSpeed = gameSpeed;
     }
 
@@ -403,6 +439,11 @@ public class MapState {
     }
 
     public void setPause(boolean pause) {
+        if (pause) {
+            timer.stop();
+        } else {
+            timer.start();
+        }
         this.pause = pause;
     }
 
@@ -424,6 +465,42 @@ public class MapState {
 
     public boolean getEndless() {
         return endless;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public double getCountMoney() {
+        return countMoney;
+    }
+
+    public ArrayList<Ennemi> getEnnemiEscaped() {
+        return ennemiEscaped;
+    }
+
+    public Difficulty getDiff() {
+        return diff;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setEndless(boolean endless) {
+        this.endless = endless;
+    }
+
+    public int getInc() {
+        return inc;
+    }
+
+    public void setInc(int inc) {
+        this.inc = inc;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 
 }

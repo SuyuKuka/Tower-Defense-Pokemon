@@ -45,8 +45,8 @@ public class InitWaves {
                 }
             }
 
-            if (!haveBoss(wave)) { // AJOUTE UN BOSS SUPPLEMENTAIRE TOUT LES 10 WAVE
-                for (int j = 0; j < i / 10; j++) {
+            if (!haveBoss(wave)) { // AJOUTE UN BOSS SUPPLEMENTAIRE TOUT LES 5 WAVES
+                for (int j = 0; j < i / 5; j++) {
                     wave.add(getBoss());
                 }
             }
@@ -95,11 +95,11 @@ public class InitWaves {
     private void test(ArrayList<Ennemi> wave) {
         AllWaves.clear();
         wave.clear();
-        wave.add(Ennemi.LIST.getBossList().get(1));
         wave.add(Ennemi.LIST.getList().get(1));
+        wave.add(Ennemi.LIST.getList().get(0));
         /*
-         * wave.add(Ennemi.LIST.getList().get(0));
          * wave.add(Ennemi.LIST.getList().get(2));
+         * wave.add(Ennemi.LIST.getBossList().get(1));
          * wave.add(Ennemi.LIST.getList().get(3));
          * wave.add(Ennemi.LIST.getList().get(4));
          * wave.add(Ennemi.LIST.getList().get(5));
@@ -141,7 +141,7 @@ public class InitWaves {
         return false;
     }
 
-    private void difficultyAjust(Difficulty diff) { // AJUSTABLE
+    private void difficultyAjust(Difficulty diff) {
         if (diff == Difficulty.EASY) {
             nbWave = 20;
             multiplier = 0.5;

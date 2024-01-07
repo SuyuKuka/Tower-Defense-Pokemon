@@ -16,17 +16,20 @@ import model.Tower;
 
 import javax.swing.border.*;
 
+import control.Control;
+
 public class UpdateMap extends JLayeredPane {
     private MapState state;
     private TowerPresent tPresent;
 
     private GraphicsMaker maker = new GraphicsMaker();
-
+    private Control control = new Control();
     private JPanel gameMap;
 
     private int cellSize = 32;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
+
         JPanel mapLayer = new JPanel();
         mapLayer.setLayout(new BorderLayout());
         mapLayer.setOpaque(false);
@@ -63,7 +66,7 @@ public class UpdateMap extends JLayeredPane {
 
                 } else if (map[i][j] == 9) {
                     tiles = new Tiles(new int[] { i, j });
-                    JLabel bg = maker.resizeJLabel("ressources/tiles/obstacle.png", cellSize);
+                    JLabel bg = maker.resizeJLabel("ressources/tiles/automne/obstacle.png", cellSize);
                     GridBagConstraints constraints2 = new GridBagConstraints();
                     tiles.addSprite(bg, constraints2);
                     tiles.setOpaque(false);
@@ -75,7 +78,6 @@ public class UpdateMap extends JLayeredPane {
 
                 constraints.gridx = j;
                 constraints.gridy = i;
-
                 constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
                 gameMap.add(tiles, constraints);
@@ -117,28 +119,28 @@ public class UpdateMap extends JLayeredPane {
 
         switch (tilesPathMap[tiles.getPos()[0]][tiles.getPos()[1]].getType()) {
             case X:
-                bg = maker.resizeJLabel("ressources/tiles/xTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/xTiles.png", size);
                 break;
             case H:
-                bg = maker.resizeJLabel("ressources/tiles/hTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/hTiles.png", size);
                 break;
             case V:
-                bg = maker.resizeJLabel("ressources/tiles/vTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/vTiles.png", size);
                 break;
             case A:
-                bg = maker.resizeJLabel("ressources/tiles/aTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/aTiles.png", size);
                 break;
             case Z:
-                bg = maker.resizeJLabel("ressources/tiles/zTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/zTiles.png", size);
                 break;
             case Q:
-                bg = maker.resizeJLabel("ressources/tiles/qTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/qTiles.png", size);
                 break;
             case S:
-                bg = maker.resizeJLabel("ressources/tiles/sTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/sTiles.png", size);
                 break;
             default:
-                bg = maker.resizeJLabel("ressources/tiles/xTiles.png", size);
+                bg = maker.resizeJLabel("ressources/tiles/automne/xTiles.png", size);
                 break;
         }
 
@@ -189,13 +191,15 @@ public class UpdateMap extends JLayeredPane {
                     int col = pos[1];
 
                     if (tPresent.getSelectedPokemon() != null) {
-                        if (!tPresent.getSelectedPokemon().isPlaced()) {
-                            //
-                            state.setTower(new int[] { row, col }, team[tPresent.getSelectedPokemon().getNumero() - 1]);
-                            Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                        Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
+                        if (!tPresent.getSelectedPokemon().isPlaced() && pkm.getPrice() < state.getMoney()) {
+
+                            control.setTowerOnMap(new int[] { row, col }, pkm, state);
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
                             addSprite(sprite, constraints);
+
                             giveTiles(pkm);
+                            tPresent.getSelectedPokemon().updateManager(pkm);
 
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);
@@ -215,6 +219,7 @@ public class UpdateMap extends JLayeredPane {
                 remove(spriteOnIt);
                 spriteOnIt = jlabel;
                 this.add(jlabel, constraints);
+
                 jlabel.getParent().revalidate();
             }
         }

@@ -8,14 +8,14 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
-import graphics.TowerPresent;
-import model.Pokemon.State;
+import model.Tower.State;
 import model.MapState;
 import model.Player;
 import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
+import java.io.FileNotFoundException;
 
 public class Control {
 
@@ -45,11 +45,11 @@ public class Control {
     }
 
     public void gameDoubleSpeed(JButton speed) {
-        if (ms.getGameSpeed() == 20) {
-            ms.setGameSpeed(5);
+        if (ms.getGameSpeed() == 50) {
+            ms.setGameSpeed(1);
             speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
-        } else if (ms.getGameSpeed() == 5) {
-            ms.setGameSpeed(20);
+        } else if (ms.getGameSpeed() == 1) {
+            ms.setGameSpeed(50);
             speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
         }
 
@@ -86,6 +86,7 @@ public class Control {
             if (buttonName.equals("retour")) {
                 main.getCardLayout().show(main.getMainPanel(), "menu");
             } else {
+
                 if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
 
                     Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
@@ -95,7 +96,7 @@ public class Control {
                     } else {
                         mState = new MapState(diff, 1);
                     }
-                    GameScreen screen = new GameScreen();
+                    GameScreen screen = new GameScreen(main);
                     screen.setmState(mState);
                     main.getMainPanel().add(screen, "gameScreen");
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -138,8 +139,62 @@ public class Control {
         return backPanel;
     }
 
-    public void setTowerOnMap(int[] pos, TowerPresent tPresent, MapState state, Tower[] team) {
-        // TODO C'EST QUOI CA ???????
+    public void goHome(GameScreen screen) {
+        screen.getePresent().reset();
+        Player.INSTANCE.resetTeam();
+
+        screen.getMain().getCardLayout().show(screen.getMain().getMainPanel(), "menu");
+
+        screen.revalidate();
+        screen.repaint();
+
+    }
+
+    public void restart(GameScreen screen, MapState state) {
+        screen.getePresent().reset();
+        Player.INSTANCE.resetTeam();
+
+        String prompt = "gameScreen_";
+        if (state.getEndless()) {
+            prompt = prompt + "e_";
+        } else {
+            prompt = prompt + "c_";
+        }
+        if (state.getDiff() == Difficulty.EASY) {
+            prompt = prompt + "facile";
+        }
+        if (state.getDiff() == Difficulty.NORMAL) {
+            prompt = prompt + "moyen";
+        }
+        if (state.getDiff() == Difficulty.HARD) {
+            prompt = prompt + "difficile";
+        }
+
+        changePanel(prompt, screen.getMain());
+
+    }
+
+    public void freeplay(GameScreen screen, JPanel tmp, MapState state) {
+        screen.removeAll();
+        screen.add(tmp);
+        screen.setVisible(true);
+
+        screen.revalidate();
+        screen.repaint();
+
+        state.setEndless(true);
+        state.setInc(state.getCount());
+        try {
+            state.startGraphic(screen);
+        } catch (FileNotFoundException e) {
+        }
+
+    }
+
+    public void setTowerOnMap(int[] pos, Tower pkm, MapState state) {
+        state.setTower(pos, pkm);
+        state.setMoney(state.getMoney() - pkm.getPrice());
+        pkm.setPrice(pkm.getPrice() + pkm.getPrice() / 10);
     }
 
     public void openPC() {

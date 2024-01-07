@@ -10,6 +10,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
+import java.io.FileNotFoundException;
+import java.util.*;
+
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import model.Ennemi;
+
+import model.MapState;
+import model.Player;
+import model.Tower;
+
+import javax.swing.border.*;
+
 public class InGameMenu extends JPanel {
 
     private GraphicsMaker maker = new GraphicsMaker();
@@ -21,6 +36,7 @@ public class InGameMenu extends JPanel {
     private JLabel compteur;
     private JLabel waveTimer;
     private JButton pc;
+    private JLabel timerName;
 
     public InGameMenu(boolean topPanel, MapState ms) {
 
@@ -86,7 +102,7 @@ public class InGameMenu extends JPanel {
         nbWave.add(compteur, BorderLayout.CENTER);
 
         // TIMER DE VAGUE
-        JLabel timerName = new JLabel();
+        timerName = new JLabel();
         timerName.setText("Prochaine vague dans: ");
         timerName.setFont(maker.getCustomFont().deriveFont(30f));
         timerName.setForeground(Color.WHITE);
@@ -182,7 +198,7 @@ public class InGameMenu extends JPanel {
         }
     }
 
-    public void updateButton(int pas, int limiteDeTemps, int count) {
+    public void updateButton(int pas, int limiteDeTemps, int count, boolean lose) {
         if (ms.getEndless()) {
             compteur.setText("Vague: " + count);
         } else {
@@ -190,14 +206,17 @@ public class InGameMenu extends JPanel {
             if ((ms.getAllEnnemis().size() - 1) < 0) {
                 compteur.setText("Vagues restants: " + 0);
             } else {
-                compteur.setText("Vagues restants: " + (ms.getAllEnnemis().size() - 1));
+                compteur.setText("Vagues restantes: " + (ms.getAllEnnemis().size() - 1));
             }
         }
 
-        if (pas >= limiteDeTemps * 100) {
-            pas = limiteDeTemps * 100;
+        if (!lose) {
+
+            if (pas >= limiteDeTemps * 100) {
+                pas = limiteDeTemps * 100;
+            }
+            waveTimer.setText(pas + "/" + limiteDeTemps * 100);
         }
-        waveTimer.setText(pas + "/" + limiteDeTemps * 100);
 
     }
 

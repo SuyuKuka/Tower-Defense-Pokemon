@@ -7,227 +7,222 @@ import model.Types;
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
         public Salameche() {
+            // ROCKET WITHOUT AOE
             super("Salameche", 22, 38, Types.FEU, Types.NONE, "ressources/sprite/charmander/charmander.gif",
-                    State.LOCKED);
+                    State.LOCKED, 50, Tower.Rayon.SMALL, 100);
             primarySkill();
         }
 
+        public Salameche reset() {
+            return new Salameche();
+        }
+
         @Override
-        public void evolution() { // marche pas
-            if (getLevel() == 16) {
-                System.out.println("j'ai évolué");
+        public void evolution() {
+            if (getLevel() == 15) {
                 setSprite("ressources/sprite/charmander/charmeleon.gif");
                 setName("Reptincel");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                getTiles().replaceSprite(getSprite());
+                setAtkCd(80);
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
-            if (getLevel() == 36) {
-                // Methode 1
+            if (getLevel() == 30) {
                 setSprite("ressources/sprite/charmander/charizard.gif");
                 setName("Dracaufeu");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
                 setSecondType(Types.VOL);
-                getTiles().replaceSprite(getSprite());
+                setAtkCd(150);
+                setRayon(Tower.Rayon.LARGE);
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
         }
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Griffe", 40, 0, Types.NORMAL, 1, true,
-                    "Utilise ses griffes pour lui infliger des degats."));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
+            learnSkill(new Skill("Griffe", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
 
         @Override
         public void unlock() { // 9
             if (getLevel() == 7) {
-                learnSkill(
-                        new Skill("Flammeche", 0, 40, Types.FEU, 1, true, "Crache des petites flamme sur son ennemi."));
+                learnSkill(new Skill("Flammeche", 0, 40, Types.FEU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 16) {
-                learnSkill(new Skill("Draco-Rage", 0, 40, Types.DRAGON, 1, true,
-                        "Utilise sa rage pour lancer un cri avec une forme de dragon."));
+                learnSkill(new Skill("Draco-Rage", 0, 40, Types.DRAGON, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 24) {
-                learnSkill(new Skill("Crocs Feu", 60, 0, Types.FEU, 1, true,
-                        "Enflamme ses crocs, pour infliger des ddegats."));
+                learnSkill(new Skill("Crocs Feu", 60, 0, Types.FEU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 32) {
-                learnSkill(new Skill("Rebondifeu", 0, 55, Types.FEU, 1, true, "Balance une flamme qui rebondit."));
+                learnSkill(new Skill("Rebondifeu", 0, 55, Types.FEU, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Cru-Aile", 65, 0, Types.VOL, 1, true,
-                        "Utilise ses ailes pour frapper son ennemi en plein fouet."));
+                learnSkill(new Skill("Cru-Aile", 65, 0, Types.VOL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 41) {
-                learnSkill(new Skill("Tranche", 70, 0, Types.NORMAL, 1, true, "Materialise une epee tranchante."));
+                learnSkill(new Skill("Tranche", 70, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Lame d'Air", 85, 0, Types.VOL, 1, true,
-                        "Forme des lames d'airs avec les battements de ses ailes."));
+                learnSkill(new Skill("Lame d'Air", 85, 0, Types.VOL, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 60) {
-                learnSkill(new Skill("Boutefeu", 100, 0, Types.FEU, 1, true,
-                        "Enflamme tout son corps d'un feu ardent puis fonce sur son ennemi."));
+                learnSkill(new Skill("Boutefeu", 100, 0, Types.FEU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Feu d'enfer", 0, 150, Types.FEU, 1, true,
-                        "Utilise les flammes des enfers infligeants d'enormes degats."));
+                learnSkill(new Skill("Feu d'enfer", 0, 150, Types.FEU, Skill.Pattern.UNIQUE, ""));
             }
         }
     }
 
     public class Arcko extends Tower implements TowerLoader { // Treecko - Grovyle - Sceptile
         public Arcko() {
-            super("Arcko", 20, 40, Types.PLANTE, Types.NONE, "ressources/sprite/treecko/treecko.gif", State.LOCKED);
+            // FAST MELEE AOE
+            super("Arcko", 20, 40, Types.PLANTE, Types.NONE, "ressources/sprite/treecko/treecko.gif", State.LOCKED, 50,
+                    Tower.Rayon.SMALL, 100);
             primarySkill();
         }
 
+        public Arcko reset() {
+            return new Arcko();
+        }
+
         @Override
-        public void evolution() { // marche pas
-            System.out.println("j'ai le niveau?");
+        public void evolution() {
             if (getLevel() == 16) {
-                System.out.println("j'ai évolué");
                 setSprite("ressources/sprite/treecko/grovyle.gif");
                 setName("Massko");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                getTiles().replaceSprite(getSprite());
+                setRayon(Tower.Rayon.MEDIUM);
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
             if (getLevel() == 36) {
-                // Methode 1
                 setSprite("ressources/sprite/treecko/sceptile.gif");
                 setName("Jungko");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
-                getTiles().replaceSprite(getSprite());
-
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
         }
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, 1, true,
-                    "Fonce sur son ennemi et l'ecrase de toutes ses forces."));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
+            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
 
         @Override
         public void unlock() {
             if (getLevel() == 6) {
-                learnSkill(new Skill("Feuillage", 0, 40, Types.PLANTE, 1, true,
-                        "Produis des feiilles et les projectes sur son adversaire."));
+                learnSkill(new Skill("Feuillage", 0, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 9) {
-                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, 0.6, true,
-                        "Fonce rapidement sur son ennemi pour lui infliger des degats."));
+                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 16) {
-                learnSkill(new Skill("Mega-Sangsue", 0, 40, Types.PLANTE, 1, true, "Drainne la force de son ennemi."));
+                learnSkill(new Skill("Mega-Sangsue", 0, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 25) {
-                learnSkill(new Skill("Giga-Sangsue", 0, 55, Types.PLANTE, 1, true,
-                        "Absorbe la force vitale de son ennemi."));
+                learnSkill(new Skill("Giga-Sangsue", 0, 55, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Souplesse", 60, 0, Types.NORMAL, 1, true,
-                        "Utilise son corps pour frapper son ennemi."));
+                learnSkill(new Skill("Souplesse", 60, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 44) {
-                learnSkill(new Skill("Lame-Feuille", 70, 40, Types.PLANTE, 1, true, "Produis des lames de feuilles."));
+                learnSkill(new Skill("Lame-Feuille", 70, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Plaie Croix", 80, 0, Types.INSECTE, 1, true,
-                        "Entaille ses ennemies de maniere brutal."));
+                learnSkill(new Skill("Plaie Croix", 80, 0, Types.INSECTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 58) {
-                learnSkill(new Skill("Eco-Sphere", 0, 100, Types.PLANTE, 1, true,
-                        "Se concentre pour former une boule d'energie."));
+                learnSkill(new Skill("Eco-Sphere", 0, 100, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Tempete Verte", 0, 150, Types.PLANTE, 1, true,
-                        "Provoque une enorme tempete avec sa foce pure."));
+                learnSkill(new Skill("Tempete Verte", 0, 150, Types.PLANTE, Skill.Pattern.AURA, ""));
             }
         }
     }
 
-    public class Tiplouf extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
-        public Tiplouf() {
-            super("Tiplouf", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/froakie.png", State.LOCKED);
+    public class Moustillon extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
+        public Moustillon() {
+            // MID RANGE MID
+            super("Moustillon", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/oshawott/oshawott.gif", State.LOCKED,
+                    50, Tower.Rayon.SMALL, 100);
             primarySkill();
         }
 
+        public Moustillon reset() {
+            return new Moustillon();
+        }
+
         @Override
-        public void evolution() { // marche pas
+        public void evolution() {
             if (getLevel() == 16) {
-                System.out.println("j'ai évolué");
-                setSprite("ressources/sprite/frogadier.png");
-                setName("Croaporal");
+                setSprite("ressources/sprite/oshawott/dewott.gif");
+                setName("Mateloutre");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
             if (getLevel() == 36) {
-                // Methode 1
-                setSprite("ressources/sprite/greninja.png");
-                setName("Amphinobi");
+                setSprite("ressources/sprite/oshawott/samurott.gif");
+                setName("Clamiral");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
-                getTiles().replaceSprite(getSprite());
+                setRayon(Tower.Rayon.MEDIUM);
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
         }
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, 1, true,
-                    "Fonce sur son ennemi et l'ecrase de toutes ses forces."));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-            learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
+            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
         }
 
         @Override
         public void unlock() {
             if (getLevel() == 5) {
-                learnSkill(new Skill("Ecume", 0, 40, Types.EAU, 1, true,
-                        "Produis des eccumes et les projectes sur son adversaire."));
+                learnSkill(new Skill("Ecume", 0, 40, Types.EAU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 8) {
-                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, 0.6, true,
-                        "Fonce rapidement sur son ennemi pour lui infliger des degats."));
+                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 10) {
-                learnSkill(new Skill("Lechouile", 30, 0, Types.SPECTRE, 1, true,
-                        "Utilise sa langue pour lecher son ennemi."));
+                learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 14) {
-                learnSkill(new Skill("Vibraqua", 0, 60, Types.EAU, 1, true, "Lance des anneaux d'eau."));
+                learnSkill(new Skill("Vibraqua", 0, 60, Types.EAU, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 23) {
-                learnSkill(new Skill("Ombre Portee", 40, 0, Types.SPECTRE, 1, true, "Utilise son ombre pour taper."));
+                learnSkill(new Skill("Aeropique", 40, 0, Types.VOL, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Extrasenceur", 0, 80, Types.PSY, 1, true,
-                        "Utilise des pouvoirs psychiques pour infliger des degats."));
+                learnSkill(new Skill("Aqua-Jet", 80, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 45) {
-                learnSkill(new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, 1, true, "Tranche son ennemi."));
+                learnSkill(new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, Skill.Pattern.AURA, ""));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Hydrocanon", 0, 100, Types.EAU, 1, true, "Tire un grand jet d'eau."));
+                learnSkill(new Skill("Hydrocanon", 0, 100, Types.EAU, Skill.Pattern.UNIQUE, ""));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Sheauriken", 150, 0, Types.EAU, 1, true,
-                        "Balance son sheauriken derriere son dos, le frappe violemment son ennemmi."));
+                learnSkill(new Skill("Lame Sainte", 150, 0, Types.COMBAT, Skill.Pattern.UNIQUE, ""));
             }
         }
     }
