@@ -25,11 +25,12 @@ public class UpdateMap extends JLayeredPane {
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = new Control();
     private JPanel gameMap;
+    private JPanel screen;
 
     private int cellSize = 32;
 
-    public UpdateMap(MapState state, TowerPresent tPresent) {
-
+    public UpdateMap(MapState state, TowerPresent tPresent, JPanel screen) {
+        this.screen = screen;
         JPanel mapLayer = new JPanel();
         mapLayer.setLayout(new BorderLayout());
         mapLayer.setOpaque(false);
@@ -157,8 +158,10 @@ public class UpdateMap extends JLayeredPane {
         private int[] pos;
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
-        JLabel empty = new JLabel(new ImageIcon("ressources/sprite/nothing.png"));
-        GridBagConstraints constraints = new GridBagConstraints();
+        private JLabel empty = new JLabel(new ImageIcon("ressources/sprite/nothing.png"));
+        private GridBagConstraints constraints = new GridBagConstraints();
+
+        private Tower pokemon;
 
         public Tiles(int[] pos) {
             this.pos = pos;
@@ -173,9 +176,7 @@ public class UpdateMap extends JLayeredPane {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
-                    if (spriteOnIt == empty) {
-                        setBorder(new LineBorder(Color.RED, 1));
-                    }
+                    setBorder(new LineBorder(Color.RED, 1));
                 }
 
                 @Override
@@ -193,7 +194,7 @@ public class UpdateMap extends JLayeredPane {
                     if (tPresent.getSelectedPokemon() != null) {
                         Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
                         if (!tPresent.getSelectedPokemon().isPlaced() && pkm.getPrice() < state.getMoney()) {
-
+                            pokemon = pkm;
                             control.setTowerOnMap(new int[] { row, col }, pkm, state);
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
                             addSprite(sprite, constraints);
@@ -209,6 +210,25 @@ public class UpdateMap extends JLayeredPane {
                         }
                     }
 
+                }
+            });
+
+            addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent evt) {
+
+                    TowerGUI GUI = new TowerGUI(pokemon);
+                    GUI.setVisible(false);
+                    tPresent.add(GUI, BorderLayout.SOUTH);
+                    if (SwingUtilities.isLeftMouseButton(evt)) {
+                        tPresent.getComponent(0).setVisible(false);
+                        tPresent.getComponent(1).setVisible(true);
+                    }
+                    if (SwingUtilities.isRightMouseButton(evt)) {
+                        tPresent.getComponent(1).setVisible(false);
+                        tPresent.getComponent(0).setVisible(true);
+                    }
                 }
             });
         }
@@ -245,6 +265,10 @@ public class UpdateMap extends JLayeredPane {
             return spriteOnIt;
         }
 
+    }
+
+    public TowerPresent gettPresent() {
+        return tPresent;
     }
 
 }

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -71,6 +72,7 @@ public class GameoverScreen extends JPanel {
         JPanel team = new JPanel();
         team.setLayout(new GridLayout(7, 1));
         team.setBackground(Color.BLACK);
+        team.setBorder(new LineBorder(Color.WHITE));
         team.add(teamHeading);
 
         for (Tower pkm : Player.INSTANCE.getTeam()) {
@@ -144,6 +146,7 @@ public class GameoverScreen extends JPanel {
 
         JPanel ePanel = new JPanel();
         ePanel.setBackground(Color.BLACK);
+        ePanel.setBorder(new LineBorder(Color.WHITE));
         for (Ennemi ennemi : ennemiEscaped) {
             JLabel pokeIcon = new JLabel(new ImageIcon(ennemi.getSprite()));
             pokeIcon.setBackground(Color.BLACK);
@@ -156,7 +159,7 @@ public class GameoverScreen extends JPanel {
         statPanel.add(esc);
         statPanel.add(ePanel);
 
-        JButton home = new JButton("home");
+        JButton home = new JButton("HOME");
         home.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -164,7 +167,7 @@ public class GameoverScreen extends JPanel {
             }
         });
 
-        JButton restart = new JButton("RESTARR");
+        JButton restart = new JButton("RESTART");
         restart.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -172,7 +175,7 @@ public class GameoverScreen extends JPanel {
             }
         });
 
-        JButton freeplay = new JButton("freeplay");
+        JButton freeplay = new JButton("FREEPLAY");
         freeplay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

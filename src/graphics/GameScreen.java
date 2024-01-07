@@ -28,7 +28,7 @@ public class GameScreen extends JPanel {
     }
 
     public void setmState(MapState mState) {
-        UpdateMap uMap = new UpdateMap(mState, tPresent);
+        UpdateMap uMap = new UpdateMap(mState, tPresent, container);
         this.uMap = uMap;
 
         inGameButton = new InGameMenu(true, mState);
