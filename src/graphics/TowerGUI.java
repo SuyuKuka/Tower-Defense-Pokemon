@@ -10,39 +10,51 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import control.Control;
+import model.Skill;
 import model.Tower;
+import model.Types;
 
 public class TowerGUI extends JPanel {
 
-    private Tower pkm;
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = new Control();
+    private Tower pkm;
 
-    public TowerGUI(Tower pkm) {
-        this.pkm = pkm;
-        if (pkm != null) {
-            System.out.println(pkm.getName());
-        }
-        JLabel pkmName = new JLabel(pkm.getName());
-        pkmName.setFont(maker.getCustomFont().deriveFont(20f));
+    private JLabel pkmName;
+    private JPanel type = new JPanel();
+    private JPanel types = new JPanel();
 
-        JPanel skillGrid = new JPanel();
-        skillGrid.setLayout(new GridLayout(2, 2));
+    public TowerGUI() {
+        type.setLayout(new BorderLayout());
+        types.setLayout(new BorderLayout());
+
+        pkmName = new JLabel();
+        pkmName.setFont(maker.getCustomFont().deriveFont(20f));//
+        pkmName.setForeground(Color.WHITE);
 
         setPreferredSize(new Dimension(0, 400));
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
         add(pkmName, BorderLayout.NORTH);
-        add(skillGrid, BorderLayout.CENTER);
-
+        add(types, BorderLayout.CENTER);
     }
 
     public Tower getPkm() {
         return this.pkm;
     }
 
-    public void setPkm(Tower pkm) {
-        this.pkm = pkm;
+    public void setPkm() {
+
+    }
+
+    public void updatePkm(Tower pkm) {
+        if (pkm.getType()[1] == Types.NONE) {
+            type = maker.imagePanel("ressources/type/" + pkm.getType()[0] + ".png");
+        } else {
+            type = maker.imagePanel("ressources/type/" + pkm.getType()[0] + ".png");
+        }
+        types.add(type, BorderLayout.CENTER);
+        pkmName.setText(pkm.getName());
     }
 
 }

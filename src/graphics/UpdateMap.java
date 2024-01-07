@@ -26,11 +26,14 @@ public class UpdateMap extends JLayeredPane {
     private Control control = new Control();
     private JPanel gameMap;
     private JPanel screen;
-
+    private TowerGUI GUI = new TowerGUI();
     private int cellSize = 32;
 
     public UpdateMap(MapState state, TowerPresent tPresent, JPanel screen) {
         this.screen = screen;
+        GUI.setVisible(false);
+        tPresent.add(GUI, BorderLayout.SOUTH);
+
         JPanel mapLayer = new JPanel();
         mapLayer.setLayout(new BorderLayout());
         mapLayer.setOpaque(false);
@@ -214,20 +217,18 @@ public class UpdateMap extends JLayeredPane {
             });
 
             addMouseListener(new MouseAdapter() {
-
                 @Override
                 public void mouseClicked(MouseEvent evt) {
-
-                    TowerGUI GUI = new TowerGUI(pokemon);
-                    GUI.setVisible(false);
-                    tPresent.add(GUI, BorderLayout.SOUTH);
-                    if (SwingUtilities.isLeftMouseButton(evt)) {
-                        tPresent.getComponent(0).setVisible(false);
-                        tPresent.getComponent(1).setVisible(true);
-                    }
-                    if (SwingUtilities.isRightMouseButton(evt)) {
-                        tPresent.getComponent(1).setVisible(false);
-                        tPresent.getComponent(0).setVisible(true);
+                    if (pokemon != null) {
+                        GUI.updatePkm(pokemon);
+                        if (SwingUtilities.isLeftMouseButton(evt)) {
+                            tPresent.getComponent(0).setVisible(false);
+                            tPresent.getComponent(1).setVisible(true);
+                        }
+                        if (SwingUtilities.isRightMouseButton(evt)) {
+                            tPresent.getComponent(1).setVisible(false);
+                            tPresent.getComponent(0).setVisible(true);
+                        }
                     }
                 }
             });

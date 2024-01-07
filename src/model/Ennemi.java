@@ -111,11 +111,11 @@ public class Ennemi extends Pokemon {
         if (getSpeed() == Speed.STUN) {
             numericSpeed = 0;
         } else if (getSpeed() == Speed.FAST) {
-            numericSpeed = 5;
-        } else if (getSpeed() == Speed.CLASSIC) {
             numericSpeed = 4;
-        } else {
+        } else if (getSpeed() == Speed.CLASSIC) {
             numericSpeed = 3;
+        } else {
+            numericSpeed = 2;
         }
 
         if (exit) {
