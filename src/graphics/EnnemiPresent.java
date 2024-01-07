@@ -38,7 +38,6 @@ public class EnnemiPresent extends JPanel {
         // Ennemi
         container.setOpaque(false);
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.setBorder(new LineBorder(Color.red));
 
         JLabel ennemiLabel = new JLabel("Ennemi sur le terrain");
         ennemiLabel.setOpaque(false);
@@ -256,13 +255,16 @@ public class EnnemiPresent extends JPanel {
     }
 
     public static void updateEnnemiHealth(Ennemi ennemi, int damageTaken) {
-        for (Component compo : ennemi.getEnnemiInfo().getComponents()) {
-            if (compo instanceof JProgressBar) {
-                JProgressBar healthBar = (JProgressBar) compo;
-                int currentHealth = healthBar.getValue();
-                int newHealth = Math.max(currentHealth + damageTaken, 0);
-                healthBar.setValue(newHealth);
-                break;
+        if (ennemi.getEnnemiInfo() != null) {
+
+            for (Component compo : ennemi.getEnnemiInfo().getComponents()) {
+                if (compo instanceof JProgressBar) {
+                    JProgressBar healthBar = (JProgressBar) compo;
+                    int currentHealth = healthBar.getValue();
+                    int newHealth = Math.max(currentHealth + damageTaken, 0);
+                    healthBar.setValue(newHealth);
+                    break;
+                }
             }
         }
         container.revalidate();

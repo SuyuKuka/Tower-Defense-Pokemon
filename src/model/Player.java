@@ -56,12 +56,12 @@ public class Player {
             hero[0] = null;
             hero[1] = null;
 
+            team[1] = new Chartor();
             team[0] = new Anchwatt();
-            team[1] = null;
-            team[2] = null;
-            team[3] = null;
-            team[4] = null;
-            team[5] = null;
+            team[2] = new Tylton();
+            team[3] = new Gringolem();
+            team[4] = new Lilia();
+            team[5] = new Starter().new Arcko();
             // nothing tower
             // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
             // "ressources/sprite/nothing.png", State.TEAM);
@@ -240,37 +240,43 @@ public class Player {
      * }
      * }
      * }
+     * private void parseSkill(String skillData, Tower tower) {
+     * String[] skillArrayData = skillData.split("#");
+     * int skillLimit = tower.getSkills().length;
+     * int skillArg = 7;
+     * int i = 0;
+     * 
+     * for (int j = 0; j < skillArg; j = j + 1) {
+     * if (i < skillLimit) {
+     * if (skillArrayData[i] == null) {
+     * tower.learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
+     * } else {
+     * String skillName = skillArrayData[j * skillArg + 0]; // 0 - 7 - 14 - 21
+     * int skillPhysicalDamage = Integer.parseInt(skillArrayData[j * skillArg + 1]);
+     * // 1 - 8 - 15 - 22
+     * int skillSpecialDamage = Integer.parseInt(skillArrayData[j * skillArg + 2]);
+     * // 2 - 9 - 16 - 23
+     * Types skillType = Types.stringToType(skillArrayData[j * skillArg + 3]); // 3
+     * - 10 - 17 - 24
+     * double skillSpeedAtk = Double.parseDouble(skillArrayData[j * skillArg + 4]);
+     * // 4 - 11 - 18 - 25
+     * boolean skillUnique;
+     * if (skillArrayData[j * skillArg + 5].contains("true")) { // 5 - 12 - 19 - 26
+     * skillUnique = true;
+     * } else {
+     * skillUnique = false;
+     * }
+     * String skillDescription = skillArrayData[j * skillArg + 6]; // 6 - 13 - 19 -
+     * 27
+     * tower.learnSkill(new Skill(skillName, skillPhysicalDamage,
+     * skillSpecialDamage, skillType,
+     * skillSpeedAtk, skillUnique, skillDescription));
+     * }
+     * i++;
+     * }
+     * }
+     * }
      */
-    private void parseSkill(String skillData, Tower tower) {
-        String[] skillArrayData = skillData.split("#");
-        int skillLimit = tower.getSkills().length;
-        int skillArg = 7;
-        int i = 0;
-
-        for (int j = 0; j < skillArg; j = j + 1) {
-            if (i < skillLimit) {
-                if (skillArrayData[i] == null) {
-                    tower.learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-                } else {
-                    String skillName = skillArrayData[j * skillArg + 0]; // 0 - 7 - 14 - 21
-                    int skillPhysicalDamage = Integer.parseInt(skillArrayData[j * skillArg + 1]); // 1 - 8 - 15 - 22
-                    int skillSpecialDamage = Integer.parseInt(skillArrayData[j * skillArg + 2]); // 2 - 9 - 16 - 23
-                    Types skillType = Types.stringToType(skillArrayData[j * skillArg + 3]); // 3 - 10 - 17 - 24
-                    double skillSpeedAtk = Double.parseDouble(skillArrayData[j * skillArg + 4]); // 4 - 11 - 18 - 25
-                    boolean skillUnique;
-                    if (skillArrayData[j * skillArg + 5].contains("true")) { // 5 - 12 - 19 - 26
-                        skillUnique = true;
-                    } else {
-                        skillUnique = false;
-                    }
-                    String skillDescription = skillArrayData[j * skillArg + 6]; // 6 - 13 - 19 - 27
-                    tower.learnSkill(new Skill(skillName, skillPhysicalDamage, skillSpecialDamage, skillType,
-                            skillSpeedAtk, skillUnique, skillDescription));
-                }
-                i++;
-            }
-        }
-    }
 
     public String getPseudo() {
         return pseudo;

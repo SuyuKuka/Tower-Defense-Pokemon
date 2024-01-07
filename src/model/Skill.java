@@ -6,29 +6,34 @@ public class Skill {
     private int specialDamage;
     private Types type;
     private double speedAtk;
-    private boolean unique;
+    private Pattern p;
     private String description;
 
-    public Skill(String name, int physicalDamage, int specialDamage, Types type, double speedAtk, boolean unique, String description) {
+    public enum Pattern {
+        UNIQUE, AOE, AURA
+    }
+
+    public Skill(String name, int physicalDamage, int specialDamage, Types type, Pattern p, String description) {
         this.name = name;
         this.physicalDamage = physicalDamage;
         this.specialDamage = specialDamage;
         this.type = type;
-        this.speedAtk = speedAtk;
-        this.unique = unique;
+        this.p = p;
         this.description = description;
     }
 
-    public String toString(){
+    public String toString() {
         return this.getName()
-        +"#"+this.getPhysicalDamage() 
-        +"#"+this.getSpecialDamage() 
-        +"#"+this.getType()
-        +"#"+this.getSpeedAtk()
-        +"#"+this.getUnique()
-        +"#"+this.getDescription();
+                + "#" + this.getPhysicalDamage()
+                + "#" + this.getSpecialDamage()
+                + "#" + this.getType()
+                + "#" + this.getSpeedAtk()
+                + "#" + this.getPatern()
+                + "#" + this.getDescription();
     }
-    //tower.learnSkill(new Skill(skillName, skillPhysicalDamage, skillSpecialDamage, skillType, skillSpeedAtk, skillUnique, skillDescription));
+    // tower.learnSkill(new Skill(skillName, skillPhysicalDamage,
+    // skillSpecialDamage, skillType, skillSpeedAtk, skillUnique,
+    // skillDescription));
 
     public String getName() {
         return name;
@@ -50,8 +55,8 @@ public class Skill {
         return speedAtk;
     }
 
-    public boolean getUnique() {
-        return unique;
+    public Pattern getPatern() {
+        return p;
     }
 
     public String getDescription() {

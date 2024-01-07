@@ -7,9 +7,9 @@ import model.Types;
 public class Nodulithe extends Tower implements TowerLoader {
 
     public Nodulithe() {
-        super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE,
-                "ressources/sprite/roggenrola/roggenrola.gif",
-                State.LOCKED);
+        // Zone destruction
+        super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE, "ressources/sprite/roggenrola/roggenrola.gif", State.LOCKED,
+                100, Tower.Rayon.SMALL, 1000);
         System.out.println("Charge le sprite");
         primarySkill();
     }
@@ -20,71 +20,54 @@ public class Nodulithe extends Tower implements TowerLoader {
 
     @Override
     public void evolution() {
-        if (getLevel() == 25) {
+        if (getLevel() == 15) {
             setSprite("ressources/sprite/roggenrola/boldore.gif");
             setName("Geolithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 10);
+            setAtkCd(250);
+            setRayon(Tower.Rayon.MEDIUM);
             getTiles().replaceSprite(getSprite());
         }
-        if (getLevel() == 50) {
+        if (getLevel() == 30) {
             setSprite("ressources/sprite/roggenrola/gigalith.gif");
             setName("Gigalithe");
             setPhysical(getPhysical() + 30);
             setSpecial(getSpecial() + 20);
+            setAtkCd(300);
+            setRayon(Tower.Rayon.GLOBAL);
             getTiles().replaceSprite(getSprite());
         }
     }
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill charge = new Skill("Charge", 8000000, 0, Types.ROCHE, 1, true,
-                "Coups de tete !");
-        learnSkill(charge);
+        learnSkill(new Skill("Charge", 50, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
     }
 
     public void unlock() {
-        if (getLevel() == 10) {
-            Skill a = new Skill("Rayon Gemme", 0, 80, Types.ROCHE, 2, false,
-                    "Charge et tire un rayon minerale.");
-            learnSkill(a);
-        }
-        if (getLevel() == 16) {
-            Skill a = new Skill("Anti-Air", 40, 0, Types.ROCHE, 1.5, true,
-                    "Attaque tres efficace contre les unites volantes.");
-            learnSkill(a);
-        }
-        if (getLevel() == 22) {
-            Skill a = new Skill("Big Splash", 80, 0, Types.COMBAT, 3, true,
-                    "Gros coup de physique");
-            learnSkill(a);
+        if (getLevel() == 20) {
+            learnSkill(new Skill("Rayon-Gemme", 0, 60, Types.ROCHE, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 30) {
-            Skill a = new Skill("Lame de Roc", 175, 0, Types.ROCHE, 100, true,
-                    "Ca fait mal, mais prend du temps a se recharger.");
-            learnSkill(a);
+            learnSkill(new Skill("Seisme", 100, 0, Types.SOL, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 40) {
+            learnSkill(new Skill("Eboulement", 60, 0, Types.ROCHE, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 45) {
-            Skill a = new Skill("Execu-Son", 90, 0, Types.TENEBRE, 9, true,
-                    "Donne un puissant coup discretement a la cible.");
-            learnSkill(a);
+            learnSkill(new Skill("Tomberoche", 200, 0, Types.ROCHE, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 53) {
-            Skill a = new Skill("Lance-Soleil", 0, 120, Types.PLANTE, 7, true,
-                    "Charge et tire un puissant rayon solaire.");
-            learnSkill(a);
+        if (getLevel() == 50) {
+            learnSkill(new Skill("Tempete de sable", 80, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 65) {
-            Skill a = new Skill("Tete de fer", 85, 0, Types.ACIER, 4, true,
-                    "Coup de tete renforce !.");
-            learnSkill(a);
+        if (getLevel() == 60) {
+            learnSkill(new Skill("Sable Ardent", 0, 200, Types.SOL, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 70) {
-            Skill a = new Skill("Seisme", 120, 0, Types.SOL, 30, false,
-                    "Frappe toute la map au sol.");
-            learnSkill(a);
+            learnSkill(new Skill("Téra Explosion", 300, 0, Types.NORMAL, Skill.Pattern.AURA, ""));
         }
+
     }
 
 }

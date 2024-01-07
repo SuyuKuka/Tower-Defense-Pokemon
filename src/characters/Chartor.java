@@ -7,9 +7,9 @@ import model.Types;
 public class Chartor extends Tower implements TowerLoader {
 
     public Chartor() {
-        // CROWD HAZARD GLOBAL DOT
-        super("Chartor", 85, 85, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
-                State.LOCKED);
+        // CROWD HAZARD GLOBAL DOT FEU/POISON
+        super("Chartor", 50, 10, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
+                State.LOCKED, 20, Tower.Rayon.GLOBAL, 900);
         primarySkill();
     }
 
@@ -24,55 +24,30 @@ public class Chartor extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        // Manque les effets
-        Skill Flammeche = new Skill("Flammeche", 0, 40, Types.FEU, 1, true,
-                "Attaque avec une faible flamme");
-        Skill CoupBoule = new Skill("Coup d'Boule", 70, 0, Types.NORMAL, 2, true,
-                "Donne un gros coup de tete.");
-        learnSkill(Flammeche);
-        learnSkill(CoupBoule);
+        learnSkill(new Skill("Zenith", 0, 2, Types.FEU, Skill.Pattern.AURA, ""));
     }
 
     public void unlock() {
-        if (getLevel() == 10) {
-            Skill a = new Skill("Puredpois", 0, 30, Types.POISON, 1.8, false,
-                    "Gaz toxique");
-            learnSkill(a);
+        if (getLevel() == 5) {
+            learnSkill(new Skill("Danse Flamme", 0, 10, Types.FEU, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 16) {
-            Skill a = new Skill("Machouille", 20, 0, Types.TENEBRE, 0.25, true,
-                    "Mord a plusieur reprise sa cible.");
-            learnSkill(a);
+        if (getLevel() == 8) {
+            learnSkill(new Skill("Seisme", 10, 0, Types.SOL, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 22) {
-            Skill a = new Skill("Big Splash", 80, 0, Types.COMBAT, 3, true,
-                    "Gros coup de physique");
-            learnSkill(a);
+        if (getLevel() == 14) {
+            learnSkill(new Skill("Ebullilave", 0, 30, Types.FEU, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 25) {
-            Skill a = new Skill("Roue de Feu", 60, 0, Types.FEU, 3, true,
-                    "S'entoure de feu et charge la cible");
-            learnSkill(a);
+        if (getLevel() == 20) {
+            learnSkill(new Skill("Bain de smog", 0, 30, Types.POISON, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 23) {
+            learnSkill(new Skill("Surchauffe", 0, 50, Types.FEU, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 30) {
-            Skill a = new Skill("Mania", 2, 0, Types.NORMAL, 0.1, true,
-                    "Le lanceur lance une rafale de coups sur la cible");
-            learnSkill(a);
+            learnSkill(new Skill("Feu d'Enfer", 0, 80, Types.FEU, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 38) {
-            Skill a = new Skill("Abime", 90, 0, Types.SOL, 60, false,
-                    "Gross fissure sur toute la zone");
-            learnSkill(a);
-        }
-        if (getLevel() == 45) {
-            Skill a = new Skill("Aqua-Breche", 85, 0, Types.EAU, 4, true,
-                    "Le lanceur utilise la force de l'eau pour attaquer.");
-            learnSkill(a);
-        }
-        if (getLevel() == 60) {
-            Skill a = new Skill("Colere", 120, 0, Types.DRAGON, 60, true,
-                    "Le lanceur s'enrage et attaque brutalement la cible");
-            learnSkill(a);
+        if (getLevel() == 35) {
+            learnSkill(new Skill("Eruption", 0, 100, Types.FEU, Skill.Pattern.UNIQUE, ""));
         }
     }
 

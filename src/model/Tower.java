@@ -54,7 +54,6 @@ public class Tower extends Pokemon {
         exp = 0;
         TList.add(this);
         level = 1;
-
         baseCd = atkCd;
         this.rayon = r;
         this.price = price;
@@ -64,29 +63,33 @@ public class Tower extends Pokemon {
         level = 1;
     }
 
-    public Skill loadSkill(String skillName) throws FileNotFoundException {
-        File file = new File("ressources/config/Pokemon Moves.csv");
-        Scanner sc = new Scanner(file);
-        int phys = 0;
-        int spe = 0;
-        while (sc.hasNext()) {
-            String[] info = new String[9];
-            info = sc.nextLine().split(";");
-            if (info[7].equals(skillName)) {
-                if (info[2].equals("Physical")) {
-                    phys = Integer.valueOf(info[4]);
-                    spe = 0;
-                } else if (info[2].equals("Special")) {
-                    phys = 0;
-                    spe = Integer.valueOf(info[4]);
-                }
-
-                return new Skill(skillName, phys, spe, Types.stringToType(info[1]), exp, isTower(), skillName);
-            }
-        }
-        sc.close();
-        return null;
-    }
+    /*
+     * 
+     * public Skill loadSkill(String skillName) throws FileNotFoundException {
+     * File file = new File("ressources/config/Pokemon Moves.csv");
+     * Scanner sc = new Scanner(file);
+     * int phys = 0;
+     * int spe = 0;
+     * while (sc.hasNext()) {
+     * String[] info = new String[9];
+     * info = sc.nextLine().split(";");
+     * if (info[7].equals(skillName)) {
+     * if (info[2].equals("Physical")) {
+     * phys = Integer.valueOf(info[4]);
+     * spe = 0;
+     * } else if (info[2].equals("Special")) {
+     * phys = 0;
+     * spe = Integer.valueOf(info[4]);
+     * }
+     * 
+     * return new Skill(skillName, phys, spe, Types.stringToType(info[1]), exp,
+     * isTower(), skillName);
+     * }
+     * }
+     * sc.close();
+     * return null;
+     * }
+     */
 
     public int[] putTower(String st) {
         try {
@@ -118,7 +121,7 @@ public class Tower extends Pokemon {
 
     public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
 
-        if (skills[select].getUnique()) {
+        if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
             getUniqueTarget(this, ennemiInMap);
             if (atkCd <= 0) {
                 atkCd = baseCd;
@@ -135,7 +138,7 @@ public class Tower extends Pokemon {
                     killCount++;
                 }
             }
-        } else {
+        } else if (skills[select].getPatern() == Skill.Pattern.AURA) {
             getZoneTarget(this, ennemiInMap);
             if (zoneTarget.size() != 0) {
 
@@ -165,7 +168,7 @@ public class Tower extends Pokemon {
     public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
         for (int i = 0; i < towerInMap.size(); i++) {
             Tower tower = towerInMap.get(i);
-            if (skills[select].getUnique()) {
+            if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
                 tower.getUniqueTarget(tower, ennemiInMap);
                 tower.attackUnique();
                 if (tower.uniqueTarget != null) {
@@ -177,7 +180,7 @@ public class Tower extends Pokemon {
                         tower.killCount++;
                     }
                 }
-            } else {
+            } else if (skills[select].getPatern() == Skill.Pattern.AURA) {
                 tower.getZoneTarget(tower, ennemiInMap);
                 if (tower.zoneTarget.size() != 0) {
                     tower.attackZone();
@@ -193,6 +196,21 @@ public class Tower extends Pokemon {
                 }
             }
         }
+    }
+
+    private void multiexp(Ennemi e) {
+        for (Tower tower : Player.INSTANCE.getTeam()) {
+            winLessExp(e, tower);
+            tower.levelUp();
+        }
+    }
+
+    private void winLessExp(Ennemi target, Tower tower) {
+        tower.setExp(tower.getExp() + Math.abs(target.getTotalPv() / 3));
+    }
+
+    public double getExp() {
+        return exp;
     }
 
     private void attackUnique() {
@@ -311,7 +329,8 @@ public class Tower extends Pokemon {
     }
 
     private void winExp(Ennemi target) {
-        this.exp += Math.abs(target.getTotalPv() / 3);
+        multiexp(target);
+        // this.exp += Math.abs(target.getTotalPv() / 2);
     }
 
     private void levelUp() {
@@ -327,6 +346,7 @@ public class Tower extends Pokemon {
             updatePokemon();
             manager.updateManager(this);
         }
+
     }
 
     public int getTotalSkill() {
@@ -334,6 +354,7 @@ public class Tower extends Pokemon {
     }
 
     public void learnSkill(Skill newSkill) {
+
         if (totalSkill > 4) {
             System.out.println("Probleme, il peut pas avoir + de 4 skills");
         } else {
@@ -420,11 +441,16 @@ public class Tower extends Pokemon {
     }
 
     public void getUniqueTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
+
         tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
-            tower.uniqueTarget = e;
-            break;
+            if (tower.isInRayon(tower, e)) {
+                tower.uniqueTarget = e;
+                break;
+            }
+
         }
+
     }
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
@@ -443,18 +469,17 @@ public class Tower extends Pokemon {
     }
 
     private void updatePokemon() {
-        // TODO IL MANQUE POUR LES STARTERS
         if (this instanceof Starter.Salameche) {
             ((Starter.Salameche) this).evolution();
-            // ((Starter.Salameche) this).unlock();
+            ((Starter.Salameche) this).unlock();
         }
         if (this instanceof Starter.Arcko) {
             ((Starter.Arcko) this).evolution();
-            // ((Starter.Arcko) this).unlock();
+            ((Starter.Arcko) this).unlock();
         }
         if (this instanceof Starter.Moustillon) {
             ((Starter.Moustillon) this).evolution();
-            // ((Starter.Moustillon) this).unlock();
+            ((Starter.Moustillon) this).unlock();
         }
         if (this instanceof Anchwatt) {
             ((Anchwatt) this).evolution();
@@ -466,11 +491,11 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Tylton) {
             ((Tylton) this).evolution();
-            // ((Tylton) this).unlock();
+            ((Tylton) this).unlock();
         }
         if (this instanceof Terhal) {
             ((Terhal) this).evolution();
-            // ((Terhal) this).unlock();
+            ((Terhal) this).unlock();
         }
         if (this instanceof Tarsal) {
             ((Tarsal) this).evolution();
@@ -486,7 +511,7 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Nodulithe) {
             ((Nodulithe) this).evolution();
-            // ((Nodulithe) this).unlock();
+            ((Nodulithe) this).unlock();
         }
         if (this instanceof Mysdibule) {
             ((Mysdibule) this).evolution();
@@ -506,7 +531,7 @@ public class Tower extends Pokemon {
         }
         if (this instanceof Gringolem) {
             ((Gringolem) this).evolution();
-            // ((Gringolem) this).unlock();
+            ((Gringolem) this).unlock();
         }
         if (this instanceof Escargaume) {
             ((Escargaume) this).evolution();

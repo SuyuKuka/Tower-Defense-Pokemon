@@ -83,7 +83,7 @@ public class MapState {
         InitWaves w = new InitWaves(difficulty);
         if (difficulty == Difficulty.EASY) {
             limiteDeTemps = 40;
-            money = 600;
+            money = 8000;
         } else if (difficulty == Difficulty.NORMAL) {
             limiteDeTemps = 25;
             money = 400;

@@ -45,8 +45,8 @@ public class InitWaves {
                 }
             }
 
-            if (!haveBoss(wave)) { // AJOUTE UN BOSS SUPPLEMENTAIRE TOUT LES 10 WAVE
-                for (int j = 0; j < i / 10; j++) {
+            if (!haveBoss(wave)) { // AJOUTE UN BOSS SUPPLEMENTAIRE TOUT LES 5 WAVES
+                for (int j = 0; j < i / 5; j++) {
                     wave.add(getBoss());
                 }
             }
@@ -64,7 +64,7 @@ public class InitWaves {
         }
         // debug();
 
-        test(wave);
+        // test(wave);
 
     }
 
@@ -141,7 +141,7 @@ public class InitWaves {
         return false;
     }
 
-    private void difficultyAjust(Difficulty diff) { // AJUSTABLE
+    private void difficultyAjust(Difficulty diff) {
         if (diff == Difficulty.EASY) {
             nbWave = 20;
             multiplier = 0.5;
