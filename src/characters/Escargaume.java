@@ -26,7 +26,9 @@ public class Escargaume extends Tower implements TowerLoader {
             setSecondType(Types.ACIER);
             setAtkCd(50);
             setRayon(Tower.Rayon.MEDIUM);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

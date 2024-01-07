@@ -8,8 +8,7 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
-import graphics.TowerPresent;
-import model.Pokemon.State;
+import model.Tower.State;
 import model.MapState;
 import model.Player;
 import model.Tower;

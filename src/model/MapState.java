@@ -5,7 +5,7 @@ import model.InitWaves.Difficulty;
 import characters.Starter;
 
 import characters.Starter.Salameche;
-
+import graphics.EnnemiPresent;
 import graphics.GameScreen;
 import graphics.GameoverScreen;
 import graphics.UpdateMap;
@@ -13,8 +13,6 @@ import graphics.UpdateMap;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.*;
-
-import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -405,6 +403,9 @@ public class MapState {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
         screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
+        for (Ennemi e : ennemiPresent) {
+            EnnemiPresent.updateEnnemiHealth(e);
+        }
 
     }
 

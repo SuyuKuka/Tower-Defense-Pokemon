@@ -27,7 +27,9 @@ public class Nodulithe extends Tower implements TowerLoader {
             setSpecial(getSpecial() + 10);
             setAtkCd(250);
             setRayon(Tower.Rayon.MEDIUM);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
         if (getLevel() == 30) {
             setSprite("ressources/sprite/roggenrola/gigalith.gif");
@@ -36,7 +38,9 @@ public class Nodulithe extends Tower implements TowerLoader {
             setSpecial(getSpecial() + 20);
             setAtkCd(300);
             setRayon(Tower.Rayon.GLOBAL);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

@@ -24,6 +24,10 @@ public class Tower extends Pokemon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
 
+    public enum State {
+        PC, TEAM, LOCKED
+    }
+
     private UpdateMap.Tiles tiles;
     private Rayon rayon;
     private double exp;
@@ -91,7 +95,7 @@ public class Tower extends Pokemon {
      * }
      */
 
-    public int[] putTower(String st) {
+    public int[] putTower(String st) { // VIA TERMINAL
         try {
             String alphaPart = st.replaceAll("[^A-Za-z]", "");
             String numPart = st.replaceAll("[^0-9]", "");
@@ -110,7 +114,6 @@ public class Tower extends Pokemon {
             } else {
                 posY = -1;
             }
-
             int[] tab = { posY, posX };
             return tab;
         } catch (Exception e) {
@@ -119,8 +122,7 @@ public class Tower extends Pokemon {
         }
     }
 
-    public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
-
+    public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // ATK WITH CD
         if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
             getUniqueTarget(this, ennemiInMap);
             if (atkCd <= 0) {
@@ -198,6 +200,11 @@ public class Tower extends Pokemon {
         }
     }
 
+    private void winExp(Ennemi target) {
+        multiexp(target);
+        setExp(getExp() + Math.abs(target.getTotalPv() / 2));
+    }
+
     private void multiexp(Ennemi e) {
         for (Tower tower : Player.INSTANCE.getTeam()) {
             winLessExp(e, tower);
@@ -206,7 +213,7 @@ public class Tower extends Pokemon {
     }
 
     private void winLessExp(Ennemi target, Tower tower) {
-        tower.setExp(tower.getExp() + Math.abs(target.getTotalPv() / 3));
+        tower.setExp(tower.getExp() + Math.abs(target.getTotalPv() / 5));
     }
 
     public double getExp() {
@@ -229,11 +236,9 @@ public class Tower extends Pokemon {
                     if (physical >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
-                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
                         // Cas negatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + physical);
-                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, (int) physical);
                     }
                     // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
@@ -252,11 +257,9 @@ public class Tower extends Pokemon {
                     if (special >= 0) {
                         // Cas positif donc retire -1
                         uniqueTarget.setPv(uniqueTarget.getPv() - 1);
-                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, -1);
                     } else {
                         // Cas negatif donc retire special vie
                         uniqueTarget.setPv(uniqueTarget.getPv() + special);
-                        EnnemiPresent.updateEnnemiHealth(uniqueTarget, special);
                     }
                     // System.out.println(getName() + " a attaque " + uniqueTarget.getName());
                     // System.out.println(
@@ -286,11 +289,10 @@ public class Tower extends Pokemon {
                         if (physical >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
-                            EnnemiPresent.updateEnnemiHealth(e, -1);
                         } else {
                             // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + physical);
-                            EnnemiPresent.updateEnnemiHealth(e, (int) physical);
+
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
@@ -309,11 +311,9 @@ public class Tower extends Pokemon {
                         if (special >= 0) {
                             // Cas positif donc retire -1
                             e.setPv(e.getPv() - 1);
-                            EnnemiPresent.updateEnnemiHealth(e, -1);
                         } else {
                             // Cas negatif donc retire special vie
                             e.setPv(e.getPv() + special);
-                            EnnemiPresent.updateEnnemiHealth(e, (int) special);
                         }
                         // System.out.println(getName() + " a attaque " + e.getName());
                         // System.out
@@ -326,11 +326,6 @@ public class Tower extends Pokemon {
                 }
             }
         }
-    }
-
-    private void winExp(Ennemi target) {
-        multiexp(target);
-        // this.exp += Math.abs(target.getTotalPv() / 2);
     }
 
     private void levelUp() {
@@ -353,7 +348,7 @@ public class Tower extends Pokemon {
         return totalSkill;
     }
 
-    public void learnSkill(Skill newSkill) {
+    public void learnSkill(Skill newSkill) { // TODO REPARATION
 
         if (totalSkill > 4) {
             System.out.println("Probleme, il peut pas avoir + de 4 skills");
@@ -375,7 +370,7 @@ public class Tower extends Pokemon {
         }
     }
 
-    private void replaceSkill(Skill newSkill, Scanner sc) {
+    private void replaceSkill(Skill newSkill, Scanner sc) { // TODO REPARATION
         System.out.println("Par lequel souhaitez-vous remplacer? 1/2/3/4");
         printSkill();
         int skillIndex = sc.nextInt();
@@ -428,7 +423,7 @@ public class Tower extends Pokemon {
         } else if (rayon == Rayon.LARGE) {
             return 7;
         } else {
-            return 1000; // Global?
+            return 1000; // GLOBAL
         }
     }
 

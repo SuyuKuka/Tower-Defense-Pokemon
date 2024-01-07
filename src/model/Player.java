@@ -6,27 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import characters.Anchwatt;
-import characters.Chartor;
-import characters.Ecrapince;
-import characters.Escargaume;
-import characters.Gringolem;
-import characters.Lilia;
-import characters.Makuhita;
-import characters.MotismaFroid;
-import characters.Mysdibule;
-import characters.Ningale;
-import characters.Nodulithe;
-import characters.Obalie;
-import characters.Rozbouton;
-import characters.Starter;
-import characters.Tarsal;
-import characters.Terhal;
-import characters.Tylton;
-import characters.Starter.Arcko;
-import characters.Starter.Salameche;
-import graphics.UpdateMap.Tiles;
-import model.Pokemon.State;
+import characters.*;
+
+import model.Tower.State;
 
 public class Player {
     public static final Player INSTANCE = new Player();
@@ -62,11 +44,7 @@ public class Player {
             team[3] = new Gringolem();
             team[4] = new Lilia();
             team[5] = new Starter().new Arcko();
-            // nothing tower
-            // new Tower(" ", -1, -1, Types.NONE, Types.NONE,
-            // "ressources/sprite/nothing.png", State.TEAM);
-            // NOTHING skill
-            // new Skill(" ", -1, -1, Types.NONE, -1, false, " ");
+
         } else {
             loadData();
         }

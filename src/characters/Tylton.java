@@ -9,7 +9,7 @@ public class Tylton extends Tower implements TowerLoader {
     public Tylton() {
         // LASER
         super("Tylton", 1, 1, Types.VOL, Types.NORMAL, "ressources/sprite/swablu/swablu.gif",
-                State.LOCKED, 10, Tower.Rayon.GLOBAL, 1000);
+                State.LOCKED, 25, Tower.Rayon.MEDIUM, 1000);
         primarySkill();
     }
 
@@ -19,13 +19,16 @@ public class Tylton extends Tower implements TowerLoader {
 
     @Override
     public void evolution() {
-        if (getLevel() == 30) {
+        if (getLevel() == 20) {
             setSprite("ressources/sprite/swablu/altaria.gif");
             setName("Altaria");
             setPhysical(getPhysical() + 9);
             setSpecial(getSpecial() + 9);
+            setRayon(Tower.Rayon.LARGE);
             setSecondType(Types.DRAGON);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
@@ -57,7 +60,7 @@ public class Tylton extends Tower implements TowerLoader {
             learnSkill(new Skill("Lance-Soleil", 0, 1, Types.PLANTE, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 90) {
-            learnSkill(new Skill("Requiem", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Requiem", 0, 10, Types.NORMAL, Skill.Pattern.AURA, ""));
         }
 
     }

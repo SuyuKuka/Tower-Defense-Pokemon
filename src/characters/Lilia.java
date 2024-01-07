@@ -25,7 +25,9 @@ public class Lilia extends Tower implements TowerLoader {
             setSpecial(getSpecial() + 40);
             setAtkCd(50);
             setRayon(Tower.Rayon.LARGE);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

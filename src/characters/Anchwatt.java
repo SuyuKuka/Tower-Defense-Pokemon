@@ -27,7 +27,9 @@ public class Anchwatt extends Tower implements TowerLoader {
             setSpecial(getSpecial() + 20);
             setAtkCd(100);
             setRayon(Tower.Rayon.MEDIUM);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
         if (getLevel() == 25) {
             setSprite("ressources/sprite/tynamo/eelektross.gif");
@@ -36,7 +38,9 @@ public class Anchwatt extends Tower implements TowerLoader {
             setSpecial(getSpecial() + 20);
             setAtkCd(200);
             setRayon(Tower.Rayon.GLOBAL);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

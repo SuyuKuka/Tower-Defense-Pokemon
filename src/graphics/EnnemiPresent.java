@@ -254,14 +254,13 @@ public class EnnemiPresent extends JPanel {
 
     }
 
-    public static void updateEnnemiHealth(Ennemi ennemi, int damageTaken) {
+    public static void updateEnnemiHealth(Ennemi ennemi) {
         if (ennemi.getEnnemiInfo() != null) {
 
             for (Component compo : ennemi.getEnnemiInfo().getComponents()) {
                 if (compo instanceof JProgressBar) {
                     JProgressBar healthBar = (JProgressBar) compo;
-                    int currentHealth = healthBar.getValue();
-                    int newHealth = Math.max(currentHealth + damageTaken, 0);
+                    int newHealth = (int) ennemi.getPv();
                     healthBar.setValue(newHealth);
                     break;
                 }

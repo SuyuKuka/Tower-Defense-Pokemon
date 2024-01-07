@@ -25,7 +25,9 @@ public class Starter {
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
                 setAtkCd(80);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
             if (getLevel() == 30) {
                 setSprite("ressources/sprite/charmander/charizard.gif");
@@ -35,7 +37,9 @@ public class Starter {
                 setSecondType(Types.VOL);
                 setAtkCd(150);
                 setRayon(Tower.Rayon.LARGE);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
         }
 
@@ -96,7 +100,9 @@ public class Starter {
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
                 setRayon(Tower.Rayon.MEDIUM);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
             if (getLevel() == 36) {
@@ -104,7 +110,9 @@ public class Starter {
                 setName("Jungko");
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
             }
         }
 
@@ -164,7 +172,9 @@ public class Starter {
                 setName("Mateloutre");
                 setPhysical(getPhysical() + 10);
                 setSpecial(getSpecial() + 10);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
             if (getLevel() == 36) {
@@ -173,7 +183,9 @@ public class Starter {
                 setPhysical(getPhysical() + 20);
                 setSpecial(getSpecial() + 20);
                 setRayon(Tower.Rayon.MEDIUM);
-                getTiles().replaceSprite(getSprite());
+                if (getTiles() != null) {
+                    getTiles().replaceSprite(getSprite());
+                }
 
             }
         }

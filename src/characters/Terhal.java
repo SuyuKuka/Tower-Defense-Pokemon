@@ -7,8 +7,9 @@ import model.Types;
 public class Terhal extends Tower implements TowerLoader {
 
     public Terhal() {
+        // RAILGUN SNIPE BOSSKILLER WITH AOE LESS RANGE
         super("Terhal", 55, 35, Types.PSY, Types.ACIER, "ressources/sprite/beldum/beldum.gif",
-                State.LOCKED);
+                State.LOCKED, 50, Tower.Rayon.SMALL, 400);
         primarySkill();
     }
 
@@ -23,56 +24,51 @@ public class Terhal extends Tower implements TowerLoader {
             setName("Metang");
             setPhysical(getPhysical() + 20);
             setSpecial(getSpecial() + 10);
-            getTiles().replaceSprite(getSprite());
+            setRayon(Tower.Rayon.MEDIUM);
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
         if (getLevel() == 45) {
             setSprite("ressources/sprite/beldum/metagross.gif");
             setName("Metalosse");
             setPhysical(getPhysical() + 60);
             setSpecial(getSpecial() + 30);
-            getTiles().replaceSprite(getSprite());
+            setAtkCd(20);
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
     @Override
-    public void primarySkill() {
-        // Manque les effets
-        Skill charge = new Skill("Charge", 20, 0, Types.NORMAL, 1, true,
-                "Coups de tete !");
-        learnSkill(charge);
+    public void primarySkill() { // TODO CHANGER
+        learnSkill(new Skill("Eclair", 0, 20, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
     }
 
     public void unlock() {
+        if (getLevel() == 10) {
+            learnSkill(new Skill("Coup d'jus", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+        }
+        if (getLevel() == 16) {
+            learnSkill(new Skill("Rayon Charge", 0, 50, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
+        }
         if (getLevel() == 20) {
-            Skill a = new Skill("Choc Mental", 0, 50, Types.PSY, 2, true,
-                    "Utilise ses pouvoir telekinesique pour frapper a l'interieur de sa cible.");
-            learnSkill(a);
+            learnSkill(new Skill("Champs electrifie", 0, 20, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
         }
-        if (getLevel() == 22) {
-            Skill a = new Skill("Griffe Acier", 60, 0, Types.ACIER, 1.2, true,
-                    "Griffe sa cible avec des griffes renforcees.");
-            learnSkill(a);
+        if (getLevel() == 25) {
+            learnSkill(new Skill("Elecanon", 0, 175, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 30) {
-            Skill a = new Skill("Luminocanon", 0, 80, Types.ACIER, 3, false,
-                    "Lance un laser sur une ligne.");
-            learnSkill(a);
+        if (getLevel() == 37) {
+            learnSkill(new Skill("Luminocanon", 0, 100, Types.ACIER, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 38) {
-            Skill a = new Skill("Eboulement", 80, 0, Types.ROCHE, 3, false,
-                    "Fait tomber de gros rochers sur les cibles.");
-            learnSkill(a);
+        if (getLevel() == 42) {
+            learnSkill(new Skill("Surf", 0, 80, Types.EAU, Skill.Pattern.AURA, ""));
         }
         if (getLevel() == 50) {
-            Skill a = new Skill("Ultralaser", 0, 200, Types.NORMAL, 10, true,
-                    "Lance un puissant laser, mais le lanceur doit se reposer apres.");
-            learnSkill(a);
+            learnSkill(new Skill("OverDrive", 0, 275, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
         }
-        if (getLevel() == 60) {
-            Skill a = new Skill("Seisme", 100, 0, Types.SOL, 5, false,
-                    "Frappe toute la map au sol.");
-            learnSkill(a);
-        }
+
     }
 
 }

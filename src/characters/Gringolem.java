@@ -24,7 +24,9 @@ public class Gringolem extends Tower implements TowerLoader {
             setPhysical(getPhysical() + 200);
             setSpecial(getSpecial() + 50);
             setRayon(Tower.Rayon.GLOBAL);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

@@ -23,10 +23,10 @@ public class Makuhita extends Tower implements TowerLoader {
             setSprite("ressources/sprite/makuhita/hariyama.gif");
             setName("Hariyama");
             setPhysical(getPhysical() + 60);
-
             setRayon(Tower.Rayon.MEDIUM);
-
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 

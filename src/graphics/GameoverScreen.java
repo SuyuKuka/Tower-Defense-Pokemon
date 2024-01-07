@@ -1,44 +1,26 @@
 package graphics;
 
-import java.io.FileNotFoundException;
-import java.util.*;
-
-import java.util.ArrayList;
-
-import javax.swing.*;
-
 import model.Ennemi;
-
 import model.MapState;
 import model.Player;
 import model.Tower;
-import java.awt.*;
-import javax.swing.*;
-
-import model.MapState;
-import control.Control;
-import java.awt.*;
-import javax.swing.*;
-
-import model.MapState;
 import control.Control;
 
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
-import java.util.*;
-
-import java.util.ArrayList;
-
-import javax.swing.*;
-
-import model.Ennemi;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
-
-import javax.swing.border.*;
 
 public class GameoverScreen extends JPanel {
 

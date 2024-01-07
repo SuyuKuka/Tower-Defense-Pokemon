@@ -25,7 +25,9 @@ public class Ecrapince extends Tower implements TowerLoader {
             setPhysical(getPhysical() + 40);
             setSpecial(getSpecial() + 10);
             setSecondType(Types.TENEBRE);
-            getTiles().replaceSprite(getSprite());
+            if (getTiles() != null) {
+                getTiles().replaceSprite(getSprite());
+            }
         }
     }
 
