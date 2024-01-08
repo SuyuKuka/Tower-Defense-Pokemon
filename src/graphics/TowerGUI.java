@@ -22,6 +22,8 @@ import javax.swing.BoxLayout;
 
 public class TowerGUI extends JPanel {
 
+    private boolean opened = false;
+    private Tower pkm;
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = new Control();
 
@@ -41,7 +43,10 @@ public class TowerGUI extends JPanel {
     private JLabel skillPattern = maker.oneLineTextMaker();
     private JLabel skillType = maker.oneLineTextMaker();
 
-    public TowerGUI() {
+    public TowerGUI(Tower pkm) {
+        pkm.setGUI(this);
+        this.pkm = pkm;
+
         JPanel skillInfoPanel = new JPanel();
         skillInfoPanel.setLayout(new BoxLayout(skillInfoPanel, BoxLayout.Y_AXIS));
         skillInfoPanel.setBorder(new LineBorder(Color.BLUE));
@@ -81,19 +86,18 @@ public class TowerGUI extends JPanel {
         add(info, BorderLayout.CENTER);
     }
 
-    public void updatePkm(Tower pkm) {
-        pkm.setGUI(this);
+    public void updatePkm() {
 
         pkmName.setText(pkm.getName() + " lvl." + pkm.getLevel());
-        updateTypePanel(pkm);
-        updateStatsPanel(pkm);
-        updateSkillPanel(pkm);
+        updateTypePanel();
+        updateStatsPanel();
+        updateSkillPanel();
 
         info.revalidate();
         info.repaint();
     }
 
-    private void updateStatsPanel(Tower pkm) {
+    private void updateStatsPanel() {
 
         phys.setText("AtkPhys: " + pkm.getPhysical() + "");
         spe.setText("AtkSpe: " + pkm.getSpecial() + "");
@@ -101,7 +105,7 @@ public class TowerGUI extends JPanel {
         vitesse.setText("Vitesse: " + pkm.getAtkCd() + "");
     }
 
-    private void updateTypePanel(Tower pkm) {
+    private void updateTypePanel() {
 
         if (pkm.getType()[1] == Types.NONE) {
             types.setText("Type: " + pkm.getType()[0] + "");
@@ -110,7 +114,7 @@ public class TowerGUI extends JPanel {
         }
     }
 
-    private void updateSkillPanel(Tower pkm) {
+    private void updateSkillPanel() {
         int incre = 0;
         for (SkillButton skill : skillSlot) {
 
@@ -151,6 +155,14 @@ public class TowerGUI extends JPanel {
         if (pkm.getCurrentSkill(pkm.getSelect()).getPatern() == Skill.Pattern.UNIQUE) {
             skillPattern.setText("Attaque un seul ennemi.");
         }
+    }
+
+    public boolean isOpened() {
+        return this.opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
     }
 
 }

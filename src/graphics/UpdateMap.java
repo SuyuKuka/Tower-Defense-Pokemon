@@ -26,13 +26,11 @@ public class UpdateMap extends JLayeredPane {
     private Control control = new Control();
     private JPanel gameMap;
     private JPanel screen;
-    private TowerGUI GUI = new TowerGUI();
+
     private int cellSize = 32;
 
     public UpdateMap(MapState state, TowerPresent tPresent, JPanel screen) {
         this.screen = screen;
-        GUI.setVisible(false);
-        tPresent.add(GUI, BorderLayout.SOUTH);
 
         JPanel mapLayer = new JPanel();
         mapLayer.setLayout(new BorderLayout());
@@ -167,16 +165,20 @@ public class UpdateMap extends JLayeredPane {
         private Tower pokemon;
 
         public Tiles(int[] pos) {
+
             this.pos = pos;
             tilesList.add(this);
+            spriteOnIt = empty;
+
+            setBackground(Color.blue);
             setLayout(new GridBagLayout());
             setMinimumSize(new Dimension(cellSize, cellSize));
             setBorder(new EmptyBorder(1, 1, 1, 1));
 
-            spriteOnIt = empty;
             add(empty, constraints);
 
             addMouseListener(new MouseAdapter() {
+
                 @Override
                 public void mouseEntered(MouseEvent evt) {
                     setBorder(new LineBorder(Color.RED, 1));
@@ -216,26 +218,6 @@ public class UpdateMap extends JLayeredPane {
                 }
             });
 
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent evt) {
-                    if (pokemon != null) {
-                        if (pokemon.getGUI() == null) {
-                            GUI.updatePkm(pokemon);
-                        } else {
-                            pokemon.getGUI().updatePkm(pokemon);
-                        }
-                        if (SwingUtilities.isLeftMouseButton(evt)) {
-                            tPresent.getComponent(0).setVisible(false);
-                            tPresent.getComponent(1).setVisible(true);
-                        }
-                        if (SwingUtilities.isRightMouseButton(evt)) {
-                            tPresent.getComponent(1).setVisible(false);
-                            tPresent.getComponent(0).setVisible(true);
-                        }
-                    }
-                }
-            });
         }
 
         public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
@@ -250,6 +232,27 @@ public class UpdateMap extends JLayeredPane {
         }
 
         private void giveTiles(Tower pkm) {
+            this.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent evt) { // FRAGILE
+                    if (SwingUtilities.isLeftMouseButton(evt)) {
+                        if (tPresent.getComponentCount() < 2) {
+                            tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
+                            pkm.getGUI().setVisible(true);
+                            tPresent.getComponent(0).setVisible(false);
+                            setOpaque(true);
+                        }
+                    }
+                    if (SwingUtilities.isRightMouseButton(evt)) {
+
+                        pkm.getGUI().setVisible(false);
+                        tPresent.remove(pkm.getGUI());
+                        tPresent.getComponent(0).setVisible(true);
+                        setOpaque(false);
+                    }
+
+                }
+            });
             pkm.setTiles(this);
         }
 

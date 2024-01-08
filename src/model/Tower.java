@@ -43,7 +43,7 @@ public class Tower extends Pokemon {
     private State state = State.LOCKED;
     private int atkCd;
     private int baseCd;
-    private TowerGUI GUI;
+    private TowerGUI GUI = new TowerGUI(this);
 
     private TowerManagement manager;
 
@@ -124,6 +124,12 @@ public class Tower extends Pokemon {
     }
 
     public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // ATK WITH CD
+        if (GUI != null) {
+            if (GUI.isVisible()) {
+                GUI.updatePkm();
+            }
+        }
+
         if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
             getUniqueTarget(this, ennemiInMap);
             if (atkCd <= 0) {
@@ -340,10 +346,7 @@ public class Tower extends Pokemon {
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
             updatePokemon();
-            if (GUI != null) {
 
-                GUI.updatePkm(this);
-            }
             manager.updateManager(this);
         }
 

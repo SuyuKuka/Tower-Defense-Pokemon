@@ -205,7 +205,7 @@ public class Control {
     public void SkillManager(SkillButton skill, Tower pkm) {
         if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
             pkm.setCurrentSkill(skill.getSkill());
-            pkm.getGUI().updatePkm(pkm);
+            pkm.getGUI().updatePkm();
             System.out.println(skill.getSkill().getName());
         }
 
