@@ -11,6 +11,7 @@ import graphics.MainGraphics;
 import model.Tower.State;
 import model.MapState;
 import model.Player;
+import model.Skill;
 import model.Tower;
 import model.InitWaves.Difficulty;
 
@@ -199,6 +200,32 @@ public class Control {
 
     public void openPC() {
         // TODO OPEN THE PC
+    }
+
+    public void SkillManager(SkillButton skill, Tower pkm) {
+        if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
+            pkm.setCurrentSkill(skill.getSkill());
+            pkm.getGUI().updatePkm(pkm);
+            System.out.println(skill.getSkill().getName());
+        }
+
+    }
+
+    public class SkillButton extends JButton {
+        private Skill skill;
+
+        public SkillButton() {
+
+        }
+
+        public void setSkill(Skill skill) {
+            this.skill = skill;
+        }
+
+        public Skill getSkill() {
+            return skill;
+        }
+
     }
 
 }

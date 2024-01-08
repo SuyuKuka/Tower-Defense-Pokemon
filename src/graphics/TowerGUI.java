@@ -1,60 +1,156 @@
 package graphics;
 
+import control.Control;
+import control.Control.SkillButton;
+import model.Skill;
+import model.Tower;
+import model.Types;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-
-import control.Control;
-import model.Skill;
-import model.Tower;
-import model.Types;
+import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.BoxLayout;
 
 public class TowerGUI extends JPanel {
 
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = new Control();
-    private Tower pkm;
 
-    private JLabel pkmName;
-    private JPanel type = new JPanel();
-    private JPanel types = new JPanel();
+    private JPanel info;
+
+    private JLabel types = maker.oneLineTextMaker();
+    private JLabel pkmName = maker.oneLineTextMaker();
+    private JLabel phys = maker.oneLineTextMaker();
+    private JLabel spe = maker.oneLineTextMaker();
+    private JLabel portee = maker.oneLineTextMaker();
+    private JLabel vitesse = maker.oneLineTextMaker();
+
+    private SkillButton[] skillSlot = new SkillButton[4];
+
+    private JLabel skillName = maker.oneLineTextMaker();
+    private JLabel skillDmg = maker.oneLineTextMaker();
+    private JLabel skillPattern = maker.oneLineTextMaker();
+    private JLabel skillType = maker.oneLineTextMaker();
 
     public TowerGUI() {
-        type.setLayout(new BorderLayout());
-        types.setLayout(new BorderLayout());
+        JPanel skillInfoPanel = new JPanel();
+        skillInfoPanel.setLayout(new BoxLayout(skillInfoPanel, BoxLayout.Y_AXIS));
+        skillInfoPanel.setBorder(new LineBorder(Color.BLUE));
+        skillInfoPanel.setOpaque(false);
+        skillInfoPanel.add(skillName);
+        skillInfoPanel.add(skillType);
+        skillInfoPanel.add(skillDmg);
+        skillInfoPanel.add(skillPattern);
 
-        pkmName = new JLabel();
-        pkmName.setFont(maker.getCustomFont().deriveFont(20f));//
-        pkmName.setForeground(Color.WHITE);
+        JPanel skills = new JPanel();
+        skills.setLayout(new GridLayout(2, 2));
+        for (int i = 0; i < skillSlot.length; i++) {
+            skillSlot[i] = control.new SkillButton();
+            skillSlot[i].setBorder(new EmptyBorder(1, 1, 1, 1));
+            skills.add(skillSlot[i]);
+        }
+        JPanel stats = new JPanel();
+        stats.setLayout(new GridLayout(2, 2));
+        stats.setOpaque(false);
+        stats.add(phys);
+        stats.add(portee);
+        stats.add(spe);
+        stats.add(vitesse);
 
-        setPreferredSize(new Dimension(0, 400));
+        info = new JPanel();
+        info.setLayout(new GridLayout(5, 1));
+        info.setBackground(Color.BLACK);
+        info.add(pkmName);
+        info.add(types);
+        info.add(stats);
+        info.add(skills);
+        info.add(skillInfoPanel);
+
+        setPreferredSize(new Dimension(0, 600));
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
-        add(pkmName, BorderLayout.NORTH);
-        add(types, BorderLayout.CENTER);
-    }
-
-    public Tower getPkm() {
-        return this.pkm;
-    }
-
-    public void setPkm() {
-
+        add(info, BorderLayout.CENTER);
     }
 
     public void updatePkm(Tower pkm) {
+        pkm.setGUI(this);
+
+        pkmName.setText(pkm.getName() + " lvl." + pkm.getLevel());
+        updateTypePanel(pkm);
+        updateStatsPanel(pkm);
+        updateSkillPanel(pkm);
+
+        info.revalidate();
+        info.repaint();
+    }
+
+    private void updateStatsPanel(Tower pkm) {
+
+        phys.setText("AtkPhys: " + pkm.getPhysical() + "");
+        spe.setText("AtkSpe: " + pkm.getSpecial() + "");
+        portee.setText("Portee: " + pkm.getRayon() + "");
+        vitesse.setText("Vitesse: " + pkm.getAtkCd() + "");
+    }
+
+    private void updateTypePanel(Tower pkm) {
+
         if (pkm.getType()[1] == Types.NONE) {
-            type = maker.imagePanel("ressources/type/" + pkm.getType()[0] + ".png");
+            types.setText("Type: " + pkm.getType()[0] + "");
         } else {
-            type = maker.imagePanel("ressources/type/" + pkm.getType()[0] + ".png");
+            types.setText("Type: " + pkm.getType()[0] + " et " + pkm.getType()[1]);
         }
-        types.add(type, BorderLayout.CENTER);
-        pkmName.setText(pkm.getName());
+    }
+
+    private void updateSkillPanel(Tower pkm) {
+        int incre = 0;
+        for (SkillButton skill : skillSlot) {
+
+            if (pkm.getSkills()[incre] != null) {
+                skill.setText(pkm.getSkills()[incre].getName());
+                skill.setSkill(pkm.getSkills()[incre]);
+                skill.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent evt) {
+                        control.SkillManager(skill, pkm);
+
+                    }
+                });
+
+            } else {
+                skill.setText("");
+            }
+
+            if (pkm.getCurrentSkill(pkm.getSelect()) == pkm.getSkills()[incre]) {
+                skill.setBorder(new LineBorder(Color.RED));
+            } else {
+                skill.setBorder(new EmptyBorder(1, 1, 1, 1));
+            }
+
+            incre++;
+        }
+
+        skillName.setText(pkm.getCurrentSkill(pkm.getSelect()).getName());
+        skillType.setText("Attaque de type: " + pkm.getCurrentSkill(pkm.getSelect()).getType() + "");
+        if (pkm.getCurrentSkill(pkm.getSelect()).getPhysicalDamage() == 0) {
+            skillDmg.setText("Degat Special: " + pkm.getCurrentSkill(pkm.getSelect()).getSpecialDamage() + "");
+        } else {
+            skillDmg.setText("Degat Physique: " + pkm.getCurrentSkill(pkm.getSelect()).getPhysicalDamage() + "");
+        }
+        if (pkm.getCurrentSkill(pkm.getSelect()).getPatern() == Skill.Pattern.AURA) {
+            skillPattern.setText("Attaque sur une zone autour.");
+        }
+        if (pkm.getCurrentSkill(pkm.getSelect()).getPatern() == Skill.Pattern.UNIQUE) {
+            skillPattern.setText("Attaque un seul ennemi.");
+        }
     }
 
 }

@@ -9,7 +9,7 @@ public class Chartor extends Tower implements TowerLoader {
     public Chartor() {
         // CROWD HAZARD GLOBAL DOT FEU/POISON
         super("Chartor", 50, 10, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
-                State.LOCKED, 60, Tower.Rayon.SMALL, 900);
+                State.LOCKED, 2, Tower.Rayon.GLOBAL, 900); // GLOBAL POUR LE TEST
         primarySkill();
     }
 
@@ -21,12 +21,12 @@ public class Chartor extends Tower implements TowerLoader {
     public void evolution() {
         // FAUSSE EVOLUTION
         if (getLevel() == 10) {
-            setAtkCd(40);
-            setRayon(Tower.Rayon.MEDIUM);
+            // setAtkCd(40);
+            // setRayon(Tower.Rayon.MEDIUM);
         }
         if (getLevel() == 30) {
-            setAtkCd(20);
-            setRayon(Tower.Rayon.LARGE);
+            // setAtkCd(20);
+            // setRayon(Tower.Rayon.LARGE);
         }
     }
 
@@ -37,7 +37,7 @@ public class Chartor extends Tower implements TowerLoader {
 
     public void unlock() {
         if (getLevel() == 5) {
-            learnSkill(new Skill("Danse Flamme", 0, 10, Types.FEU, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Danse Flamme", 0, 10, Types.FEU, Skill.Pattern.UNIQUE, ""));
         }
         if (getLevel() == 8) {
             learnSkill(new Skill("Seisme", 10, 0, Types.SOL, Skill.Pattern.AURA, ""));

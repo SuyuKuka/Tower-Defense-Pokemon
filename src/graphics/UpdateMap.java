@@ -220,7 +220,11 @@ public class UpdateMap extends JLayeredPane {
                 @Override
                 public void mouseClicked(MouseEvent evt) {
                     if (pokemon != null) {
-                        GUI.updatePkm(pokemon);
+                        if (pokemon.getGUI() == null) {
+                            GUI.updatePkm(pokemon);
+                        } else {
+                            pokemon.getGUI().updatePkm(pokemon);
+                        }
                         if (SwingUtilities.isLeftMouseButton(evt)) {
                             tPresent.getComponent(0).setVisible(false);
                             tPresent.getComponent(1).setVisible(true);

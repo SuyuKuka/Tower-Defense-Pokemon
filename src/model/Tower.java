@@ -7,6 +7,7 @@ import java.util.Scanner;
 import characters.*;
 
 import graphics.EnnemiPresent;
+import graphics.TowerGUI;
 import graphics.TowerManagement;
 import graphics.UpdateMap;
 
@@ -42,7 +43,7 @@ public class Tower extends Pokemon {
     private State state = State.LOCKED;
     private int atkCd;
     private int baseCd;
-    private Rayon r;
+    private TowerGUI GUI;
 
     private TowerManagement manager;
 
@@ -339,6 +340,10 @@ public class Tower extends Pokemon {
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
             updatePokemon();
+            if (GUI != null) {
+
+                GUI.updatePkm(this);
+            }
             manager.updateManager(this);
         }
 
@@ -578,6 +583,18 @@ public class Tower extends Pokemon {
         return skills[select];
     }
 
+    public void setCurrentSkill(Skill s) {
+        for (int i = 0; i < getSkills().length; i++) {
+            if (getSkills()[i] == s) {
+                setSelect(i);
+            }
+        }
+    }
+
+    public void setSelect(int select) {
+        this.select = select;
+    }
+
     public Skill[] getSkills() {
         return skills;
     }
@@ -636,6 +653,18 @@ public class Tower extends Pokemon {
 
     public void setAtkCd(int atkCd) {
         this.baseCd = atkCd;
+    }
+
+    public int getSelect() {
+        return select;
+    }
+
+    public TowerGUI getGUI() {
+        return this.GUI;
+    }
+
+    public void setGUI(TowerGUI GUI) {
+        this.GUI = GUI;
     }
 
 }
