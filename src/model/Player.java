@@ -16,6 +16,7 @@ public class Player {
     private int money;
     private int lvl;
     private double exp;
+    private double expLvlUp;
 
     private ArrayList<Tower> obtainedPokemon; // utilite?
 
@@ -255,6 +256,19 @@ public class Player {
      * }
      * }
      */
+
+    public double expCap(){
+        expLvlUp = lvl * 100;
+        return expLvlUp;
+    }
+
+    public void levelUp(){
+        double cap = expCap();
+        if(cap <= exp){
+            lvl++;
+            exp -= cap;
+        }
+    }
 
     public String getPseudo() {
         return pseudo;

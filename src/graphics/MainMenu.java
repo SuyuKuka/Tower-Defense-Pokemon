@@ -198,43 +198,48 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel bigProfilPanel() {
-
-        JPanel profilPanel = new JPanel();
-        profilPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        profilPanel.setOpaque(false);
-
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BorderLayout());
-        infoPanel.setBackground(Color.BLACK);
-
-        JPanel cadrePanel = new JPanel();
-        cadrePanel.setLayout(new BorderLayout());
-        cadrePanel.setBackground(Color.BLACK);
-        cadrePanel.setBorder(new LineBorder(Color.GRAY, 1));
-        cadrePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 50);
-
-        JLabel pseudo = new JLabel("  " + user.getPseudo());
-        pseudo.setForeground(Color.WHITE);
-        pseudo.setFont(maker.getCustomFont().deriveFont(20f));
-
-        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl());
-        levelAccount.setForeground(Color.WHITE);
-        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
-
-        cadrePanel.add(profilPhoto, BorderLayout.WEST);
-        infoPanel.add(pseudo, BorderLayout.NORTH);
-        infoPanel.add(levelAccount, BorderLayout.CENTER);
-
-        cadrePanel.add(infoPanel, BorderLayout.CENTER);
-        profilPanel.add(cadrePanel);
-
         JPanel bigProfilePanel = maker.imagePanel("ressources/profile/profilebg.png");
         bigProfilePanel.setOpaque(false);
+        bigProfilePanel.setPreferredSize(new Dimension(300, 0));
+        
+        bigProfilePanel.setLayout(new BoxLayout(bigProfilePanel, BoxLayout.Y_AXIS));
+        bigProfilePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+        JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 80);
+        profilPhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+        JLabel pseudo = new JLabel(user.getPseudo());
+        pseudo.setForeground(Color.WHITE);
+        pseudo.setFont(maker.getCustomFont().deriveFont(20f));
+        pseudo.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+        JLabel levelAccount = new JLabel("Nv du compte : " + user.getLvl());
+        levelAccount.setForeground(Color.WHITE);
+        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
+        levelAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        bigProfilePanel.add(profilPanel);
+        JProgressBar expBar = new JProgressBar();
+        expBar.setMinimum(0);
+        expBar.setMaximum((int) user.expCap());
+        expBar.setValue((int) user.getExp());
 
+        expBar.setForeground(Color.BLUE);
+        expBar.setString(user.getExp() + "/" + user.expCap());
+        expBar.setStringPainted(true);
+        expBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        Dimension expBarSize = new Dimension(200, 20); // Ajustez la taille selon vos préférences
+        expBar.setMaximumSize(expBarSize);
+
+        profilPhoto.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        pseudo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        levelAccount.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+
+        bigProfilePanel.add(profilPhoto);
+        bigProfilePanel.add(pseudo);
+        bigProfilePanel.add(levelAccount);
+        bigProfilePanel.add(expBar);
+    
         return bigProfilePanel;
     }
 
