@@ -407,14 +407,17 @@ public class MapState {
             EnnemiPresent.updateEnnemiHealth(e);
         }
         for (Tower t : towerPresent) {
+            showAlert(t);
+            t.getRangePanel().repaint();
+        }
+    }
 
-            if (t.getGUI().getAlert() && !t.getGUI().isVisible()) {
-                t.getTiles().setBackground(Color.RED);
-                t.getTiles().setOpaque(true);
-            } else if (!t.getGUI().isVisible()) {
-                t.getTiles().setOpaque(false);
-            }
-
+    private void showAlert(Tower t) {
+        if (t.getGUI().getAlert() && !t.getGUI().isVisible()) {
+            t.getTiles().setBackground(Color.RED);
+            t.getTiles().setOpaque(true);
+        } else if (!t.getGUI().isVisible()) {
+            t.getTiles().setOpaque(false);
         }
     }
 

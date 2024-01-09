@@ -22,7 +22,7 @@ public class Chartor extends Tower implements TowerLoader {
         // FAUSSE EVOLUTION
         if (getLevel() == 10) {
             // setAtkCd(40);
-            // setRayon(Tower.Rayon.MEDIUM);
+            setRayon(Tower.Rayon.MEDIUM);
         }
         if (getLevel() == 30) {
             // setAtkCd(20);

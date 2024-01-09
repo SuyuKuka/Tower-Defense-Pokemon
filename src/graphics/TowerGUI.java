@@ -85,6 +85,7 @@ public class TowerGUI extends JPanel {
         info.add(skillInfoPanel);
         info.add(pkmInfoPanel);
 
+        setVisible(false);
         setPreferredSize(new Dimension(0, 600));
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());

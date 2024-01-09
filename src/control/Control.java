@@ -3,11 +3,14 @@ package control;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
+import graphics.TowerPresent;
+import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
 import model.Tower.State;
 import model.MapState;
@@ -16,7 +19,12 @@ import model.Skill;
 import model.Tower;
 import model.InitWaves.Difficulty;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
 public class Control {
@@ -213,6 +221,14 @@ public class Control {
         } else {
             return false;
         }
+    }
+
+    public void giveTiles(Tower pkm, UpdateMap.Tiles tile) {
+        pkm.setTiles(tile);
+    }
+
+    public void giveRangePanel(Tower pkm, JPanel towerRange) {
+        pkm.setRangePanel(towerRange);// CONTROLE
     }
 
     public void setMs(MapState ms) {

@@ -8,7 +8,7 @@ public class Lilia extends Tower implements TowerLoader {
     public Lilia() {
         // RAPID FIRING
         super("Lilia", 80, 80, Types.PLANTE, Types.ROCHE, "ressources/sprite/lileep/lileep.gif",
-                State.LOCKED, 75, Tower.Rayon.MEDIUM, 300);
+                State.LOCKED, 75, Tower.Rayon.LARGE, 300);
         primarySkill();
     }
 
