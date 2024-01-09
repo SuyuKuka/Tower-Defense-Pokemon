@@ -7,6 +7,7 @@ import java.util.Scanner;
 import characters.*;
 
 import graphics.EnnemiPresent;
+import graphics.TowerGUI;
 import graphics.TowerManagement;
 import graphics.UpdateMap;
 
@@ -42,7 +43,8 @@ public class Tower extends Pokemon {
     private State state = State.LOCKED;
     private int atkCd;
     private int baseCd;
-    private Rayon r;
+    private TowerGUI GUI = new TowerGUI(this);
+    private JPanel rangePanel;
 
     private TowerManagement manager;
 
@@ -123,6 +125,12 @@ public class Tower extends Pokemon {
     }
 
     public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // ATK WITH CD
+        if (GUI != null) {
+            if (GUI.isVisible()) {
+                GUI.updatePkm();
+            }
+        }
+
         if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
             getUniqueTarget(this, ennemiInMap);
             if (atkCd <= 0) {
@@ -339,6 +347,7 @@ public class Tower extends Pokemon {
             setSpecial(getSpecial() + addSpecial);
             exp = 0;
             updatePokemon();
+
             manager.updateManager(this);
         }
 
@@ -356,11 +365,12 @@ public class Tower extends Pokemon {
             if (totalSkill == 4) {
                 System.out.println("Votre pokemon a 4 attaques.");
                 System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
-                Scanner sc = new Scanner(System.in);
-                String st = sc.nextLine();
-                if (st.equalsIgnoreCase("O")) {
-                    replaceSkill(newSkill, sc);
-                }
+                GUI.opendLearnSkill(newSkill);
+                // Scanner sc = new Scanner(System.in);
+                // String st = sc.nextLine();
+                // if (st.equalsIgnoreCase("O")) {
+                // replaceSkill(newSkill, sc);
+                // }
             } else {
                 skills[totalSkill] = newSkill;
                 totalSkill++;
@@ -578,6 +588,18 @@ public class Tower extends Pokemon {
         return skills[select];
     }
 
+    public void setCurrentSkill(Skill s) {
+        for (int i = 0; i < getSkills().length; i++) {
+            if (getSkills()[i] == s) {
+                setSelect(i);
+            }
+        }
+    }
+
+    public void setSelect(int select) {
+        this.select = select;
+    }
+
     public Skill[] getSkills() {
         return skills;
     }
@@ -638,4 +660,23 @@ public class Tower extends Pokemon {
         this.baseCd = atkCd;
     }
 
+    public int getSelect() {
+        return select;
+    }
+
+    public TowerGUI getGUI() {
+        return this.GUI;
+    }
+
+    public void setGUI(TowerGUI GUI) {
+        this.GUI = GUI;
+    }
+
+    public void setRangePanel(JPanel rangePanel) {
+        this.rangePanel = rangePanel;
+    }
+
+    public JPanel getRangePanel() {
+        return rangePanel;
+    }
 }

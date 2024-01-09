@@ -45,36 +45,36 @@ public class Obalie extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Morsure", 80, 0, Types.TENEBRE, Skill.Pattern.UNIQUE, ""));
+        learnSkill(new Skill("Morsure", 80, 0, Types.TENEBRE, Skill.Pattern.UNIQUE, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Coup Bas", 50, 0, Types.TENEBRE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Coup Bas", 50, 0, Types.TENEBRE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 22) {
-            learnSkill(new Skill("Tete de Fer", 75, 0, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Tete de Fer", 75, 0, Types.ACIER, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 30) {
-            learnSkill(new Skill("Calinerie", 80, 0, Types.FEE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Calinerie", 80, 0, Types.FEE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 40) {
-            learnSkill(new Skill("Griffe Acier", 90, 0, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Griffe Acier", 90, 0, Types.ACIER, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 45) {
-            learnSkill(new Skill("Force", 90, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Force", 90, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("Lame de Roc", 80, 0, Types.ROCHE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Lame de Roc", 80, 0, Types.ROCHE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 55) {
-            learnSkill(new Skill("Damoclès", 120, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Damoclès", 120, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 70) {
-            learnSkill(new Skill("Mitra-Poing", 0, 90, Types.COMBAT, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Mitra-Poing", 0, 90, Types.COMBAT, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 80) {
-            learnSkill(new Skill("Exploforce", 200, 0, Types.COMBAT, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Exploforce", 200, 0, Types.COMBAT, Skill.Pattern.UNIQUE, "", 200));
         }
     }
 }

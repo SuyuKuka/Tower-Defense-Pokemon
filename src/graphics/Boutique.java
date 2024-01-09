@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Boutique extends JPanel {
 
-    private Control manager = new Control();
+    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Boutique(MainGraphics main) {
@@ -19,7 +19,7 @@ public class Boutique extends JPanel {
         JPanel titlePanel = titlePanel();
 
         // Back
-        JPanel backPanel = manager.backButton(main);
+        JPanel backPanel = control.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(backPanel, BorderLayout.SOUTH);

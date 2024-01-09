@@ -21,7 +21,7 @@ public class MainMenu extends JPanel {
 
     private Player user;
 
-    private Control control;
+    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     private boolean displayProfile = false;
@@ -33,7 +33,7 @@ public class MainMenu extends JPanel {
 
         CardLayout cdL = new CardLayout();
         user = p;
-        control = new Control(p);
+        control.setUser(p);
 
         setLayout(new BorderLayout());
         setOpaque(false);

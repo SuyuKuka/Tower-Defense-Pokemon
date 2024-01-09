@@ -46,30 +46,30 @@ public class Anchwatt extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Eclair", 0, 20, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
+        learnSkill(new Skill("Eclair", 0, 20, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Coup d'jus", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Coup d'jus", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 16) {
-            learnSkill(new Skill("Rayon Charge", 0, 50, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Rayon Charge", 0, 50, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 20) {
-            learnSkill(new Skill("Champs electrifie", 0, 20, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Champs electrifie", 0, 20, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 25) {
-            learnSkill(new Skill("Elecanon", 0, 175, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Elecanon", 0, 175, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 37) {
-            learnSkill(new Skill("Luminocanon", 0, 100, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Luminocanon", 0, 100, Types.ACIER, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 42) {
-            learnSkill(new Skill("Surf", 0, 80, Types.EAU, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Surf", 0, 80, Types.EAU, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("OverDrive", 0, 275, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("OverDrive", 0, 275, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 200));
         }
 
     }

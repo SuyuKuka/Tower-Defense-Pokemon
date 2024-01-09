@@ -70,4 +70,12 @@ public class GraphicsMaker {
         return res;
     }
 
+    public JLabel oneLineTextMaker() { // TOWER GUI.JAVA
+        JLabel panel = new JLabel();
+        panel.setFont(getCustomFont().deriveFont(20f));//
+        panel.setForeground(Color.WHITE);
+
+        return panel;
+    }
+
 }

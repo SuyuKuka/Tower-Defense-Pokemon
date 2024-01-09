@@ -23,33 +23,33 @@ public class MotismaFroid extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Cage Eclair", 0, 2, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+        learnSkill(new Skill("Cage Eclair", 0, 2, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Brouhaha", 0, 10, Types.NORMAL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Brouhaha", 0, 10, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 19) {
-            learnSkill(new Skill("Vibrobscur", 0, 10, Types.TENEBRE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Vibrobscur", 0, 10, Types.TENEBRE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 25) {
-            learnSkill(new Skill("Onde de Choc", 0, 30, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Onde de Choc", 0, 30, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 30) {
-            learnSkill(new Skill("Champ Electrifie", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Champ Electrifie", 0, 10, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 38) {
-            learnSkill(new Skill("Vent Glace", 0, 30, Types.GLACE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Vent Glace", 0, 30, Types.GLACE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 40) {
-            learnSkill(new Skill("Tonnerre", 0, 50, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Tonnerre", 0, 50, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 45) {
-            learnSkill(new Skill("Esprit Frappeur", 0, 30, Types.SPECTRE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Esprit Frappeur", 0, 30, Types.SPECTRE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("Fatal-Foudre", 0, 140, Types.ELECTRIQUE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Fatal-Foudre", 0, 140, Types.ELECTRIQUE, Skill.Pattern.AURA, "", 200));
         }
     }
 }
