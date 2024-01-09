@@ -8,6 +8,7 @@ public class Pc {
     private ArrayList<Tower> pc = new ArrayList<Tower>();
     private Tower select1 = null;
     private Tower select2 = null;
+    private Tower lastSelectedTower;
 
     public void echange(){
         team = Player.INSTANCE.getTeam();
@@ -18,7 +19,6 @@ public class Pc {
                 int j = pc.indexOf(select2);
                 pc.set(i, select1); //select 1 dans le pc
                 team[j] = select2;  //select 2 dans la team
-                System.out.println(i);
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.TEAM){
                 //si select2 est dans la team et select1 pc
                 int i = pc.indexOf(select1);
@@ -38,7 +38,19 @@ public class Pc {
                 pc.set(i, select2);
                 pc.set(j, select1);
             }
+            select1 = null;
+            select2 = null;
+            lastSelectedTower = null;
+            for(int i = 0; i<team.length; i=i+1){
+                System.out.println(team[i].toString());
+            }
+        }else{
+            //Vide on verra
         }
+    }
+
+    public Tower getLastSelectedTower() {
+        return lastSelectedTower;
     }
 
     public void selected(Tower t){
@@ -54,5 +66,29 @@ public class Pc {
 
     public void setTeam(Tower[] team) {
         this.team = team;
+    }
+
+    public Tower[] getTeam() {
+        return team;
+    }
+
+    public ArrayList<Tower> getPc() {
+        return pc;
+    }
+
+    public void setSelect1(Tower select1) {
+        this.select1 = select1;
+    }
+
+    public void setSelect2(Tower select2) {
+        this.select2 = select2;
+    }
+
+    public Tower getSelect1() {
+        return select1;
+    }
+
+    public Tower getSelect2() {
+        return select2;
     }
 }

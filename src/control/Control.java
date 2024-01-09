@@ -115,10 +115,10 @@ public class Control {
 
     public void switchPkm(Tower pkm) {
         if (pkm.getState() == State.PC) {
-            user.getPc().remove(pkm);
+            user.getPc().getPc().remove(pkm);
             user.addteam(pkm);
         } else {
-            user.getPc().add(pkm);
+            user.getPc().getPc().add(pkm);
             user.removeTeam(pkm);
         }
     }

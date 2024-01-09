@@ -44,6 +44,10 @@ public class Player {
             team[3] = new Gringolem();
             team[4] = new Lilia();
             team[5] = new Starter().new Arcko();
+
+            for(int i =0; i<team.length; i=i+1){
+                team[i].setState(State.TEAM);
+            }
         } else {
             loadData();
         }
