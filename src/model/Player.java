@@ -23,7 +23,7 @@ public class Player {
     private ArrayList<Hero> heroContract = new ArrayList<>();
     private Hero[] hero = new Hero[2];
     private Tower[] team = new Tower[6];
-    private ArrayList<Tower> pc = new ArrayList<Tower>();
+    private Pc pc = Pc.INSTANCE;
 
     private File file = new File("ressources/config/data.csv");
 
@@ -34,7 +34,6 @@ public class Player {
             exp = 0;
             lvl = 1;
             obtainedPokemon = new ArrayList<>();
-            pc = new ArrayList<>();
 
             hero[0] = null;
             hero[1] = null;
@@ -45,10 +44,11 @@ public class Player {
             team[3] = new Gringolem();
             team[4] = new Lilia();
             team[5] = new Starter().new Arcko();
-
         } else {
             loadData();
         }
+        pc.setTeam(team);
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             saveData();
         }));
@@ -294,7 +294,7 @@ public class Player {
         return obtainedPokemon;
     }
 
-    public ArrayList<Tower> getPc() {
+    public Pc getPc() {
         return pc;
     }
 

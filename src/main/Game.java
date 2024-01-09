@@ -12,7 +12,6 @@ import control.ControlTerminal;
 public class Game {
 
     public Game() {
-
         MainGraphics graph = new MainGraphics(Player.INSTANCE, this);
     }
 

@@ -98,22 +98,14 @@ public class MainMenu extends JPanel {
         JPanel pcPanel = new JPanel();
         pcPanel.setLayout(new BorderLayout());
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
-
+        pcPanel.setPreferredSize(new Dimension(350, 0));
         JPanel box = maker.imagePanel("ressources/background/pc.png");
-        GridLayout gridBox = new GridLayout(5, 5);
-        gridBox.setHgap(2);
-        gridBox.setVgap(2);
-        box.setLayout(gridBox);
-        for (int i = 0; i < gridBox.getColumns() * gridBox.getRows(); i++) {
-            Slot slot = new Slot();
-            if (user.getPc().size() > i) {
-                slot = new Slot(user.getPc().get(i));
-            }
-            slot.setBorder(new EmptyBorder(1, 0, 1, 1));
-            box.add(slot);
-        }
-        box.setPreferredSize(new Dimension(300, 200));
-        box.setBorder(new EmptyBorder(40, 20, 40, 20));
+        // GridLayout gridBox = new GridLayout(5, 5);
+        // gridBox.setHgap(2);
+        // gridBox.setVgap(2);
+        
+        // box.setPreferredSize(new Dimension(300, 200));
+        // box.setBorder(new EmptyBorder(40, 20, 40, 20));
 
         pcPanel.add(box, BorderLayout.CENTER);
         pcPanel.add(heading, BorderLayout.NORTH);
