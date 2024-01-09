@@ -407,8 +407,8 @@ public class MapState {
             EnnemiPresent.updateEnnemiHealth(e);
         }
         for (Tower t : towerPresent) {
-            // FAIRE CLIGNOTER
-            if (t.getGUI().getAlert() && nextWaveIn % 5 == 0 && !t.getGUI().isVisible()) {
+
+            if (t.getGUI().getAlert() && !t.getGUI().isVisible()) {
                 t.getTiles().setBackground(Color.RED);
                 t.getTiles().setOpaque(true);
             } else if (!t.getGUI().isVisible()) {

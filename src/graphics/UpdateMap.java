@@ -219,6 +219,7 @@ public class UpdateMap extends JLayeredPane {
                             towerRange.setBounds(0, 0, mapWidth * cellSize, mapHeight * cellSize);
                             pkm.setRangePanel(towerRange);
                             towerRange.setVisible(false);
+                            pkm.getGUI().setVisible(false);
                             uMap.add(towerRange, POPUP_LAYER);
 
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
@@ -249,8 +250,10 @@ public class UpdateMap extends JLayeredPane {
             this.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
+
                     if (SwingUtilities.isLeftMouseButton(evt)) {
                         if (tPresent.getComponentCount() < 2) {
+
                             tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
                             pkm.getGUI().setVisible(true);
                             tPresent.getComponent(0).setVisible(false);
