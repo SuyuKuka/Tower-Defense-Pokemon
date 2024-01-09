@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 public class GameoverScreen extends JPanel {
 
     private GraphicsMaker maker = new GraphicsMaker();
-    private Control control = new Control();
+    private Control control = Control.INSTANCE;
 
     private int totalWavePassed;
     private int totalMoneyEarned;

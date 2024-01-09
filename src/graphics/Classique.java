@@ -8,7 +8,7 @@ import control.Control;
 
 public class Classique extends JPanel {
 
-    private Control manager = new Control();
+    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Classique(MainGraphics main) {
@@ -53,9 +53,9 @@ public class Classique extends JPanel {
         JButton mediumButton = new JButton(new ImageIcon("ressources/button/moyen_button.png"));
         JButton hardButton = new JButton(new ImageIcon("ressources/button/difficile_button.png"));
 
-        manager.buttonPressed(easyButton, "gameScreen_c_facile", main);
-        manager.buttonPressed(mediumButton, "gameScreen_c_moyen", main);
-        manager.buttonPressed(hardButton, "gameScreen_c_difficile", main);
+        control.buttonPressed(easyButton, "gameScreen_c_facile", main);
+        control.buttonPressed(mediumButton, "gameScreen_c_moyen", main);
+        control.buttonPressed(hardButton, "gameScreen_c_difficile", main);
 
         easyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         mediumButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -78,7 +78,7 @@ public class Classique extends JPanel {
         bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         bottomPanel.setPreferredSize(new Dimension(0, 52));
 
-        JPanel backPanel = manager.backButton(main);
+        JPanel backPanel = control.backButton(main);
         bottomPanel.add(backPanel, BorderLayout.WEST);
         bottomPanel.setOpaque(true);
         return bottomPanel;

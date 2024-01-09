@@ -45,37 +45,37 @@ public class Starter {
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Griffe", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Griffe", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 0));
         }
 
         @Override
         public void unlock() { // 9
             if (getLevel() == 7) {
-                learnSkill(new Skill("Flammeche", 0, 40, Types.FEU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Flammeche", 0, 40, Types.FEU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 16) {
-                learnSkill(new Skill("Draco-Rage", 0, 40, Types.DRAGON, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Draco-Rage", 0, 40, Types.DRAGON, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 24) {
-                learnSkill(new Skill("Crocs Feu", 60, 0, Types.FEU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Crocs Feu", 60, 0, Types.FEU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 32) {
-                learnSkill(new Skill("Rebondifeu", 0, 55, Types.FEU, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Rebondifeu", 0, 55, Types.FEU, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Cru-Aile", 65, 0, Types.VOL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Cru-Aile", 65, 0, Types.VOL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 41) {
-                learnSkill(new Skill("Tranche", 70, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Tranche", 70, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Lame d'Air", 85, 0, Types.VOL, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Lame d'Air", 85, 0, Types.VOL, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 60) {
-                learnSkill(new Skill("Boutefeu", 100, 0, Types.FEU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Boutefeu", 100, 0, Types.FEU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Feu d'enfer", 0, 150, Types.FEU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Feu d'enfer", 0, 150, Types.FEU, Skill.Pattern.UNIQUE, "", 200));
             }
         }
     }
@@ -118,42 +118,42 @@ public class Starter {
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 0));
         }
 
         @Override
         public void unlock() {
             if (getLevel() == 6) {
-                learnSkill(new Skill("Feuillage", 0, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Feuillage", 0, 40, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 9) {
-                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 16) {
-                learnSkill(new Skill("Mega-Sangsue", 0, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Mega-Sangsue", 0, 40, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 25) {
-                learnSkill(new Skill("Giga-Sangsue", 0, 55, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Giga-Sangsue", 0, 55, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Souplesse", 60, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Souplesse", 60, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 44) {
-                learnSkill(new Skill("Lame-Feuille", 70, 40, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Lame-Feuille", 70, 40, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Plaie Croix", 80, 0, Types.INSECTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Plaie Croix", 80, 0, Types.INSECTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 58) {
-                learnSkill(new Skill("Eco-Sphere", 0, 100, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Eco-Sphere", 0, 100, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Tempete Verte", 0, 150, Types.PLANTE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Tempete Verte", 0, 150, Types.PLANTE, Skill.Pattern.AURA, "", 200));
             }
         }
     }
 
-    public class Moustillon extends Tower implements TowerLoader { // Froakie - Frogadier - Greninja
+    public class Moustillon extends Tower implements TowerLoader {
         public Moustillon() {
             // MID RANGE MID
             super("Moustillon", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/oshawott/oshawott.gif", State.LOCKED,
@@ -192,37 +192,37 @@ public class Starter {
 
         @Override
         public void primarySkill() {
-            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Ecras'Face", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
 
         @Override
         public void unlock() {
             if (getLevel() == 5) {
-                learnSkill(new Skill("Ecume", 0, 40, Types.EAU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Ecume", 0, 40, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 8) {
-                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Vive-Attaque", 40, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 10) {
-                learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 14) {
-                learnSkill(new Skill("Vibraqua", 0, 60, Types.EAU, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Vibraqua", 0, 60, Types.EAU, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 23) {
-                learnSkill(new Skill("Aeropique", 40, 0, Types.VOL, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Aeropique", 40, 0, Types.VOL, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 36) {
-                learnSkill(new Skill("Aqua-Jet", 80, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Aqua-Jet", 80, 0, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 45) {
-                learnSkill(new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, Skill.Pattern.AURA, ""));
+                learnSkill(new Skill("Tranche-Nuit", 70, 0, Types.TENEBRE, Skill.Pattern.AURA, "", 200));
             }
             if (getLevel() == 52) {
-                learnSkill(new Skill("Hydrocanon", 0, 100, Types.EAU, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Hydrocanon", 0, 100, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
             }
             if (getLevel() == 70) {
-                learnSkill(new Skill("Lame Sainte", 150, 0, Types.COMBAT, Skill.Pattern.UNIQUE, ""));
+                learnSkill(new Skill("Lame Sainte", 150, 0, Types.COMBAT, Skill.Pattern.UNIQUE, "", 200));
             }
         }
     }

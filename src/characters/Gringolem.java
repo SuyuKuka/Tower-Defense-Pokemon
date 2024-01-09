@@ -32,30 +32,30 @@ public class Gringolem extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Malediction", 0, 80, Types.SPECTRE, Skill.Pattern.AURA, ""));
+        learnSkill(new Skill("Malediction", 0, 80, Types.SPECTRE, Skill.Pattern.AURA, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 20) {
-            learnSkill(new Skill("Dynamo-Poing", 80, 10, Types.COMBAT, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Dynamo-Poing", 80, 10, Types.COMBAT, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 30) {
-            learnSkill(new Skill("Seisme", 10, 0, Types.SOL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Seisme", 10, 0, Types.SOL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 40) {
-            learnSkill(new Skill("Ultimapoing", 60, 0, Types.NORMAL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Ultimapoing", 60, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 45) {
-            learnSkill(new Skill("Tomberoche", 200, 0, Types.ROCHE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Tomberoche", 200, 0, Types.ROCHE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("Marto-Poing", 80, 0, Types.COMBAT, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Marto-Poing", 80, 0, Types.COMBAT, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 60) {
-            learnSkill(new Skill("Sable Ardent", 0, 200, Types.SOL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Sable Ardent", 0, 200, Types.SOL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 70) {
-            learnSkill(new Skill("Téra Explosion", 300, 0, Types.NORMAL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Téra Explosion", 300, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
 
     }

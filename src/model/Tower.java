@@ -44,6 +44,7 @@ public class Tower extends Pokemon {
     private int atkCd;
     private int baseCd;
     private TowerGUI GUI = new TowerGUI(this);
+    private JPanel rangePanel;
 
     private TowerManagement manager;
 
@@ -364,11 +365,12 @@ public class Tower extends Pokemon {
             if (totalSkill == 4) {
                 System.out.println("Votre pokemon a 4 attaques.");
                 System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
-                Scanner sc = new Scanner(System.in);
-                String st = sc.nextLine();
-                if (st.equalsIgnoreCase("O")) {
-                    replaceSkill(newSkill, sc);
-                }
+                GUI.opendLearnSkill(newSkill);
+                // Scanner sc = new Scanner(System.in);
+                // String st = sc.nextLine();
+                // if (st.equalsIgnoreCase("O")) {
+                // replaceSkill(newSkill, sc);
+                // }
             } else {
                 skills[totalSkill] = newSkill;
                 totalSkill++;
@@ -670,4 +672,11 @@ public class Tower extends Pokemon {
         this.GUI = GUI;
     }
 
+    public void setRangePanel(JPanel rangePanel) {
+        this.rangePanel = rangePanel;
+    }
+
+    public JPanel getRangePanel() {
+        return rangePanel;
+    }
 }

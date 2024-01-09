@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Marathon extends JPanel {
 
-    private Control manager = new Control();
+    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Marathon(MainGraphics main) {
@@ -21,7 +21,7 @@ public class Marathon extends JPanel {
         JPanel buttonPanel = buttonPanel(main);
 
         // Back
-        JPanel backPanel = manager.backButton(main);
+        JPanel backPanel = control.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
@@ -56,9 +56,9 @@ public class Marathon extends JPanel {
         mediumButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         hardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        manager.buttonPressed(easyButton, "gameScreen_m_facile", main);
-        manager.buttonPressed(mediumButton, "gameScreen_m_moyen", main);
-        manager.buttonPressed(hardButton, "gameScreen_m_difficile", main);
+        control.buttonPressed(easyButton, "gameScreen_m_facile", main);
+        control.buttonPressed(mediumButton, "gameScreen_m_moyen", main);
+        control.buttonPressed(hardButton, "gameScreen_m_difficile", main);
 
         buttonPanel.add(easyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));

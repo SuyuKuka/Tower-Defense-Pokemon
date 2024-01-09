@@ -28,7 +28,7 @@ import javax.swing.border.*;
 public class InGameMenu extends JPanel {
 
     private GraphicsMaker maker = new GraphicsMaker();
-    private Control control;
+    private Control control = Control.INSTANCE;
 
     private MapState ms;
     private JLabel pv;
@@ -42,7 +42,7 @@ public class InGameMenu extends JPanel {
 
         this.ms = ms;
 
-        control = new Control(ms);
+        control.setMs(ms);
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(0, 52));

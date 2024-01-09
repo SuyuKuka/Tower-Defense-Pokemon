@@ -8,18 +8,21 @@ public class Skill {
     private double speedAtk;
     private Pattern p;
     private String description;
+    private int price;
 
     public enum Pattern {
         UNIQUE, AOE, AURA
     }
 
-    public Skill(String name, int physicalDamage, int specialDamage, Types type, Pattern p, String description) {
+    public Skill(String name, int physicalDamage, int specialDamage, Types type, Pattern p, String description,
+            int price) {
         this.name = name;
         this.physicalDamage = physicalDamage;
         this.specialDamage = specialDamage;
         this.type = type;
         this.p = p;
         this.description = description;
+        this.price = price;
     }
 
     public String toString() {
@@ -61,5 +64,9 @@ public class Skill {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

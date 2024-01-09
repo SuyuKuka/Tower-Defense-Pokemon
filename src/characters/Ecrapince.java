@@ -33,36 +33,36 @@ public class Ecrapince extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Tranche", 80, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+        learnSkill(new Skill("Tranche", 80, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Aqua-Breche", 50, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Aqua-Breche", 50, 0, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 22) {
-            learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Coqui-Lame", 75, 0, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 30) {
-            learnSkill(new Skill("Tranche-Nuit", 80, 0, Types.TENEBRE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Tranche-Nuit", 80, 0, Types.TENEBRE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 40) {
-            learnSkill(new Skill("Griffe Acier", 90, 0, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Griffe Acier", 90, 0, Types.ACIER, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 45) {
-            learnSkill(new Skill("Plaie Croix", 90, 0, Types.INSECTE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Plaie Croix", 90, 0, Types.INSECTE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("Bombe Beurk", 0, 80, Types.POISON, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Bombe Beurk", 0, 80, Types.POISON, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 55) {
-            learnSkill(new Skill("Damoclès", 120, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Damoclès", 120, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 70) {
-            learnSkill(new Skill("Vent Glace", 0, 90, Types.GLACE, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Vent Glace", 0, 90, Types.GLACE, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 80) {
-            learnSkill(new Skill("Pince-Masse", 200, 0, Types.EAU, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Pince-Masse", 200, 0, Types.EAU, Skill.Pattern.UNIQUE, "", 200));
         }
     }
 

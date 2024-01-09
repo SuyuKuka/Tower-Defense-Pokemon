@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
+import graphics.TowerGUI.SkillButton;
 import model.Tower.State;
 import model.MapState;
 import model.Player;
@@ -23,15 +24,9 @@ public class Control {
     private Player user;
     private MapState ms;
 
-    public Control(Player p) {
-        user = p;
-    }
+    public static final Control INSTANCE = new Control();
 
-    public Control(MapState ms) {
-        this.ms = ms;
-    }
-
-    public Control() {
+    private Control() {
 
     }
 
@@ -202,30 +197,29 @@ public class Control {
         // TODO OPEN THE PC
     }
 
-    public void SkillManager(SkillButton skill, Tower pkm) {
+    public void chooseSkill(SkillButton skill, Tower pkm) {
         if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
             pkm.setCurrentSkill(skill.getSkill());
             pkm.getGUI().updatePkm();
             System.out.println(skill.getSkill().getName());
         }
-
     }
 
-    public class SkillButton extends JButton {
-        private Skill skill;
-
-        public SkillButton() {
-
+    public boolean skillReplace(Tower pkm, Skill newSkill) {
+        if (ms.getMoney() - newSkill.getPrice() >= 0) {
+            pkm.getSkills()[pkm.getSelect()] = newSkill;
+            ms.setMoney(ms.getMoney() - newSkill.getPrice());
+            return true;
+        } else {
+            return false;
         }
-
-        public void setSkill(Skill skill) {
-            this.skill = skill;
-        }
-
-        public Skill getSkill() {
-            return skill;
-        }
-
     }
 
+    public void setMs(MapState ms) {
+        this.ms = ms;
+    }
+
+    public void setUser(Player user) {
+        this.user = user;
+    }
 }

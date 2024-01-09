@@ -34,30 +34,30 @@ public class Escargaume extends Tower implements TowerLoader {
 
     @Override
     public void primarySkill() {
-        learnSkill(new Skill("Taillade", 50, 0, Types.INSECTE, Skill.Pattern.UNIQUE, ""));
+        learnSkill(new Skill("Taillade", 50, 0, Types.INSECTE, Skill.Pattern.UNIQUE, "", 0));
     }
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Bombe Acide", 0, 80, Types.POISON, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Bombe Acide", 0, 80, Types.POISON, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 22) {
-            learnSkill(new Skill("Bélier", 80, 0, Types.NORMAL, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Bélier", 80, 0, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 28) {
-            learnSkill(new Skill("Megacorne", 100, 0, Types.INSECTE, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Megacorne", 100, 0, Types.INSECTE, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 30) {
-            learnSkill(new Skill("Tunnelier", 20, 0, Types.SOL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Tunnelier", 20, 0, Types.SOL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 32) {
-            learnSkill(new Skill("Fulmifer", 100, 0, Types.ACIER, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Fulmifer", 100, 0, Types.ACIER, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 40) {
-            learnSkill(new Skill("Giga Impact", 100, 0, Types.NORMAL, Skill.Pattern.AURA, ""));
+            learnSkill(new Skill("Giga Impact", 100, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
         if (getLevel() == 50) {
-            learnSkill(new Skill("Close Combat", 150, 0, Types.COMBAT, Skill.Pattern.UNIQUE, ""));
+            learnSkill(new Skill("Close Combat", 150, 0, Types.COMBAT, Skill.Pattern.UNIQUE, "", 200));
         }
     }
 }
