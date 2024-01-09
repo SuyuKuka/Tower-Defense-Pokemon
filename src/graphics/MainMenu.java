@@ -170,26 +170,21 @@ public class MainMenu extends JPanel {
 
         JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
         JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
-        JButton boutiqueButton = new JButton(new ImageIcon("ressources/button/boutique_button.png"));
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
 
         control.buttonPressed(classiqueButton, "classique", main);
         control.buttonPressed(marathonButton, "marathon", main);
-        control.buttonPressed(boutiqueButton, "boutique", main);
         control.buttonPressed(optionsButton, "options", main);
 
         // Centrer les boutons verticalement
         classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boutiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Ajouter des boutons avec des rigid areas (espace fixe) entre eux
         buttonPanel.add(classiqueButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(marathonButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        buttonPanel.add(boutiqueButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
 

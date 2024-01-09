@@ -7,16 +7,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
+import characters.*;
+import com.sun.tools.javac.Main;
 import graphics.GameScreen;
 import graphics.MainGraphics;
 import graphics.TowerPresent;
 import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
+import model.*;
 import model.Tower.State;
-import model.MapState;
-import model.Player;
-import model.Skill;
-import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.BorderLayout;
@@ -33,6 +32,10 @@ public class Control {
     private MapState ms;
 
     public static final Control INSTANCE = new Control();
+
+    private Hero selectedHero;
+
+
 
     private Control() {
 
@@ -86,39 +89,66 @@ public class Control {
     }
 
     public void changePanel(String buttonName, MainGraphics main) {
+        System.out.println(buttonName);
         Timer timer = new Timer(1, e1 -> {
+            if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+                startGame(buttonName,main);
+            }
             if (buttonName.equals("retour")) {
                 main.getCardLayout().show(main.getMainPanel(), "menu");
             } else {
-
-                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
-
-                    Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
-                    MapState mState;
-                    if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
-                        mState = new MapState(diff, 0);
-                    } else {
-                        mState = new MapState(diff, 1);
-                    }
-                    GameScreen screen = new GameScreen(main);
-                    screen.setmState(mState);
-                    main.getMainPanel().add(screen, "gameScreen");
-                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                        @Override
-                        protected Void doInBackground() throws Exception {
-                            mState.startGraphic(screen);
-                            return null;
-                        }
-                    };
-                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
-                    worker.execute();
-                } else {
-                    main.getCardLayout().show(main.getMainPanel(), buttonName);
-                }
+                main.getCardLayout().show(main.getMainPanel(), buttonName);
             }
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    public void startGame(String buttonName, MainGraphics main){
+        Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
+        MapState mState;
+
+        if(selectedHero!=null){
+            applyHero();
+        }
+
+
+        if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
+            mState = new MapState(diff, 0);
+        } else {
+            mState = new MapState(diff, 1);
+        }
+        GameScreen screen = new GameScreen(main);
+        screen.setmState(mState);
+        main.getMainPanel().add(screen, "gameScreen");
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                mState.startGraphic(screen);
+                return null;
+            }
+        };
+        main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
+        worker.execute();
+    }
+
+    private void applyHero(){
+        if (selectedHero instanceof Sacha) {
+            ((Sacha) selectedHero).buff();
+        }
+        if (selectedHero instanceof Ondine) {
+            ((Ondine) selectedHero).buff();
+        }
+        if (selectedHero instanceof Pierre) {
+            ((Pierre) selectedHero).debuff();
+        }
+        if (selectedHero instanceof Max) {
+            ((Max) selectedHero).debuff();
+        }
+        if (selectedHero instanceof Rocket) {
+            ((Rocket) selectedHero).buff();
+            ((Rocket) selectedHero).debuff();
+        }
     }
 
     public void switchPkm(Tower pkm) {
@@ -237,5 +267,9 @@ public class Control {
 
     public void setUser(Player user) {
         this.user = user;
+    }
+
+    public void setSelectedHero(Hero selectedHero) {
+        this.selectedHero = selectedHero;
     }
 }

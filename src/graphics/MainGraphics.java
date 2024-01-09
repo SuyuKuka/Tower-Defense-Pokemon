@@ -70,13 +70,11 @@ public class MainGraphics extends JFrame {
         MainMenu menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
-        Boutique boutique = new Boutique(this);
         Options options = new Options(this);
 
         mainPanel.add(menu, "menu");
         mainPanel.add(classique, "classique");
         mainPanel.add(marathon, "marathon");
-        mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
 
         add(mainPanel);

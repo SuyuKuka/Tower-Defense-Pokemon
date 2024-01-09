@@ -1,5 +1,6 @@
 package main;
 
+import characters.*;
 import graphics.*;
 import model.*;
 
@@ -12,8 +13,10 @@ import control.ControlTerminal;
 public class Game {
 
     public Game() {
+        initHero();
 
         MainGraphics graph = new MainGraphics(Player.INSTANCE, this);
+
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -33,6 +36,14 @@ public class Game {
 
         }
 
+    }
+
+    public void initHero(){
+        Sacha sacha=new Sacha(Player.INSTANCE);
+        Ondine ondine=new Ondine(Player.INSTANCE);
+        Pierre pierre=new Pierre(Player.INSTANCE);
+        Max max=new Max(Player.INSTANCE);
+        Rocket rocket=new Rocket(Player.INSTANCE);
     }
 
 }

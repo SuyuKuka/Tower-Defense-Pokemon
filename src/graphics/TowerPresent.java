@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 
 public class TowerPresent extends JPanel {
     private Tower[] team = Player.INSTANCE.getTeam();
-    private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
@@ -40,10 +39,8 @@ public class TowerPresent extends JPanel {
         heroLayout.setVgap(10);
         JPanel heroPanel = new JPanel(heroLayout);
         heroPanel.setOpaque(false);
-        TowerManagement hero1 = new TowerManagement(hero[0], 7);
-        TowerManagement hero2 = new TowerManagement(hero[1], 8);
-        heroPanel.add(hero1);
-        heroPanel.add(hero2);
+
+
 
         bg.add(heroPanel);
 

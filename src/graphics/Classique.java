@@ -1,15 +1,22 @@
 package graphics;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import control.Control;
+import model.Hero;
 
 public class Classique extends JPanel {
-
     private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
+    private Hero selected;
+    private JPanel prevSelected;
+
 
     public Classique(MainGraphics main) {
         setOpaque(false);
@@ -24,11 +31,83 @@ public class Classique extends JPanel {
         JPanel bottomPanel = bottomPanel(main);
         //
 
+        //CENTRE
+        JPanel heroPanel=heroPanel();
+
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
+        add(heroPanel, BorderLayout.WEST);
 
         setVisible(true);
+    }
+
+    private  JPanel heroPanel(){
+        JPanel heroPanel=new JPanel();
+        heroPanel.setLayout(new BoxLayout(heroPanel,BoxLayout.Y_AXIS));
+        heroPanel.setOpaque(false);
+        for (Hero h: Hero.getList()) {
+             heroPanel.add( heroLabel(h));
+        }
+        return  heroPanel;
+    }
+
+    private JPanel heroLabel(Hero h){
+        JLabel img=new JLabel(new ImageIcon(h.getImage()));
+
+        JLabel name=maker.oneLineTextMaker();
+        name.setText(h.getName());
+
+        JLabel desc=maker.oneLineTextMaker();
+        desc.setText(h.getDesc());
+
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setBorder(new LineBorder(Color.BLACK));
+        infoPanel.setOpaque(false);
+        infoPanel.setLayout(new GridLayout(2,1));
+        infoPanel.add(name);
+        infoPanel.add(desc);
+        infoPanel.setPreferredSize(new Dimension(500,0));
+
+        JPanel heroLabel=new JPanel();
+        heroLabel.setBackground(new Color(20,20,20));
+        heroLabel.setLayout(new BorderLayout());
+        heroLabel.setBorder(new EmptyBorder(1,1,1,1));
+        heroLabel.add(img,BorderLayout.WEST);
+        heroLabel.add(infoPanel,BorderLayout.CENTER);
+
+        heroLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(selected==null){
+                    selected=h;
+                    prevSelected=heroLabel;
+                    heroLabel.setBackground(Color.RED);
+
+                }else{
+                    selected=h;
+                    prevSelected.setBackground(new Color(20,20,20));
+                    prevSelected=heroLabel;
+                    heroLabel.setBackground(Color.RED);
+                }
+
+                control.setSelectedHero(selected);
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+               heroLabel.setBorder(new LineBorder(Color.WHITE));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                heroLabel.setBorder(new EmptyBorder(1,1,1,1));
+            }
+        });
+
+        return  heroLabel;
     }
 
     private JPanel titlePanel() {
@@ -84,4 +163,7 @@ public class Classique extends JPanel {
         return bottomPanel;
     }
 
+    public Hero getSelected() {
+        return selected;
+    }
 }
