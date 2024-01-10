@@ -52,21 +52,10 @@ public class TowerManagement extends JPanel {
 
     private JPanel addSpriteLabel() {
         spritePanel.setOpaque(false);
-
         spriteLabel = new JLabel(new ImageIcon(pokemon.getSprite()));
         pokemon.setManager(this);
 
         spritePanel.add(spriteLabel, BorderLayout.SOUTH);
-
-        // try {
-        // BufferedImage spriteImage = ImageIO.read(new File(pokemon.getSprite()));
-        // Image spriteResized = spriteImage.getScaledInstance(60, 60,
-        // Image.SCALE_SMOOTH);
-        // JLabel spriteLabel = new JLabel(new ImageIcon(spriteResized));
-        // spritePanel.add(spriteLabel, BorderLayout.SOUTH);
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
         spritePanel.setBorder(BorderFactory.createEmptyBorder(5, 28, 0, 0));
         return spritePanel;
     }
