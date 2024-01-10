@@ -56,9 +56,9 @@ public class Player {
             }
 
             //Initialisation du pc
-            for(int i=0; i<25; i=i+1){
-                pc.getPc().add(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1));
-            }
+            // for(int i=0; i<25; i=i+1){
+            //     pc.getPc().add(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1));
+            // }
         } else {
             loadData();
         }

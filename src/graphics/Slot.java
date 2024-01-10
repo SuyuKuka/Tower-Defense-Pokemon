@@ -42,7 +42,6 @@ import java.awt.event.MouseEvent;
                     adding();
                 }
                 container.revalidate();
-
             }
 
             @Override
@@ -57,7 +56,7 @@ import java.awt.event.MouseEvent;
         });
     }
 
-    public Slot(MainMenu container) {
+    public Slot(MainMenu container) {//slot vide
         this(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1), container);
         // setOpaque(true);
         // setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -109,8 +108,8 @@ import java.awt.event.MouseEvent;
         return pkm;
     }
 
-        public void setPkm(Tower pkm) {
+    public void setPkm(Tower pkm) {
         System.out.println(pkm.getName());
-            this.pkm = pkm;
-        }
+        this.pkm = pkm;
     }
+}

@@ -3,6 +3,8 @@ package graphics;
 import model.Pc;
 import model.Player;
 import model.Tower;
+import model.Types;
+import model.Tower.Rayon;
 import model.Tower.State;
 
 import javax.swing.*;
@@ -31,6 +33,8 @@ public class MainMenu extends JPanel {
 
     private boolean displayPcPanel = false;
     JPanel teamPanel;
+    JPanel pcPanel;
+    JPanel box;
 
     public MainMenu(MainGraphics main, Player p) {
         Pc.INSTANCE.setMainMenu(this);
@@ -89,7 +93,6 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel pcPanel() {
-
         JLabel pcTitle = new JLabel("PC");
         pcTitle.setFont(maker.getCustomFont());
         pcTitle.setForeground(Color.WHITE);
@@ -98,28 +101,38 @@ public class MainMenu extends JPanel {
         heading.setBorder(new LineBorder(Color.BLACK, 5));
         heading.add(pcTitle);
 
-        JPanel pcPanel = new JPanel();
+        pcPanel = new JPanel();
         pcPanel.setLayout(new BorderLayout());
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
         pcPanel.setPreferredSize(new Dimension(350, 0));
-        JPanel box = maker.imagePanel("ressources/background/pc.png");
-        // box.add(new Slot());
-        for(int i=0; i<5; i=i+1){
-            for(int j=0; j<5; j=j+1){
-                box.add(new Slot(this));
-                
-            }
-        }
 
-        pcPanel.add(box, BorderLayout.CENTER);
-        pcPanel.add(heading, BorderLayout.NORTH);
+        placePc();
+        pcPanel.add(heading, BorderLayout.NORTH);  
         return pcPanel;
     }
 
+    public void placePc(){
+        if(box!=null){
+            box.removeAll();
+            System.out.println("Box supprimé");
+            box.repaint();
+            box.revalidate();
+        }
+        System.out.println("Initialisation");
+        box = maker.imagePanel("ressources/background/pc.png");
+        box.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        for (int i = 0; i < Pc.INSTANCE.getHeight() * Pc.INSTANCE.getWidth(); i++) {
+                Slot slot = new Slot(Pc.INSTANCE.getPc().get(i), this);
+                slot.setPreferredSize(new Dimension(75, 75));
+                box.add(slot);
+        }
+        pcPanel.add(box, BorderLayout.CENTER);
+        pcPanel.repaint();
+        pcPanel.revalidate();
+    }
+
     private JPanel teamPanel(JPanel pcPanel) {
-
-
-         teamPanel = new JPanel();
+        teamPanel = new JPanel();
         teamPanel.setBackground(new Color(40, 40, 40));
         JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
@@ -139,15 +152,14 @@ public class MainMenu extends JPanel {
     }
 
     public void placeTeam(){
-
-       teamPanel.removeAll();
+        teamPanel.removeAll();
         JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
         teamPanel.add(pcLabel);
 
         System.out.println("===========================================");
         for (int i = 0; i < 6; i++) {
-            System.out.println(Player.INSTANCE.getTeam()[i].getName());
+            //System.out.println(Player.INSTANCE.getTeam()[i].getName());
             Slot slot = new Slot(this);
             if (user.getTeam()[i] != null) {
                 slot = new Slot(user.getTeam()[i],this);
@@ -159,7 +171,6 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel titlePanel() {
-
         JLabel heading = new JLabel("POKEREVOLUTE");
         heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
