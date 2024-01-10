@@ -3,27 +3,19 @@ package control;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 import characters.*;
-import com.sun.tools.javac.Main;
 import graphics.GameScreen;
 import graphics.MainGraphics;
-import graphics.TowerPresent;
 import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
 import model.*;
 import model.Tower.State;
 import model.InitWaves.Difficulty;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
 public class Control {
@@ -42,7 +34,7 @@ public class Control {
     }
 
     public void gamePause(JButton pause) {
-        if (ms.getPause() == true) {
+        if (ms.getPause()) {
             ms.setPause(false);
             pause.setIcon(new ImageIcon("ressources/template/pauseButton.png"));
         } else {
@@ -68,16 +60,16 @@ public class Control {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
+            if (st.startsWith("gameScreen")) {
                 button.setIcon(
-                        new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
+                        new ImageIcon("ressources/button/" + st.substring(13) + "_button_pressed.png"));
             } else {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
 
             Timer timer = new Timer(200, e1 -> {
-                if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
-                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
+                if (st.startsWith("gameScreen")) {
+                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13) + "_button.png"));
                 } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
@@ -91,7 +83,7 @@ public class Control {
     public void changePanel(String buttonName, MainGraphics main) {
         System.out.println(buttonName);
         Timer timer = new Timer(1, e1 -> {
-            if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
+            if (buttonName.startsWith("gameScreen")) {
                 startGame(buttonName,main);
             }
             if (buttonName.equals("retour")) {
@@ -105,15 +97,13 @@ public class Control {
     }
 
     public void startGame(String buttonName, MainGraphics main){
-        Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
+        Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13));
         MapState mState;
 
-        if(selectedHero!=null){
-            applyHero();
-        }
 
 
-        if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
+
+        if (buttonName.substring(11).charAt(0) == 'c') {
             mState = new MapState(diff, 0);
         } else {
             mState = new MapState(diff, 1);
@@ -121,9 +111,12 @@ public class Control {
         GameScreen screen = new GameScreen(main);
         screen.setmState(mState);
         main.getMainPanel().add(screen, "gameScreen");
-        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
+                if(selectedHero!=null){
+                   mState.setSelectedHero(selectedHero);
+                }
                 mState.startGraphic(screen);
                 return null;
             }
@@ -132,24 +125,7 @@ public class Control {
         worker.execute();
     }
 
-    private void applyHero(){
-        if (selectedHero instanceof Sacha) {
-            ((Sacha) selectedHero).buff();
-        }
-        if (selectedHero instanceof Ondine) {
-            ((Ondine) selectedHero).buff();
-        }
-        if (selectedHero instanceof Pierre) {
-            ((Pierre) selectedHero).debuff();
-        }
-        if (selectedHero instanceof Max) {
-            ((Max) selectedHero).debuff();
-        }
-        if (selectedHero instanceof Rocket) {
-            ((Rocket) selectedHero).buff();
-            ((Rocket) selectedHero).debuff();
-        }
-    }
+
 
     public void switchPkm(Tower pkm) {
         if (pkm.getState() == State.PC) {
@@ -220,7 +196,7 @@ public class Control {
         state.setInc(state.getCount());
         try {
             state.startGraphic(screen);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
 
     }

@@ -22,7 +22,6 @@ public class Ennemi extends Pokemon {
 
     // DEPLACEMENT
     private Map map;
-    private boolean exit;
     private int[] pos;
     private int[][] roadMap = Map.roadMap.readableMap();
     // DEPL. GRAPHIC
@@ -101,7 +100,7 @@ public class Ennemi extends Pokemon {
         // debugTilesMap(tilesMap);
 
         cellSize = uMap.getCellSize();
-        exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
+        boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
 
         Point spritePos = new Point(((int) sprite.getLocation().getX() + cellSize / 2),
                 ((int) sprite.getLocation().getY() + cellSize / 2));

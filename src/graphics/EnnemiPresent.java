@@ -22,10 +22,10 @@ public class EnnemiPresent extends JPanel {
     private JPanel ennemiInfoPanel;
     private Ennemi ennemiInInfoPanel;
 
-    private JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
     JScrollPane ennemiList;
 
     public EnnemiPresent() {
+        JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
         bg.setOpaque(false);
         bg.setLayout(new BorderLayout());
 

@@ -466,13 +466,11 @@ public class Map {
     }
 
     public int[] getFrontEntry() {
-        int[] frontEntry = { 1, entry[1] };
-        return frontEntry;
+        return new int[]{ 1, entry[1] };
     }
 
     public int[] getFrontExit() {
-        int[] frontExit = { map.length - 2, exit[1] };
-        return frontExit;
+        return new int[]{ map.length - 2, exit[1] };
     }
 
     public int[] getEntry() {
@@ -501,9 +499,9 @@ public class Map {
 
     public class Corner {
 
-        private int[] pos;
-        private boolean topOrientation;
-        private boolean rightOrientation;
+        private final int[] pos;
+        private final boolean topOrientation;
+        private final boolean rightOrientation;
 
         private int taille = rand.nextInt(3) + 3;
 

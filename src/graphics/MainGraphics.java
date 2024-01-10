@@ -24,15 +24,14 @@ public class MainGraphics extends JFrame {
     private JPanel mainPanel;
     private BufferedImage backgroundImage;
 
-    private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
     public MainGraphics(Player p, Game main) {
 
         // setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new
         // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
         // "POKEMONGOOOOO"));
 
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
         setResizable(false);
 

@@ -10,12 +10,8 @@ public class Pierre extends Hero {
     public Pierre(Player p) {
         super("Pierre", 0, 60, "ressources/heroprofile/pierre.png","-60% def physique");
     }
-    public void debuff(){
-        System.out.println(Ennemi.LIST.getBossList());
-        for (Ennemi e: Ennemi.LIST.getBossList()){
-            System.out.println(e.getName());
-            e.setPhysical(e.getPhysical()*getDebuff()/100);
-        }
+    public void debuff(Ennemi e){
+        e.setPhysical(e.getPhysical()*(100-getDebuff())/100);
     }
 
 }
