@@ -3,6 +3,7 @@ package graphics;
 import model.Pc;
 import model.Player;
 import model.Tower;
+import model.Tower.State;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -156,9 +157,6 @@ public class MainMenu extends JPanel {
         }
         teamPanel.revalidate();
     }
-
-
-
 
     private JPanel titlePanel() {
 

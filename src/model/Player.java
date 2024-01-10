@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import characters.*;
-
+import model.Tower.Rayon;
 import model.Tower.State;
 
 public class Player {
@@ -38,15 +38,26 @@ public class Player {
             hero[0] = null;
             hero[1] = null;
 
+            //Initialisation de la team
             team[1] = new Chartor();
             team[0] = new Anchwatt();
             team[2] = new Tylton();
             team[3] = new Gringolem();
-            team[4] = new Lilia();
+            //team[4] = new Lilia();
+            //team[4] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
             team[5] = new Starter().new Arcko();
 
             for(int i =0; i<team.length; i=i+1){
-                team[i].setState(State.TEAM);
+                if(team[i]!=null){
+                    team[i].setState(State.TEAM);
+                }else{
+                    team[i] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
+                }
+            }
+
+            //Initialisation du pc
+            for(int i=0; i<25; i=i+1){
+                pc.getPc().add(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1));
             }
         } else {
             loadData();

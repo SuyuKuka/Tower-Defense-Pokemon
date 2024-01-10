@@ -49,7 +49,9 @@ public class TowerPresent extends JPanel {
 
         for (int i = 0; i < team.length; i = i + 1) {
             try {
-                initiateTeam(team[i], i + 1);
+                if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
+                    initiateTeam(team[i], i + 1);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
