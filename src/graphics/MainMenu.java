@@ -107,28 +107,23 @@ public class MainMenu extends JPanel {
         pcPanel.setPreferredSize(new Dimension(350, 0));
 
         placePc();
-        pcPanel.add(heading, BorderLayout.NORTH);  
+        box.repaint();
+        pcPanel.add(heading, BorderLayout.NORTH);
         return pcPanel;
     }
 
     public void placePc(){
         if(box!=null){
             box.removeAll();
-            System.out.println("Box supprimé");
-            box.repaint();
-            box.revalidate();
         }
-        System.out.println("Initialisation");
         box = maker.imagePanel("ressources/background/pc.png");
         box.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         for (int i = 0; i < Pc.INSTANCE.getHeight() * Pc.INSTANCE.getWidth(); i++) {
-                Slot slot = new Slot(Pc.INSTANCE.getPc().get(i), this);
-                slot.setPreferredSize(new Dimension(75, 75));
-                box.add(slot);
+            Slot slot = new Slot(Pc.INSTANCE.getPc().get(i), this);
+            slot.setPreferredSize(new Dimension(75, 75));
+            box.add(slot);
         }
         pcPanel.add(box, BorderLayout.CENTER);
-        pcPanel.repaint();
-        pcPanel.revalidate();
     }
 
     private JPanel teamPanel(JPanel pcPanel) {
