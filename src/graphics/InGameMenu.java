@@ -138,7 +138,7 @@ public class InGameMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("LE PCCCCCCCCCCCCCC");
-                control.openPC();
+                // control.openPC();
             }
         });
 

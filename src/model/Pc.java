@@ -79,17 +79,13 @@ public class Pc {
     }
 
     public void selected(Tower t){
-        System.out.println(pc.size());
         if(select1==null){
             select1=t;
-            System.out.println("Selected 1 : " + select1.getName());
         }else if(select1==t){
             select1=null;
         }else if(select2==null && select1 != null){
             select2 = t;
-            System.out.println("Selected 2 : " + select2.getName());
         }
-
         echange();
     }
 

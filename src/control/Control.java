@@ -113,16 +113,6 @@ public class Control {
         timer.start();
     }
 
-    public void switchPkm(Tower pkm) {
-        if (pkm.getState() == State.PC) {
-            user.getPc().getPc().remove(pkm);
-            user.addteam(pkm);
-        } else {
-            user.getPc().getPc().add(pkm);
-            user.removeTeam(pkm);
-        }
-    }
-
     public JPanel backButton(MainGraphics main) {
 
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));

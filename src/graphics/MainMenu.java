@@ -100,6 +100,8 @@ public class MainMenu extends JPanel {
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
         pcPanel.setPreferredSize(new Dimension(350, 0));
         
+        box = maker.imagePanel("ressources/background/pc.png");
+        box.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         placePc();
         pcPanel.add(heading, BorderLayout.NORTH);
         return pcPanel;
@@ -109,8 +111,6 @@ public class MainMenu extends JPanel {
         if(box!=null){
             box.removeAll(); 
         }
-        box = maker.imagePanel("ressources/background/pc.png");
-        box.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         for (int i = 0; i < Pc.INSTANCE.getHeight() * Pc.INSTANCE.getWidth(); i++) {
             Slot slot = new Slot(Pc.INSTANCE.getPc().get(i), this);
             slot.setPreferredSize(new Dimension(75, 75));
@@ -119,7 +119,6 @@ public class MainMenu extends JPanel {
         }
         pcPanel.add(box, BorderLayout.CENTER);
         if(box!=null){
-            System.out.println("repainted");
             box.repaint();
         } 
     }
