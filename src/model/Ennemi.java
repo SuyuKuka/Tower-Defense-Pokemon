@@ -541,4 +541,8 @@ public class Ennemi extends Pokemon {
     public JPanel getEnnemiInfo() {
         return ennemiInfo;
     }
+
+    public Map getMap() {
+        return map;
+    }
 }

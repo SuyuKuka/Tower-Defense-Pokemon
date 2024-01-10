@@ -6,10 +6,7 @@ import java.util.Scanner;
 
 import characters.*;
 
-import graphics.EnnemiPresent;
-import graphics.TowerGUI;
-import graphics.TowerManagement;
-import graphics.UpdateMap;
+import graphics.*;
 
 import java.awt.*;
 
@@ -32,6 +29,7 @@ public class Tower extends Pokemon {
     private UpdateMap.Tiles tiles;
     private TowerGUI GUI = new TowerGUI(this);
     private JPanel rangePanel;
+    private Projectile projectile;
 
     private State state = State.LOCKED;
 
@@ -232,9 +230,11 @@ public class Tower extends Pokemon {
     }
 
     private void attackUnique() {
+
         if (uniqueTarget == null) {
             // System.out.println("Pas de cible");
         } else {
+            projectile=new Projectile(uniqueTarget,this,"ressources/projectiles/fire.png");
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
                     // System.out.println("Immunise");
@@ -678,5 +678,9 @@ public class Tower extends Pokemon {
 
     public JPanel getRangePanel() {
         return rangePanel;
+    }
+
+    public Projectile getProjectile() {
+        return projectile;
     }
 }

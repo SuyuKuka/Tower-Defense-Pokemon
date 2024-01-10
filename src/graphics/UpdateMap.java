@@ -30,6 +30,7 @@ public class UpdateMap extends JLayeredPane {
     private int cellSize = 32;
     private int mapWidth;
     private int mapHeight;
+    private JPanel projectileLayer;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
         this.state = state;
@@ -91,8 +92,10 @@ public class UpdateMap extends JLayeredPane {
         setBounds(0, 0, 764, 531);
         setVisible(true);
         add(mapLayer, DEFAULT_LAYER);
-
     }
+
+
+
 
     public void setSpriteEntry(Ennemi e) {
 
@@ -294,7 +297,7 @@ public class UpdateMap extends JLayeredPane {
     public JPanel makeTowerRange(Tower pkm, int row, int col) {
         JPanel towerRange = new JPanel() {
             public void paintComponent(Graphics g) {
-                int rayon = pkm.getRayonValue(pkm.getRayon()) * cellSize;
+                int rayon = pkm.getDiametreValue(pkm.getRayon()) * cellSize;
                 int x = (col * cellSize) - rayon / 2 + 16;
                 int y = (row * cellSize) - rayon / 2 + 16;
                 super.paintComponent(g);
