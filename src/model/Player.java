@@ -320,9 +320,7 @@ public class Player {
         // t.setState(State.PC);
     }
 
-    public Tower[] getHero() {
-        return hero;
-    }
+  
 
     public ArrayList<Hero> getHeroContract() {
         return heroContract;

@@ -30,21 +30,24 @@ public class Tower extends Pokemon {
     }
 
     private UpdateMap.Tiles tiles;
-    private Rayon rayon;
-    private double exp;
-    private Ennemi uniqueTarget;
-    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
-    private int level;
-    private int[] pos;
+    private TowerGUI GUI = new TowerGUI(this);
+    private JPanel rangePanel;
+
+    private State state = State.LOCKED;
+
     private Skill[] skills = new Skill[4];
     private int select = 0;
     private int totalSkill = 0;
+
+    private int level;
+    private int[] pos;
+    private double exp;
+    private Rayon rayon;
     private int price;
-    private State state = State.LOCKED;
+    private Ennemi uniqueTarget;
+    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
     private int atkCd;
     private int baseCd;
-    private TowerGUI GUI = new TowerGUI(this);
-    private JPanel rangePanel;
 
     private TowerManagement manager;
 
@@ -429,11 +432,11 @@ public class Tower extends Pokemon {
         } else if (rayon == Rayon.SMALL) {
             return 3;
         } else if (rayon == Rayon.MEDIUM) {
-            return 5;
-        } else if (rayon == Rayon.LARGE) {
             return 7;
+        } else if (rayon == Rayon.LARGE) {
+            return 11;
         } else {
-            return 1000; // GLOBAL
+            return 20; // GLOBAL
         }
     }
 

@@ -1,8 +1,7 @@
 package model;
 
+import characters.*;
 import model.InitWaves.Difficulty;
-
-import characters.Starter;
 
 import characters.Starter.Salameche;
 import graphics.EnnemiPresent;
@@ -10,38 +9,21 @@ import graphics.GameScreen;
 import graphics.GameoverScreen;
 import graphics.UpdateMap;
 
-import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import javax.swing.*;
-
-import model.Ennemi;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
 import java.awt.*;
 import javax.swing.Timer;
 
-import model.MapState;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
-
-import javax.swing.border.*;
-import javax.swing.border.*;
-
 public class MapState {
 
-    private Map m;
-
-    private int[][] config;
+    private final Map m;
+private Hero selectedHero;
+    private final int[][] config;
     private GameScreen screen;
 
-    private ArrayList<Tower> towerPresent = new ArrayList<Tower>();
-    private ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
+    private final ArrayList<Tower> towerPresent = new ArrayList<Tower>();
+    private final ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
 
     private ArrayList<ArrayList<Ennemi>> allEnnemis = new ArrayList<>();
     private ArrayList<Ennemi> wave = new ArrayList<>();
@@ -54,27 +36,27 @@ public class MapState {
     private double moneyIncrement = 0;
     private int nbTotalWave;
     private int nextWaveIn = 0;
-    private Random rand = new Random();
+    private final Random rand = new Random();
     private Timer timer;
     private boolean endless;
     private int count = 0;
     private InitWaves w;
 
-    private Difficulty diff;
+    private final Difficulty diff;
 
     int step = 0;
     int inc = 1;
 
     // STATS
     private double countMoney;
-    private ArrayList<Ennemi> ennemiEscaped = new ArrayList<>();
+    private final ArrayList<Ennemi> ennemiEscaped = new ArrayList<>();
 
     //
     public MapState(Difficulty difficulty, int mode) {
         Map map = new Map(18, 24, difficulty);
         try {
             InitPokemon.loadingChar();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
 
         }
         diff = difficulty;
@@ -99,6 +81,9 @@ public class MapState {
 
         m = map;
         config = m.getConfig();
+
+
+
 
     }
 
@@ -160,7 +145,7 @@ public class MapState {
             if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
-                if (st.length() != 0) {
+                if (!st.isEmpty()) {
                     if (setTower(sala.putTower(st), sala)) {
                         nbTour--;
                     }
@@ -202,6 +187,9 @@ public class MapState {
                 e.setPos(m.getEntry());
             }
         }
+        applyHero();
+        screen.gettPresent().setHero(selectedHero);
+
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
@@ -232,7 +220,6 @@ public class MapState {
                 t.attack2(ennemiPresent, this);
 
             }
-            // Player.INSTANCE.getTeam()[0].attack(towerPresent, ennemiPresent, this);
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
                 screen.getuMap().remove(e.getJLabelSprite());
@@ -262,10 +249,7 @@ public class MapState {
         if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
             return true;
         }
-        if (pv == 0) {
-            return true;
-        }
-        return false;
+        return pv == 0;
     }
 
     private void gameOverScreen(boolean win) {
@@ -279,7 +263,7 @@ public class MapState {
         if (!wave.isEmpty()) {
 
             if (pas / 10 > rand.nextInt(600)) {
-
+                System.out.println(wave.get(0));
                 setEnnemi(m.getEntry(), wave.get(0));
                 wave.remove(0);
                 return 0;
@@ -328,7 +312,9 @@ public class MapState {
             }
             leaked = false;
             pv--;
-            screen.getuMap().repaint();
+            if (screen != null) {
+                screen.getuMap().repaint();
+            }
         }
     }
 
@@ -353,9 +339,7 @@ public class MapState {
     }
 
     public boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
-        if (posTower[0] == -1 || posTower[1] == -1) {
-            return false;
-        } else {
+        if (posTower[0] != -1 && posTower[1] != -1) {
             // LA CONCEPTION DU TABLEAU EST DIFFERENTE, INVERSER I J
             int posX = posTower[0];
             int posY = posTower[1];
@@ -366,8 +350,8 @@ public class MapState {
                 tower.setPos(posTower);
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     private void setEnnemi(int[] posEnnemi, Ennemi ennemi) { // MANUELLEMENT
@@ -407,14 +391,17 @@ public class MapState {
             EnnemiPresent.updateEnnemiHealth(e);
         }
         for (Tower t : towerPresent) {
-            // FAIRE CLIGNOTER
-            if (t.getGUI().getAlert() && nextWaveIn % 5 == 0 && !t.getGUI().isVisible()) {
-                t.getTiles().setBackground(Color.RED);
-                t.getTiles().setOpaque(true);
-            } else if (!t.getGUI().isVisible()) {
-                t.getTiles().setOpaque(false);
-            }
+            showAlert(t);
+            t.getRangePanel().repaint();
+        }
+    }
 
+    private void showAlert(Tower t) {
+        if (t.getGUI().getAlert() && !t.getGUI().isVisible()) {
+            t.getTiles().setBackground(Color.RED);
+            t.getTiles().setOpaque(true);
+        } else if (!t.getGUI().isVisible()) {
+            t.getTiles().setOpaque(false);
         }
     }
 
@@ -512,4 +499,35 @@ public class MapState {
         this.money = money;
     }
 
+    private void applyHero(){
+        ifBuff:for (ArrayList<Ennemi> eList : allEnnemis) {
+            for (Ennemi e : eList) {
+                if (selectedHero instanceof Sacha) {
+                    ((Sacha) selectedHero).buff();
+                    break ifBuff;
+                }
+                if (selectedHero instanceof Ondine) {
+                    ((Ondine) selectedHero).buff();
+                    break ifBuff;
+                }
+                if (selectedHero instanceof Pierre) {
+                    if(e.isBoss()) {
+                        ((Pierre) selectedHero).debuff(e);
+                    }
+                }
+                if (selectedHero instanceof Max) {
+                    if(e.isBoss()) {
+                        ((Max) selectedHero).debuff(e);
+                    }
+                }
+                if (selectedHero instanceof Rocket) {
+                    ((Rocket) selectedHero).debuff(e);
+                }
+            }
+        }
+    }
+
+    public void setSelectedHero(Hero selectedHero) {
+        this.selectedHero = selectedHero;
+    }
 }

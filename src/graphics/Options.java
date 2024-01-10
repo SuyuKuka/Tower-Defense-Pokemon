@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class Options extends JPanel {
 
-    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Options(MainGraphics main) {
@@ -17,6 +16,7 @@ public class Options extends JPanel {
         JPanel titlePanel = titlePanel();
 
         // Back
+        Control control = Control.INSTANCE;
         JPanel backPanel = control.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);

@@ -25,11 +25,10 @@ public class InitPokemon {
     }
 
     private static void pokemonMaker(String[] info) {
-
         Ennemi e = new Ennemi(info[0], // NOM
-                Integer.valueOf(info[1]), // PV
-                Integer.valueOf(info[2]), // DEFPHY
-                Integer.valueOf(info[3]), // DEFSPE
+                Integer.parseInt(info[1]), // PV
+                Integer.parseInt(info[2]), // DEFPHY
+                Integer.parseInt(info[3]), // DEFSPE
                 Types.stringToType(info[4]), // TYPE1
                 Types.stringToType(info[5]), // TYPE2
                 info[6].equals("VRAI"), // BOSS

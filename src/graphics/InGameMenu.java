@@ -36,7 +36,6 @@ public class InGameMenu extends JPanel {
     private JLabel compteur;
     private JLabel waveTimer;
     private JButton pc;
-    private JLabel timerName;
 
     public InGameMenu(boolean topPanel, MapState ms) {
 
@@ -102,7 +101,7 @@ public class InGameMenu extends JPanel {
         nbWave.add(compteur, BorderLayout.CENTER);
 
         // TIMER DE VAGUE
-        timerName = new JLabel();
+        JLabel timerName = new JLabel();
         timerName.setText("Prochaine vague dans: ");
         timerName.setFont(maker.getCustomFont().deriveFont(30f));
         timerName.setForeground(Color.WHITE);
@@ -198,7 +197,7 @@ public class InGameMenu extends JPanel {
         }
     }
 
-    public void updateButton(int pas, int limiteDeTemps, int count, boolean lose) {
+    public void updateButton(int pas, int timeLimit, int count, boolean lose) {
         if (ms.getEndless()) {
             compteur.setText("Vague: " + count);
         } else {
@@ -212,10 +211,10 @@ public class InGameMenu extends JPanel {
 
         if (!lose) {
 
-            if (pas >= limiteDeTemps * 100) {
-                pas = limiteDeTemps * 100;
+            if (pas >= timeLimit * 100) {
+                pas = timeLimit * 100;
             }
-            waveTimer.setText(pas + "/" + limiteDeTemps * 100);
+            waveTimer.setText(pas + "/" + timeLimit * 100);
         }
 
     }

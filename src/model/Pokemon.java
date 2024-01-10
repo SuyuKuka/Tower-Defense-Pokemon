@@ -85,6 +85,7 @@ public class Pokemon {
     }
 
     public void setSpeed(Speed sp) {
+
         speed = sp;
     }
 
