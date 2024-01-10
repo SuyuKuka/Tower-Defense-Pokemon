@@ -1,5 +1,10 @@
 package model;
 
+import com.sun.tools.javac.Main;
+import graphics.MainMenu;
+import graphics.Slot;
+
+import javax.swing.*;
 import java.util.*;
 
 import model.Tower.Rayon;
@@ -23,9 +28,16 @@ public class Pc {
         }
     }
 
+    private MainMenu mainMenu;
+
     public void echange(){
         team = Player.INSTANCE.getTeam();
         if(select1 != null && select2 != null){
+           // System.out.println(select1.getName()+" "+select2.getName());
+
+
+
+
             if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.PC){
                 //si select1 est dans la team et select2 pc
                 System.out.println("1 team, 2 pc");
@@ -65,9 +77,12 @@ public class Pc {
             select1 = null;
             select2 = null;
             lastSelectedTower = null;
-            for(int i = 0; i<team.length; i=i+1){
-                System.out.println(team[i].toString());
+            for(int i = 0; i<Player.INSTANCE.getTeam().length; i=i+1){
+                System.out.println(Player.INSTANCE.getTeam()[i].getName());
             }
+            System.out.println();
+
+            mainMenu.placeTeam();
         }else{
             //Vide on verra
         }
@@ -85,6 +100,7 @@ public class Pc {
         }else if(select2==null && select1 != null){
             select2 = t;
         }
+
         echange();
     }
 
@@ -114,5 +130,9 @@ public class Pc {
 
     public Tower getSelect2() {
         return select2;
+    }
+
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
     }
 }

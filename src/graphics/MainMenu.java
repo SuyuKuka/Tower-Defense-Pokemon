@@ -1,5 +1,6 @@
 package graphics;
 
+import model.Pc;
 import model.Player;
 import model.Tower;
 
@@ -28,9 +29,10 @@ public class MainMenu extends JPanel {
     private boolean inCadrePanel = false;
 
     private boolean displayPcPanel = false;
+    JPanel teamPanel;
 
     public MainMenu(MainGraphics main, Player p) {
-
+        Pc.INSTANCE.setMainMenu(this);
         CardLayout cdL = new CardLayout();
         user = p;
         control.setUser(p);
@@ -103,7 +105,7 @@ public class MainMenu extends JPanel {
         // box.add(new Slot());
         for(int i=0; i<5; i=i+1){
             for(int j=0; j<5; j=j+1){
-                box.add(new Slot());
+                box.add(new Slot(this));
                 
             }
         }
@@ -114,12 +116,12 @@ public class MainMenu extends JPanel {
     }
 
     private JPanel teamPanel(JPanel pcPanel) {
+
+
+         teamPanel = new JPanel();
+        teamPanel.setBackground(new Color(40, 40, 40));
         JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
-
-        JPanel teamPanel = new JPanel();
-        teamPanel.setBackground(new Color(40, 40, 40));
-        teamPanel.add(pcLabel);
 
         if (user.getTeam()[0] == null) {
             JLabel pokeicon = new JLabel("Vous n'avez aucun Pokemon dans votre equipe.");
@@ -130,17 +132,33 @@ public class MainMenu extends JPanel {
         } else {
             pcLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             teamPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            for (int i = 0; i < 6; i++) {
-                Slot slot = new Slot();
-                if (user.getTeam()[i] != null) {
-                    slot = new Slot(user.getTeam()[i]);
-                }
-                teamPanel.add(slot);
-            }
+            placeTeam();
             return teamPanel;
         }
-
     }
+
+    public void placeTeam(){
+
+       teamPanel.removeAll();
+        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
+        pcLabel.setOpaque(false);
+        teamPanel.add(pcLabel);
+
+        System.out.println("===========================================");
+        for (int i = 0; i < 6; i++) {
+            System.out.println(Player.INSTANCE.getTeam()[i].getName());
+            Slot slot = new Slot(this);
+            if (user.getTeam()[i] != null) {
+                slot = new Slot(user.getTeam()[i],this);
+                user.getTeam()[i].setSlot(slot);
+            }
+            teamPanel.add(slot);
+        }
+        teamPanel.revalidate();
+    }
+
+
+
 
     private JPanel titlePanel() {
 

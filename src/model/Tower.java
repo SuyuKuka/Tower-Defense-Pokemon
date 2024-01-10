@@ -6,10 +6,7 @@ import java.util.Scanner;
 
 import characters.*;
 
-import graphics.EnnemiPresent;
-import graphics.TowerGUI;
-import graphics.TowerManagement;
-import graphics.UpdateMap;
+import graphics.*;
 
 import java.awt.*;
 
@@ -29,29 +26,36 @@ public class Tower extends Pokemon {
         PC, TEAM, LOCKED
     }
 
+    //GRAPHICS
     private UpdateMap.Tiles tiles;
+    private Slot slot;
+    private TowerGUI GUI = new TowerGUI(this);
+    private JPanel rangePanel;
+    private TowerManagement manager;
+
+    //STATS
     private Rayon rayon;
     private double exp;
-    private Ennemi uniqueTarget;
-    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
+    private int price;
     private int level;
     private int[] pos;
+    private int atkCd;
+    private int baseCd;
+
+    //SKILLS
     private Skill[] skills = new Skill[4];
     private int select = 0;
     private int totalSkill = 0;
-    private int price;
+    private Ennemi uniqueTarget;
+    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
+
     private State state;
-    private int atkCd;
-    private int baseCd;
-    private TowerGUI GUI = new TowerGUI(this);
-    private JPanel rangePanel;
 
-    private TowerManagement manager;
-
+    //LIST
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    // STATS
+    //OPTIONEL
     private int killCount = 0;
 
     public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
@@ -679,5 +683,13 @@ public class Tower extends Pokemon {
 
     public JPanel getRangePanel() {
         return rangePanel;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
 }
