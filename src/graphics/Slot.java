@@ -3,6 +3,7 @@ package graphics;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import characters.Ecrapince;
 import model.Pc;
 import model.Tower;
 
@@ -16,7 +17,7 @@ import java.awt.event.MouseEvent;
         private Tower pkm;
         private static Slot firstSelected;
     
-    public Slot(Tower pkm) {
+    public Slot(Tower pkm,MainMenu container) {
         this.pkm = pkm;
 
         setOpaque(true);
@@ -37,7 +38,8 @@ import java.awt.event.MouseEvent;
                 } else {
                     adding();
                 }
-                repaint();
+                container.revalidate();
+
             }
 
             @Override
@@ -89,6 +91,7 @@ import java.awt.event.MouseEvent;
     public void adding(){
         setBorder(BorderFactory.createLineBorder(Color.RED));
         if(Slot.firstSelected==null){
+            pkm.setSlot(this);
             Slot.firstSelected = this;
         }
     }
@@ -101,4 +104,9 @@ import java.awt.event.MouseEvent;
     public Tower getPkm() {
         return pkm;
     }
-}
+
+        public void setPkm(Tower pkm) {
+        System.out.println(pkm.getName());
+            this.pkm = pkm;
+        }
+    }
