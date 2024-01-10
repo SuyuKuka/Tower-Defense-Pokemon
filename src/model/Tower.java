@@ -40,7 +40,7 @@ public class Tower extends Pokemon {
     private int select = 0;
     private int totalSkill = 0;
     private int price;
-    private State state = State.LOCKED;
+    private State state;
     private int atkCd;
     private int baseCd;
     private TowerGUI GUI = new TowerGUI(this);
@@ -60,6 +60,7 @@ public class Tower extends Pokemon {
         exp = 0;
         TList.add(this);
         level = 1;
+        this.state=state;
         baseCd = atkCd;
         this.rayon = r;
         this.price = price;

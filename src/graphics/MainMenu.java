@@ -100,7 +100,13 @@ public class MainMenu extends JPanel {
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
         pcPanel.setPreferredSize(new Dimension(350, 0));
         JPanel box = maker.imagePanel("ressources/background/pc.png");
-        box.add(new Slot());
+        // box.add(new Slot());
+        for(int i=0; i<5; i=i+1){
+            for(int j=0; j<5; j=j+1){
+                box.add(new Slot());
+                
+            }
+        }
 
         pcPanel.add(box, BorderLayout.CENTER);
         pcPanel.add(heading, BorderLayout.NORTH);
