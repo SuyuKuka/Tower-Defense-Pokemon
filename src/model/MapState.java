@@ -187,8 +187,11 @@ private Hero selectedHero;
                 e.setPos(m.getEntry());
             }
         }
-        applyHero();
-        screen.gettPresent().setHero(selectedHero);
+
+        if(selectedHero!=null) {
+            applyHero();
+            screen.gettPresent().setHero(selectedHero);
+        }
 
         nbTotalWave = allEnnemis.size();
 
@@ -499,8 +502,9 @@ private Hero selectedHero;
         this.money = money;
     }
 
-    private void applyHero(){
-        ifBuff:for (ArrayList<Ennemi> eList : allEnnemis) {
+    private void applyHero() {
+        ifBuff:
+        for (ArrayList<Ennemi> eList : allEnnemis) {
             for (Ennemi e : eList) {
                 if (selectedHero instanceof Sacha) {
                     ((Sacha) selectedHero).buff();
@@ -511,12 +515,12 @@ private Hero selectedHero;
                     break ifBuff;
                 }
                 if (selectedHero instanceof Pierre) {
-                    if(e.isBoss()) {
+                    if (e.isBoss()) {
                         ((Pierre) selectedHero).debuff(e);
                     }
                 }
                 if (selectedHero instanceof Max) {
-                    if(e.isBoss()) {
+                    if (e.isBoss()) {
                         ((Max) selectedHero).debuff(e);
                     }
                 }
@@ -525,6 +529,7 @@ private Hero selectedHero;
                 }
             }
         }
+
     }
 
     public void setSelectedHero(Hero selectedHero) {

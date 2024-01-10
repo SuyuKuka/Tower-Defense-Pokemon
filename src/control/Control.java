@@ -99,10 +99,6 @@ public class Control {
     public void startGame(String buttonName, MainGraphics main){
         Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13));
         MapState mState;
-
-
-
-
         if (buttonName.substring(11).charAt(0) == 'c') {
             mState = new MapState(diff, 0);
         } else {
