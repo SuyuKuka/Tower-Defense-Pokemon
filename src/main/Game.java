@@ -2,6 +2,8 @@ package main;
 
 import java.io.FileNotFoundException;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import characters.Max;
@@ -29,9 +31,7 @@ public class Game {
                     Game game = new Game();
                 }
             });
-
         }
-
     }
 
     public void initHero() {

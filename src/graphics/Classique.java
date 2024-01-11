@@ -154,7 +154,7 @@ public class Classique extends JPanel {
 
     private JPanel bottomPanel(MainGraphics main) {
         JPanel bottomPanel = maker.imagePanel("ressources/background/banner.png");
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         bottomPanel.setPreferredSize(new Dimension(0, 52));
 
         JPanel backPanel = control.backButton(main);

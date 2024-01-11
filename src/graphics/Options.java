@@ -1,16 +1,18 @@
 package graphics;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
 
 import control.Control;
 
 public class Options extends JPanel {
+    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Options(MainGraphics main) {
@@ -19,22 +21,34 @@ public class Options extends JPanel {
         setVisible(true);
 
         JPanel titlePanel = titlePanel();
-        Control control = Control.INSTANCE;
-        JPanel backPanel = control.backButton(main);
+        JPanel bottomPanel = bottomPanel(main);
 
         add(titlePanel, BorderLayout.NORTH);
-        add(backPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     private JPanel titlePanel() {
+        JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
+        titlePanel.setPreferredSize(new Dimension(0, 52));
+
         JLabel heading = new JLabel("Options");
-        heading.setFont(maker.getCustomFont());
+        heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
 
-        JPanel titlePanel = new JPanel();
-        titlePanel.setOpaque(false);
         titlePanel.add(heading, new GridBagConstraints());
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 48, 0));
+        titlePanel.setBackground(Color.BLACK);
+
         return titlePanel;
+    }
+
+    private JPanel bottomPanel(MainGraphics main) {
+        JPanel bottomPanel = maker.imagePanel("ressources/background/banner.png");
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        bottomPanel.setPreferredSize(new Dimension(0, 52));
+
+        JPanel backPanel = control.backButton(main);
+        bottomPanel.add(backPanel, BorderLayout.WEST);
+        bottomPanel.setOpaque(true);
+        return bottomPanel;
     }
 }
