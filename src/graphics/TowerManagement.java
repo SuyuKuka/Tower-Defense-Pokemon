@@ -55,13 +55,8 @@ public class TowerManagement extends JPanel {
        addMouseListener(new MouseAdapter() {
            @Override
            public void mouseEntered(MouseEvent e) {
-               if (!isSelected) {
-                   setCursor(new Cursor(Cursor.HAND_CURSOR));
-                   setBorder(new LineBorder(Color.WHITE));
-               }
-               if (isPlaced) {
-                    towerManagement.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-               }
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+                setBorder(new LineBorder(Color.WHITE));
            }
            @Override
            public void mouseExited(MouseEvent e) {
@@ -76,10 +71,12 @@ public class TowerManagement extends JPanel {
                         setSelected(false);
                         towerPresent.setSelectedPokemon(null);
                         setBorder(new EmptyBorder(1, 1, 1, 1));
+                        
                     } else {
                         if (towerPresent.getSelectedPokemon() != null) {
                             towerPresent.getSelectedPokemon().setSelected(false);
                             towerPresent.getSelectedPokemon().setBorder(new EmptyBorder(1, 1, 1, 1));
+                            setSelected(false);
                         }
                         setSelected(true);
                         giveSelected();
