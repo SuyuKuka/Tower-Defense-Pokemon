@@ -73,7 +73,7 @@ private Hero selectedHero;
             money = 400;
         } else if (difficulty == Difficulty.HARD) {
             limiteDeTemps = 10;
-            money = 200;
+            money = 2000;
         }
         countMoney = money; // STATS
         endless = mode == 1;
@@ -200,6 +200,7 @@ private Hero selectedHero;
 
         nbTotalWave = allEnnemis.size();
 
+
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
             System.out.println(expWin);
             // ENDLESS
@@ -228,10 +229,6 @@ private Hero selectedHero;
             //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
-                if (t.getProjectile() != null) {
-                    screen.getuMap().add(t.getProjectile(),DRAG_LAYER);
-                    t.getProjectile().updateProj();
-                }
             }
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -322,6 +319,12 @@ private Hero selectedHero;
         Ennemi escaped = null;
         boolean leaked = false;
         for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
+
+            if (e.getProjectile() != null) {
+                screen.getuMap().add(e.getProjectile(), DRAG_LAYER);
+                e.getProjectile().updateProj();
+            }
+
             e.getJLabelSprite().setVisible(true);
             if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
                 leaked = true;

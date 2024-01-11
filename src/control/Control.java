@@ -194,9 +194,8 @@ public class Control {
     }
 
     public void chooseSkill(SkillButton skill, Tower pkm) {
-        if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
+        if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()&& skill.getSkill()!=null) {
             pkm.setCurrentSkill(skill.getSkill());
-            System.out.println(skill.getSkill().getName());
         }
     }
 

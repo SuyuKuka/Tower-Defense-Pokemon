@@ -10,7 +10,7 @@ public class Chartor extends Tower implements TowerLoader {
     public Chartor() {
         // CROWD HAZARD GLOBAL DOT FEU/POISON
         super("Chartor", 50, 10, Types.FEU, Types.NONE, "ressources/sprite/torkoal/torkoal.gif",
-                State.LOCKED, 2, Tower.Rayon.GLOBAL, 900); // GLOBAL POUR LE TEST
+                State.LOCKED, 40, Tower.Rayon.GLOBAL, 900); // GLOBAL POUR LE TEST
         primarySkill();
     }
 
@@ -19,7 +19,7 @@ public class Chartor extends Tower implements TowerLoader {
         setLevel(1);
         setPhysical(50);
         setSpecial(10);
-        setAtkCd(2);
+        setAtkCd(40);
         setRayon(Tower.Rayon.GLOBAL);
         setPrice(900);
         setFirstType(Types.FEU);
