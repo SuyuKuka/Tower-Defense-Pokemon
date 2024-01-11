@@ -66,6 +66,7 @@ public class UpdateMap extends JLayeredPane {
                     tiles = new Tiles(new int[] { i, j });
                     JLabel bg = maker.resizeJLabel("ressources/tiles/automne/obstacle.png", cellSize);
                     GridBagConstraints constraints2 = new GridBagConstraints();
+                    tiles.setOccupied(true);
                     tiles.addSpriteOnTiles(bg, constraints2);
                     tiles.setOpaque(false);
 
@@ -163,6 +164,7 @@ public class UpdateMap extends JLayeredPane {
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
         private JLabel empty = new JLabel(new ImageIcon("ressources/sprite/nothing.png"));
+        private boolean occupied=false;
         private GridBagConstraints constraints = new GridBagConstraints();
 
         public Tiles(int[] pos) {
@@ -182,7 +184,10 @@ public class UpdateMap extends JLayeredPane {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
                     setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-                    setBorder(new LineBorder(Color.RED, 1));
+                    if(!occupied){
+                        setBorder(new LineBorder(Color.RED, 1));
+                    }
+
                 }
 
                 @Override
@@ -242,9 +247,8 @@ public class UpdateMap extends JLayeredPane {
             this.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
-
                     if (SwingUtilities.isLeftMouseButton(evt)) {
-                        if (tPresent.getComponentCount() < 2) {
+                        if (tPresent.getComponentCount() < 2 && !occupied) {
 
                             tPresent.getComponent(0).setVisible(false);
                             tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
@@ -270,6 +274,10 @@ public class UpdateMap extends JLayeredPane {
                 }
             });
             control.giveTiles(pkm, this);
+        }
+
+        public void setOccupied(boolean occupied) {
+            this.occupied = occupied;
         }
 
         public void replaceSprite(String spritePath) {

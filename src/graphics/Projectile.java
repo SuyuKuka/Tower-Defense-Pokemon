@@ -7,11 +7,15 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import static javax.swing.JLayeredPane.POPUP_LAYER;
+
 public class Projectile extends JPanel {
     private Ennemi target;
     private Tower shooter;
     private String image;
 
+    private UpdateMap updateMap;
+    int cellSize=32;
 
     public Projectile(Ennemi target, Tower shooter, String image) {
         this.target = target;
@@ -21,22 +25,48 @@ public class Projectile extends JPanel {
         int[][] map=target.getMap().getConfig();
         int mapWidth = map[0].length;
         int mapHeight = map.length;
-        int cellSize=32;
+
+        setOpaque(false);
+
+        JLabel img=new JLabel(new ImageIcon(image));
+        add(img);
+
+
+        setBounds(0, 0,  cellSize, cellSize);
+
+//        System.out.println(target.getName());
+//        System.out.println(shooter.getName());
+//        System.out.println();
 
     }
 
-    public void drawLine(){
+    public void setUpdateMap(UpdateMap updateMap) {
+        this.updateMap = updateMap;
+
+        setVisible(false);
 
     }
-@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        System.out.println("LINEEEEE");
-        drawProjectiles( g);
-    }
 
-    public  void drawProjectiles(Graphics g){
-        Graphics2D g2 = (Graphics2D) g;
-        g2.drawLine(target.getPos()[0],target.getPos()[1],shooter.getPos()[0],shooter.getPos()[1]);
+    public void updateProj() {
+
+        if (getLocation().getX() < target.getJLabelSprite().getLocation().getX()) {
+            setLocation(new Point((int) (getLocation().getX() + 5), (int) getLocation().getY()));
+        }
+        if (getLocation().getX() > target.getJLabelSprite().getLocation().getX()) {
+            setLocation(new Point((int) (getLocation().getX() - 5), (int) getLocation().getY()));
+        }
+        if (getLocation().getY() < target.getJLabelSprite().getLocation().getY()) {
+            setLocation(new Point((int) (getLocation().getX()), (int) getLocation().getY() + 5));
+        }
+        if (getLocation().getY() > target.getJLabelSprite().getLocation().getY()) {
+            setLocation(new Point((int) (getLocation().getX()), (int) getLocation().getY() - 5));
+        }
+//        if (getLocation().getX() == target.getJLabelSprite().getLocation().getX() && getLocation().getY() == target.getJLabelSprite().getLocation().getY()) {
+//            setVisible(false);
+//        }
+        if(target.getPv()<=0){
+            setVisible(false);
+        }
+
     }
 }

@@ -195,6 +195,7 @@ private Hero selectedHero;
             screen.gettPresent().setHero(selectedHero);
         }
 
+
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
@@ -224,9 +225,8 @@ private Hero selectedHero;
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
                 if (t.getProjectile() != null) {
-
-                    screen.getuMap().repaint();
                     screen.getuMap().add(t.getProjectile(),DRAG_LAYER);
+                    t.getProjectile(). setLocation(new Point(t.getPos()[1]*32,t.getPos()[0]*32));
                 }
             }
 
@@ -402,6 +402,10 @@ private Hero selectedHero;
         for (Tower t : towerPresent) {
             showAlert(t);
             t.getRangePanel().repaint();
+            if(t.getProjectile()!=null){
+                t.getProjectile().updateProj();
+            }
+
         }
     }
 
