@@ -10,28 +10,16 @@ import graphics.GameScreen;
 import graphics.GameoverScreen;
 import graphics.UpdateMap;
 
-import java.awt.Dimension;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import javax.swing.*;
 
-import model.Ennemi;
 
-import model.MapState;
-import model.Player;
-import model.Tower;
+
 import java.awt.*;
 import javax.swing.Timer;
 
-import model.MapState;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
-
-import javax.swing.border.*;
-import javax.swing.border.*;
 
 public class MapState {
 
@@ -183,7 +171,7 @@ public class MapState {
     }
 
     public void startGraphic(GameScreen screen) throws FileNotFoundException {
-
+        Pc.INSTANCE.setState(this);
         this.screen = screen;
 
         // MODE ENDLESS
@@ -205,6 +193,7 @@ public class MapState {
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
+
             // ENDLESS
             if (endless && allEnnemis.size() == 3) {
                 allEnnemis.add(w.initEndless(inc++));
@@ -227,7 +216,7 @@ public class MapState {
             step = ennemiComing(step);
             step++;
             nextWaveIn++;
-
+            //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
 
@@ -266,6 +255,16 @@ public class MapState {
             return true;
         }
         return false;
+    }
+
+    public void removeFromMap(Tower pkm){
+        towerPresent.remove(pkm);
+        m.remove(pkm);
+        if(pkm.getTiles()!=null){
+            screen.getuMap().getTiles(pkm.getPos()).resetTile();
+            screen.getuMap().getGameMap().revalidate();
+        }
+
     }
 
     private void gameOverScreen(boolean win) {
@@ -403,6 +402,7 @@ public class MapState {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
         screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
+
         for (Ennemi e : ennemiPresent) {
             EnnemiPresent.updateEnnemiHealth(e);
         }

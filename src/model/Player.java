@@ -345,10 +345,6 @@ public class Player {
         return hero;
     }
 
-    public ArrayList<Hero> getHeroContract() {
-        return heroContract;
-    }
-
     // TODO
     public void setPseudo(String pseudo) throws Exception {
 

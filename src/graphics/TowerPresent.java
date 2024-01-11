@@ -35,25 +35,10 @@ public class TowerPresent extends JPanel {
 
         bg.add(initiateTitle());
 
-        GridLayout heroLayout = new GridLayout(1, 2);
-        heroLayout.setHgap(10);
-        heroLayout.setVgap(10);
-        JPanel heroPanel = new JPanel(heroLayout);
-        heroPanel.setOpaque(false);
-        TowerManagement hero1 = new TowerManagement(hero[0], 7);
-        TowerManagement hero2 = new TowerManagement(hero[1], 8);
-        heroPanel.add(hero1);
-        heroPanel.add(hero2);
-
-        bg.add(heroPanel);
 
         for (int i = 0; i < team.length; i = i + 1) {
-            try {
-                if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
-                    initiateTeam(team[i], i + 1);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
+                initiateTeam(team[i], i + 1);
             }
         }
 
@@ -79,32 +64,22 @@ public class TowerPresent extends JPanel {
         return titlePanel;
     }
 
-    public void initiateTeam(Tower tower, int numero) throws IOException {
-        TowerManagement pokemon = new TowerManagement(tower, numero);
+    public void initiateTeam(Tower tower, int numero)  {
+        TowerManagement pokemon = new TowerManagement(tower, numero,this);
         bg.add(pokemon);
-        pokemon.setEnabled(true);
-        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
+    }
 
-        pokemon.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!pokemon.isPlaced() && pokemon != null) {
-                    if (pokemon.isSelected()) {
-                        if (selectedPokemon != null) {
-                            selectedPokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
-                        }
-                        pokemon.setBorder(new MatteBorder(2, 2, 2, 0, Color.RED));
-                        selectedPokemon = pokemon;
-                    } else {
-                        pokemon.setBorder(new EmptyBorder(2, 2, 2, 0));
-                        selectedPokemon = null;
-                    }
-                }
-
+    public void setSelectedPokemon(TowerManagement selectedPokemon) {
+        this.selectedPokemon = selectedPokemon;
+    }
+    public void updatePresent(){
+        bg.removeAll();
+        bg.add(initiateTitle());
+        for (int i = 0; i < team.length; i++) {
+            if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
+                initiateTeam(team[i], i + 1);
             }
-
-        });
+        }
     }
 
     public Tower getTower() {

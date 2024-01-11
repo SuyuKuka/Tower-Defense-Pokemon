@@ -23,6 +23,8 @@ public class Pc {
     private MainMenu mainMenu;
     private InGamePc inGamePc;
 
+    private MapState state;
+
     public Pc(){
         for(int i=0; i<height * width; i=i+1){
             if(i == 6){
@@ -46,6 +48,9 @@ public class Pc {
                     select2.setState(State.TEAM);
                     pc.set(j, select1); //select 1 dans le pc
                     team[i] = select2;  //select 2 dans la team
+
+                    state.removeFromMap(select1);
+
                 }
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.TEAM){
                 int i = pc.indexOf(select1);
@@ -54,6 +59,10 @@ public class Pc {
                 select2.setState(State.PC);
                 team[j] = select1; //select 1 dans la team
                 pc.set(i,select2); //select 2 dans le pc
+
+                state.removeFromMap(select2);
+
+
             }else if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.TEAM){
                 int i = Arrays.asList(team).indexOf(select1);
                 int j = Arrays.asList(team).indexOf(select2);
@@ -164,5 +173,9 @@ public class Pc {
 
     public int getWidth() {
         return width;
+    }
+
+    public void setState(MapState state) {
+        this.state = state;
     }
 }

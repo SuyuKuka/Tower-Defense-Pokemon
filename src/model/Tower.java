@@ -353,7 +353,9 @@ public class Tower extends Pokemon {
             exp = 0;
             updatePokemon();
 
-            manager.updateManager(this);
+            if(manager!=null){
+                manager.updateManager(this);
+            }
         }
 
     }
@@ -567,6 +569,7 @@ public class Tower extends Pokemon {
 
         return distance < towerRayon && deltaX <= towerRayon / 2 && deltaY <= towerRayon / 2;
     }
+
 
     public int[] getPos() {
         return pos;

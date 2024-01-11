@@ -41,22 +41,19 @@ public class GameScreen extends JPanel {
         container.add(uMap, BorderLayout.CENTER);
         container.add(inGamePc, BorderLayout.EAST);
         container.add(tPresent, BorderLayout.EAST);
-        tPresent.setVisible(false);
+
 
         add(container, BorderLayout.CENTER);
     }
 
     public void changeRightSide(){
         if(InGameMenu.isPc()){
-            container.remove(tPresent);
             container.add(inGamePc, BorderLayout.EAST);
             inGamePc.setVisible(true);
             tPresent.setVisible(false);
 
         }else{
-            container.remove(inGamePc);
-            tPresent = new TowerPresent();
-            container.add(tPresent, BorderLayout.EAST);
+            tPresent.updatePresent();
             inGamePc.setVisible(false);
             tPresent.setVisible(true);
         }

@@ -29,10 +29,6 @@ public class MainGraphics extends JFrame {
 
     public MainGraphics(Player p, Game main) {
 
-        // setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new
-        // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
-        // "POKEMONGOOOOO"));
-
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
         setResizable(false);
 
@@ -40,9 +36,6 @@ public class MainGraphics extends JFrame {
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // setResizable(false);
-        // setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // setUndecorated(true);
 
         // Background
         if (backgroundImage == null) {

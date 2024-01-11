@@ -31,6 +31,8 @@ public class UpdateMap extends JLayeredPane {
     private int mapWidth;
     private int mapHeight;
 
+
+
     public UpdateMap(MapState state, TowerPresent tPresent) {
         this.state = state;
         this.tPresent = tPresent;
@@ -164,6 +166,8 @@ public class UpdateMap extends JLayeredPane {
 
         private Tower pokemon;
 
+        private MouseAdapter listener;
+
         public Tiles(int[] pos) {
 
             this.pos = pos;
@@ -202,9 +206,12 @@ public class UpdateMap extends JLayeredPane {
                             control.setTowerOnMap(new int[] { row, col }, pkm, state);
 
                             JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
-                            addSprite(sprite, constraints);
-                            giveTiles(pkm);
+                            if ( addSprite(sprite, constraints)) {
+                                giveTiles(pkm);
+
+                            }
                             tPresent.getSelectedPokemon().updateManager(pkm);
+
 
                             int rayon = pkm.getRayonValue(pkm.getRayon()) * cellSize;
                             int x = (col * cellSize) - rayon / 2 + 16;
@@ -234,19 +241,22 @@ public class UpdateMap extends JLayeredPane {
 
         }
 
-        public void addSprite(JLabel jlabel, GridBagConstraints constraints) {
+        public boolean addSprite(JLabel jlabel, GridBagConstraints constraints) {
 
             if (spriteOnIt == empty) {
                 remove(spriteOnIt);
                 spriteOnIt = jlabel;
                 this.add(jlabel, constraints);
-
                 jlabel.getParent().revalidate();
+                return true;
+            }else{
+                return false;
             }
         }
 
         private void giveTiles(Tower pkm) {
-            this.addMouseListener(new MouseAdapter() {
+
+            listener=new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
                     if (SwingUtilities.isLeftMouseButton(evt)) {
@@ -268,8 +278,15 @@ public class UpdateMap extends JLayeredPane {
                     }
 
                 }
-            });
+            };
+            this.addMouseListener(listener);
             pkm.setTiles(this);
+        }
+
+        public void resetTile(){
+            this.removeAll();
+            spriteOnIt = empty;
+            this.removeMouseListener(listener);
         }
 
         public void replaceSprite(String spritePath) {
@@ -289,6 +306,10 @@ public class UpdateMap extends JLayeredPane {
             return spriteOnIt;
         }
 
+    }
+
+    public JPanel getGameMap() {
+        return gameMap;
     }
 
     public TowerPresent gettPresent() {
