@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 public class MainGraphics extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel;
+
     private BufferedImage backgroundImage;
 
     private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -31,25 +32,26 @@ public class MainGraphics extends JFrame {
     private Music musicPlayer = new Music();
 
     public MainGraphics(Player p, Game main) {
+        this.screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        this.screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        menu = new MainMenu(this);
 
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
         setResizable(false);
-
         setLocationRelativeTo(null);
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+
         Random rdm = new Random();
         int musicRandom = rdm.nextInt(5);
         musicPlayer.playMusic("main" + musicRandom);
 
-        // Background
         if (backgroundImage == null) {
             Random rand = new Random();
-            int background_random = rand.nextInt(3);
-            File file = new File("ressources/background/background" + background_random + ".jpg");
+            int backgroundRandom = rand.nextInt(3);
+            File file = new File("ressources/background/background" + backgroundRandom + ".jpg");
             try {
                 backgroundImage = ImageIO.read(file);
                 if (backgroundImage == null) {
@@ -59,6 +61,7 @@ public class MainGraphics extends JFrame {
                 e.printStackTrace();
             }
         }
+
         mainPanel = new JPanel(cardLayout) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -68,7 +71,6 @@ public class MainGraphics extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        menu = new MainMenu(this);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Options options = new Options(this);
@@ -79,10 +81,9 @@ public class MainGraphics extends JFrame {
         mainPanel.add(options, "options");
 
         add(mainPanel);
-        setVisible(true);
     }
 
-    public void updateMenu(){
+    public void updateMenu() {
         menu.updateProfile();
         menu.placeTeam();
     }
@@ -98,5 +99,4 @@ public class MainGraphics extends JFrame {
     public JPanel getMainPanel() {
         return mainPanel;
     }
-
 }

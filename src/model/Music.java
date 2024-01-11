@@ -1,8 +1,13 @@
 package model;
 
-import javax.sound.sampled.*;
 import java.io.File;
-import java.util.*;
+import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 
 public class Music {
     public Music() {
@@ -19,7 +24,7 @@ public class Music {
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
                 clip.start();
-                if(songName.substring(0, songName.length()-1).contains("main")){
+                if (songName.substring(0, songName.length() - 1).contains("main")) {
                     clip.addLineListener(new LineListener() {
                         @Override
                         public void update(LineEvent event) {
@@ -32,7 +37,7 @@ public class Music {
                                 }
                                 Random rand = new Random();
                                 int i = rand.nextInt(5);
-                                playMusic(songName.substring(0, songName.length()-1) + i);
+                                playMusic(songName.substring(0, songName.length() - 1) + i);
                             }
                         }
                     });

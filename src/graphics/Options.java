@@ -1,27 +1,29 @@
 package graphics;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import control.Control;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Options extends JPanel {
-
     private GraphicsMaker maker = new GraphicsMaker();
 
     public Options(MainGraphics main) {
         setOpaque(false);
         setLayout(new BorderLayout());
-        // Titre
-        JPanel titlePanel = titlePanel();
+        setVisible(true);
 
-        // Back
+        JPanel titlePanel = titlePanel();
         Control control = Control.INSTANCE;
         JPanel backPanel = control.backButton(main);
 
         add(titlePanel, BorderLayout.NORTH);
         add(backPanel, BorderLayout.SOUTH);
-        setVisible(true);
     }
 
     private JPanel titlePanel() {
@@ -33,9 +35,6 @@ public class Options extends JPanel {
         titlePanel.setOpaque(false);
         titlePanel.add(heading, new GridBagConstraints());
         titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 48, 0));
-
         return titlePanel;
     }
-
-
 }

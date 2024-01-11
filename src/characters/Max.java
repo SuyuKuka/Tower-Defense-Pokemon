@@ -5,7 +5,7 @@ import model.Hero;
 
 public class Max extends Hero {
     public Max() {
-        super("Max", 0, 100, "ressources/heroprofile/max.png","-60% def special");
+        super("Max", 0, 20, "ressources/heroprofile/max.png", "-20% def special");
     }
 
     public void debuff(Ennemi e) {

@@ -1,70 +1,71 @@
 package model;
 
-import characters.*;
 import model.InitWaves.Difficulty;
-
+import characters.Max;
+import characters.Ondine;
+import characters.Pierre;
+import characters.Rocket;
+import characters.Sacha;
+import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.EnnemiPresent;
 import graphics.GameScreen;
 import graphics.GameoverScreen;
 import graphics.UpdateMap;
-import graphics.*;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
-import java.awt.*;
 import javax.swing.Timer;
-
 import static javax.swing.JLayeredPane.DRAG_LAYER;
 
 public class MapState {
-
     private final Map m;
-private Hero selectedHero;
+    private Hero selectedHero;
     private final int[][] config;
     private GameScreen screen;
 
     private final ArrayList<Tower> towerPresent = new ArrayList<Tower>();
     private final ArrayList<Ennemi> ennemiPresent = new ArrayList<Ennemi>();
-
     private ArrayList<ArrayList<Ennemi>> allEnnemis = new ArrayList<>();
     private ArrayList<Ennemi> wave = new ArrayList<>();
+    private final Random rand = new Random();
+    private Timer timer;
 
     private int pv = 3;
     private int limiteDeTemps = 30;
-    private int gameSpeed = 50; // GRAPHIC ONLY
+    private int gameSpeed = 50;
     private boolean pause = false;
     private double money;
     private double moneyIncrement = 0;
     private int nbTotalWave;
     private int nextWaveIn = 0;
-    private final Random rand = new Random();
-    private Timer timer;
-    private boolean endless;
     private int count = 0;
-    private InitWaves w;
+    private int step = 0;
+    private int inc = 1;
+    private int expWin = 0;
+    private boolean endless;
 
     private final Difficulty diff;
+    private InitWaves w;
 
-    int step = 0;
-    int inc = 1;
-    int expWin = 0;
-
-    // STATS
     private double countMoney;
     private final ArrayList<Ennemi> ennemiEscaped = new ArrayList<>();
 
-    //
     public MapState(Difficulty difficulty, int mode) {
         Map map = new Map(18, 24, difficulty);
+        m = map;
+        config = m.getConfig();
+
         try {
             InitPokemon.loadingChar();
         } catch (FileNotFoundException ignored) {
-
         }
         diff = difficulty;
-        InitWaves w = new InitWaves(difficulty);
+        w = new InitWaves(difficulty);
         if (difficulty == Difficulty.EASY) {
             limiteDeTemps = 40;
             money = 8000;
@@ -75,20 +76,11 @@ private Hero selectedHero;
             limiteDeTemps = 10;
             money = 2000;
         }
-        countMoney = money; // STATS
+        countMoney = money;
         endless = mode == 1;
         if (!endless) {
             allEnnemis = w.getAllEnnemis();
         }
-
-        this.w = w;
-
-        m = map;
-        config = m.getConfig();
-
-
-
-
     }
 
     private void infoTerminal() {
@@ -107,20 +99,15 @@ private Hero selectedHero;
     }
 
     public void startTerminal() throws FileNotFoundException {
-
         Scanner sc = new Scanner(System.in);
-
-        int nbTour = 6; // AJUSTABLE
-
+        int nbTour = 6;
+        step = 0;
+        int increment = 1;
         infoTerminal();
 
-        // A METTRE DANS /control
-        // Tower terminal = new Tower("Terminal", 1,1, null, null);
         Starter starterInstance = new Starter();
         Salameche sala = starterInstance.new Salameche();
 
-        int step = 0;
-        int increment = 1;
         if (endless) {
             allEnnemis.add(w.initEndless(increment++));
         }
@@ -128,7 +115,6 @@ private Hero selectedHero;
         while (!endGame() || endless) {
             if (endless && allEnnemis.size() == 1) {
                 allEnnemis.add(w.initEndless(increment++));
-
             }
 
             for (ArrayList<Ennemi> eList : allEnnemis) {
@@ -142,11 +128,10 @@ private Hero selectedHero;
             m.affiche(ennemiPresent);
 
             info(step);
-
             step = ennemiComing(step);
             step++;
 
-            if (nbTour != 0) { // SI IL RESTE DES TOURS A PLACER
+            if (nbTour != 0) {
                 System.out.print("Ajouter une tour  (" + nbTour + "): ");
                 String st = sc.nextLine();
                 if (!st.isEmpty()) {
@@ -154,26 +139,23 @@ private Hero selectedHero;
                         nbTour--;
                     }
                 }
-            } else {
-                String st = sc.nextLine();
             }
-            sala.attack(towerPresent, ennemiPresent, this);
-
+            sala.attack(ennemiPresent, this);
         }
         sc.close();
     }
 
-    private void info(int step) {
+    private void info(int i) {
         System.out.println("Vagues restantes: " + (allEnnemis.size()));
         System.out.println("Ennemie en attente:" + wave.size());
         System.out.println("Ennemis sur le terrain: " + ennemiPresent.size());
         System.out.println("PV: " + pv);
-        System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - step));
+        System.out.println("Temps avant la prochaine vague: " + (limiteDeTemps + 1 - i));
     }
 
-    public void startGraphic(GameScreen screen) throws FileNotFoundException {
+    public void startGraphic(GameScreen s) throws FileNotFoundException {
         Pc.INSTANCE.setState(this);
-        this.screen = screen;
+        this.screen = s;
 
         // MODE ENDLESS
         if (endless) {
@@ -192,11 +174,10 @@ private Hero selectedHero;
             }
         }
 
-        if(selectedHero!=null) {
+        if (selectedHero != null) {
             applyHero();
             screen.gettPresent().setHero(selectedHero);
         }
-
 
         nbTotalWave = allEnnemis.size();
 
@@ -219,7 +200,7 @@ private Hero selectedHero;
 
             money = money + 0.01 * 1 + moneyIncrement;
             countMoney = countMoney + 0.01 * 1 + moneyIncrement;
-            UpdateGraphic(nextWaveIn, false);
+            updateGraphic(nextWaveIn, false);
             moveOnMapGraphic(screen.getuMap());
             loadNextWave();
             step = ennemiComing(step);
@@ -228,7 +209,7 @@ private Hero selectedHero;
             expWin++;
             //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
-                t.attack2(ennemiPresent, this);
+                t.attack(ennemiPresent, this);
             }
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -247,9 +228,9 @@ private Hero selectedHero;
                     gameOverScreen(true);
                 }
                 timer.stop();
-                System.out.println("EXP " + expWin/150);
-                Player.INSTANCE.setExp(expWin/150);
-                while (Player.INSTANCE.getExp()>=Player.INSTANCE.expCap()){
+                System.out.println("EXP " + expWin / 150);
+                Player.INSTANCE.setExp(expWin / 150);
+                while (Player.INSTANCE.getExp() >= Player.INSTANCE.expCap()) {
                     Player.INSTANCE.levelUp();
                 }
             }
@@ -265,18 +246,17 @@ private Hero selectedHero;
         return pv == 0;
     }
 
-    public void removeFromMap(Tower pkm){
+    public void removeFromMap(Tower pkm) {
         towerPresent.remove(pkm);
         m.remove(pkm);
-        if(pkm.getTiles()!=null){
+        if (pkm.getTiles() != null) {
             screen.getuMap().getTiles(pkm.getPos()).resetTile();
             screen.getuMap().getGameMap().revalidate();
         }
-
     }
 
     private void gameOverScreen(boolean win) {
-        UpdateGraphic(0, true);
+        updateGraphic(0, true);
         GameoverScreen fini = new GameoverScreen(this, screen, win);
         fini.revalidate();
         fini.repaint();
@@ -284,7 +264,6 @@ private Hero selectedHero;
 
     private int ennemiComing(int pas) {
         if (!wave.isEmpty()) {
-
             if (pas / 10 > rand.nextInt(600)) {
                 setEnnemi(m.getEntry(), wave.get(0));
                 wave.remove(0);
@@ -297,14 +276,13 @@ private Hero selectedHero;
     private void moveOnMap() {
         Ennemi escaped = null;
         boolean leaked = false;
-        for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-
-            if (e.move()) { // SI LA PROCHAINE CASE EST LA SORTIS
+        for (Ennemi e : ennemiPresent) {
+            if (e.move()) {
                 leaked = true;
                 escaped = e;
             }
         }
-        if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
+        if (leaked && !ennemiPresent.isEmpty()) {
             ennemiPresent.remove(escaped);
             if (screen != null) {
                 screen.getePresent().getEnnemiGone().add(escaped);
@@ -312,28 +290,24 @@ private Hero selectedHero;
             leaked = false;
             pv--;
         }
-
     }
 
     private void moveOnMapGraphic(UpdateMap uMap) {
         Ennemi escaped = null;
         boolean leaked = false;
-        for (Ennemi e : ennemiPresent) { // DEPLACE LES ENNEMIS
-
+        for (Ennemi e : ennemiPresent) {
             if (e.getProjectile() != null) {
                 screen.getuMap().add(e.getProjectile(), DRAG_LAYER);
                 e.getProjectile().updateProj();
             }
-
             e.getJLabelSprite().setVisible(true);
-            if (e.moveGraphic(e.getJLabelSprite(), uMap)) { // SI LA PROCHAINE CASE EST LA SORTIS
+            if (e.moveGraphic(e.getJLabelSprite(), uMap)) {
                 leaked = true;
                 escaped = e;
                 ennemiEscaped.add(e);
             }
         }
-
-        if (leaked && !ennemiPresent.isEmpty()) { // SI UN ENNEMI PASSE
+        if (leaked && !ennemiPresent.isEmpty()) {
             ennemiPresent.remove(escaped);
             if (screen != null) {
                 screen.getePresent().getEnnemiGone().add(escaped);
@@ -348,7 +322,6 @@ private Hero selectedHero;
 
     private void loadNextWave() {
         if (nextWaveIn > limiteDeTemps * 100 || ennemiPresent.isEmpty() && wave.isEmpty()) {
-
             count++;
             nextWaveIn = 0;
             for (Ennemi e : wave) {
@@ -356,22 +329,18 @@ private Hero selectedHero;
             }
             wave.clear();
             allEnnemis.remove(wave);
-
             moneyIncrement = moneyIncrement + 0.01;
-
         }
         if (!allEnnemis.isEmpty()) {
             wave = allEnnemis.get(0);
-
         }
     }
 
-    public boolean setTower(int[] posTower, Tower tower) { // MANUELLEMENT
+    public boolean setTower(int[] posTower, Tower tower) {
         if (posTower[0] != -1 && posTower[1] != -1) {
             // LA CONCEPTION DU TABLEAU EST DIFFERENTE, INVERSER I J
             int posX = posTower[0];
             int posY = posTower[1];
-
             if (config[posX][posY] == 0) {
                 config[posX][posY] = 2;
                 towerPresent.add(tower);
@@ -382,10 +351,9 @@ private Hero selectedHero;
         return false;
     }
 
-    private void setEnnemi(int[] posEnnemi, Ennemi ennemi) { // MANUELLEMENT
+    private void setEnnemi(int[] posEnnemi, Ennemi ennemi) {
         int posX = posEnnemi[0];
         int posY = posEnnemi[1];
-
         if (config[posX][posY] == 3 || config[posX][posY] == 4) {
             ennemiPresent.add(ennemi);
             ennemi.setPos(posEnnemi);
@@ -395,7 +363,6 @@ private Hero selectedHero;
     }
 
     public void isDead(Ennemi e) {
-        // System.out.println("DEAD:" + e);
         screen.getuMap().repaint();
         if (e.isBoss()) {
             money = money + 100;
@@ -404,18 +371,16 @@ private Hero selectedHero;
             money = money + 10;
             countMoney = countMoney + 10;
         }
-
         ennemiPresent.remove(e);
         if (screen != null) {
             screen.getePresent().getEnnemiGone().add(e);
         }
     }
 
-    public void UpdateGraphic(int pas, boolean lose) {
+    public void updateGraphic(int pas, boolean lose) {
         screen.getePresent().setEnnemiPresent(ennemiPresent);
-        screen.getInGameInfo().UpdateInfo();
+        screen.getInGameInfo().updateInfo();
         screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
-
         for (Ennemi e : ennemiPresent) {
             EnnemiPresent.updateEnnemiHealth(e);
             screen.getePresent().updateSmallPanel(e);
@@ -452,7 +417,6 @@ private Hero selectedHero;
 
     public void setGameSpeed(int gameSpeed) {
         if (timer != null) {
-
             timer.setDelay(gameSpeed);
             timer.restart();
         }

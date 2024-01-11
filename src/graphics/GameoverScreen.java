@@ -24,28 +24,26 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class GameoverScreen extends JPanel {
-
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = Control.INSTANCE;
+    private MapState state;
+    private GameScreen screen;
 
     private int totalWavePassed;
     private int totalMoneyEarned;
     private ArrayList<Ennemi> ennemiEscaped;
 
-    private MapState state;
-    private GameScreen screen;
-
     public GameoverScreen(MapState state, GameScreen screen, boolean win) {
-        JPanel tmp = screen.getContainer();
+        this.state = state;
+        this.screen = screen;
+
         setLayout(new BorderLayout());
         setOpaque(false);
-        // STATS
+
         totalWavePassed = state.getCount();
         totalMoneyEarned = (int) state.getCountMoney();
         ennemiEscaped = state.getEnnemiEscaped();
-        //
-        this.state = state;
-        this.screen = screen;
+
         JLabel headText = new JLabel();
         if (win) {
             headText.setText("VICTOIRE!!!");
@@ -59,6 +57,7 @@ public class GameoverScreen extends JPanel {
         heading.add(headText);
         heading.setOpaque(false);
 
+        JPanel tmp = screen.getContainer();
         JPanel stats = middleScreen(win, tmp);
         JPanel bottom = maker.imagePanel("ressources/background/banner.png");
         bottom.setPreferredSize(new Dimension(0, 60));
@@ -90,11 +89,9 @@ public class GameoverScreen extends JPanel {
 
         screen.remove(screen.getContainer());
         screen.setOpaque(false);
-
         screen.add(this);
         screen.revalidate();
         screen.repaint();
-
     }
 
     private JPanel middleScreen(boolean win, JPanel tmp) {
@@ -114,7 +111,6 @@ public class GameoverScreen extends JPanel {
 
         int totalKill = 0;
         Tower topkill = Player.INSTANCE.getTeam()[0];
-
         for (Tower pkm : Player.INSTANCE.getTeam()) {
             if (pkm != null) {
                 if (pkm.getKillCount() > topkill.getKillCount()) {
@@ -200,5 +196,4 @@ public class GameoverScreen extends JPanel {
 
         return stats;
     }
-
 }

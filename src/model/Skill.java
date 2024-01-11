@@ -1,7 +1,7 @@
 package model;
 
 public class Skill {
-    public String name;
+    private String name;
     private int physicalDamage;
     private int specialDamage;
     private Types type;
@@ -34,9 +34,6 @@ public class Skill {
                 + "#" + this.getPatern()
                 + "#" + this.getDescription();
     }
-    // tower.learnSkill(new Skill(skillName, skillPhysicalDamage,
-    // skillSpecialDamage, skillType, skillSpeedAtk, skillUnique,
-    // skillDescription));
 
     public String getName() {
         return name;

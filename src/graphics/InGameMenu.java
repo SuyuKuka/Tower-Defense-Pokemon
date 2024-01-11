@@ -1,65 +1,48 @@
 package graphics;
 
-import java.awt.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import model.MapState;
 import control.Control;
-import main.Game;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
-import javax.swing.border.EmptyBorder;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
-
-import java.util.ArrayList;
-
-import javax.swing.*;
-
-import model.Ennemi;
-
-import model.MapState;
-import model.Player;
-import model.Tower;
-
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class InGameMenu extends JPanel {
-
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = Control.INSTANCE;
     private GameScreen gameScreen;
-
     private MapState ms;
+
     private JLabel pv;
     private JLabel money;
     private JLabel compteur;
     private JLabel waveTimer;
     private JLabel pc;
-    private JLabel timerName;
-    private static boolean inPc=false;
+
+    private static boolean inPc = false;
 
     public InGameMenu(boolean topPanel, MapState ms, GameScreen gameScreen) {
-
         this.ms = ms;
         this.gameScreen = gameScreen;
-
         control.setMs(ms);
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(0, 52));
 
         JPanel bg = maker.imagePanel("ressources/background/banner.png");
-        add(bg, BorderLayout.CENTER);
         bg.setLayout(new BorderLayout());
+        add(bg, BorderLayout.CENTER);
 
         if (topPanel) {
             JPanel buttonsPanel = createTopPanel();
@@ -72,7 +55,6 @@ public class InGameMenu extends JPanel {
     }
 
     public JPanel createTopPanel() {
-        // LES BOUTONS
         JButton speed = new JButton(new ImageIcon("ressources/template/normalButton.png"));
         speed.setPreferredSize(new Dimension(42, 42));
         speed.setOpaque(false);
@@ -80,7 +62,7 @@ public class InGameMenu extends JPanel {
         speed.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!inPc){
+                if (!inPc) {
                     control.gameDoubleSpeed(speed);
                 }
             }
@@ -93,7 +75,7 @@ public class InGameMenu extends JPanel {
         pause.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!inPc){
+                if (!inPc) {
                     control.gamePause(pause);
                 }
             }
@@ -105,7 +87,6 @@ public class InGameMenu extends JPanel {
         buttonsPanel.add(pause);
         buttonsPanel.setOpaque(false);
 
-        // COMPTER DE WAVE
         compteur = new JLabel();
         compteur.setFont(maker.getCustomFont().deriveFont(30f));
         compteur.setForeground(Color.WHITE);
@@ -115,7 +96,6 @@ public class InGameMenu extends JPanel {
         nbWave.setOpaque(false);
         nbWave.add(compteur, BorderLayout.CENTER);
 
-        // TIMER DE VAGUE
         JLabel timerName = new JLabel();
         timerName.setText("Prochaine vague dans: ");
         timerName.setFont(maker.getCustomFont().deriveFont(30f));
@@ -131,15 +111,12 @@ public class InGameMenu extends JPanel {
         timer.add(waveTimer, BorderLayout.CENTER);
         timer.add(timerName, BorderLayout.WEST);
 
-        // PANEL QUI RETIENT TOUT
         JPanel display = new JPanel();
         display.setLayout(new GridLayout(1, 3));
         display.setOpaque(false);
-
         display.add(nbWave, BorderLayout.CENTER);
         display.add(timer, BorderLayout.WEST);
         display.add(buttonsPanel, BorderLayout.EAST);
-
         return display;
     }
 
@@ -152,11 +129,11 @@ public class InGameMenu extends JPanel {
         pc.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(inPc){
-                    inPc=false;
+                if (inPc) {
+                    inPc = false;
                     teamPanel.setVisible(false);
-                }else{
-                    inPc=true;
+                } else {
+                    inPc = true;
                     teamPanel.setVisible(true);
                 }
                 control.gamePause(new JButton());
@@ -164,7 +141,6 @@ public class InGameMenu extends JPanel {
             }
         });
 
-        // LA VIE
         JPanel heartIcon = maker.imagePanel("ressources/template/heart.png");
         heartIcon.setOpaque(false);
         heartIcon.setPreferredSize(new Dimension(42, 42));
@@ -177,14 +153,11 @@ public class InGameMenu extends JPanel {
         JPanel lifePanel = new JPanel();
         lifePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         lifePanel.setOpaque(false);
-
         lifePanel.add(teamPanel);
         lifePanel.add(pc);
         lifePanel.add(heartIcon);
         lifePanel.add(pv);
 
-        
-        // L'ARGENT
         JPanel moneyIcon = maker.imagePanel("ressources/template/baie.png");
         moneyIcon.setOpaque(false);
         moneyIcon.setPreferredSize(new Dimension(42, 42));
@@ -197,7 +170,6 @@ public class InGameMenu extends JPanel {
         JPanel moneyPanel = new JPanel();
         moneyPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         moneyPanel.setOpaque(false);
-
         moneyPanel.add(moneyIcon);
         moneyPanel.add(money);
 
@@ -205,14 +177,11 @@ public class InGameMenu extends JPanel {
         info.setLayout(new BorderLayout());
         info.add(moneyPanel, BorderLayout.WEST);
         info.add(lifePanel, BorderLayout.CENTER);
-
         info.setOpaque(false);
-
         return info;
-
     }
 
-    public void UpdateInfo() {
+    public void updateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
         if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
@@ -226,26 +195,21 @@ public class InGameMenu extends JPanel {
         if (ms.getEndless()) {
             compteur.setText("Vague: " + count);
         } else {
-
             if ((ms.getAllEnnemis().size() - 1) < 0) {
                 compteur.setText("Vagues restants: " + 0);
             } else {
                 compteur.setText("Vagues restantes: " + (ms.getAllEnnemis().size() - 1));
             }
         }
-
         if (!lose) {
-
             if (pas >= timeLimit * 100) {
                 pas = timeLimit * 100;
             }
             waveTimer.setText(pas + "/" + timeLimit * 100);
         }
-
     }
 
-    public static boolean isPc(){
+    public static boolean isPc() {
         return inPc;
     }
-
 }

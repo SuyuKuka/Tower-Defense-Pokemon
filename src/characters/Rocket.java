@@ -5,7 +5,7 @@ import model.Hero;
 
 public class Rocket extends Hero {
     public Rocket() {
-        super("La Team Rocket", 60, 60, "ressources/heroprofile/rocket.png","-60% pv");
+        super("La Team Rocket", 20, 20, "ressources/heroprofile/rocket.png", "-20% pv");
     }
 
     public void debuff(Ennemi e) {

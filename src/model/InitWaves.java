@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class InitWaves {
-
     public enum Difficulty {
         EASY, NORMAL, HARD;
 
@@ -30,46 +29,37 @@ public class InitWaves {
 
     private Random random = new Random();
 
-    private ArrayList<ArrayList<Ennemi>> AllWaves = new ArrayList<>();
+    private ArrayList<ArrayList<Ennemi>> allWaves = new ArrayList<>();
 
     public InitWaves(Difficulty diff) { // CREER UNE WAVE ET LA RANDOMISE
-
         difficultyAjust(diff);
-
         ArrayList<Ennemi> wave = new ArrayList<>();
         for (int i = 1; i < nbWave + 1; i++) {
-
             if (i % 50 == 0) { // AUGM LES STATS A TOUT LES 50 WAVE
                 for (Ennemi e : catalogue) {
                     e.buffAllStat(2);
                 }
             }
-
             if (!haveBoss(wave)) { // AJOUTE UN BOSS SUPPLEMENTAIRE TOUT LES 5 WAVES
                 for (int j = 0; j < i / 5; j++) {
                     wave.add(getBoss());
                 }
             }
-
             while (wave.size() < 2 * (i + 2)) { // TANT QUE LA WAVE N'EST PAS PLEINE, TAILLE CROISSANTE DES WAVE
                 int randChar = random.nextInt(i);
                 while (randChar >= catalogue.size()) { // RECUP ALEATOIRE UN PKM DANS LE CATALOGUE
                     randChar = random.nextInt(i);
                 }
-
                 wave.add(new Ennemi(catalogue.get(randChar)));
             }
-            AllWaves.add(wave); // AJOUTE A LA LISTE DE WAVE
+            allWaves.add(wave); // AJOUTE A LA LISTE DE WAVE
             wave = new ArrayList<>();
         }
         // debug();
-
         // test(wave);
-
     }
 
     public ArrayList<Ennemi> initEndless(int i) {
-
         ArrayList<Ennemi> wave = new ArrayList<>();
         if (i % 50 == 0) { // AUGM LES STATS A TOUT LES 50 WAVE
             for (Ennemi e : catalogue) {
@@ -86,17 +76,16 @@ public class InitWaves {
             while (randChar >= catalogue.size()) { // RECUP ALEATOIRE UN PKM DANS LE CATALOGUE
                 randChar = random.nextInt(i);
             }
-
             wave.add(new Ennemi(catalogue.get(randChar)));
         }
         return wave;
     }
 
     private void test(ArrayList<Ennemi> wave) {
-        AllWaves.clear();
+        allWaves.clear();
         wave.clear();
-//        wave.add(Ennemi.LIST.getList().get(1));
-//        wave.add(Ennemi.LIST.getList().get(2));
+        // wave.add(Ennemi.LIST.getList().get(1));
+        // wave.add(Ennemi.LIST.getList().get(2));
         //wave.add(Ennemi.LIST.getList().get(0));
 
 
@@ -118,12 +107,12 @@ public class InitWaves {
          * wave.add(Ennemi.LIST.getList().get(16));
          * wave.add(Ennemi.LIST.getList().get(17));
          */
-        AllWaves.add(wave);
+        allWaves.add(wave);
     }
 
     private void debug() {
         int count = 0;
-        for (ArrayList<Ennemi> arrayList : AllWaves) {
+        for (ArrayList<Ennemi> arrayList : allWaves) {
             System.out.println("Wave " + count++ + ": " + arrayList.size());
             System.out.println(arrayList);
         }
@@ -155,17 +144,14 @@ public class InitWaves {
         if (diff == Difficulty.HARD) {
             nbWave = 60;
             multiplier = 2;
-
         }
-
     }
 
     public ArrayList<ArrayList<Ennemi>> getAllEnnemis() {
-
-        return AllWaves;
+        return allWaves;
     }
 
     public ArrayList<Ennemi> getiWave(int i) {
-        return AllWaves.get(i);
+        return allWaves.get(i);
     }
 }

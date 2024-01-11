@@ -2,22 +2,22 @@ package model;
 
 import java.util.ArrayList;
 
-import javax.swing.*;
+import java.awt.Point;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import graphics.Projectile;
 import graphics.UpdateMap;
-import graphics.UpdateMap.Tiles;
 import model.Map.DirectionTiles;
 import model.Map.TilesType;
 
-import java.awt.*;
-
 public class Ennemi extends Pokemon {
-
-    private static ArrayList<Ennemi> EList = new ArrayList<>();
-    private static ArrayList<Ennemi> EBossList = new ArrayList<>();
+    private static ArrayList<Ennemi> eList = new ArrayList<>();
+    private static ArrayList<Ennemi> eBossList = new ArrayList<>();
     public static final Ennemi LIST = new Ennemi();
-    public boolean boss;
+    private boolean boss;
     private JLabel sprite;
     private JPanel ennemiInfo;
     private Projectile projectile;
@@ -29,7 +29,7 @@ public class Ennemi extends Pokemon {
     // DEPL. GRAPHIC
     private Map.Corner corner;
     private boolean switcher = false;
-    private int[] Xpos = new int[2];
+    private int[] xPos = new int[2];
     private double incrementX = 0;
     private double incrementY = 2;
     private boolean inLoop = false;
@@ -52,10 +52,10 @@ public class Ennemi extends Pokemon {
             String sprite) {
         super(name, pv, defPhysical, defSpecial, type1, type2, false, sprite);
         if (boss) {
-            EBossList.add(this);
+            eBossList.add(this);
             this.boss = boss;
         } else {
-            EList.add(this);
+            eList.add(this);
         }
     }
 
@@ -89,25 +89,22 @@ public class Ennemi extends Pokemon {
                 posY = -1; // Si la partie numerique est vide, utilisezz 0 comme valeur par defaut.
             }
 
-            int[] tab = { posX, posY };
+            int[] tab = {posX, posY};
             return tab;
         } catch (Exception e) {
-            int[] tab = { -1, -1 };
+            int[] tab = {-1, -1};
             return tab;
         }
     }
 
     public boolean moveGraphic(JLabel sprite, UpdateMap uMap) {
-
         // debugTilesMap(tilesMap);
-
         cellSize = uMap.getCellSize();
         boolean exit = this.map.getExit()[0] == getPos()[0] && this.map.getExit()[1] == getPos()[1];
 
         Point spritePos = new Point(((int) sprite.getLocation().getX() + cellSize / 2),
                 ((int) sprite.getLocation().getY() + cellSize / 2));
-
-        Point tileLocation = tilesMap[getPos()[0]][getPos()[1]].getBox().getLocation();//
+        Point tileLocation = tilesMap[getPos()[0]][getPos()[1]].getBox().getLocation();
 
         if (getSpeed() == Speed.STUN) {
             numericSpeed = 0;
@@ -141,21 +138,19 @@ public class Ennemi extends Pokemon {
         if (incrementX == -numericSpeed) {
             sprite.setIcon(new ImageIcon(getSprite().substring(0, getSprite().length() - 4) + "G.gif"));
         }
-
         sprite.setLocation((int) (sprite.getLocation().getX() + incrementX),
                 (int) (sprite.getLocation().getY() + incrementY));
         if (spritePos.getX() != tileLocation.getX() || spritePos.getY() != tileLocation.getY()) {
-            setPos(new int[] { (int) spritePos.getY() / cellSize, (int) spritePos.getX() / cellSize });
+            setPos(new int[] {(int) spritePos.getY() / cellSize, (int) spritePos.getX() / cellSize});
         }
-
         return false;
     }
 
     private void takeLoop(Point spritePos, Point tileLocation) {
         switch (tilesMap[getPos()[0]][getPos()[1]].getType()) {
             case X:
-                Xpos[0] = getPos()[0];
-                Xpos[1] = getPos()[1];
+                xPos[0] = getPos()[0];
+                xPos[1] = getPos()[1];
                 getActualLoop();
 
                 break;
@@ -185,6 +180,8 @@ public class Ennemi extends Pokemon {
             case S:
                 cornerS();
                 break;
+            default:
+                break;
         }
     }
 
@@ -197,8 +194,8 @@ public class Ennemi extends Pokemon {
     private void getActualLoop() {
         for (Map.Corner c : map.getCornerList()) {
             if (c.haveLoop()
-                    && c.getCornerPos()[0] == Xpos[0]
-                    && c.getCornerPos()[1] == Xpos[1]) {
+                    && c.getCornerPos()[0] == xPos[0]
+                    && c.getCornerPos()[1] == xPos[1]) {
                 corner = c;
             }
         }
@@ -208,7 +205,7 @@ public class Ennemi extends Pokemon {
         if (corner.getTopOrientation() && corner.getRightOrientation()) {
             incrementX = numericSpeed;
             incrementY = -numericSpeed / 2;
-            tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.H);
+            tilesMap[xPos[0]][xPos[1]].setType(TilesType.H);
             switcher = true;
         } else if (corner.getTopOrientation()) {
             // NOTHING
@@ -218,7 +215,7 @@ public class Ennemi extends Pokemon {
         } else {
             incrementY = numericSpeed;
             incrementX = -numericSpeed / 2;
-            tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.V);
+            tilesMap[xPos[0]][xPos[1]].setType(TilesType.V);
             switcher = true;
         }
     }
@@ -233,10 +230,7 @@ public class Ennemi extends Pokemon {
         } else if (corner.getRightOrientation()) {
             incrementY = -numericSpeed;
             incrementX = -numericSpeed / 2;
-        } else {
-            // NOTHING
         }
-
     }
 
     private void cornerS() {
@@ -260,12 +254,12 @@ public class Ennemi extends Pokemon {
         } else if (corner.getTopOrientation()) {
             incrementX = -numericSpeed;
             incrementY = -numericSpeed / 2;
-            tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.H);
+            tilesMap[xPos[0]][xPos[1]].setType(TilesType.H);
             switcher = true;
         } else if (corner.getRightOrientation()) {
             incrementY = numericSpeed;
             incrementX = numericSpeed / 2;
-            tilesMap[Xpos[0]][Xpos[1]].setType(TilesType.V);
+            tilesMap[xPos[0]][xPos[1]].setType(TilesType.V);
             switcher = true;
         } else {
             incrementY = -numericSpeed / 2;
@@ -304,6 +298,8 @@ public class Ennemi extends Pokemon {
             case S:
                 incrementY = numericSpeed / 2;
                 incrementX = -numericSpeed;
+                break;
+            default:
                 break;
         }
     }
@@ -352,18 +348,16 @@ public class Ennemi extends Pokemon {
                 if (onCorner) {
                     keepDirection();
                     onCorner = false;
-                }
-
-                else if (pas == roadMap[getPos()[0] + 1][getPos()[1]] - 1) { // BAS
+                } else if (pas == roadMap[getPos()[0] + 1][getPos()[1]] - 1) {
                     moveBot();
                     direction = 'b';
-                } else if (pas == roadMap[getPos()[0]][getPos()[1] - 1] - 1) { // GAUCHE
+                } else if (pas == roadMap[getPos()[0]][getPos()[1] - 1] - 1) {
                     moveLeft();
                     direction = 'l';
-                } else if (pas == roadMap[getPos()[0]][getPos()[1] + 1] - 1) { // DROITE
+                } else if (pas == roadMap[getPos()[0]][getPos()[1] + 1] - 1) {
                     moveRight();
                     direction = 'r';
-                } else if (pas == roadMap[getPos()[0] - 1][getPos()[1]] - 1) {// HAUT
+                } else if (pas == roadMap[getPos()[0] - 1][getPos()[1]] - 1) {
                     moveTop();
                     direction = 't';
                 } else {
@@ -395,30 +389,32 @@ public class Ennemi extends Pokemon {
             case 'l':
                 moveLeft();
                 break;
+            default:
+                break;
         }
     }
 
     private void moveBot() {
         pas = roadMap[getPos()[0] + 1][getPos()[1]];
-        int[] pos = { getPos()[0] + 1, getPos()[1] };
+        int[] pos = {getPos()[0] + 1, getPos()[1]};
         setPos(pos);
     }
 
     private void moveRight() {
         pas = roadMap[getPos()[0]][getPos()[1] + 1];
-        int[] pos = { getPos()[0], getPos()[1] + 1 };
+        int[] pos = {getPos()[0], getPos()[1] + 1};
         setPos(pos);
     }
 
     private void moveLeft() {
         pas = roadMap[getPos()[0]][getPos()[1] - 1];
-        int[] pos = { getPos()[0], getPos()[1] - 1 };
+        int[] pos = {getPos()[0], getPos()[1] - 1};
         setPos(pos);
     }
 
     private void moveTop() {
         pas = roadMap[getPos()[0] - 1][getPos()[1]];
-        int[] pos = { getPos()[0] - 1, getPos()[1] };
+        int[] pos = {getPos()[0] - 1, getPos()[1]};
         setPos(pos);
     }
 
@@ -437,11 +433,11 @@ public class Ennemi extends Pokemon {
     }
 
     public ArrayList<Ennemi> getList() {
-        return EList;
+        return eList;
     }
 
     public ArrayList<Ennemi> getBossList() {
-        return EBossList;
+        return eBossList;
     }
 
     public int[] getPos() {
@@ -460,8 +456,8 @@ public class Ennemi extends Pokemon {
         this.map = map;
     }
 
-    public void setJLabelSprite(JLabel sprite) {
-        this.sprite = sprite;
+    public void setJLabelSprite(JLabel s) {
+        this.sprite = s;
     }
 
     public JLabel getJLabelSprite() {
@@ -502,6 +498,8 @@ public class Ennemi extends Pokemon {
                             break;
                         case S:
                             res[i][j] = map.new DirectionTiles(TilesType.S, i, j);
+                            break;
+                        default:
                             break;
                     }
                 }

@@ -6,7 +6,7 @@ import model.Tower;
 
 public class Ondine extends Hero {
     public Ondine() {
-        super("Ondine", 60, 0, "ressources/heroprofile/ondine.png","+60 Atk special");
+        super("Ondine", 20, 0, "ressources/heroprofile/ondine.png", "+20 Atk special");
     }
 
     public void buff() {

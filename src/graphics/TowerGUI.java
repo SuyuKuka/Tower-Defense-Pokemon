@@ -20,33 +20,36 @@ import javax.swing.border.LineBorder;
 import javax.swing.BoxLayout;
 
 public class TowerGUI extends JPanel {
-
-    private boolean alert = false;
     private Tower pkm;
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = Control.INSTANCE;
 
     private JPanel info;
-
     private JLabel types = maker.oneLineTextMaker();
     private JLabel pkmName = maker.oneLineTextMaker();
     private JLabel phys = maker.oneLineTextMaker();
     private JLabel spe = maker.oneLineTextMaker();
     private JLabel portee = maker.oneLineTextMaker();
     private JLabel vitesse = maker.oneLineTextMaker();
-
-    private SkillButton[] skillSlot = new SkillButton[4];
-
     private JLabel skillName = maker.oneLineTextMaker();
     private JLabel skillDmg = maker.oneLineTextMaker();
     private JLabel skillPattern = maker.oneLineTextMaker();
     private JLabel skillType = maker.oneLineTextMaker();
-
     private JPanel pkmInfoPanel;
 
+    private SkillButton[] skillSlot = new SkillButton[4];
+
+    private boolean alert = false;
+
     public TowerGUI(Tower pkm) {
-        pkm.setGUI(this);
         this.pkm = pkm;
+        pkm.setGUI(this);
+
+        setVisible(false);
+        setPreferredSize(new Dimension(0, 600));
+        setBackground(Color.BLACK);
+        setLayout(new BorderLayout());
+
         JPanel skillInfoPanel = new JPanel();
         skillInfoPanel.setLayout(new BoxLayout(skillInfoPanel, BoxLayout.Y_AXIS));
         skillInfoPanel.setBorder(new LineBorder(Color.BLUE));
@@ -63,6 +66,7 @@ public class TowerGUI extends JPanel {
             skillSlot[i].setBorder(new EmptyBorder(1, 1, 1, 1));
             skills.add(skillSlot[i]);
         }
+
         JPanel stats = new JPanel();
         stats.setLayout(new GridLayout(2, 2));
         stats.setOpaque(false);
@@ -85,16 +89,12 @@ public class TowerGUI extends JPanel {
         info.add(skillInfoPanel);
         info.add(pkmInfoPanel);
 
-        setVisible(false);
-        setPreferredSize(new Dimension(0, 600));
-        setBackground(Color.BLACK);
-        setLayout(new BorderLayout());
         add(info, BorderLayout.CENTER);
     }
 
     public void updatePkm() {
-
         pkmName.setText(pkm.getName() + " lvl." + pkm.getLevel());
+
         updateTypePanel();
         updateStatsPanel();
         updateSkillPanel();
@@ -104,17 +104,15 @@ public class TowerGUI extends JPanel {
     }
 
     private void updateStatsPanel() {
-
-        phys.setText("AtkPhys: " + pkm.getPhysical() );
-        spe.setText("AtkSpe: " + pkm.getSpecial() );
-        portee.setText("Portee: " + pkm.getRayon() );
-        vitesse.setText("Vitesse: " + pkm.getAtkCd() );
+        phys.setText("AtkPhys: " + pkm.getPhysical());
+        spe.setText("AtkSpe: " + pkm.getSpecial());
+        portee.setText("Portee: " + pkm.getRayon());
+        vitesse.setText("Vitesse: " + pkm.getAtkCd());
     }
 
     private void updateTypePanel() {
-
         if (pkm.getType()[1] == Types.NONE) {
-            types.setText("Type: " + pkm.getType()[0] );
+            types.setText("Type: " + pkm.getType()[0]);
         } else {
             types.setText("Type: " + pkm.getType()[0] + " et " + pkm.getType()[1]);
         }
@@ -122,13 +120,11 @@ public class TowerGUI extends JPanel {
 
     private void updateSkillInfoPanel(Skill skill) {
         skillName.setText(skill.getName());
-        skillType.setText("Attaque de type: " + skill.getType() );
+        skillType.setText("Attaque de type: " + skill.getType());
         if (skill.getPhysicalDamage() == 0) {
-            skillDmg.setText(
-                    "Degat Special: " + skill.getSpecialDamage() );
+            skillDmg.setText("Degat Special: " + skill.getSpecialDamage());
         } else {
-            skillDmg.setText(
-                    "Degat Physique: " + skill.getPhysicalDamage());
+            skillDmg.setText("Degat Physique: " + skill.getPhysicalDamage());
         }
         if (skill.getPatern() == Skill.Pattern.AURA) {
             skillPattern.setText("Attaque sur une zone autour.");
@@ -148,16 +144,13 @@ public class TowerGUI extends JPanel {
             } else {
                 skill.setText("");
             }
-
             if (pkm.getCurrentSkill(pkm.getSelect()) == pkm.getSkills()[incre]) {
                 skill.setBorder(new LineBorder(Color.RED));
             } else {
                 skill.setBorder(new EmptyBorder(1, 1, 1, 1));
             }
-
             incre++;
         }
-
     }
 
     public void opendLearnSkill(Skill newSkill) {
@@ -200,7 +193,6 @@ public class TowerGUI extends JPanel {
         JButton no = new JButton();
         no.setFont(maker.getCustomFont().deriveFont(20f));
         no.setText("Non");
-
         no.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -237,10 +229,9 @@ public class TowerGUI extends JPanel {
 
                 @Override
                 public void mouseEntered(MouseEvent evt) {
-                    if(skill!=null){
+                    if (skill != null) {
                         updateSkillInfoPanel(skill);
                     }
-
                 }
             });
         }
@@ -256,7 +247,5 @@ public class TowerGUI extends JPanel {
         public Skill getSkill() {
             return skill;
         }
-
     }
-
 }

@@ -6,22 +6,15 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class InitPokemon {
-
     public static void loadingChar() throws FileNotFoundException {
         File ennemiLoader = new File("ressources/config/PokemonLoader.csv");
-
-        Scanner sc;
-
-        sc = new Scanner(ennemiLoader);
+        Scanner sc = new Scanner(ennemiLoader);
         while (sc.hasNext()) {
-
             String[] info = new String[9];
             info = sc.next().split(",");
-
             pokemonMaker(info);
         }
         sc.close();
-
     }
 
     private static void pokemonMaker(String[] info) {
@@ -34,7 +27,5 @@ public class InitPokemon {
                 info[6].equals("VRAI"), // BOSS
                 info[8]); // sprite
         e.setSpeed(Pokemon.stringToSpeed(info[7])); // SPEED
-
     }
-
 }

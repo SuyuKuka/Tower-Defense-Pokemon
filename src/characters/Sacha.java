@@ -6,7 +6,7 @@ import model.Tower;
 
 public class Sacha extends Hero {
     public Sacha() {
-        super("Sasha", 60, 0, "ressources/heroprofile/sacha.png", "+60 Atk physique");
+        super("Sasha", 20, 0, "ressources/heroprofile/sacha.png", "+20 Atk physique");
     }
 
     public void buff() {

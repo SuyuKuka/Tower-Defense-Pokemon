@@ -1,64 +1,70 @@
 package graphics;
 
 import model.Pc;
-import model.*;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
+import model.Player;
 import control.Control;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class MainMenu extends JPanel {
-
     private Player user = Player.INSTANCE;
-
     private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
 
     private boolean displayProfile = false;
     private boolean inCadrePanel = false;
-
     private boolean displayPcPanel = false;
+
     private JPanel teamPanel;
     private JPanel pcPanel;
-    private  JPanel box;
+    private JPanel box;
     private JProgressBar expBar;
     private JLabel levelAccount;
     private JLabel levelAccount2;
+
     public MainMenu(MainGraphics main) {
         Pc.INSTANCE.setMainMenu(this);
         CardLayout cdL = new CardLayout();
 
         setLayout(new BorderLayout());
         setOpaque(false);
+        setVisible(true);
 
-        // Titre
         JPanel titlePanel = titlePanel();
-
-        // Boutons
-
         JPanel buttonPanel = buttonPanel(main);
 
-        // Team
-        JPanel pcPanel = pcPanel();
+        pcPanel = pcPanel();
         pcPanel.setVisible(false);
-        JPanel teamPanel = teamPanel(pcPanel);
+        teamPanel = teamPanel();
 
-        // Profil
         JPanel bigProfil = bigProfilPanel();
         bigProfil.setVisible(false);
 
         JPanel profilPanel = profilPanel(bigProfil);
         profilPanel.add(teamPanel, BorderLayout.EAST);
 
-        // right
         JPanel rightSidePanel = new JPanel(cdL);
         rightSidePanel.add(buttonPanel, "button");
         rightSidePanel.add(pcPanel, "pc");
@@ -67,11 +73,9 @@ public class MainMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (displayPcPanel) {
-
                     cdL.show(rightSidePanel, "button");
                     displayPcPanel = false;
                 } else {
-
                     cdL.show(rightSidePanel, "pc");
                     displayPcPanel = true;
                 }
@@ -82,8 +86,6 @@ public class MainMenu extends JPanel {
         add(rightSidePanel, BorderLayout.EAST);
         add(profilPanel, BorderLayout.SOUTH);
         add(bigProfil, BorderLayout.WEST);
-
-        setVisible(true);
     }
 
     private JPanel pcPanel() {
@@ -99,7 +101,7 @@ public class MainMenu extends JPanel {
         pcPanel.setLayout(new BorderLayout());
         pcPanel.setBorder(new LineBorder(Color.BLACK, 2));
         pcPanel.setPreferredSize(new Dimension(350, 0));
-        
+
         box = maker.imagePanel("ressources/background/pc.png");
         box.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         placePc();
@@ -107,9 +109,9 @@ public class MainMenu extends JPanel {
         return pcPanel;
     }
 
-    public void placePc(){
-        if(box!=null){
-            box.removeAll(); 
+    public void placePc() {
+        if (box != null) {
+            box.removeAll();
         }
         for (int i = 0; i < Pc.INSTANCE.getHeight() * Pc.INSTANCE.getWidth(); i++) {
             Slot slot = new Slot(Pc.INSTANCE.getPc().get(i), this);
@@ -118,12 +120,12 @@ public class MainMenu extends JPanel {
             box.add(slot);
         }
         pcPanel.add(box, BorderLayout.CENTER);
-        if(box!=null){
+        if (box != null) {
             box.repaint();
-        } 
+        }
     }
 
-    private JPanel teamPanel(JPanel pcPanel) {
+    private JPanel teamPanel() {
         teamPanel = new JPanel();
         teamPanel.setBackground(new Color(40, 40, 40));
         JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
@@ -143,24 +145,24 @@ public class MainMenu extends JPanel {
         }
     }
 
-    public void placeTeam(){
+    public void placeTeam() {
         teamPanel.removeAll();
         JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
         teamPanel.add(pcLabel);
 
         for (int i = 0; i < 6; i++) {
-            Slot slot = new Slot(user.getTeam()[i],this);
+            Slot slot = new Slot(user.getTeam()[i], this);
             user.getTeam()[i].setSlot(slot);
             teamPanel.add(slot);
         }
         teamPanel.revalidate();
     }
 
-    public void updateProfile(){
+    public void updateProfile() {
         levelAccount2.setText("Nv du compte : " + user.getLvl());
         levelAccount.setText("Nv du compte : " + user.getLvl());
-        expBar.setValue((int) (user.getExp()/ user.expCap()*100));
+        expBar.setValue((int) (user.getExp() / user.expCap() * 100));
         expBar.setString(user.getExp() + "/" + user.expCap());
     }
 
@@ -183,72 +185,66 @@ public class MainMenu extends JPanel {
         buttonPanel.setOpaque(false);
 
         JButton classiqueButton = new JButton(new ImageIcon("ressources/button/classique_button.png"));
+        classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JButton marathonButton = new JButton(new ImageIcon("ressources/button/marathon_button.png"));
+        marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JButton optionsButton = new JButton(new ImageIcon("ressources/button/options_button.png"));
+        optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         control.buttonPressed(classiqueButton, "classique", main);
         control.buttonPressed(marathonButton, "marathon", main);
         control.buttonPressed(optionsButton, "options", main);
 
-        // Centrer les boutons verticalement
-        classiqueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        marathonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Ajouter des boutons avec des rigid areas (espace fixe) entre eux
         buttonPanel.add(classiqueButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(marathonButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buttonPanel.add(optionsButton);
-
         return buttonPanel;
-
     }
 
     private JPanel bigProfilPanel() {
         JPanel bigProfilePanel = maker.imagePanel("ressources/profile/profilebg.png");
         bigProfilePanel.setOpaque(false);
         bigProfilePanel.setPreferredSize(new Dimension(300, 0));
-        
+
         bigProfilePanel.setLayout(new BoxLayout(bigProfilePanel, BoxLayout.Y_AXIS));
         bigProfilePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+
         JLabel profilPhoto = maker.resizeJLabel("ressources/profile/profil_photo.png", 80);
         profilPhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+        profilPhoto.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+
         JLabel pseudo = new JLabel(user.getPseudo());
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
         pseudo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pseudo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 
         levelAccount2 = new JLabel("Nv du compte : " + user.getLvl());
         levelAccount2.setForeground(Color.WHITE);
         levelAccount2.setFont(maker.getCustomFont().deriveFont(20f));
         levelAccount2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        levelAccount2.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
-         expBar = new JProgressBar();
+        expBar = new JProgressBar();
         expBar.setMinimum(0);
         expBar.setMaximum((int) user.expCap());
         expBar.setValue((int) user.getExp());
-
         expBar.setForeground(Color.BLUE);
         expBar.setString(user.getExp() + "/" + user.expCap());
         expBar.setStringPainted(true);
         expBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
         Dimension expBarSize = new Dimension(200, 20); // Ajustez la taille selon vos préférences
         expBar.setMaximumSize(expBarSize);
-
-        profilPhoto.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        pseudo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        levelAccount2.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
         bigProfilePanel.add(profilPhoto);
         bigProfilePanel.add(pseudo);
         bigProfilePanel.add(levelAccount2);
         bigProfilePanel.add(expBar);
-    
+
         return bigProfilePanel;
     }
 

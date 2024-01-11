@@ -7,7 +7,7 @@ import model.MapState;
 import model.InitWaves.Difficulty;
 
 public class ControlTerminal {
-    MapState state;
+    private MapState state;
 
     private void mainMenuPrint() {
         System.out.println("------POKEREVOLUTE------");

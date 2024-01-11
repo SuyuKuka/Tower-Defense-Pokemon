@@ -1,7 +1,8 @@
 package graphics;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
 
 import model.MapState;
 
@@ -11,26 +12,24 @@ public class GameScreen extends JPanel {
     private InGamePc inGamePc = new InGamePc();
     private InGameMenu inGameButton;
     private InGameMenu inGameInfo;
-
     private UpdateMap uMap;
     private GraphicsMaker maker = new GraphicsMaker();
+    private MainGraphics main;
 
     private JPanel container = maker.imagePanel("ressources/tiles/automne/grass.png");
-    private MainGraphics main;
 
     public GameScreen(MainGraphics main) {
         this.main = main;
+
         setLayout(new BorderLayout());
         setOpaque(true);
 
         container.setLayout(new BorderLayout());
         container.setOpaque(false);
-
     }
 
     public void setmState(MapState mState) {
-        UpdateMap uMap = new UpdateMap(mState, tPresent);
-        this.uMap = uMap;
+        this.uMap =  new UpdateMap(mState, tPresent);
 
         inGameButton = new InGameMenu(true, mState, this);
         inGameInfo = new InGameMenu(false, mState, this);
@@ -41,18 +40,15 @@ public class GameScreen extends JPanel {
         container.add(uMap, BorderLayout.CENTER);
         container.add(inGamePc, BorderLayout.EAST);
         container.add(tPresent, BorderLayout.EAST);
-
-
         add(container, BorderLayout.CENTER);
     }
 
-    public void changeRightSide(){
-        if(InGameMenu.isPc()){
+    public void changeRightSide() {
+        if (InGameMenu.isPc()) {
             container.add(inGamePc, BorderLayout.EAST);
             inGamePc.setVisible(true);
             tPresent.setVisible(false);
-
-        }else{
+        } else {
             tPresent.updatePresent();
             inGamePc.setVisible(false);
             tPresent.setVisible(true);

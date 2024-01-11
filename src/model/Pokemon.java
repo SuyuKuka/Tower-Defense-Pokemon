@@ -101,12 +101,12 @@ public class Pokemon {
         this.special = special;
     }
 
-    public void setFirstType(Types type) {
-        this.type[0] = type;
+    public void setFirstType(Types t) {
+        this.type[0] = t;
     }
 
-    public void setSecondType(Types type) {
-        this.type[1] = type;
+    public void setSecondType(Types t) {
+        this.type[1] = t;
     }
 
     public void setSprite(String sprite) {
