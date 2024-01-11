@@ -4,7 +4,6 @@ import characters.Starter;
 import characters.Starter.Salameche;
 import graphics.InGamePc;
 import graphics.MainMenu;
-import graphics.Slot;
 import model.Tower.*;
 
 import java.util.*;
@@ -37,12 +36,14 @@ public class Pc {
         }
     }
 
-    public int getIndex(Tower[] team,Tower pkm){
-        System.out.println("LENGTH: "+team.length);
-
+    public int getIndex(Tower pkm){
         for (int i = 0; i < team.length ; i++) {
-            if (team[i].getName().equals(pkm.getName())){ //PROBLME INSTANCE DE PKM
+            if (team[i].getName().equals(pkm.getName()) && !team[i].getName().contains("nothing")){
                 return i;
+            }else if(select1.getSprite().contains("ressources/sprite/nothing.png")){
+                return Arrays.asList(team).indexOf(pkm);
+            }else if(select2.getSprite().contains("ressources/sprite/nothing.png")){
+                return Arrays.asList(team).indexOf(pkm);
             }
         }
         return -1;
@@ -53,11 +54,8 @@ public class Pc {
         if(select1 != null && select2 != null){
             if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.PC){
                 if(pkmTeamRemain() && (!select1.getSprite().contains("ressources/sprite/nothing.png") || !select2.getSprite().contains("ressources/sprite/nothing.png"))){
-                    int i = getIndex(team,select1);
+                    int i = getIndex(select1);
                     int j = pc.indexOf(select2);
-
-                    System.out.println(i);
-                    System.out.println(j);
 
                     pc.set(j, select1); //select 1 dans le pc
                     team[i] = select2;  //select 2 dans la team
@@ -71,10 +69,7 @@ public class Pc {
                 }
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.TEAM){
                 int i = pc.indexOf(select1);
-                int j = getIndex(team,select2);
-
-                System.out.println(i);
-                System.out.println(j);
+                int j = getIndex(select2);
 
                 team[j] = select1; //select 1 dans la team
                 pc.set(i,select2); //select 2 dans le pc
@@ -88,22 +83,17 @@ public class Pc {
             }else if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.TEAM){
                 int i = Arrays.asList(team).indexOf(select1);
                 int j = Arrays.asList(team).indexOf(select2);
-                System.out.println(i);
-                System.out.println(j);
+
                 team[i] = select2;
                 team[j] = select1;
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.PC){
                 int i = pc.indexOf(select1);
                 int j = pc.indexOf(select2);
-                System.out.println(i);
-                System.out.println(j);
 
                 pc.set(i, select2);
                 pc.set(j, select1);
             }else{
                 System.out.println("PROBLEME");
-                System.out.println(select1.getState());
-                System.out.println(select2.getState());
             }
             select1 = null;
             select2 = null;
@@ -123,23 +113,13 @@ public class Pc {
     }
 
     public void selected(Tower t){
-        // for(int i=0; i<6; i=i+1){
-        //     System.out.println(Player.INSTANCE.getTeam()[i].getName());
-        // }
-        // System.out.println("-------------------------");
-        // for(int i=0; i<pc.size(); i=i+1){
-        //     System.out.println(pc.get(i).getName());
-        // }
-        // System.out.println("==========================");
         team = Player.INSTANCE.getTeam();
         if(select1==null){
             select1=t;
-            System.out.println(select1.getState());
         }else if(select1==t){
             select1=null;
         }else if(select2==null && select1 != null){
             select2 = t;
-            System.out.println(select2.getState());
         }
         
         echange();

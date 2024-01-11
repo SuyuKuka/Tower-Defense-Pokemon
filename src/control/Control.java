@@ -190,10 +190,6 @@ public class Control {
         pkm.setPrice(pkm.getPrice() + pkm.getPrice() / 10);
     }
 
-    public void openPC() {
-        // TODO OPEN THE PC
-    }
-
     public void chooseSkill(SkillButton skill, Tower pkm) {
         if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
             pkm.setCurrentSkill(skill.getSkill());

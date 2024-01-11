@@ -157,16 +157,12 @@ public class InGameMenu extends JPanel {
                     teamPanel.setVisible(false);
                 }else{
                     inPc=true;
-                    control.openPC();
                     teamPanel.setVisible(true);
                 }
                 control.gamePause(new JButton());
                 gameScreen.changeRightSide();
             }
         });
-
-        
-        
 
         // LA VIE
         JPanel heartIcon = maker.imagePanel("ressources/template/heart.png");
@@ -219,12 +215,11 @@ public class InGameMenu extends JPanel {
     public void UpdateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
-        pc.setVisible(true);
-        // if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
-        //     pc.setVisible(true);
-        // } else {
-        //     pc.setVisible(false);
-        // }
+        if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
+            pc.setVisible(true);
+        } else {
+            pc.setVisible(false);
+        }
     }
 
     public void updateButton(int pas, int limiteDeTemps, int count, boolean lose) {

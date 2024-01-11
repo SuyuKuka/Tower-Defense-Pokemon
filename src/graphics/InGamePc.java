@@ -9,7 +9,6 @@ import model.Pc;
 import model.Player;
 
 public class InGamePc extends JPanel{
-    private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
     
     JPanel teamPanel = new JPanel();

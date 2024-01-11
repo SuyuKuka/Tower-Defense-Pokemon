@@ -56,7 +56,7 @@ public class Player {
                 }
             }
 
-           //resetTeam();
+           resetTeam();
 
             //Initialisation du pc
             // for(int i=0; i<25; i=i+1){
