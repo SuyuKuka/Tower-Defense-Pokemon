@@ -126,7 +126,7 @@ public class MainMenu extends JPanel {
     private JPanel teamPanel(JPanel pcPanel) {
         teamPanel = new JPanel();
         teamPanel.setBackground(new Color(40, 40, 40));
-        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
+        JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
 
         if (user.getTeam()[0] == null) {
@@ -145,7 +145,7 @@ public class MainMenu extends JPanel {
 
     public void placeTeam(){
         teamPanel.removeAll();
-        JLabel pcLabel = maker.resizeJLabel("ressources/pc_sprite.png", 32);
+        JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
         teamPanel.add(pcLabel);
 

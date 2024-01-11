@@ -18,13 +18,15 @@ import java.awt.event.MouseEvent;
         private Tower pkm;
         private static Slot firstSelected;
     
-    public Slot(Tower pkm, MainMenu container) {
+    public Slot(Tower pkm, JPanel container) {
         this.pkm = pkm;
 
         setOpaque(true);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        setBorder(new EmptyBorder(1, 1, 1, 1));
-        setBackground(new Color(50, 50, 50));
+        if(pkm.getState() != State.LOCKED){
+            setBorder(new EmptyBorder(1, 1, 1, 1));
+            setBackground(new Color(50, 50, 50));
+        }
 
         JLabel pokeicon = new JLabel(new ImageIcon(pkm.getSprite()));
         pokeicon.setOpaque(false);
@@ -54,7 +56,7 @@ import java.awt.event.MouseEvent;
         });
     }
 
-    public Slot(MainMenu container) {//slot vide
+    public Slot(JPanel container) {//slot vide
         this(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1), container);
     }
 

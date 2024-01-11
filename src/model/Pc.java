@@ -2,6 +2,7 @@ package model;
 
 import characters.Starter;
 import characters.Starter.Salameche;
+import graphics.InGamePc;
 import graphics.MainMenu;
 import graphics.Slot;
 import model.Tower.*;
@@ -19,6 +20,9 @@ public class Pc {
     private int height = 4;
     private int width = 6;
 
+    private MainMenu mainMenu;
+    private InGamePc inGamePc;
+
     public Pc(){
         for(int i=0; i<height * width; i=i+1){
             if(i == 6){
@@ -30,8 +34,6 @@ public class Pc {
             }
         }
     }
-
-    private MainMenu mainMenu;
 
     public void echange(){
         team = Player.INSTANCE.getTeam();
@@ -71,6 +73,10 @@ public class Pc {
 
             mainMenu.placeTeam();
             mainMenu.placePc();
+            if(inGamePc!=null){
+                inGamePc.placeTeam();
+                inGamePc.placePc();
+            }
         }
     }
 
@@ -79,12 +85,23 @@ public class Pc {
     }
 
     public void selected(Tower t){
+        for(int i=0; i<6; i=i+1){
+            System.out.println(Player.INSTANCE.getTeam()[i].getName());
+        }
+        System.out.println("-------------------------");
+        for(int i=0; i<pc.size(); i=i+1){
+            System.out.println(pc.get(i).getName());
+        }
+        System.out.println("==========================");
+        team = Player.INSTANCE.getTeam();
         if(select1==null){
             select1=t;
+            System.out.println(select1.getState());
         }else if(select1==t){
             select1=null;
         }else if(select2==null && select1 != null){
             select2 = t;
+            System.out.println(select2.getState());
         }
         echange();
     }
@@ -119,6 +136,10 @@ public class Pc {
 
     public void setMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
+    }
+
+    public void setInGamePc(InGamePc inGamePc) {
+        this.inGamePc = inGamePc;
     }
 
     public int getHeight() {

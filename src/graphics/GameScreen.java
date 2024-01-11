@@ -8,6 +8,7 @@ import model.MapState;
 public class GameScreen extends JPanel {
     private EnnemiPresent ePresent = new EnnemiPresent();
     private TowerPresent tPresent = new TowerPresent();
+    private InGamePc inGamePc = new InGamePc();
     private InGameMenu inGameButton;
     private InGameMenu inGameInfo;
 
@@ -31,16 +32,34 @@ public class GameScreen extends JPanel {
         UpdateMap uMap = new UpdateMap(mState, tPresent);
         this.uMap = uMap;
 
-        inGameButton = new InGameMenu(true, mState);
-        inGameInfo = new InGameMenu(false, mState);
+        inGameButton = new InGameMenu(true, mState, this);
+        inGameInfo = new InGameMenu(false, mState, this);
 
         container.add(ePresent, BorderLayout.WEST);
         container.add(inGameInfo, BorderLayout.SOUTH);
         container.add(inGameButton, BorderLayout.NORTH);
         container.add(uMap, BorderLayout.CENTER);
+        container.add(inGamePc, BorderLayout.EAST);
         container.add(tPresent, BorderLayout.EAST);
+        tPresent.setVisible(false);
 
         add(container, BorderLayout.CENTER);
+    }
+
+    public void changeRightSide(){
+        if(InGameMenu.isPc()){
+            container.remove(tPresent);
+            container.add(inGamePc, BorderLayout.EAST);
+            inGamePc.setVisible(true);
+            tPresent.setVisible(false);
+
+        }else{
+            container.remove(inGamePc);
+            container.add(tPresent, BorderLayout.EAST);
+            inGamePc.setVisible(false);
+            tPresent.setVisible(true);
+        }
+        repaint();
     }
 
     public EnnemiPresent getePresent() {
@@ -75,4 +94,7 @@ public class GameScreen extends JPanel {
         this.container = container;
     }
 
+    public InGamePc getInGamePc() {
+        return inGamePc;
+    }
 }

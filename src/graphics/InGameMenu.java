@@ -1,16 +1,23 @@
 package graphics;
 
 import java.awt.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import model.MapState;
 import control.Control;
+import main.Game;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+
 import javax.swing.border.EmptyBorder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import java.util.ArrayList;
@@ -29,18 +36,21 @@ public class InGameMenu extends JPanel {
 
     private GraphicsMaker maker = new GraphicsMaker();
     private Control control = Control.INSTANCE;
+    private GameScreen gameScreen;
 
     private MapState ms;
     private JLabel pv;
     private JLabel money;
     private JLabel compteur;
     private JLabel waveTimer;
-    private JButton pc;
+    private JLabel pc;
     private JLabel timerName;
+    private static boolean inPc=false;
 
-    public InGameMenu(boolean topPanel, MapState ms) {
+    public InGameMenu(boolean topPanel, MapState ms, GameScreen gameScreen) {
 
         this.ms = ms;
+        this.gameScreen = gameScreen;
 
         control.setMs(ms);
 
@@ -70,7 +80,9 @@ public class InGameMenu extends JPanel {
         speed.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.gameDoubleSpeed(speed);
+                if(!inPc){
+                    control.gameDoubleSpeed(speed);
+                }
             }
         });
 
@@ -81,7 +93,9 @@ public class InGameMenu extends JPanel {
         pause.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.gamePause(pause);
+                if(!inPc){
+                    control.gamePause(pause);
+                }
             }
         });
 
@@ -130,17 +144,29 @@ public class InGameMenu extends JPanel {
     }
 
     public JPanel createBotPanel() {
-        // PC BUTTON
-        pc = new JButton("LE PCCCCCCC");
-        pc.setBorder(new EmptyBorder(0, 0, 0, 0));
-        pc.setPreferredSize(new Dimension(126, 42));
+        JPanel teamPanel = gameScreen.getInGamePc().getTeamPanel();
+        teamPanel.setVisible(false);
+        pc = maker.resizeJLabel("ressources/template/pc_sprite.png", 40);
+        pc.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+        pc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         pc.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("LE PCCCCCCCCCCCCCC");
-                // control.openPC();
+                if(inPc){
+                    inPc=false;
+                    teamPanel.setVisible(false);
+                }else{
+                    inPc=true;
+                    control.openPC();
+                    teamPanel.setVisible(true);
+                }
+                control.gamePause(new JButton());
+                gameScreen.changeRightSide();
             }
         });
+
+        
+        
 
         // LA VIE
         JPanel heartIcon = maker.imagePanel("ressources/template/heart.png");
@@ -156,10 +182,12 @@ public class InGameMenu extends JPanel {
         lifePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         lifePanel.setOpaque(false);
 
+        lifePanel.add(teamPanel);
         lifePanel.add(pc);
         lifePanel.add(heartIcon);
         lifePanel.add(pv);
 
+        
         // L'ARGENT
         JPanel moneyIcon = maker.imagePanel("ressources/template/baie.png");
         moneyIcon.setOpaque(false);
@@ -191,11 +219,12 @@ public class InGameMenu extends JPanel {
     public void UpdateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
-        if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
-            pc.setVisible(true);
-        } else {
-            pc.setVisible(false);
-        }
+        pc.setVisible(true);
+        // if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
+        //     pc.setVisible(true);
+        // } else {
+        //     pc.setVisible(false);
+        // }
     }
 
     public void updateButton(int pas, int limiteDeTemps, int count, boolean lose) {
@@ -218,6 +247,10 @@ public class InGameMenu extends JPanel {
             waveTimer.setText(pas + "/" + limiteDeTemps * 100);
         }
 
+    }
+
+    public static boolean isPc(){
+        return inPc;
     }
 
 }
