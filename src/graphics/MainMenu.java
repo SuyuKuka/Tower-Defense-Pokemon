@@ -130,6 +130,7 @@ public class MainMenu extends JPanel {
         teamPanel.setBackground(new Color(40, 40, 40));
         JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
+        pcLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         if (user.getTeam()[0] == null) {
             JLabel pokeicon = new JLabel("Vous n'avez aucun Pokemon dans votre equipe.");
@@ -237,7 +238,7 @@ public class MainMenu extends JPanel {
         expBar.setString(user.getExp() + "/" + user.expCap());
         expBar.setStringPainted(true);
         expBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        Dimension expBarSize = new Dimension(200, 20); // Ajustez la taille selon vos préférences
+        Dimension expBarSize = new Dimension(200, 20);
         expBar.setMaximumSize(expBarSize);
 
         bigProfilePanel.add(profilPhoto);
@@ -269,7 +270,7 @@ public class MainMenu extends JPanel {
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
 
-         levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
+        levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
 
