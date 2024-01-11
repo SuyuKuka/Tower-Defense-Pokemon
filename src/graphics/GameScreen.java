@@ -16,7 +16,7 @@ public class GameScreen extends JPanel {
     private GraphicsMaker maker = new GraphicsMaker();
     private MainGraphics main;
 
-    private JPanel container = maker.imagePanel("ressources/tiles/automne/grass.png");
+    private JPanel container = maker.imagePanel("ressources/tiles/" + Options.selectedMap + "/grass.png");
 
     public GameScreen(MainGraphics main) {
         this.main = main;

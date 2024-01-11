@@ -10,6 +10,7 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
 public class Music {
+    public static int volume = 10;
     public Music() {
     }
 
