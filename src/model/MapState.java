@@ -71,10 +71,10 @@ public class MapState {
             money = 500;
         } else if (difficulty == Difficulty.NORMAL) {
             limiteDeTemps = 25;
-            money = 80;
+            money = 200;
         } else if (difficulty == Difficulty.HARD) {
             limiteDeTemps = 10;
-            money = 200;
+            money = 80;
         }
         countMoney = money;
         endless = mode == 1;
