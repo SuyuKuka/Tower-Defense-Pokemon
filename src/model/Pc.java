@@ -39,12 +39,14 @@ public class Pc {
         team = Player.INSTANCE.getTeam();
         if(select1 != null && select2 != null){
             if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.PC){
-                int i = Arrays.asList(team).indexOf(select1);
-                int j = pc.indexOf(select2);
-                select1.setState(State.PC);
-                select2.setState(State.TEAM);
-                pc.set(j, select1); //select 1 dans le pc
-                team[i] = select2;  //select 2 dans la team
+                if(pkmTeamRemain() && (!select1.getSprite().contains("ressources/sprite/nothing.png") || !select2.getSprite().contains("ressources/sprite/nothing.png"))){
+                    int i = Arrays.asList(team).indexOf(select1);
+                    int j = pc.indexOf(select2);
+                    select1.setState(State.PC);
+                    select2.setState(State.TEAM);
+                    pc.set(j, select1); //select 1 dans le pc
+                    team[i] = select2;  //select 2 dans la team
+                }
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.TEAM){
                 int i = pc.indexOf(select1);
                 int j = Arrays.asList(team).indexOf(select2);
@@ -85,14 +87,14 @@ public class Pc {
     }
 
     public void selected(Tower t){
-        for(int i=0; i<6; i=i+1){
-            System.out.println(Player.INSTANCE.getTeam()[i].getName());
-        }
-        System.out.println("-------------------------");
-        for(int i=0; i<pc.size(); i=i+1){
-            System.out.println(pc.get(i).getName());
-        }
-        System.out.println("==========================");
+        // for(int i=0; i<6; i=i+1){
+        //     System.out.println(Player.INSTANCE.getTeam()[i].getName());
+        // }
+        // System.out.println("-------------------------");
+        // for(int i=0; i<pc.size(); i=i+1){
+        //     System.out.println(pc.get(i).getName());
+        // }
+        // System.out.println("==========================");
         team = Player.INSTANCE.getTeam();
         if(select1==null){
             select1=t;
@@ -103,7 +105,21 @@ public class Pc {
             select2 = t;
             System.out.println(select2.getState());
         }
+        
         echange();
+    }
+
+    public boolean pkmTeamRemain(){
+        int noNothing = 0;
+        for(int i=0; i<team.length; i=i+1){
+            if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
+                noNothing++;
+            }
+        }
+        if(noNothing>1){
+            return true;
+        }
+        return false;
     }
 
     public void setTeam(Tower[] team) {
