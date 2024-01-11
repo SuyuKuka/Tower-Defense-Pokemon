@@ -49,6 +49,7 @@ private Hero selectedHero;
 
     int step = 0;
     int inc = 1;
+    int expWin = 0;
 
     // STATS
     private double countMoney;
@@ -200,7 +201,7 @@ private Hero selectedHero;
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
-
+            System.out.println(expWin);
             // ENDLESS
             if (endless && allEnnemis.size() == 3) {
                 allEnnemis.add(w.initEndless(inc++));
@@ -223,6 +224,7 @@ private Hero selectedHero;
             step = ennemiComing(step);
             step++;
             nextWaveIn++;
+            expWin++;
             //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
@@ -248,15 +250,18 @@ private Hero selectedHero;
                     gameOverScreen(true);
                 }
                 timer.stop();
+                System.out.println("EXP " + expWin/150);
+                Player.INSTANCE.setExp(expWin/150);
+                while (Player.INSTANCE.getExp()>=Player.INSTANCE.expCap()){
+                    Player.INSTANCE.levelUp();
+                }
             }
         });
-
         timer.start();
 
     }
 
     private boolean endGame() {
-
         if (allEnnemis.isEmpty() && !endless && ennemiPresent.isEmpty()) {
             return true;
         }
