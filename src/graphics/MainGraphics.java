@@ -68,7 +68,7 @@ public class MainGraphics extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-         menu = new MainMenu(this, p);
+        menu = new MainMenu(this);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Options options = new Options(this);

@@ -39,11 +39,11 @@ public class Game {
     }
 
     public void initHero(){
-        Sacha sacha=new Sacha(Player.INSTANCE);
-        Ondine ondine=new Ondine(Player.INSTANCE);
-        Pierre pierre=new Pierre(Player.INSTANCE);
-        Max max=new Max(Player.INSTANCE);
-        Rocket rocket=new Rocket(Player.INSTANCE);
+        Sacha sacha=new Sacha();
+        Ondine ondine=new Ondine();
+        Pierre pierre=new Pierre();
+        Max max=new Max();
+        Rocket rocket=new Rocket();
     }
 
 }

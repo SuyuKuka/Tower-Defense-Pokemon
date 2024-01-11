@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 public class MainMenu extends JPanel {
 
-    private Player user;
+    private Player user = Player.INSTANCE;
 
     private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
@@ -32,11 +32,9 @@ public class MainMenu extends JPanel {
     private JProgressBar expBar;
     private JLabel levelAccount;
     private JLabel levelAccount2;
-    public MainMenu(MainGraphics main, Player p) {
+    public MainMenu(MainGraphics main) {
         Pc.INSTANCE.setMainMenu(this);
         CardLayout cdL = new CardLayout();
-        user = p;
-        control.setUser(p);
 
         setLayout(new BorderLayout());
         setOpaque(false);
