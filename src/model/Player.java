@@ -56,7 +56,7 @@ public class Player {
                 }
             }
 
-            //resetTeam();
+           //resetTeam();
 
             //Initialisation du pc
             // for(int i=0; i<25; i=i+1){
@@ -349,89 +349,152 @@ public class Player {
     public void setPseudo(String pseudo) throws Exception {
 
     }
+//    public void resetTeam() {
+//        for (Tower t : team) {
+//            removeTeam(t);
+//            if (t instanceof Starter.Salameche) {
+//                addteam(((Starter.Salameche) t).reset());
+//            }
+//            if (t instanceof Starter.Arcko) {
+//                addteam(((Starter.Arcko) t).reset());
+//            }
+//            if (t instanceof Starter.Moustillon) {
+//                addteam(((Starter.Moustillon) t).reset());
+//            }
+//            if (t instanceof Anchwatt) {
+//                addteam(((Anchwatt) t).reset());
+//            }
+//            if (t instanceof Obalie) {
+//                addteam(((Obalie) t).reset());
+//            }
+//            if (t instanceof Tylton) {
+//                addteam(((Tylton) t).reset());
+//            }
+//            if (t instanceof Terhal) {
+//                addteam(((Terhal) t).reset());
+//            }
+//            if (t instanceof Tarsal) {
+//                addteam(((Tarsal) t).reset());
+//            }
+//            if (t instanceof Rozbouton) {
+//                addteam(((Rozbouton) t).reset());
+//            }
+//            if (t instanceof Ningale) {
+//                addteam(((Ningale) t).reset());
+//            }
+//            if (t instanceof Nodulithe) {
+//                addteam(((Nodulithe) t).reset());
+//            }
+//            if (t instanceof Mysdibule) {
+//                addteam(((Mysdibule) t).reset());
+//            }
+//            if (t instanceof MotismaFroid) {
+//                addteam(((MotismaFroid) t).reset());
+//            }
+//            if (t instanceof Makuhita) {
+//                addteam(((Makuhita) t).reset());
+//            }
+//            if (t instanceof Lilia) {
+//                addteam(((Lilia) t).reset());
+//            }
+//            if (t instanceof Gringolem) {
+//                addteam(((Gringolem) t).reset());
+//            }
+//            if (t instanceof Escargaume) {
+//                addteam(((Escargaume) t).reset());
+//            }
+//            if (t instanceof Ecrapince) {
+//                addteam(((Ecrapince) t).reset());
+//            }
+//            if (t instanceof Chartor) {
+//                addteam(((Chartor) t).reset());
+//            }
+//        }
+//    }
+
 
     public void resetTeam() {
-        count = 0;
         for (Tower t : team) {
-            //removeTeam(t);
             if (t instanceof Starter.Salameche) {
-                // addteam(((Starter.Salameche) t).reset());
-                team[count] = ((Starter.Salameche) t).reset();
+                ((Starter.Salameche) t).reset();
             }
             if (t instanceof Starter.Arcko) {
-                // addteam(((Starter.Arcko) t).reset());
-                team[count] = ((Starter.Arcko) t).reset();
+                ((Starter.Arcko) t).reset();
             }
             if (t instanceof Starter.Moustillon) {
-                // addteam(((Starter.Moustillon) t).reset());
-                team[count] = ((Starter.Moustillon) t).reset();
+
+                ((Starter.Moustillon) t).reset();
             }
             if (t instanceof Anchwatt) {
-                // addteam(((Anchwatt) t).reset());
-                team[count] = ((Anchwatt) t).reset();
+
+                ((Anchwatt) t).reset();
             }
             if (t instanceof Obalie) {
-                // addteam(((Obalie) t).reset());
-                team[count] = ((Obalie) t).reset();
+
+                ((Obalie) t).reset();
             }
             if (t instanceof Tylton) {
-                // addteam(((Tylton) t).reset());
-                team[count] = ((Tylton) t).reset();
+
+                ((Tylton) t).reset();
             }
             if (t instanceof Terhal) {
-                // addteam(((Terhal) t).reset());
-                team[count] = ((Terhal) t).reset();
+
+                ((Terhal) t).reset();
             }
             if (t instanceof Tarsal) {
-                // addteam(((Tarsal) t).reset());
-                team[count] = ((Tarsal) t).reset();
+
+                ((Tarsal) t).reset();
             }
             if (t instanceof Rozbouton) {
-                // addteam(((Rozbouton) t).reset());
-                team[count] = ((Rozbouton) t).reset();
+
+                ((Rozbouton) t).reset();
             }
             if (t instanceof Ningale) {
-                // addteam(((Ningale) t).reset());
-                team[count] = ((Ningale) t).reset();
+
+                ((Ningale) t).reset();
             }
             if (t instanceof Nodulithe) {
-                // addteam(((Nodulithe) t).reset());
-                team[count] = ((Nodulithe) t).reset();
+
+                ((Nodulithe) t).reset();
             }
             if (t instanceof Mysdibule) {
-                // addteam(((Mysdibule) t).reset());
-                team[count] = ((Mysdibule) t).reset();
+
+                ((Mysdibule) t).reset();
             }
             if (t instanceof MotismaFroid) {
-                // addteam(((MotismaFroid) t).reset());
-                team[count] = ((MotismaFroid) t).reset();
+
+                ((MotismaFroid) t).reset();
             }
             if (t instanceof Makuhita) {
-                // addteam(((Makuhita) t).reset());
-                team[count] = ((Makuhita) t).reset();
+
+                ((Makuhita) t).reset();
             }
             if (t instanceof Lilia) {
-                // addteam(((Lilia) t).reset());
-                team[count] = ((Lilia) t).reset();
+
+                ((Lilia) t).reset();
             }
             if (t instanceof Gringolem) {
-                // addteam(((Gringolem) t).reset());
-                team[count] = ((Gringolem) t).reset();
+
+                ((Gringolem) t).reset();
             }
             if (t instanceof Escargaume) {
-                // addteam(((Escargaume) t).reset());
-                team[count] = ((Escargaume) t).reset();
+
+                ((Escargaume) t).reset();
             }
             if (t instanceof Ecrapince) {
-                // addteam(((Ecrapince) t).reset());
-                team[count] = ((Ecrapince) t).reset();
+
+                ((Ecrapince) t).reset();
             }
             if (t instanceof Chartor) {
-                // addteam(((Chartor) t).reset());
-                team[count] = ((Chartor) t).reset();
+
+                ((Chartor) t).reset();
             }
-            team[count].setState(State.PC);
-            count++;
+
         }
+
+    }
+
+    public void setExp(double exp) {
+        this.exp = exp;
     }
 }

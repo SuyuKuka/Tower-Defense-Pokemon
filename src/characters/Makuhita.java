@@ -13,9 +13,20 @@ public class Makuhita extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Makuhita reset() {
-        return new Makuhita();
+    public void reset() {
+        setName("Makuhita");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(60);
+        setSpecial(20);
+        setAtkCd(250);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(100);
+        setFirstType(Types.COMBAT);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/makuhita/makuhita.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

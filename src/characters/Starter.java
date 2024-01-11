@@ -13,8 +13,18 @@ public class Starter {
             primarySkill();
         }
 
-        public Salameche reset() {
-            return new Salameche();
+        public void reset() {
+            setName("Salameche");
+            setLevel(1);
+            setPhysical(22);
+            setSpecial(38);
+            setAtkCd(50);
+            setRayon(Tower.Rayon.SMALL);
+            setPrice(100);
+            setFirstType(Types.FEU);
+            setSecondType(Types.NONE);
+            setSprite("ressources/sprite/charmander/charmander.gif");
+            setExp(0);
         }
 
         @Override
@@ -88,9 +98,20 @@ public class Starter {
             primarySkill();
         }
 
-        public Arcko reset() {
-            return new Arcko();
+        public void reset() {
+            setName("Arcko");
+            setLevel(1); // Mettez le niveau à 1 comme demandé
+            setPhysical(20);
+            setSpecial(40);
+            setAtkCd(50);
+            setRayon(Tower.Rayon.SMALL);
+            setPrice(100);
+            setFirstType(Types.PLANTE);
+            setSecondType(Types.NONE);
+            setSprite("ressources/sprite/treecko/treecko.gif");
+            setExp(0);
         }
+
 
         @Override
         public void evolution() {
@@ -161,9 +182,20 @@ public class Starter {
             primarySkill();
         }
 
-        public Moustillon reset() {
-            return new Moustillon();
+        public void reset() {
+            setName("Moustillon");
+            setLevel(1); // Mettez le niveau à 1 comme demandé
+            setPhysical(25);
+            setSpecial(35);
+            setAtkCd(50);
+            setRayon(Tower.Rayon.SMALL);
+            setPrice(100);
+            setFirstType(Types.EAU);
+            setSecondType(Types.NONE);
+            setSprite("ressources/sprite/oshawott/oshawott.gif");
+            setExp(0);
         }
+
 
         @Override
         public void evolution() {

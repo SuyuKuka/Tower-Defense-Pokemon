@@ -26,10 +26,12 @@ public class MainMenu extends JPanel {
     private boolean inCadrePanel = false;
 
     private boolean displayPcPanel = false;
-    JPanel teamPanel;
-    JPanel pcPanel;
-    JPanel box;
-
+    private JPanel teamPanel;
+    private JPanel pcPanel;
+    private  JPanel box;
+    private JProgressBar expBar;
+    private JLabel levelAccount;
+    private JLabel levelAccount2;
     public MainMenu(MainGraphics main, Player p) {
         Pc.INSTANCE.setMainMenu(this);
         CardLayout cdL = new CardLayout();
@@ -157,6 +159,13 @@ public class MainMenu extends JPanel {
         teamPanel.revalidate();
     }
 
+    public void updateProfile(){
+        levelAccount2.setText("Nv du compte : " + user.getLvl());
+        levelAccount.setText("Nv du compte : " + user.getLvl());
+        expBar.setValue((int) (user.getExp()/ user.expCap()*100));
+        expBar.setString(user.getExp() + "/" + user.expCap());
+    }
+
     private JPanel titlePanel() {
         JLabel heading = new JLabel("POKEREVOLUTE");
         heading.setFont(maker.getCustomFont().deriveFont(45f));
@@ -219,13 +228,13 @@ public class MainMenu extends JPanel {
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
         pseudo.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
-        JLabel levelAccount = new JLabel("Nv du compte : " + user.getLvl());
-        levelAccount.setForeground(Color.WHITE);
-        levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
-        levelAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JProgressBar expBar = new JProgressBar();
+        levelAccount2 = new JLabel("Nv du compte : " + user.getLvl());
+        levelAccount2.setForeground(Color.WHITE);
+        levelAccount2.setFont(maker.getCustomFont().deriveFont(20f));
+        levelAccount2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+         expBar = new JProgressBar();
         expBar.setMinimum(0);
         expBar.setMaximum((int) user.expCap());
         expBar.setValue((int) user.getExp());
@@ -240,11 +249,11 @@ public class MainMenu extends JPanel {
 
         profilPhoto.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         pseudo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        levelAccount.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        levelAccount2.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
         bigProfilePanel.add(profilPhoto);
         bigProfilePanel.add(pseudo);
-        bigProfilePanel.add(levelAccount);
+        bigProfilePanel.add(levelAccount2);
         bigProfilePanel.add(expBar);
     
         return bigProfilePanel;
@@ -271,7 +280,7 @@ public class MainMenu extends JPanel {
         pseudo.setForeground(Color.WHITE);
         pseudo.setFont(maker.getCustomFont().deriveFont(20f));
 
-        JLabel levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
+         levelAccount = new JLabel("  Nv du compte : " + user.getLvl() + " ");
         levelAccount.setForeground(Color.WHITE);
         levelAccount.setFont(maker.getCustomFont().deriveFont(20f));
 

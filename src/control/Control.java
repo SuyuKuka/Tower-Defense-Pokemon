@@ -129,7 +129,14 @@ public class Control {
         screen.getePresent().reset();
         Player.INSTANCE.resetTeam();
 
+        Player.INSTANCE.setExp(300);
+        while (Player.INSTANCE.getExp()>=Player.INSTANCE.expCap()){
+            Player.INSTANCE.levelUp();
+        }
+
+
         screen.getMain().getCardLayout().show(screen.getMain().getMainPanel(), "menu");
+        screen.getMain().updateMenu();
 
         screen.revalidate();
         screen.repaint();

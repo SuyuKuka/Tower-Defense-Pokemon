@@ -13,9 +13,20 @@ public class Obalie extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Obalie reset() {
-        return new Obalie();
+    public void reset() {
+        setName("Obalie");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(40);
+        setSpecial(55);
+        setAtkCd(100);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(3000);
+        setFirstType(Types.EAU);
+        setSecondType(Types.GLACE);
+        setSprite("ressources/sprite/spheal/spheal.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

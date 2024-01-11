@@ -37,40 +37,67 @@ public class Pc {
         }
     }
 
+    public int getIndex(Tower[] team,Tower pkm){
+        System.out.println("LENGTH: "+team.length);
+
+        for (int i = 0; i < team.length ; i++) {
+            if (team[i].getName().equals(pkm.getName())){ //PROBLME INSTANCE DE PKM
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void echange(){
         team = Player.INSTANCE.getTeam();
         if(select1 != null && select2 != null){
             if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.PC){
                 if(pkmTeamRemain() && (!select1.getSprite().contains("ressources/sprite/nothing.png") || !select2.getSprite().contains("ressources/sprite/nothing.png"))){
-                    int i = Arrays.asList(team).indexOf(select1);
+                    int i = getIndex(team,select1);
                     int j = pc.indexOf(select2);
-                    select1.setState(State.PC);
-                    select2.setState(State.TEAM);
+
+                    System.out.println(i);
+                    System.out.println(j);
+
                     pc.set(j, select1); //select 1 dans le pc
                     team[i] = select2;  //select 2 dans la team
 
-                    state.removeFromMap(select1);
+                    select1.setState(State.PC);
+                    select2.setState(State.TEAM);
 
+                    if(inGamePc!=null){
+                        state.removeFromMap(select1);
+                    }
                 }
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.TEAM){
                 int i = pc.indexOf(select1);
-                int j = Arrays.asList(team).indexOf(select2);
-                select1.setState(State.TEAM);
-                select2.setState(State.PC);
+                int j = getIndex(team,select2);
+
+                System.out.println(i);
+                System.out.println(j);
+
                 team[j] = select1; //select 1 dans la team
                 pc.set(i,select2); //select 2 dans le pc
 
-                state.removeFromMap(select2);
+                select1.setState(State.TEAM);
+                select2.setState(State.PC);
 
-
+                if(inGamePc!=null){
+                    state.removeFromMap(select2);
+                }
             }else if(select1.getState() == Tower.State.TEAM && select2.getState() == Tower.State.TEAM){
                 int i = Arrays.asList(team).indexOf(select1);
                 int j = Arrays.asList(team).indexOf(select2);
+                System.out.println(i);
+                System.out.println(j);
                 team[i] = select2;
                 team[j] = select1;
             }else if(select1.getState() == Tower.State.PC && select2.getState() == Tower.State.PC){
                 int i = pc.indexOf(select1);
                 int j = pc.indexOf(select2);
+                System.out.println(i);
+                System.out.println(j);
+
                 pc.set(i, select2);
                 pc.set(j, select1);
             }else{

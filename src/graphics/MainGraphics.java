@@ -27,6 +27,8 @@ public class MainGraphics extends JFrame {
     private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
+    private MainMenu menu;
+
     public MainGraphics(Player p, Game main) {
 
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
@@ -60,7 +62,7 @@ public class MainGraphics extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        MainMenu menu = new MainMenu(this, p);
+         menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Boutique boutique = new Boutique(this);
@@ -74,6 +76,11 @@ public class MainGraphics extends JFrame {
 
         add(mainPanel);
         setVisible(true);
+    }
+
+    public void updateMenu(){
+        menu.updateProfile();
+        menu.placeTeam();
     }
 
     public BufferedImage getBackgroundImage() {

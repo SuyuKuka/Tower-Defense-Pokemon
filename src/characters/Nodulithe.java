@@ -10,13 +10,23 @@ public class Nodulithe extends Tower implements TowerLoader {
         // Zone destruction
         super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE, "ressources/sprite/roggenrola/roggenrola.gif", State.LOCKED,
                 100, Tower.Rayon.SMALL, 1000);
-        System.out.println("Charge le sprite");
         primarySkill();
     }
 
-    public Nodulithe reset() {
-        return new Nodulithe();
+    public void reset() {
+        setName("Nodulithe");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(75);
+        setSpecial(25);
+        setAtkCd(100);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(1000);
+        setFirstType(Types.ROCHE);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/roggenrola/roggenrola.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

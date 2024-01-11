@@ -14,9 +14,20 @@ public class Anchwatt extends Tower implements TowerLoader {
 
     }
 
-    public Anchwatt reset() {
-        return new Anchwatt();
+    public void reset() {
+        setName("Anchwatt");
+        setLevel(1);
+        setPhysical(20);
+        setSpecial(20);
+        setAtkCd(50);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(400);
+        setFirstType(Types.ELECTRIQUE);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/tynamo/tynamo.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

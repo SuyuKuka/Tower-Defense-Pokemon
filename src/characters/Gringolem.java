@@ -12,9 +12,20 @@ public class Gringolem extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Gringolem reset() {
-        return new Gringolem();
+    public void reset() {
+        setName("Gringolem");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(500);
+        setSpecial(200);
+        setAtkCd(2000);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(3000);
+        setFirstType(Types.SPECTRE);
+        setSecondType(Types.SOL);
+        setSprite("ressources/sprite/golett/golett.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

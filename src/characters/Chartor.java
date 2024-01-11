@@ -13,9 +13,20 @@ public class Chartor extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Chartor reset() {
-        return new Chartor();
+    public void reset() {
+        setName("Chartor");
+        setLevel(1);
+        setPhysical(50);
+        setSpecial(10);
+        setAtkCd(2);
+        setRayon(Tower.Rayon.GLOBAL);
+        setPrice(900);
+        setFirstType(Types.FEU);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/torkoal/torkoal.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

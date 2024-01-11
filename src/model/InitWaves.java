@@ -64,7 +64,7 @@ public class InitWaves {
         }
         // debug();
 
-        // test(wave);
+         test(wave);
 
     }
 
@@ -95,9 +95,9 @@ public class InitWaves {
     private void test(ArrayList<Ennemi> wave) {
         AllWaves.clear();
         wave.clear();
-        wave.add(Ennemi.LIST.getList().get(1));
+        //wave.add(Ennemi.LIST.getList().get(1));
         wave.add(Ennemi.LIST.getList().get(2));
-        wave.add(Ennemi.LIST.getList().get(0));
+        //wave.add(Ennemi.LIST.getList().get(0));
         /*
          * wave.add(Ennemi.LIST.getBossList().get(1));
          * wave.add(Ennemi.LIST.getList().get(3));

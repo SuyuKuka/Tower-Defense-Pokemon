@@ -13,9 +13,20 @@ public class Tarsal extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Tarsal reset() {
-        return new Tarsal();
+    public void reset() {
+        setName("Tarsal");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(25);
+        setSpecial(45);
+        setAtkCd(200);
+        setRayon(Tower.Rayon.GLOBAL);
+        setPrice(900);
+        setFirstType(Types.PSY);
+        setSecondType(Types.FEE);
+        setSprite("ressources/sprite/ralts/ralts.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

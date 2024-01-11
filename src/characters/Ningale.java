@@ -13,9 +13,20 @@ public class Ningale extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Rozbouton reset() {
-        return new Rozbouton();
+    public void reset() {
+        setName("Ningale");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(45);
+        setSpecial(30);
+        setAtkCd(50);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(200);
+        setFirstType(Types.INSECTE);
+        setSecondType(Types.SOL);
+        setSprite("ressources/sprite/nincada/nincada.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {
