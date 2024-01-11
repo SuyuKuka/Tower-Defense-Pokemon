@@ -18,35 +18,45 @@ public class Music {
         try {
             File audioFile = new File("ressources/music/" + songName + ".wav");
             if (audioFile.exists()) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-                clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
-                if (songName.substring(0, songName.length() - 1).contains("main")) {
-                    clip.addLineListener(new LineListener() {
-                        @Override
-                        public void update(LineEvent event) {
-                            if(isPlayed){
-                                if (event.getType() == LineEvent.Type.STOP) {
+                if (isPlayed) {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+        
+                    if (songName.substring(0, songName.length() - 1).contains("main")) {
+                        clip.addLineListener(new LineListener() {
+                            @Override
+                            public void update(LineEvent event) {
+                                if (!isPlayed) {
+                                    clip.stop();
+                                    clip.setFramePosition(0);
+                                    return;
+                                }
+        
+                                if (startBattle && event.getType() == LineEvent.Type.STOP) {
                                     clip.close();
                                     try {
                                         audioInputStream.close();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                    Random rand = new Random();
-                                    int i = rand.nextInt(5);
-                                    playMusic(songName.substring(0, songName.length() - 1) + i);
+                                    if (!startBattle) {
+                                        Random rand = new Random();
+                                        int i = rand.nextInt(5);
+                                        playMusic(songName.substring(0, songName.length() - 1) + i);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
 
     public Clip getClip() {
         return clip;

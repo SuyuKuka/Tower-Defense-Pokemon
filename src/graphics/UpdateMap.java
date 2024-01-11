@@ -210,12 +210,7 @@ public class UpdateMap extends JLayeredPane {
 
                     if (tPresent.getSelectedPokemon() != null) {
                         Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
-                        System.out.println(state.getTowerPresent());
-                        System.out.println(tPresent.getSelectedPokemon().getPokemon());
-                        System.out.println();
                         if (!state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon()) && pkm.getPrice() < state.getMoney()) {
-
-
                             int[] towerOnMapPos = new int[] {row, col};
                             control.setTowerOnMap(towerOnMapPos, pkm, state);
 

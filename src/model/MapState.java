@@ -157,6 +157,11 @@ public class MapState {
         Pc.INSTANCE.setState(this);
         this.screen = s;
 
+        screen.getMain().getMusicPlayer().setStartBattle(true);
+        screen.getMain().getMusicPlayer().getClip().stop();
+        Random rdm = new Random();
+        int i = rdm.nextInt(6);
+        screen.getMain().getMusicPlayer().playMusic("battle" + i);
         // MODE ENDLESS
         if (endless) {
             allEnnemis.add(w.initEndless(inc++));
@@ -227,6 +232,7 @@ public class MapState {
                     gameOverScreen(true);
                 }
                 timer.stop();
+                screen.getMain().getMusicPlayer().setStartBattle(false);
                 Player.INSTANCE.setExp(expWin / 150);
                 while (Player.INSTANCE.getExp() >= Player.INSTANCE.expCap()) {
                     Player.INSTANCE.levelUp();
