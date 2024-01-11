@@ -29,7 +29,7 @@ public class InGameMenu extends JPanel {
     private JLabel compteur;
     private JLabel waveTimer;
     private JLabel pc;
-
+    private static JButton pause;
     private static boolean inPc = false;
 
     public InGameMenu(boolean topPanel, MapState ms, GameScreen gameScreen) {
@@ -68,7 +68,7 @@ public class InGameMenu extends JPanel {
             }
         });
 
-        JButton pause = new JButton(new ImageIcon("ressources/template/pauseButton.png"));
+         pause = new JButton(new ImageIcon("ressources/template/pauseButton.png"));
         pause.setPreferredSize(new Dimension(42, 42));
         pause.setOpaque(false);
         pause.setBackground(Color.BLACK);
@@ -136,7 +136,7 @@ public class InGameMenu extends JPanel {
                     inPc = true;
                     teamPanel.setVisible(true);
                 }
-                control.gamePause(new JButton());
+                control.gamePause(pause);
                 gameScreen.changeRightSide();
             }
         });
@@ -184,7 +184,7 @@ public class InGameMenu extends JPanel {
     public void updateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
-        if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
+        if ((ms.getAllEnnemis().size() - 1) % 1 == 0) {
             pc.setVisible(true);
         } else {
             pc.setVisible(false);

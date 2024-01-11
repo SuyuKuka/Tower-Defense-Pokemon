@@ -210,7 +210,11 @@ public class UpdateMap extends JLayeredPane {
 
                     if (tPresent.getSelectedPokemon() != null) {
                         Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
-                        if (!tPresent.getSelectedPokemon().isPlaced() && pkm.getPrice() < state.getMoney()) {
+                        System.out.println(state.getTowerPresent());
+                        System.out.println(tPresent.getSelectedPokemon().getPokemon());
+                        System.out.println();
+                        if (!state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon()) && pkm.getPrice() < state.getMoney()) {
+
 
                             int[] towerOnMapPos = new int[] {row, col};
                             control.setTowerOnMap(towerOnMapPos, pkm, state);
@@ -227,12 +231,11 @@ public class UpdateMap extends JLayeredPane {
                             giveTiles(pkm); // CONTROL
                             control.giveRangePanel(pkm, towerRange);
 
-                            if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
-                                tPresent.getSelectedPokemon().setPlaced(true);
-                                tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
-                                tPresent.getSelectedPokemon().getPriceLabel().setText("Nv : " + String.valueOf(tPresent.getSelectedPokemon().getPokemon().getLevel()));
-                            }
 
+                        }
+                        if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
+                            tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                            tPresent.getSelectedPokemon().getPriceLabel().setText("Nv : " + String.valueOf(tPresent.getSelectedPokemon().getPokemon().getLevel()));
                         }
                     }
 
@@ -253,8 +256,7 @@ public class UpdateMap extends JLayeredPane {
         }
 
         private void giveTiles(Tower pkm) {
-
-            this.addMouseListener(new MouseAdapter() {
+            listener=new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
                     if (SwingUtilities.isLeftMouseButton(evt)) {
@@ -282,7 +284,9 @@ public class UpdateMap extends JLayeredPane {
                     }
 
                 }
-            });
+            };
+
+            this.addMouseListener(listener);
             control.giveTiles(pkm, this);
         }
 

@@ -77,6 +77,7 @@ public class TowerPresent extends JPanel {
         bg.add(initiateTitle());
         for (int i = 0; i < Player.INSTANCE.getTeam().length; i++) {
             if (!Player.INSTANCE.getTeam()[i].getSprite().contains("ressources/sprite/nothing.png")) {
+
                 initiateTeam(Player.INSTANCE.getTeam()[i], i + 1);
             }
         }

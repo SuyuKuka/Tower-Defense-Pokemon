@@ -182,9 +182,6 @@ public class TowerManagement extends JPanel {
     public void updateManager(Tower tower) {
         spriteLabel.setIcon(new ImageIcon(tower.getSprite()));
         nameLabel.setText(tower.getName());
-        if (isPlaced) {
-            priceLabel.setText("Nv : " + String.valueOf(pokemon.getLevel()));
-        }
         revalidate();
         repaint();
     }

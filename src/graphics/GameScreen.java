@@ -49,7 +49,7 @@ public class GameScreen extends JPanel {
             inGamePc.setVisible(true);
             tPresent.setVisible(false);
         } else {
-            tPresent.updatePresent();
+          tPresent.updatePresent();
             inGamePc.setVisible(false);
             tPresent.setVisible(true);
         }
