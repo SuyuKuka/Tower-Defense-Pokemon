@@ -14,9 +14,20 @@ public class Terhal extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Terhal reset() {
-        return new Terhal();
+    public void reset() {
+        setName("Terhal");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(55);
+        setSpecial(35);
+        setAtkCd(50);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(400);
+        setFirstType(Types.PSY);
+        setSecondType(Types.ACIER);
+        setSprite("ressources/sprite/beldum/beldum.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

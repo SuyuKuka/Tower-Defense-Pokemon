@@ -13,9 +13,20 @@ public class MotismaFroid extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public MotismaFroid reset() {
-        return new MotismaFroid();
+    public void reset() {
+        setName("MotismaFroid");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(2);
+        setSpecial(105);
+        setAtkCd(20);
+        setRayon(Tower.Rayon.GLOBAL);
+        setPrice(900);
+        setFirstType(Types.ELECTRIQUE);
+        setSecondType(Types.GLACE);
+        setSprite("ressources/sprite/frostrotom/frostrotom.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

@@ -26,33 +26,36 @@ public class Tower extends Pokemon {
         PC, TEAM, LOCKED
     }
 
+    //GRAPHICS
     private UpdateMap.Tiles tiles;
+    private Slot slot;
     private TowerGUI GUI = new TowerGUI(this);
     private JPanel rangePanel;
     private Projectile projectile;
 
-    private State state = State.LOCKED;
-
-    private Skill[] skills = new Skill[4];
-    private int select = 0;
-    private int totalSkill = 0;
-
+    //STATS
+    private Rayon rayon;
+    private double exp;
+    private int price;
     private int level;
     private int[] pos;
-    private double exp;
-    private Rayon rayon;
-    private int price;
-    private Ennemi uniqueTarget;
-    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
     private int atkCd;
     private int baseCd;
 
-    private TowerManagement manager;
+    //SKILLS
+    private Skill[] skills = new Skill[4];
+    private int select = 0;
+    private int totalSkill = 0;
+    private Ennemi uniqueTarget;
+    private ArrayList<Ennemi> zoneTarget = new ArrayList<Ennemi>();
 
+    private State state;
+
+    //LIST
     private static ArrayList<Tower> TList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
-    // STATS
+    //OPTIONEL
     private int killCount = 0;
 
     public Tower(String name, double atkPhysical, double atkSpecial, Types type1, Types type2, String sprite,
@@ -61,6 +64,7 @@ public class Tower extends Pokemon {
         exp = 0;
         TList.add(this);
         level = 1;
+        this.state=state;
         baseCd = atkCd;
         this.rayon = r;
         this.price = price;
@@ -351,7 +355,9 @@ public class Tower extends Pokemon {
             exp = 0;
             updatePokemon();
 
-            manager.updateManager(this);
+            if(manager!=null){
+                manager.updateManager(this);
+            }
         }
 
     }
@@ -562,6 +568,7 @@ public class Tower extends Pokemon {
 
         return distance < towerRayon ;
     }
+
 
     public int[] getPos() {
         return pos;

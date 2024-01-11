@@ -14,9 +14,20 @@ public class Ecrapince extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Ecrapince reset() {
-        return new Ecrapince();
+    public void reset() {
+        setName("Ecrapince");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(80);
+        setSpecial(20);
+        setAtkCd(500);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(200);
+        setFirstType(Types.EAU);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/corphish/corphish.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

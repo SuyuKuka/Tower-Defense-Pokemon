@@ -32,6 +32,8 @@ public class UpdateMap extends JLayeredPane {
     private int mapHeight;
     private JPanel projectileLayer;
 
+
+
     public UpdateMap(MapState state, TowerPresent tPresent) {
         this.state = state;
         this.tPresent = tPresent;
@@ -167,6 +169,10 @@ public class UpdateMap extends JLayeredPane {
         private boolean occupied=false;
         private GridBagConstraints constraints = new GridBagConstraints();
 
+        private Tower pokemon;
+
+        private MouseAdapter listener;
+
         public Tiles(int[] pos) {
 
             this.pos = pos;
@@ -238,13 +244,16 @@ public class UpdateMap extends JLayeredPane {
                 remove(spriteOnIt);
                 spriteOnIt = jlabel;
                 this.add(jlabel, constraints);
-
                 jlabel.getParent().revalidate();
+                return true;
+            }else{
+                return false;
             }
         }
 
         private void giveTiles(Tower pkm) {
-            this.addMouseListener(new MouseAdapter() {
+
+            listener=new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
                     if (SwingUtilities.isLeftMouseButton(evt)) {
@@ -297,6 +306,10 @@ public class UpdateMap extends JLayeredPane {
             return spriteOnIt;
         }
 
+    }
+
+    public JPanel getGameMap() {
+        return gameMap;
     }
 
     public TowerPresent gettPresent() {
