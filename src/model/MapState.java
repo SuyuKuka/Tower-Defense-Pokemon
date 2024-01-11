@@ -397,6 +397,7 @@ private Hero selectedHero;
         screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
         for (Ennemi e : ennemiPresent) {
             EnnemiPresent.updateEnnemiHealth(e);
+            screen.getePresent().updateSmallPanel(e);
         }
         for (Tower t : towerPresent) {
             showAlert(t);

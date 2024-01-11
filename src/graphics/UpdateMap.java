@@ -181,6 +181,7 @@ public class UpdateMap extends JLayeredPane {
 
                 @Override
                 public void mouseEntered(MouseEvent evt) {
+                    setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
                     setBorder(new LineBorder(Color.RED, 1));
                 }
 
