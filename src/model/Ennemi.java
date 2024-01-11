@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import graphics.Projectile;
 import graphics.UpdateMap;
 import graphics.UpdateMap.Tiles;
 import model.Map.DirectionTiles;
@@ -19,6 +20,7 @@ public class Ennemi extends Pokemon {
     public boolean boss;
     private JLabel sprite;
     private JPanel ennemiInfo;
+    private Projectile projectile;
 
     // DEPLACEMENT
     private Map map;
@@ -544,5 +546,13 @@ public class Ennemi extends Pokemon {
 
     public Map getMap() {
         return map;
+    }
+
+    public void setProjectile(Projectile projectile) {
+        this.projectile = projectile;
+    }
+
+    public Projectile getProjectile() {
+        return projectile;
     }
 }

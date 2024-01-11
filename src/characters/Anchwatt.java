@@ -10,7 +10,7 @@ public class Anchwatt extends Tower implements TowerLoader {
     public Anchwatt() {
         // RAILGUN SNIPE BOSSKILLER
         super("Anchwatt", 20, 20, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
-                State.LOCKED, 50, Tower.Rayon.SMALL, 400);
+                State.LOCKED, 50, Rayon.SMALL, 400);
         primarySkill();
 
     }
@@ -21,7 +21,7 @@ public class Anchwatt extends Tower implements TowerLoader {
         setPhysical(20);
         setSpecial(20);
         setAtkCd(50);
-        setRayon(Tower.Rayon.SMALL);
+        setRayon(Rayon.SMALL);
         setPrice(400);
         setFirstType(Types.ELECTRIQUE);
         setSecondType(Types.NONE);
