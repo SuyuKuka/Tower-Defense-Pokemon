@@ -68,13 +68,13 @@ public class MapState {
         w = new InitWaves(difficulty);
         if (difficulty == Difficulty.EASY) {
             limiteDeTemps = 40;
-            money = 8000;
+            money = 500;
         } else if (difficulty == Difficulty.NORMAL) {
             limiteDeTemps = 25;
-            money = 400;
+            money = 80;
         } else if (difficulty == Difficulty.HARD) {
             limiteDeTemps = 10;
-            money = 2000;
+            money = 200;
         }
         countMoney = money;
         endless = mode == 1;

@@ -225,8 +225,6 @@ public class UpdateMap extends JLayeredPane {
 
                             giveTiles(pkm); // CONTROL
                             control.giveRangePanel(pkm, towerRange);
-
-
                         }
                         if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                             tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
@@ -277,7 +275,6 @@ public class UpdateMap extends JLayeredPane {
 
                         setOpaque(false);
                     }
-
                 }
             };
 
@@ -295,10 +292,7 @@ public class UpdateMap extends JLayeredPane {
             this.removeMouseListener(listener);
         }
 
-
-
         public void replaceSprite(String spritePath) {
-
             JLabel jlabel = new JLabel(new ImageIcon(spritePath));
             remove(spriteOnIt);
             spriteOnIt = jlabel;
@@ -313,7 +307,6 @@ public class UpdateMap extends JLayeredPane {
         public JLabel getSpriteOnIt() {
             return spriteOnIt;
         }
-
     }
 
     public JPanel getGameMap() {

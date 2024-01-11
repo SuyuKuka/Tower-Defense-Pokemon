@@ -184,7 +184,7 @@ public class InGameMenu extends JPanel {
     public void updateInfo() {
         pv.setText(ms.getPv() + "");
         money.setText((int) ms.getMoney() + "");
-        if ((ms.getAllEnnemis().size() - 1) % 1 == 0) {
+        if ((ms.getAllEnnemis().size() - 1) % 6 == 0) {
             pc.setVisible(true);
         } else {
             pc.setVisible(false);
