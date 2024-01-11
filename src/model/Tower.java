@@ -287,7 +287,7 @@ public class Tower extends Pokemon {
     private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
-
+                projectile=new Projectile(e,this,"ressources/projectiles/fire.png");
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
                         // System.out.println("Immunise");

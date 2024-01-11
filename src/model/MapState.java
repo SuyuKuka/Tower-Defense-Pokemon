@@ -226,7 +226,7 @@ private Hero selectedHero;
                 t.attack2(ennemiPresent, this);
                 if (t.getProjectile() != null) {
                     screen.getuMap().add(t.getProjectile(),DRAG_LAYER);
-                    t.getProjectile(). setLocation(new Point(t.getPos()[1]*32,t.getPos()[0]*32));
+                    t.getProjectile().updateProj();
                 }
             }
 
@@ -401,11 +401,6 @@ private Hero selectedHero;
         }
         for (Tower t : towerPresent) {
             showAlert(t);
-            t.getRangePanel().repaint();
-            if(t.getProjectile()!=null){
-                t.getProjectile().updateProj();
-            }
-
         }
     }
 
