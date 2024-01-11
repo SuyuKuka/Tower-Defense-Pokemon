@@ -430,17 +430,17 @@ public class Tower extends Pokemon {
     }
 
     // NONE, SMALL, MEDIUM, LARGE, GLOBAL
-    public int getRayonValue(Rayon rayon) {
+    public int getDiametreValue(Rayon rayon) {
         if (rayon == Rayon.NONE) {
             return 0;
         } else if (rayon == Rayon.SMALL) {
             return 3;
         } else if (rayon == Rayon.MEDIUM) {
-            return 5;
-        } else if (rayon == Rayon.LARGE) {
             return 7;
+        } else if (rayon == Rayon.LARGE) {
+            return 11;
         } else {
-            return 1000; // GLOBAL
+            return 20; // GLOBAL
         }
     }
 
@@ -472,10 +472,7 @@ public class Tower extends Pokemon {
                     tower.zoneTarget.add(e);
                 }
             } else {
-                if (tower.zoneTarget.contains(e)) {
-                    tower.zoneTarget.remove(e);
-                }
-
+                tower.zoneTarget.remove(e);
             }
         }
     }
@@ -561,13 +558,13 @@ public class Tower extends Pokemon {
 
     private boolean isInRayon(Tower tower, Ennemi ennemi) {
 
-        int deltaX = Math.abs(ennemi.getPos()[0] - tower.getPos()[0]);
-        int deltaY = Math.abs(ennemi.getPos()[1] - tower.getPos()[1]);
+        double deltaX = Math.abs(ennemi.getJLabelSprite().getLocation().getX()/32 - tower.getPos()[1]);
+        double deltaY = Math.abs(ennemi.getJLabelSprite().getLocation().getY()/32 - tower.getPos()[0]);
 
-        int distance = deltaX + deltaY;
-        int towerRayon = getRayonValue(rayon);
+        double distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+        double towerRayon = getDiametreValue(rayon)/2;
 
-        return distance < towerRayon && deltaX <= towerRayon / 2 && deltaY <= towerRayon / 2;
+        return distance < towerRayon ;
     }
 
 

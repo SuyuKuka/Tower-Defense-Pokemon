@@ -1,5 +1,6 @@
 package graphics;
 
+import model.Hero;
 import model.Player;
 import model.Tower;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import java.io.IOException;
@@ -14,11 +16,11 @@ import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
 public class TowerPresent extends JPanel {
-    private Tower[] team = Player.INSTANCE.getTeam();
-    private Tower[] hero = Player.INSTANCE.getHero();
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
+
+    private Hero hero;
 
     public TowerPresent() {
 
@@ -36,6 +38,9 @@ public class TowerPresent extends JPanel {
         bg.add(initiateTitle());
 
 
+
+
+        Tower[] team = Player.INSTANCE.getTeam();
         for (int i = 0; i < team.length; i = i + 1) {
             if(!team[i].getSprite().contains("ressources/sprite/nothing.png")){
                 initiateTeam(team[i], i + 1);
@@ -82,11 +87,39 @@ public class TowerPresent extends JPanel {
         }
     }
 
+    public void setHero(Hero hero) {
+
+        JLabel name=maker.oneLineTextMaker();
+        name.setText(hero.getName());
+
+        JLabel desc=maker.oneLineTextMaker();
+        desc.setText(hero.getDesc());
+
+        JPanel heroInfoPanel=new JPanel();
+        heroInfoPanel.setLayout(new GridLayout(2,1));
+        heroInfoPanel.setBackground(new Color(20,20,20,150));
+        heroInfoPanel.add(name);
+        heroInfoPanel.add(desc);
+
+        JPanel heroPanel = maker.imagePanel(hero.getImage());
+        heroPanel.setLayout(new BorderLayout());
+        heroPanel.setBackground(Color.BLACK);
+        heroPanel.setBorder(new LineBorder(Color.CYAN));
+        heroPanel.add(heroInfoPanel,BorderLayout.CENTER);
+
+
+
+
+        bg.add(heroPanel);
+        this.hero = hero;
+    }
+
     public Tower getTower() {
         return selectedPokemon.getPokemon();
     }
 
     public TowerManagement getSelectedPokemon() {
+
         return selectedPokemon;
     }
 }

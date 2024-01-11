@@ -2,6 +2,7 @@ package characters;
 
 import model.Skill;
 import model.Tower;
+import model.TowerLoader;
 import model.Types;
 
 public class Anchwatt extends Tower implements TowerLoader {

@@ -1,4 +1,4 @@
-package characters;
+package model;
 
 public interface TowerLoader { // ce qui est propre a chaque tour
     public void evolution(); // Evolue ou non a un niveau

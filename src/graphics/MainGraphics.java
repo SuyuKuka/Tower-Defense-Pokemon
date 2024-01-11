@@ -31,6 +31,8 @@ public class MainGraphics extends JFrame {
 
     public MainGraphics(Player p, Game main) {
 
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         setMinimumSize(new Dimension(screenWidth - screenWidth / 3, screenHeight - screenHeight / 3));
         setResizable(false);
 
@@ -65,13 +67,11 @@ public class MainGraphics extends JFrame {
          menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
-        Boutique boutique = new Boutique(this);
         Options options = new Options(this);
 
         mainPanel.add(menu, "menu");
         mainPanel.add(classique, "classique");
         mainPanel.add(marathon, "marathon");
-        mainPanel.add(boutique, "boutique");
         mainPanel.add(options, "options");
 
         add(mainPanel);

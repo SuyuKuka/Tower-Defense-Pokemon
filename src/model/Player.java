@@ -341,9 +341,7 @@ public class Player {
         }
     }
 
-    public Tower[] getHero() {
-        return hero;
-    }
+  
 
     // TODO
     public void setPseudo(String pseudo) throws Exception {

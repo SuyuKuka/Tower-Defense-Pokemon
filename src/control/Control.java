@@ -6,14 +6,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
+import characters.*;
 import graphics.GameScreen;
 import graphics.MainGraphics;
+import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
+import model.*;
 import model.Tower.State;
-import model.MapState;
-import model.Player;
-import model.Skill;
-import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
@@ -26,12 +25,16 @@ public class Control {
 
     public static final Control INSTANCE = new Control();
 
+    private Hero selectedHero;
+
+
+
     private Control() {
 
     }
 
     public void gamePause(JButton pause) {
-        if (ms.getPause() == true) {
+        if (ms.getPause()) {
             ms.setPause(false);
             pause.setIcon(new ImageIcon("ressources/template/pauseButton.png"));
         } else {
@@ -57,16 +60,16 @@ public class Control {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
-            if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
+            if (st.startsWith("gameScreen")) {
                 button.setIcon(
-                        new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button_pressed.png"));
+                        new ImageIcon("ressources/button/" + st.substring(13) + "_button_pressed.png"));
             } else {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
 
             Timer timer = new Timer(200, e1 -> {
-                if (st.length() >= 10 && st.substring(0, 10).equals("gameScreen")) {
-                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13, st.length()) + "_button.png"));
+                if (st.startsWith("gameScreen")) {
+                    button.setIcon(new ImageIcon("ressources/button/" + st.substring(13) + "_button.png"));
                 } else {
                     button.setIcon(new ImageIcon("ressources/button/" + st + "_button.png"));
                 }
@@ -78,39 +81,56 @@ public class Control {
     }
 
     public void changePanel(String buttonName, MainGraphics main) {
+        System.out.println(buttonName);
         Timer timer = new Timer(1, e1 -> {
+            if (buttonName.startsWith("gameScreen")) {
+                startGame(buttonName,main);
+            }
             if (buttonName.equals("retour")) {
                 main.getCardLayout().show(main.getMainPanel(), "menu");
             } else {
-
-                if (buttonName.length() >= 10 && buttonName.substring(0, 10).equals("gameScreen")) {
-
-                    Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13, buttonName.length()));
-                    MapState mState;
-                    if (buttonName.substring(11, buttonName.length()).charAt(0) == 'c') {
-                        mState = new MapState(diff, 0);
-                    } else {
-                        mState = new MapState(diff, 1);
-                    }
-                    GameScreen screen = new GameScreen(main);
-                    screen.setmState(mState);
-                    main.getMainPanel().add(screen, "gameScreen");
-                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                        @Override
-                        protected Void doInBackground() throws Exception {
-                            mState.startGraphic(screen);
-                            return null;
-                        }
-                    };
-                    main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
-                    worker.execute();
-                } else {
-                    main.getCardLayout().show(main.getMainPanel(), buttonName);
-                }
+                main.getCardLayout().show(main.getMainPanel(), buttonName);
             }
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    public void startGame(String buttonName, MainGraphics main){
+        Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13));
+        MapState mState;
+        if (buttonName.substring(11).charAt(0) == 'c') {
+            mState = new MapState(diff, 0);
+        } else {
+            mState = new MapState(diff, 1);
+        }
+        GameScreen screen = new GameScreen(main);
+        screen.setmState(mState);
+        main.getMainPanel().add(screen, "gameScreen");
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                if(selectedHero!=null){
+                   mState.setSelectedHero(selectedHero);
+                }
+                mState.startGraphic(screen);
+                return null;
+            }
+        };
+        main.getCardLayout().show(main.getMainPanel(), buttonName.substring(0, 10));
+        worker.execute();
+    }
+
+
+
+    public void switchPkm(Tower pkm) {
+        if (pkm.getState() == State.PC) {
+            user.getPc().remove(pkm);
+            user.addteam(pkm);
+        } else {
+            user.getPc().add(pkm);
+            user.removeTeam(pkm);
+        }
     }
 
     public JPanel backButton(MainGraphics main) {
@@ -179,7 +199,7 @@ public class Control {
         state.setInc(state.getCount());
         try {
             state.startGraphic(screen);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
 
     }
@@ -208,11 +228,23 @@ public class Control {
         }
     }
 
+    public void giveTiles(Tower pkm, UpdateMap.Tiles tile) {
+        pkm.setTiles(tile);
+    }
+
+    public void giveRangePanel(Tower pkm, JPanel towerRange) {
+        pkm.setRangePanel(towerRange);// CONTROLE
+    }
+
     public void setMs(MapState ms) {
         this.ms = ms;
     }
 
     public void setUser(Player user) {
         this.user = user;
+    }
+
+    public void setSelectedHero(Hero selectedHero) {
+        this.selectedHero = selectedHero;
     }
 }

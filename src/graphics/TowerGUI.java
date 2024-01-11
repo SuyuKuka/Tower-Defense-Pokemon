@@ -47,7 +47,6 @@ public class TowerGUI extends JPanel {
     public TowerGUI(Tower pkm) {
         pkm.setGUI(this);
         this.pkm = pkm;
-
         JPanel skillInfoPanel = new JPanel();
         skillInfoPanel.setLayout(new BoxLayout(skillInfoPanel, BoxLayout.Y_AXIS));
         skillInfoPanel.setBorder(new LineBorder(Color.BLUE));
@@ -86,6 +85,7 @@ public class TowerGUI extends JPanel {
         info.add(skillInfoPanel);
         info.add(pkmInfoPanel);
 
+        setVisible(false);
         setPreferredSize(new Dimension(0, 600));
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
