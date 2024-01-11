@@ -1,0 +1,72 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "main.Game",
+            "projectName": "pooproject_e2bb4614"
+        },
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "graphics.test",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
+            "name": "SuperposedPanelsExample",
+            "request": "launch",
+            "mainClass": "graphics.SuperposedPanelsExample",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
+            "name": "StackedPanels3DExample",
+            "request": "launch",
+            "mainClass": "graphics.StackedPanels3DExample",
+            "projectName": "pooproject_89e8d3d2"
+        },
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "main.test",
+            "projectName": "pooproject_76e33191"
+        },
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "main.Game",
+            "projectName": "pooproject_5dd57233"
+        },
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "main.Game",
+            "projectName": "pooproject_89e8d3d2",
+            "args": "[terminal]"
+        },
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "main.Game",
+            "projectName": "pooproject_76e33191",
+            "args": "[terminal]"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
