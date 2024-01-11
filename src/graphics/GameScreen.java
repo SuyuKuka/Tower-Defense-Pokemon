@@ -55,6 +55,7 @@ public class GameScreen extends JPanel {
 
         }else{
             container.remove(inGamePc);
+            tPresent = new TowerPresent();
             container.add(tPresent, BorderLayout.EAST);
             inGamePc.setVisible(false);
             tPresent.setVisible(true);
