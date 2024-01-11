@@ -253,12 +253,12 @@ public class UpdateMap extends JLayeredPane {
 
         private void giveTiles(Tower pkm) {
 
-            listener=new MouseAdapter() {
+            this.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
                     if (SwingUtilities.isLeftMouseButton(evt)) {
                         if (tPresent.getComponentCount() < 2 && !occupied) {
-                            System.out.println("test");
+
                             tPresent.getComponent(0).setVisible(false);
                             tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
 
@@ -281,7 +281,7 @@ public class UpdateMap extends JLayeredPane {
                     }
 
                 }
-            };
+            });
             control.giveTiles(pkm, this);
         }
 
