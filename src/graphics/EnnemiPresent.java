@@ -1,10 +1,28 @@
 package graphics;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 import java.util.ArrayList;
 
@@ -12,31 +30,29 @@ import model.Ennemi;
 import model.Types;
 import model.Pokemon.Speed;
 
-import javax.swing.border.*;
-
 public class EnnemiPresent extends JPanel {
     private static GraphicsMaker maker = new GraphicsMaker();
+    private Ennemi ennemiInInfoPanel;
+
     private ArrayList<Ennemi> ennemiDisplayed = new ArrayList<Ennemi>();
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
+
     private static JPanel container = new JPanel();
     private JPanel ennemiInfoPanel;
     private JLabel pv;
-    private Ennemi ennemiInInfoPanel;
-
-    JScrollPane ennemiList;
+    private JScrollPane ennemiList;
 
     public EnnemiPresent() {
-        JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
-        bg.setOpaque(false);
-        bg.setLayout(new BorderLayout());
-
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(246, 0));
         setOpaque(false);
-        add(bg, BorderLayout.CENTER);
         setVisible(true);
 
-        // Ennemi
+        JPanel bg = maker.imagePanel("ressources/team/ennemiside.png");
+        bg.setOpaque(false);
+        bg.setLayout(new BorderLayout());
+        add(bg, BorderLayout.CENTER);
+
         container.setOpaque(false);
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
@@ -55,14 +71,11 @@ public class EnnemiPresent extends JPanel {
 
         ennemiList = new JScrollPane(container);
         ennemiList.setOpaque(false);
-        // ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         ennemiList.setBorder(BorderFactory.createEmptyBorder(20, 0, 100, 0));
-        // ennemiList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         JViewport viewport = ennemiList.getViewport();
         viewport.setOpaque(false);
 
-        // ENNEMI INFO CADRE
         ennemiInfoPanel = maker.imagePanel("ressources/template/ennemiInfoBg.png");
         ennemiInfoPanel.setPreferredSize(new Dimension(400, 100));
         ennemiInfoPanel.setVisible(false);
@@ -76,13 +89,11 @@ public class EnnemiPresent extends JPanel {
         for (Ennemi e : ennemiGone) {
             deleteEnnemiLabel(e);
         }
-
         for (Ennemi e : ennemiPresent) {
             if (!ennemiDisplayed.contains(e)) {
                 createEnnemiLabel(e);
             }
         }
-
         ennemiGone.clear();
         container.revalidate();
         container.repaint();
@@ -144,6 +155,7 @@ public class EnnemiPresent extends JPanel {
         ennemiInInfoPanel = e;
         ennemiInfoPanel.setBackground(Color.WHITE);
         ennemiInfoPanel.setBorder(new LineBorder(Color.WHITE));
+
         GridLayout grid = new GridLayout(5, 1);
         ennemiInfoPanel.setLayout(grid);
 
@@ -225,7 +237,6 @@ public class EnnemiPresent extends JPanel {
             return "IMM contre les atk Spectre";
         }
         return "";
-
     }
 
     public void deleteEnnemiLabel(Ennemi e) {
@@ -251,12 +262,10 @@ public class EnnemiPresent extends JPanel {
         while (ennemiDisplayed.size() > 0) {
             deleteEnnemiLabel(ennemiDisplayed.get(ennemiDisplayed.size() - 1));
         }
-
     }
 
     public static void updateEnnemiHealth(Ennemi ennemi) {
         if (ennemi.getEnnemiInfo() != null) {
-
             for (Component compo : ennemi.getEnnemiInfo().getComponents()) {
                 if (compo instanceof JProgressBar) {
                     JProgressBar healthBar = (JProgressBar) compo;
@@ -265,8 +274,6 @@ public class EnnemiPresent extends JPanel {
                     break;
                 }
             }
-
-
         }
         container.revalidate();
         container.repaint();

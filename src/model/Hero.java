@@ -7,23 +7,21 @@ public class Hero {
     private int buff;
     private int debuff;
     private String image;
-
     private String desc;
 
-    private static ArrayList<Hero> list=new ArrayList<>();
-
+    private static ArrayList<Hero> list = new ArrayList<>();
 
     public Hero(String name, int buff, int debuff, String image, String desc) {
-        this.name=name;
-        this.buff=buff;
-        this.debuff=debuff;
-        this.image=image;
-        this.desc=desc;
+        this.name = name;
+        this.buff = buff;
+        this.debuff = debuff;
+        this.image = image;
+        this.desc = desc;
 
         list.add(this);
     }
 
-    public Hero(){
+    public Hero() {
 
     }
 

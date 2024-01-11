@@ -6,32 +6,25 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
-import characters.*;
 import graphics.GameScreen;
 import graphics.MainGraphics;
+import graphics.Tiles;
 import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
-import model.*;
-import model.Tower.State;
+import model.Hero;
+import model.MapState;
+import model.Player;
+import model.Skill;
+import model.Tower;
 import model.InitWaves.Difficulty;
 
 import java.awt.Cursor;
 import java.io.FileNotFoundException;
 
 public class Control {
-
-    private Player user;
-    private MapState ms;
-
     public static final Control INSTANCE = new Control();
-
+    private MapState ms;
     private Hero selectedHero;
-
-
-
-    private Control() {
-
-    }
 
     public void gamePause(JButton pause) {
         if (ms.getPause()) {
@@ -62,8 +55,7 @@ public class Control {
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.addActionListener(e -> {
             if (st.startsWith("gameScreen")) {
-                button.setIcon(
-                        new ImageIcon("ressources/button/" + st.substring(13) + "_button_pressed.png"));
+                button.setIcon(new ImageIcon("ressources/button/" + st.substring(13) + "_button_pressed.png"));
             } else {
                 button.setIcon(new ImageIcon("ressources/button/" + st + "_button_pressed.png"));
             }
@@ -82,10 +74,9 @@ public class Control {
     }
 
     public void changePanel(String buttonName, MainGraphics main) {
-        System.out.println(buttonName);
         Timer timer = new Timer(1, e1 -> {
             if (buttonName.startsWith("gameScreen")) {
-                startGame(buttonName,main);
+                startGame(buttonName, main);
             }
             if (buttonName.equals("retour")) {
                 main.getCardLayout().show(main.getMainPanel(), "menu");
@@ -97,7 +88,7 @@ public class Control {
         timer.start();
     }
 
-    public void startGame(String buttonName, MainGraphics main){
+    public void startGame(String buttonName, MainGraphics main) {
         Difficulty diff = Difficulty.stringToDifficulty(buttonName.substring(13));
         MapState mState;
         if (buttonName.substring(11).charAt(0) == 'c') {
@@ -111,7 +102,7 @@ public class Control {
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                if(selectedHero!=null){
+                if (selectedHero != null) {
                    mState.setSelectedHero(selectedHero);
                 }
                 mState.startGraphic(screen);
@@ -123,14 +114,12 @@ public class Control {
     }
 
     public JPanel backButton(MainGraphics main) {
-
         JButton backButton = new JButton(new ImageIcon("ressources/button/retour_button.png"));
         buttonPressed(backButton, "retour", main);
 
         JPanel backPanel = new JPanel();
         backPanel.setOpaque(false);
         backPanel.add(backButton);
-
         return backPanel;
     }
 
@@ -143,7 +132,6 @@ public class Control {
 
         screen.revalidate();
         screen.repaint();
-
     }
 
     public void restart(GameScreen screen, MapState state) {
@@ -165,16 +153,13 @@ public class Control {
         if (state.getDiff() == Difficulty.HARD) {
             prompt = prompt + "difficile";
         }
-
         changePanel(prompt, screen.getMain());
-
     }
 
     public void freeplay(GameScreen screen, JPanel tmp, MapState state) {
         screen.removeAll();
         screen.add(tmp);
         screen.setVisible(true);
-
         screen.revalidate();
         screen.repaint();
 
@@ -182,9 +167,9 @@ public class Control {
         state.setInc(state.getCount());
         try {
             state.startGraphic(screen);
-        } catch (FileNotFoundException ignored) {
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void setTowerOnMap(int[] pos, Tower pkm, MapState state) {
@@ -194,7 +179,7 @@ public class Control {
     }
 
     public void chooseSkill(SkillButton skill, Tower pkm) {
-        if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()&& skill.getSkill()!=null) {
+        if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill() && skill.getSkill() != null) {
             pkm.setCurrentSkill(skill.getSkill());
         }
     }
@@ -209,20 +194,16 @@ public class Control {
         }
     }
 
-    public void giveTiles(Tower pkm, UpdateMap.Tiles tile) {
+    public void giveTiles(Tower pkm, Tiles tile) {
         pkm.setTiles(tile);
     }
 
     public void giveRangePanel(Tower pkm, JPanel towerRange) {
-        pkm.setRangePanel(towerRange);// CONTROLE
+        pkm.setRangePanel(towerRange);
     }
 
     public void setMs(MapState ms) {
         this.ms = ms;
-    }
-
-    public void setUser(Player user) {
-        this.user = user;
     }
 
     public void setSelectedHero(Hero selectedHero) {

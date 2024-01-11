@@ -1,30 +1,37 @@
 package graphics;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import control.Control;
 import model.Pc;
 import model.Player;
 
-public class InGamePc extends JPanel{
+public class InGamePc extends JPanel {
     private GraphicsMaker maker = new GraphicsMaker();
-    
-    JPanel teamPanel = new JPanel();
-    JPanel pcPanel = new JPanel();
-    JPanel box = new JPanel();
-    
-    public InGamePc(){
+
+    private JPanel teamPanel = new JPanel();
+    private JPanel pcPanel = new JPanel();
+    private JPanel box = new JPanel();
+
+    public InGamePc() {
         Pc.INSTANCE.setInGamePc(this);
         setOpaque(false);
+        setPreferredSize(new Dimension(250, 500));
+
         pcPanel.setOpaque(false);
         box.setOpaque(false);
-        setPreferredSize(new Dimension(250, 500));
 
         teamPanel();
         pcPanel();
-
         add(pcPanel);
     }
 
@@ -32,23 +39,23 @@ public class InGamePc extends JPanel{
         JLabel pcTitle = new JLabel("PC");
         pcTitle.setFont(maker.getCustomFont());
         pcTitle.setForeground(Color.WHITE);
-    
+
         JPanel heading = maker.imagePanel("ressources/background/pcheading.png");
         heading.setBorder(new LineBorder(Color.BLACK, 5));
         heading.setPreferredSize(new Dimension(250, 75));
         heading.add(pcTitle);
-    
-        box.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
+
+        box.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         box.setLayout(new GridLayout(8, 3, 5, 5));
         placePc();
-    
+
         pcPanel.setLayout(new BorderLayout());
         pcPanel.add(heading, BorderLayout.NORTH);
         pcPanel.add(box, BorderLayout.SOUTH);
     }
-    
-    public void placePc(){
-        if(box != null){
+
+    public void placePc() {
+        if (box != null) {
             box.removeAll();
         }
         for (int i = 0; i < Pc.INSTANCE.getHeight() * Pc.INSTANCE.getWidth(); i++) {
@@ -58,9 +65,9 @@ public class InGamePc extends JPanel{
             box.add(slot);
         }
         pcPanel.add(box);
-        if(box != null){
+        if (box != null) {
             box.repaint();
-        } 
+        }
     }
 
     public void teamPanel() {
@@ -70,10 +77,10 @@ public class InGamePc extends JPanel{
         placeTeam();
     }
 
-    public void placeTeam(){
+    public void placeTeam() {
         teamPanel.removeAll();
         for (int i = 0; i < 6; i++) {
-            Slot slot = new Slot(Player.INSTANCE.getTeam()[i],this);
+            Slot slot = new Slot(Player.INSTANCE.getTeam()[i], this);
             Player.INSTANCE.getTeam()[i].setSlot(slot);
             teamPanel.add(slot);
         }

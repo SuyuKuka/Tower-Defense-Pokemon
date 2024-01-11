@@ -1,10 +1,22 @@
 package graphics;
 
-import javax.swing.*;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,85 +27,73 @@ public class Classique extends JPanel {
     private Control control = Control.INSTANCE;
     private GraphicsMaker maker = new GraphicsMaker();
     private Hero selected;
-    private JPanel prevSelected;
 
+    private JPanel prevSelected;
 
     public Classique(MainGraphics main) {
         setOpaque(false);
         setLayout(new BorderLayout());
-        // Titre
+        setVisible(true);
+
         JPanel titlePanel = titlePanel();
-
-        // Boutons
         JPanel buttonPanel = buttonPanel(main);
-
-        // Back
         JPanel bottomPanel = bottomPanel(main);
-        //
-
-        //CENTRE
-        JPanel heroPanel=heroPanel();
+        JPanel heroPanel = heroPanel();
 
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
         add(heroPanel, BorderLayout.WEST);
-
-        setVisible(true);
     }
 
-    private  JPanel heroPanel(){
-        JPanel heroPanel=new JPanel();
-        heroPanel.setLayout(new BoxLayout(heroPanel,BoxLayout.Y_AXIS));
+    private JPanel heroPanel() {
+        JPanel heroPanel = new JPanel();
+        heroPanel.setLayout(new BoxLayout(heroPanel, BoxLayout.Y_AXIS));
         heroPanel.setOpaque(false);
         for (Hero h: Hero.getList()) {
-             heroPanel.add( heroLabel(h));
+            heroPanel.add(heroLabel(h));
         }
-        return  heroPanel;
+        return heroPanel;
     }
 
-    private JPanel heroLabel(Hero h){
-        JLabel img=new JLabel(new ImageIcon(h.getImage()));
+    private JPanel heroLabel(Hero h) {
+        JLabel img = new JLabel(new ImageIcon(h.getImage()));
 
-        JLabel name=maker.oneLineTextMaker();
+        JLabel name = maker.oneLineTextMaker();
         name.setText(h.getName());
 
-        JLabel desc=maker.oneLineTextMaker();
+        JLabel desc = maker.oneLineTextMaker();
         desc.setText(h.getDesc());
-
 
         JPanel infoPanel = new JPanel();
         infoPanel.setBorder(new LineBorder(Color.BLACK));
         infoPanel.setOpaque(false);
-        infoPanel.setLayout(new GridLayout(2,1));
+        infoPanel.setLayout(new GridLayout(2, 1));
         infoPanel.add(name);
         infoPanel.add(desc);
-        infoPanel.setPreferredSize(new Dimension(500,0));
+        infoPanel.setPreferredSize(new Dimension(500, 0));
 
-        JPanel heroLabel=new JPanel();
-        heroLabel.setBackground(new Color(20,20,20));
+        JPanel heroLabel = new JPanel();
+        heroLabel.setBackground(new Color(20, 20, 20));
         heroLabel.setLayout(new BorderLayout());
-        heroLabel.setBorder(new EmptyBorder(1,1,1,1));
-        heroLabel.add(img,BorderLayout.WEST);
-        heroLabel.add(infoPanel,BorderLayout.CENTER);
+        heroLabel.setBorder(new EmptyBorder(1, 1, 1, 1));
+        heroLabel.add(img, BorderLayout.WEST);
+        heroLabel.add(infoPanel, BorderLayout.CENTER);
 
         heroLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(selected==null){
-                    selected=h;
-                    prevSelected=heroLabel;
+                if (selected == null) {
+                    selected = h;
+                    prevSelected = heroLabel;
                     heroLabel.setBackground(Color.RED);
-
-                }else{
-                    selected=h;
-                    prevSelected.setBackground(new Color(20,20,20));
-                    prevSelected=heroLabel;
+                } else {
+                    selected = h;
+                    prevSelected.setBackground(new Color(20, 20, 0));
+                    prevSelected = heroLabel;
                     heroLabel.setBackground(Color.RED);
                 }
-
                 control.setSelectedHero(selected);
-
             }
 
             @Override
@@ -103,16 +103,16 @@ public class Classique extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                heroLabel.setBorder(new EmptyBorder(1,1,1,1));
+                heroLabel.setBorder(new EmptyBorder(1, 1, 1, 1));
             }
         });
-
-        return  heroLabel;
+        return heroLabel;
     }
 
     private JPanel titlePanel() {
         JPanel titlePanel = maker.imagePanel("ressources/background/banner.png");
         titlePanel.setPreferredSize(new Dimension(0, 52));
+
         JLabel heading = new JLabel("Choisis la difficulte");
         heading.setFont(maker.getCustomFont().deriveFont(45f));
         heading.setForeground(Color.WHITE);
@@ -154,7 +154,7 @@ public class Classique extends JPanel {
 
     private JPanel bottomPanel(MainGraphics main) {
         JPanel bottomPanel = maker.imagePanel("ressources/background/banner.png");
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         bottomPanel.setPreferredSize(new Dimension(0, 52));
 
         JPanel backPanel = control.backButton(main);

@@ -6,13 +6,10 @@ import model.TowerLoader;
 import model.Types;
 
 public class Anchwatt extends Tower implements TowerLoader {
-
     public Anchwatt() {
-        // RAILGUN SNIPE BOSSKILLER
         super("Anchwatt", 20, 20, Types.ELECTRIQUE, Types.NONE, "ressources/sprite/tynamo/tynamo.gif",
                 State.LOCKED, 50, Rayon.SMALL, 400);
         primarySkill();
-
     }
 
     public void reset() {
@@ -28,7 +25,6 @@ public class Anchwatt extends Tower implements TowerLoader {
         setSprite("ressources/sprite/tynamo/tynamo.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -83,7 +79,5 @@ public class Anchwatt extends Tower implements TowerLoader {
         if (getLevel() == 50) {
             learnSkill(new Skill("OverDrive", 0, 275, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 200));
         }
-
     }
-
 }

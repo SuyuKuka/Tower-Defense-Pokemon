@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Obalie extends Tower implements TowerLoader {
-
     public Obalie() {
-        // MELEE/RANGE/ZONE, BURST
         super("Obalie", 40, 55, Types.EAU, Types.GLACE, "ressources/sprite/spheal/spheal.gif",
                 State.LOCKED, 100, Tower.Rayon.SMALL, 3000);
         primarySkill();
@@ -16,7 +14,7 @@ public class Obalie extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Obalie");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(40);
         setSpecial(55);
         setAtkCd(100);

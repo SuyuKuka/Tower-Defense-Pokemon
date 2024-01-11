@@ -7,7 +7,6 @@ import model.Types;
 
 public class Lilia extends Tower implements TowerLoader {
     public Lilia() {
-        // RAPID FIRING
         super("Lilia", 80, 80, Types.PLANTE, Types.ROCHE, "ressources/sprite/lileep/lileep.gif",
                 State.LOCKED, 75, Tower.Rayon.LARGE, 300);
         primarySkill();
@@ -15,7 +14,7 @@ public class Lilia extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Lilia");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(80);
         setSpecial(80);
         setAtkCd(75);
@@ -26,7 +25,6 @@ public class Lilia extends Tower implements TowerLoader {
         setSprite("ressources/sprite/lileep/lileep.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -70,7 +68,5 @@ public class Lilia extends Tower implements TowerLoader {
         if (getLevel() == 50) {
             learnSkill(new Skill("Lame de Roc", 0, 90, Types.ROCHE, Skill.Pattern.UNIQUE, "", 200));
         }
-
     }
 }
-//

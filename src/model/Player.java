@@ -5,7 +5,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import characters.*;
+import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
+import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
+import characters.Ningale;
+import characters.Nodulithe;
+import characters.Obalie;
+import characters.Rozbouton;
+import characters.Starter;
+import characters.Tarsal;
+import characters.Terhal;
+import characters.Tylton;
 import model.Tower.Rayon;
 import model.Tower.State;
 
@@ -18,7 +34,6 @@ public class Player {
 
     private Tower[] team = new Tower[6];
     private Pc pc = Pc.INSTANCE;
-    int count = 0;
 
     private File file = new File("ressources/config/data.csv");
 
@@ -26,22 +41,19 @@ public class Player {
         if (createData()) {
             this.pseudo = "Joueur";
             exp = 0;
-            lvl = 1;   
+            lvl = 1;
         } else {
             loadData();
         }
         //Initialisation de la team
-        team[1] = new Chartor();
-        team[0] = new Anchwatt();
-        team[2] = new Tylton();
-        team[3] = new Gringolem();
-        //team[4] = new Lilia();
-        team[5] = new Starter().new Arcko();
+        team[0] = new Starter().new Arcko();
+        team[1] = new Starter().new Salameche();
+        team[2] = new Starter().new Moustillon();
 
-        for(int i =0; i<team.length; i=i+1){
-            if(team[i]!=null){
+        for (int i = 0; i < team.length; i = i + 1) {
+            if (team[i] != null) {
                 team[i].setState(State.TEAM);
-            }else{
+            } else {
                 team[i] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
             }
         }
@@ -103,14 +115,14 @@ public class Player {
         }
     }
 
-    public double expCap(){
+    public double expCap() {
         expLvlUp = lvl * 100;
         return expLvlUp;
     }
 
-    public void levelUp(){
+    public void levelUp() {
         double cap = expCap();
-        if(cap <= exp){
+        if (cap <= exp) {
             lvl++;
             exp -= cap;
         }

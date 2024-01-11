@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Nodulithe extends Tower implements TowerLoader {
-
     public Nodulithe() {
-        // Zone destruction
         super("Nodulithe", 75, 25, Types.ROCHE, Types.NONE, "ressources/sprite/roggenrola/roggenrola.gif", State.LOCKED,
                 100, Tower.Rayon.SMALL, 1000);
         primarySkill();
@@ -16,7 +14,7 @@ public class Nodulithe extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Nodulithe");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(75);
         setSpecial(25);
         setAtkCd(100);
@@ -27,7 +25,6 @@ public class Nodulithe extends Tower implements TowerLoader {
         setSprite("ressources/sprite/roggenrola/roggenrola.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -82,7 +79,5 @@ public class Nodulithe extends Tower implements TowerLoader {
         if (getLevel() == 70) {
             learnSkill(new Skill("Téra Explosion", 300, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
-
     }
-
 }

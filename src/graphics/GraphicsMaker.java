@@ -1,27 +1,29 @@
 package graphics;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+
 import java.io.File;
-import javax.swing.*;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-import java.awt.*;
-import javax.swing.border.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class GraphicsMaker {
-
     private Font customFont;
 
     public GraphicsMaker() {
         try {
-
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File("ressources/munro.ttf"));
             customFont = customFont.deriveFont(Font.ITALIC, 60f);
-
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
-
         }
     }
 
@@ -31,18 +33,15 @@ public class GraphicsMaker {
 
     public JPanel imagePanel(String path) {
         BufferedImage backgroundImage = loadImage(path);
-        JPanel IPanel = new JPanel() {
+        JPanel imgPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
-
                 super.paintComponent(g);
-
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
             }
         };
-
-        return IPanel;
+        return imgPanel;
     }
 
     public BufferedImage loadImage(String path) {
@@ -58,7 +57,6 @@ public class GraphicsMaker {
                 e.printStackTrace();
             }
         }
-
         return backgroundImage;
     }
 
@@ -70,12 +68,10 @@ public class GraphicsMaker {
         return res;
     }
 
-    public JLabel oneLineTextMaker() { // TOWER GUI.JAVA
+    public JLabel oneLineTextMaker() {
         JLabel panel = new JLabel();
-        panel.setFont(getCustomFont().deriveFont(20f));//
+        panel.setFont(getCustomFont().deriveFont(20f));
         panel.setForeground(Color.WHITE);
-
         return panel;
     }
-
 }

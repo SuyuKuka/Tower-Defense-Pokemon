@@ -7,12 +7,7 @@ import model.MapState;
 import model.InitWaves.Difficulty;
 
 public class ControlTerminal {
-
-    MapState state;
-
-    public ControlTerminal() {
-
-    }
+    private MapState state;
 
     private void mainMenuPrint() {
         System.out.println("------POKEREVOLUTE------");
@@ -50,7 +45,6 @@ public class ControlTerminal {
         Scanner sc = new Scanner(System.in);
         while (!ready) {
             String st = sc.nextLine();
-
             switch (st) {
                 case "FACILE":
                     ready = true;
@@ -82,7 +76,6 @@ public class ControlTerminal {
         Scanner sc = new Scanner(System.in);
         while (!ready) {
             String st = sc.nextLine();
-
             switch (st) {
                 case "FACILE":
                     ready = true;
@@ -108,14 +101,6 @@ public class ControlTerminal {
         sc.close();
     }
 
-    private void shopMenu() {
-        // TODO
-    }
-
-    private void teamMenu() {
-        // TODO
-    }
-
     public void initTerminal() throws FileNotFoundException {
         boolean ready = false;
         Scanner sc = new Scanner(System.in);
@@ -127,27 +112,20 @@ public class ControlTerminal {
                     ready = true;
                     classicMenu();
                     break;
-
                 case "MARATHON":
                     ready = true;
                     marathonMenu();
                     break;
-
                 case "BOUTIQUE":
-                    shopMenu();
                     ready = true;
                     break;
-
                 case "TEAM":
-                    teamMenu();
                     ready = true;
                     break;
-
                 default:
                     break;
             }
         }
         sc.close();
-
     }
 }

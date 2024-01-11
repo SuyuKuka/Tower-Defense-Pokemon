@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Makuhita extends Tower implements TowerLoader {
-
     public Makuhita() {
-        // MELEE AURA
         super("Makuhita", 60, 20, Types.COMBAT, Types.NONE, "ressources/sprite/makuhita/makuhita.gif",
                 State.LOCKED, 250, Tower.Rayon.SMALL, 100);
         primarySkill();
@@ -16,7 +14,7 @@ public class Makuhita extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Makuhita");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(60);
         setSpecial(20);
         setAtkCd(250);
@@ -27,7 +25,6 @@ public class Makuhita extends Tower implements TowerLoader {
         setSprite("ressources/sprite/makuhita/makuhita.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -76,5 +73,4 @@ public class Makuhita extends Tower implements TowerLoader {
             learnSkill(new Skill("Exploforce", 200, 0, Types.COMBAT, Skill.Pattern.AURA, "", 200));
         }
     }
-
 }

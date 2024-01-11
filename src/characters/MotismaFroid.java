@@ -7,7 +7,6 @@ import model.Types;
 
 public class MotismaFroid extends Tower implements TowerLoader {
     public MotismaFroid() {
-        // CROWD HAZARD GLOBAL DOT ELEC/GLACE
         super("MotismaFroid", 2, 105, Types.ELECTRIQUE, Types.GLACE, "ressources/sprite/frostrotom/frostrotom.gif",
                 State.LOCKED, 20, Tower.Rayon.GLOBAL, 900);
         primarySkill();
@@ -27,10 +26,8 @@ public class MotismaFroid extends Tower implements TowerLoader {
         setExp(0);
     }
 
-
     @Override
     public void evolution() {
-        // NOTHING
     }
 
     @Override

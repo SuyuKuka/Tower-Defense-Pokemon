@@ -2,24 +2,30 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
-import characters.*;
+import javax.swing.JPanel;
+
+import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
+import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
+import characters.Ningale;
+import characters.Nodulithe;
+import characters.Obalie;
+import characters.Rozbouton;
+import characters.Starter;
+import characters.Tarsal;
+import characters.Terhal;
+import characters.Tylton;
 
 import graphics.*;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import model.Tower;
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import static javax.swing.JLayeredPane.DRAG_LAYER;
-
 public class Tower extends Pokemon {
-
     public enum Rayon {
         NONE, SMALL, MEDIUM, LARGE, GLOBAL
     }
@@ -29,9 +35,9 @@ public class Tower extends Pokemon {
     }
 
     //GRAPHICS
-    private UpdateMap.Tiles tiles;
+    private Tiles tiles;
     private Slot slot;
-    private TowerGUI GUI = new TowerGUI(this);
+    private TowerGUI gui = new TowerGUI(this);
     private JPanel rangePanel;
     private TowerManagement manager;
 
@@ -54,7 +60,7 @@ public class Tower extends Pokemon {
     private State state;
 
     //LIST
-    private static ArrayList<Tower> TList = new ArrayList<Tower>();
+    private static ArrayList<Tower> tList = new ArrayList<Tower>();
     public static final Tower LIST = new Tower();
 
     //OPTIONEL
@@ -64,9 +70,9 @@ public class Tower extends Pokemon {
             State state, int atkCd, Tower.Rayon r, int price) {
         super(name, 0, atkPhysical, atkSpecial, type1, type2, true, sprite);
         exp = 0;
-        TList.add(this);
+        tList.add(this);
         level = 1;
-        this.state=state;
+        this.state = state;
         baseCd = atkCd;
         this.rayon = r;
         this.price = price;
@@ -75,34 +81,6 @@ public class Tower extends Pokemon {
     private Tower() {
         level = 1;
     }
-
-    /*
-     * 
-     * public Skill loadSkill(String skillName) throws FileNotFoundException {
-     * File file = new File("ressources/config/Pokemon Moves.csv");
-     * Scanner sc = new Scanner(file);
-     * int phys = 0;
-     * int spe = 0;
-     * while (sc.hasNext()) {
-     * String[] info = new String[9];
-     * info = sc.nextLine().split(";");
-     * if (info[7].equals(skillName)) {
-     * if (info[2].equals("Physical")) {
-     * phys = Integer.valueOf(info[4]);
-     * spe = 0;
-     * } else if (info[2].equals("Special")) {
-     * phys = 0;
-     * spe = Integer.valueOf(info[4]);
-     * }
-     * 
-     * return new Skill(skillName, phys, spe, Types.stringToType(info[1]), exp,
-     * isTower(), skillName);
-     * }
-     * }
-     * sc.close();
-     * return null;
-     * }
-     */
 
     public int[] putTower(String st) { // VIA TERMINAL
         try {
@@ -123,21 +101,20 @@ public class Tower extends Pokemon {
             } else {
                 posY = -1;
             }
-            int[] tab = { posY, posX };
+            int[] tab = {posY, posX};
             return tab;
         } catch (Exception e) {
-            int[] tab = { -1, -1 };
+            int[] tab = {-1, -1};
             return tab;
         }
     }
 
-    public void attack2(ArrayList<Ennemi> ennemiInMap, MapState m) { // ATK WITH CD
-        if (GUI != null) {
-            if (GUI.isVisible()) {
-                GUI.updatePkm();
+    public void attack(ArrayList<Ennemi> ennemiInMap, MapState m) { // ATK WITH CD
+        if (gui != null) {
+            if (gui.isVisible()) {
+                gui.updatePkm();
             }
         }
-
         if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
             getUniqueTarget(this, ennemiInMap);
             if (atkCd <= 0) {
@@ -158,9 +135,7 @@ public class Tower extends Pokemon {
         } else if (skills[select].getPatern() == Skill.Pattern.AURA) {
             getZoneTarget(this, ennemiInMap);
             if (zoneTarget.size() != 0) {
-
                 if (atkCd <= 0) {
-
                     atkCd = baseCd;
                     attackZone();
                 } else {
@@ -174,41 +149,6 @@ public class Tower extends Pokemon {
                         levelUp();
                         zoneTarget.remove(e);
                         killCount++;
-                    }
-                }
-
-            }
-
-        }
-    }
-
-    public void attack(ArrayList<Tower> towerInMap, ArrayList<Ennemi> ennemiInMap, MapState m) { // TERMINAL (?)
-        for (int i = 0; i < towerInMap.size(); i++) {
-            Tower tower = towerInMap.get(i);
-            if (skills[select].getPatern() == Skill.Pattern.UNIQUE) {
-                tower.getUniqueTarget(tower, ennemiInMap);
-                tower.attackUnique();
-                if (tower.uniqueTarget != null) {
-                    if (tower.uniqueTarget.getPv() <= 0) {
-                        m.isDead(tower.uniqueTarget);
-                        tower.winExp(tower.uniqueTarget);
-                        tower.levelUp();
-                        tower.uniqueTarget = null;
-                        tower.killCount++;
-                    }
-                }
-            } else if (skills[select].getPatern() == Skill.Pattern.AURA) {
-                tower.getZoneTarget(tower, ennemiInMap);
-                if (tower.zoneTarget.size() != 0) {
-                    tower.attackZone();
-                    for (Ennemi e : tower.zoneTarget) {
-                        if (e.getPv() <= 0) {
-                            m.isDead(e);
-                            tower.winExp(e);
-                            tower.levelUp();
-                            tower.zoneTarget.remove(e);
-                            tower.killCount++;
-                        }
                     }
                 }
             }
@@ -236,18 +176,12 @@ public class Tower extends Pokemon {
     }
 
     private void attackUnique() {
-
-        if (uniqueTarget == null) {
-            // System.out.println("Pas de cible");
-        } else {
-
-            uniqueTarget.setProjectile(new Projectile(uniqueTarget,this,"ressources/projectiles/"+getCurrentSkill(getSelect()).getType()+".gif"));
+        if (uniqueTarget != null) {
+            uniqueTarget.setProjectile(new Projectile(uniqueTarget, this, "ressources/projectiles/" + getCurrentSkill(getSelect()).getType() + ".gif"));
             uniqueTarget.getProjectile().setVisible(true);
 
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    // System.out.println("Immunise");
-                } else {
+                if (Types.typeChart(skills[select], uniqueTarget) != 0) {
                     double physical = (uniqueTarget.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                             * Types.typeChart(skills[select], uniqueTarget);
                     if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
@@ -266,9 +200,7 @@ public class Tower extends Pokemon {
                     // uniqueTarget.getPv() + "pv");
                 }
             } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                if (Types.typeChart(skills[select], uniqueTarget) == 0) {
-                    // System.out.println("Immunise");
-                } else {
+                if (Types.typeChart(skills[select], uniqueTarget) != 0) {
                     int special = (int) ((uniqueTarget.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                             * Types.typeChart(skills[select], uniqueTarget));
                     if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
@@ -286,9 +218,6 @@ public class Tower extends Pokemon {
                     // getName() + " a inflige " + special + "pv, il lui reste " +
                     // uniqueTarget.getPv() + "pv");
                 }
-            } else {
-                // Attaque de statut donc effect?
-                System.out.println("ATQ STATUT");
             }
         }
     }
@@ -296,14 +225,11 @@ public class Tower extends Pokemon {
     private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
-
-                e.setProjectile(new Projectile(e,this,"ressources/projectiles/"+getCurrentSkill(getSelect()).getType()+".gif"));
+                e.setProjectile(new Projectile(e, this, "ressources/projectiles/" + getCurrentSkill(getSelect()).getType() + ".gif"));
                 e.getProjectile().setVisible(true);
 
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
-                    if (Types.typeChart(skills[select], e) == 0) {
-                        // System.out.println("Immunise");
-                    } else {
+                    if (Types.typeChart(skills[select], e) != 0) {
                         double physical = (e.getPhysical() - getPhysical() - skills[select].getPhysicalDamage())
                                 * Types.typeChart(skills[select], e);
                         if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
@@ -323,9 +249,7 @@ public class Tower extends Pokemon {
                         // e.getPv() + "pv");
                     }
                 } else if (skills[select].getPhysicalDamage() == 0 && skills[select].getSpecialDamage() != 0) {
-                    if (Types.typeChart(skills[select], e) == 0) {
-                        // System.out.println("Immunise");
-                    } else {
+                    if (Types.typeChart(skills[select], e) != 0) {
                         double special = (e.getSpecial() - getSpecial() - skills[select].getSpecialDamage())
                                 * Types.typeChart(skills[select], e);
                         if (skills[select].getType() == getType()[0] || skills[select].getType() == getType()[1]) {
@@ -343,33 +267,29 @@ public class Tower extends Pokemon {
                         // .println(getName() + " a inflige " + special + "pv, il lui reste " +
                         // e.getPv() + "pv");
                     }
-                } else {
-                    // Attaque de statut donc juste applique effet?
-                    System.out.println("ATQ STATUT");
                 }
             }
         }
     }
 
     private void levelUp() {
-        if(level<100){
+        if (level < 100) {
             Random r = new Random();
             if (exp > 5 * level) {
                 level++;
-                // System.out.println("levelUp " + level);
                 int addPhysical = r.nextInt(5);
-                int addSpecial = r.nextInt(5);// fois un multiplicateur?
+                int addSpecial = r.nextInt(5);
                 setPhysical(getPhysical() + addPhysical);
                 setSpecial(getSpecial() + addSpecial);
                 exp = 0;
                 updatePokemon();
 
-                if(manager!=null){
+                if (manager != null) {
                     manager.updateManager(this);
                 }
             }
-        }else{
-            level=100;
+        } else {
+            level = 100;
         }
     }
 
@@ -377,44 +297,16 @@ public class Tower extends Pokemon {
         return totalSkill;
     }
 
-    public void learnSkill(Skill newSkill) { // TODO REPARATION
-
+    public void learnSkill(Skill newSkill) {
         if (totalSkill > 4) {
-            System.out.println("Probleme, il peut pas avoir + de 4 skills");
+            throw new IllegalArgumentException("Trop de capacité");
         } else {
             if (totalSkill == 4) {
-                System.out.println("Votre pokemon a 4 attaques.");
-                System.out.println("Souhaitez-vous remplacer une attaque par " + newSkill.getName() + " ? O/N");
-                GUI.opendLearnSkill(newSkill);
-                // Scanner sc = new Scanner(System.in);
-                // String st = sc.nextLine();
-                // if (st.equalsIgnoreCase("O")) {
-                // replaceSkill(newSkill, sc);
-                // }
+                gui.opendLearnSkill(newSkill);
             } else {
                 skills[totalSkill] = newSkill;
                 totalSkill++;
-                // System.out.println(getName() + " a appris " + newSkill.getName());
-                // System.out.println(totalSkill);
             }
-        }
-    }
-
-    private void replaceSkill(Skill newSkill, Scanner sc) { // TODO REPARATION
-        System.out.println("Par lequel souhaitez-vous remplacer? 1/2/3/4");
-        printSkill();
-        int skillIndex = sc.nextInt();
-        if (skillIndex >= 1 && skillIndex <= totalSkill) {
-            System.out.println(skills[skillIndex - 1].getName() + " a bien ete remplace par " + newSkill.getName());
-            skills[skillIndex - 1] = newSkill;
-        } else {
-            System.out.println("Choix invalide.");
-        }
-    }
-
-    private void printSkill() {
-        for (int i = 0; i < totalSkill; i++) {
-            System.out.println(i + 1 + ". " + skills[i].getName());
         }
     }
 
@@ -442,18 +334,17 @@ public class Tower extends Pokemon {
                 + ";" + getSprite();
     }
 
-    // NONE, SMALL, MEDIUM, LARGE, GLOBAL
-    public int getDiametreValue(Rayon rayon) {
-        if (rayon == Rayon.NONE) {
+    public int getDiametreValue(Rayon r) {
+        if (r == Rayon.NONE) {
             return 0;
-        } else if (rayon == Rayon.SMALL) {
+        } else if (r == Rayon.SMALL) {
             return 4;
-        } else if (rayon == Rayon.MEDIUM) {
+        } else if (r == Rayon.MEDIUM) {
             return 7;
-        } else if (rayon == Rayon.LARGE) {
+        } else if (r == Rayon.LARGE) {
             return 11;
         } else {
-            return 20; // GLOBAL
+            return 20;
         }
     }
 
@@ -469,13 +360,11 @@ public class Tower extends Pokemon {
 
         tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
-            if (tower.isInRayon( e)) {
+            if (tower.isInRayon(e)) {
                 tower.uniqueTarget = e;
                 break;
             }
-
         }
-
     }
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
@@ -570,16 +459,12 @@ public class Tower extends Pokemon {
     }
 
     public boolean isInRayon(Ennemi ennemi) {
-
-        double deltaX = Math.abs(ennemi.getJLabelSprite().getLocation().getX()/32 - getPos()[1]);
-        double deltaY = Math.abs(ennemi.getJLabelSprite().getLocation().getY()/32 - getPos()[0]);
-
-        double distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
-        double towerRayon = (double) getDiametreValue(rayon) /2;
-
-        return distance < towerRayon ;
+        double deltaX = Math.abs(ennemi.getJLabelSprite().getLocation().getX() / 32 - getPos()[1]);
+        double deltaY = Math.abs(ennemi.getJLabelSprite().getLocation().getY() / 32 - getPos()[0]);
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        double towerRayon = (double) getDiametreValue(rayon) / 2;
+        return distance < towerRayon;
     }
-
 
     public int[] getPos() {
         return pos;
@@ -590,7 +475,7 @@ public class Tower extends Pokemon {
     }
 
     public ArrayList<Tower> getList() {
-        return TList;
+        return tList;
     }
 
     public int getLevel() {
@@ -602,8 +487,8 @@ public class Tower extends Pokemon {
         super.setName(name);
     }
 
-    public Skill getCurrentSkill(int select) {
-        return skills[select];
+    public Skill getCurrentSkill(int i) {
+        return skills[i];
     }
 
     public void setCurrentSkill(Skill s) {
@@ -650,16 +535,16 @@ public class Tower extends Pokemon {
         this.exp = exp;
     }
 
-    public void setTiles(UpdateMap.Tiles tiles) {
+    public void setTiles(Tiles tiles) {
         this.tiles = tiles;
     }
 
-    public UpdateMap.Tiles getTiles() {
+    public Tiles getTiles() {
         return tiles;
     }
 
     public static ArrayList<Tower> getTList() {
-        return TList;
+        return tList;
     }
 
     public int getKillCount() {
@@ -683,11 +568,11 @@ public class Tower extends Pokemon {
     }
 
     public TowerGUI getGUI() {
-        return this.GUI;
+        return gui;
     }
 
-    public void setGUI(TowerGUI GUI) {
-        this.GUI = GUI;
+    public void setGUI(TowerGUI newGUI) {
+        this.gui = newGUI;
     }
 
     public void setRangePanel(JPanel rangePanel) {
@@ -697,7 +582,6 @@ public class Tower extends Pokemon {
     public JPanel getRangePanel() {
         return rangePanel;
     }
-
 
     public void setSlot(Slot slot) {
         this.slot = slot;

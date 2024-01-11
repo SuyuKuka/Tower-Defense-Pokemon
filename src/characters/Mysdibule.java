@@ -7,7 +7,6 @@ import model.Types;
 
 public class Mysdibule extends Tower implements TowerLoader {
     public Mysdibule() {
-        // FAST MELEEE UNIQUE
         super("Mysdibule", 85, 55, Types.ACIER, Types.FEE, "ressources/sprite/mawile/mawile.gif",
                 State.LOCKED, 50, Tower.Rayon.SMALL, 200);
         primarySkill();
@@ -15,7 +14,7 @@ public class Mysdibule extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Mysdibule");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(85);
         setSpecial(55);
         setAtkCd(50);
@@ -27,10 +26,8 @@ public class Mysdibule extends Tower implements TowerLoader {
         setExp(0);
     }
 
-
     @Override
     public void evolution() {
-        // NOTHING
     }
 
     @Override

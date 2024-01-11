@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Ningale extends Tower implements TowerLoader {
-    // TODO
     public Ningale() {
-        // FAST MELEEE UNIQUE
         super("Ningale", 45, 30, Types.INSECTE, Types.SOL, "ressources/sprite/nincada/nincada.gif",
                 State.LOCKED, 50, Tower.Rayon.SMALL, 200);
         primarySkill();
@@ -16,7 +14,7 @@ public class Ningale extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Ningale");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(45);
         setSpecial(30);
         setAtkCd(50);
@@ -28,14 +26,11 @@ public class Ningale extends Tower implements TowerLoader {
         setExp(0);
     }
 
-
     @Override
     public void evolution() {
         if (getLevel() == 30) {
-
-            boolean choix = true;
-            if (choix) { // CONTROLE DE CHOIX
-
+            boolean choix = false;
+            if (choix) {
                 setSprite("ressources/sprite/nincada/ninjask.gif");
                 setName("Ninjask");
                 setPhysical(getPhysical() + 40);
@@ -43,7 +38,6 @@ public class Ningale extends Tower implements TowerLoader {
                 setSecondType(Types.VOL);
                 getTiles().replaceSprite(getSprite());
             } else {
-
                 setSprite("ressources/sprite/nincada/shedinja.gif");
                 setName("Munja");
                 setPhysical(getPhysical() + 40);
@@ -81,6 +75,5 @@ public class Ningale extends Tower implements TowerLoader {
         if (getLevel() == 50) {
             learnSkill(new Skill("Lame de Roc", 0, 90, Types.ROCHE, Skill.Pattern.UNIQUE, "", 200));
         }
-
     }
 }
