@@ -19,7 +19,7 @@ public class TowerPresent extends JPanel {
     private GraphicsMaker maker = new GraphicsMaker();
     private TowerManagement selectedPokemon;
     private JPanel bg = maker.imagePanel("ressources/team/towerside.png");
-
+    private Tower[] team =Player.INSTANCE.getTeam();
     private Hero hero;
 
     public TowerPresent() {

@@ -31,6 +31,7 @@ public class Tower extends Pokemon {
     private Slot slot;
     private TowerGUI GUI = new TowerGUI(this);
     private JPanel rangePanel;
+    private TowerManagement manager;
     private Projectile projectile;
 
     //STATS
@@ -689,5 +690,9 @@ public class Tower extends Pokemon {
 
     public Projectile getProjectile() {
         return projectile;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
 }

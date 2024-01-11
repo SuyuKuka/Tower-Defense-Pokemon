@@ -239,7 +239,7 @@ public class UpdateMap extends JLayeredPane {
             });
         }
 
-        public void addSpriteOnTiles(JLabel jlabel, GridBagConstraints constraints) {
+        public boolean addSpriteOnTiles(JLabel jlabel, GridBagConstraints constraints) {
             if (spriteOnIt == empty) {
                 remove(spriteOnIt);
                 spriteOnIt = jlabel;
@@ -258,7 +258,7 @@ public class UpdateMap extends JLayeredPane {
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
                     if (SwingUtilities.isLeftMouseButton(evt)) {
                         if (tPresent.getComponentCount() < 2 && !occupied) {
-
+                            System.out.println("test");
                             tPresent.getComponent(0).setVisible(false);
                             tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
 
@@ -281,13 +281,21 @@ public class UpdateMap extends JLayeredPane {
                     }
 
                 }
-            });
+            };
             control.giveTiles(pkm, this);
         }
 
         public void setOccupied(boolean occupied) {
             this.occupied = occupied;
         }
+
+        public void resetTile(){
+            this.removeAll();
+            spriteOnIt = empty;
+            this.removeMouseListener(listener);
+        }
+
+
 
         public void replaceSprite(String spritePath) {
 
