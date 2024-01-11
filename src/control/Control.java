@@ -44,14 +44,15 @@ public class Control {
     }
 
     public void gameDoubleSpeed(JButton speed) {
-        if (ms.getGameSpeed() == 50) {
-            ms.setGameSpeed(1);
-            speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
-        } else if (ms.getGameSpeed() == 1) {
-            ms.setGameSpeed(50);
-            speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
+        if (!ms.getPause()) {
+            if (ms.getGameSpeed() == 50) {
+                ms.setGameSpeed(1);
+                speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
+            } else if (ms.getGameSpeed() == 1) {
+                ms.setGameSpeed(50);
+                speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
+            }
         }
-
     }
 
     public void buttonPressed(JButton button, String st, MainGraphics main) {
