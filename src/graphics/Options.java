@@ -1,22 +1,19 @@
 package graphics;
 
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSlider;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +81,14 @@ public class Options extends JPanel {
             selectedMap = ((JRadioButton) e.getSource()).getText();
         };
     
+        springButton.setFocusPainted(false);
+        summerButton.setFocusPainted(false);
+        autumnButton.setFocusPainted(false);
+        winterButton.setFocusPainted(false);
+        springButton.setMargin(new Insets(0, 20, 0, 0));
+        summerButton.setMargin(new Insets(0, 20, 0, 0));
+        autumnButton.setMargin(new Insets(0, 20, 0, 0));
+        winterButton.setMargin(new Insets(0, 20, 0, 0));
         springButton.addActionListener(mapSelectionListener);
         summerButton.addActionListener(mapSelectionListener);
         autumnButton.addActionListener(mapSelectionListener);
@@ -124,6 +129,10 @@ public class Options extends JPanel {
             }
         };
 
+        enableMusicButton.setFocusPainted(false);
+        disableMusicButton.setFocusPainted(false);
+        enableMusicButton.setMargin(new Insets(0, 20, 0, 0));
+        disableMusicButton.setMargin(new Insets(0, 20, 0, 0));
         enableMusicButton.addActionListener(musicSelectionListener);
         disableMusicButton.addActionListener(musicSelectionListener);
         enableMusicButton.setSelected(true);
@@ -155,7 +164,6 @@ public class Options extends JPanel {
                 .addComponent(enableMusicButton)
                 .addComponent(disableMusicButton);
         layout.setVerticalGroup(vGroup);
-
         return all;
     }
     
