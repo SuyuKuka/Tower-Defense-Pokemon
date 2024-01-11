@@ -99,4 +99,8 @@ public class MainGraphics extends JFrame {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+    public Music getMusicPlayer() {
+        return musicPlayer;
+    }
 }
