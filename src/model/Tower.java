@@ -31,7 +31,7 @@ public class Tower extends Pokemon {
     private Slot slot;
     private TowerGUI GUI = new TowerGUI(this);
     private JPanel rangePanel;
-    private TowerManagement manager;
+    private Projectile projectile;
 
     //STATS
     private Rayon rayon;
@@ -234,9 +234,11 @@ public class Tower extends Pokemon {
     }
 
     private void attackUnique() {
+
         if (uniqueTarget == null) {
             // System.out.println("Pas de cible");
         } else {
+            projectile=new Projectile(uniqueTarget,this,"ressources/projectiles/fire.png");
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
                     // System.out.println("Immunise");
@@ -289,7 +291,7 @@ public class Tower extends Pokemon {
     private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
-
+                projectile=new Projectile(e,this,"ressources/projectiles/fire.png");
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
                         // System.out.println("Immunise");
@@ -685,11 +687,7 @@ public class Tower extends Pokemon {
         return rangePanel;
     }
 
-    public Slot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(Slot slot) {
-        this.slot = slot;
+    public Projectile getProjectile() {
+        return projectile;
     }
 }

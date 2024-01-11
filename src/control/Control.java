@@ -44,14 +44,15 @@ public class Control {
     }
 
     public void gameDoubleSpeed(JButton speed) {
-        if (ms.getGameSpeed() == 50) {
-            ms.setGameSpeed(1);
-            speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
-        } else if (ms.getGameSpeed() == 1) {
-            ms.setGameSpeed(50);
-            speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
+        if (!ms.getPause()) {
+            if (ms.getGameSpeed() == 50) {
+                ms.setGameSpeed(1);
+                speed.setIcon(new ImageIcon("ressources/template/speedButton.png"));
+            } else if (ms.getGameSpeed() == 1) {
+                ms.setGameSpeed(50);
+                speed.setIcon(new ImageIcon("ressources/template/normalButton.png"));
+            }
         }
-
     }
 
     public void buttonPressed(JButton button, String st, MainGraphics main) {
@@ -201,7 +202,6 @@ public class Control {
     public void chooseSkill(SkillButton skill, Tower pkm) {
         if (pkm.getCurrentSkill(pkm.getSelect()) != skill.getSkill()) {
             pkm.setCurrentSkill(skill.getSkill());
-            pkm.getGUI().updatePkm();
             System.out.println(skill.getSkill().getName());
         }
     }

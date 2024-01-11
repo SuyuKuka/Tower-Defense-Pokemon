@@ -105,16 +105,16 @@ public class TowerGUI extends JPanel {
 
     private void updateStatsPanel() {
 
-        phys.setText("AtkPhys: " + pkm.getPhysical() + "");
-        spe.setText("AtkSpe: " + pkm.getSpecial() + "");
-        portee.setText("Portee: " + pkm.getRayon() + "");
-        vitesse.setText("Vitesse: " + pkm.getAtkCd() + "");
+        phys.setText("AtkPhys: " + pkm.getPhysical() );
+        spe.setText("AtkSpe: " + pkm.getSpecial() );
+        portee.setText("Portee: " + pkm.getRayon() );
+        vitesse.setText("Vitesse: " + pkm.getAtkCd() );
     }
 
     private void updateTypePanel() {
 
         if (pkm.getType()[1] == Types.NONE) {
-            types.setText("Type: " + pkm.getType()[0] + "");
+            types.setText("Type: " + pkm.getType()[0] );
         } else {
             types.setText("Type: " + pkm.getType()[0] + " et " + pkm.getType()[1]);
         }
@@ -122,13 +122,13 @@ public class TowerGUI extends JPanel {
 
     private void updateSkillInfoPanel(Skill skill) {
         skillName.setText(skill.getName());
-        skillType.setText("Attaque de type: " + skill.getType() + "");
+        skillType.setText("Attaque de type: " + skill.getType() );
         if (skill.getPhysicalDamage() == 0) {
             skillDmg.setText(
-                    "Degat Special: " + skill.getSpecialDamage() + "");
+                    "Degat Special: " + skill.getSpecialDamage() );
         } else {
             skillDmg.setText(
-                    "Degat Physique: " + skill.getPhysicalDamage() + "");
+                    "Degat Physique: " + skill.getPhysicalDamage());
         }
         if (skill.getPatern() == Skill.Pattern.AURA) {
             skillPattern.setText("Attaque sur une zone autour.");
@@ -145,18 +145,6 @@ public class TowerGUI extends JPanel {
                 skill.setFont(maker.getCustomFont().deriveFont(20f));
                 skill.setText(pkm.getSkills()[incre].getName());
                 skill.setSkill(pkm.getSkills()[incre]);
-                skill.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent evt) {
-                        control.chooseSkill(skill, pkm);
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent evt) {
-                        updateSkillInfoPanel(skill.getSkill());
-                    }
-                });
-
             } else {
                 skill.setText("");
             }
@@ -197,13 +185,11 @@ public class TowerGUI extends JPanel {
                     info.add(pkmInfoPanel);
                 }
             }
-
             @Override
             public void mouseEntered(MouseEvent evt) {
                 newSkillButton.setText(newSkill.getName());
                 updateSkillInfoPanel(newSkillButton.getSkill());
             }
-
             @Override
             public void mouseExited(MouseEvent evt) {
                 newSkillButton.setText("Prix: " + newSkill.getPrice());
@@ -239,15 +225,24 @@ public class TowerGUI extends JPanel {
         return this.alert;
     }
 
-    public void setAlert(boolean alert) {
-        this.alert = alert;
-    }
-
     public class SkillButton extends JButton {
         private Skill skill;
 
         public SkillButton() {
+           addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent evt) {
+                    control.chooseSkill(SkillButton.this, pkm);
+                }
 
+                @Override
+                public void mouseEntered(MouseEvent evt) {
+                    if(skill!=null){
+                        updateSkillInfoPanel(skill);
+                    }
+
+                }
+            });
         }
 
         public SkillButton(Skill skill) {

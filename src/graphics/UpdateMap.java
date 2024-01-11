@@ -30,6 +30,7 @@ public class UpdateMap extends JLayeredPane {
     private int cellSize = 32;
     private int mapWidth;
     private int mapHeight;
+    private JPanel projectileLayer;
 
 
 
@@ -67,6 +68,7 @@ public class UpdateMap extends JLayeredPane {
                     tiles = new Tiles(new int[] { i, j });
                     JLabel bg = maker.resizeJLabel("ressources/tiles/automne/obstacle.png", cellSize);
                     GridBagConstraints constraints2 = new GridBagConstraints();
+                    tiles.setOccupied(true);
                     tiles.addSpriteOnTiles(bg, constraints2);
                     tiles.setOpaque(false);
 
@@ -93,8 +95,10 @@ public class UpdateMap extends JLayeredPane {
         setBounds(0, 0, 764, 531);
         setVisible(true);
         add(mapLayer, DEFAULT_LAYER);
-
     }
+
+
+
 
     public void setSpriteEntry(Ennemi e) {
 
@@ -162,6 +166,7 @@ public class UpdateMap extends JLayeredPane {
         public static ArrayList<Tiles> tilesList = new ArrayList<>();
         private JLabel spriteOnIt;
         private JLabel empty = new JLabel(new ImageIcon("ressources/sprite/nothing.png"));
+        private boolean occupied=false;
         private GridBagConstraints constraints = new GridBagConstraints();
 
         private Tower pokemon;
@@ -184,7 +189,11 @@ public class UpdateMap extends JLayeredPane {
 
                 @Override
                 public void mouseEntered(MouseEvent evt) {
-                    setBorder(new LineBorder(Color.RED, 1));
+                    setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                    if(!occupied){
+                        setBorder(new LineBorder(Color.RED, 1));
+                    }
+
                 }
 
                 @Override
@@ -247,9 +256,8 @@ public class UpdateMap extends JLayeredPane {
             listener=new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt) { // FRAGILE
-
                     if (SwingUtilities.isLeftMouseButton(evt)) {
-                        if (tPresent.getComponentCount() < 2) {
+                        if (tPresent.getComponentCount() < 2 && !occupied) {
 
                             tPresent.getComponent(0).setVisible(false);
                             tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
@@ -277,10 +285,8 @@ public class UpdateMap extends JLayeredPane {
             control.giveTiles(pkm, this);
         }
 
-        public void resetTile(){
-            this.removeAll();
-            spriteOnIt = empty;
-            this.removeMouseListener(listener);
+        public void setOccupied(boolean occupied) {
+            this.occupied = occupied;
         }
 
         public void replaceSprite(String spritePath) {
@@ -313,7 +319,7 @@ public class UpdateMap extends JLayeredPane {
     public JPanel makeTowerRange(Tower pkm, int row, int col) {
         JPanel towerRange = new JPanel() {
             public void paintComponent(Graphics g) {
-                int rayon = pkm.getRayonValue(pkm.getRayon()) * cellSize;
+                int rayon = pkm.getDiametreValue(pkm.getRayon()) * cellSize;
                 int x = (col * cellSize) - rayon / 2 + 16;
                 int y = (row * cellSize) - rayon / 2 + 16;
                 super.paintComponent(g);

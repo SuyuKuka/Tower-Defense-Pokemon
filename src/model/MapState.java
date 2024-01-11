@@ -15,6 +15,8 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.Timer;
 
+import static javax.swing.JLayeredPane.DRAG_LAYER;
+
 public class MapState {
 
     private final Map m;
@@ -193,6 +195,7 @@ private Hero selectedHero;
             screen.gettPresent().setHero(selectedHero);
         }
 
+
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
@@ -222,7 +225,10 @@ private Hero selectedHero;
             //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
-
+                if (t.getProjectile() != null) {
+                    screen.getuMap().add(t.getProjectile(),DRAG_LAYER);
+                    t.getProjectile().updateProj();
+                }
             }
 
             for (Ennemi e : screen.getePresent().getEnnemiGone()) {
@@ -277,7 +283,6 @@ private Hero selectedHero;
         if (!wave.isEmpty()) {
 
             if (pas / 10 > rand.nextInt(600)) {
-                System.out.println(wave.get(0));
                 setEnnemi(m.getEntry(), wave.get(0));
                 wave.remove(0);
                 return 0;
@@ -404,10 +409,10 @@ private Hero selectedHero;
 
         for (Ennemi e : ennemiPresent) {
             EnnemiPresent.updateEnnemiHealth(e);
+            screen.getePresent().updateSmallPanel(e);
         }
         for (Tower t : towerPresent) {
             showAlert(t);
-            t.getRangePanel().repaint();
         }
     }
 

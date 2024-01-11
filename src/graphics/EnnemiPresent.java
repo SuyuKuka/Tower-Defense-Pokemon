@@ -20,6 +20,7 @@ public class EnnemiPresent extends JPanel {
     private ArrayList<Ennemi> ennemiGone = new ArrayList<Ennemi>();
     private static JPanel container = new JPanel();
     private JPanel ennemiInfoPanel;
+    private JLabel pv;
     private Ennemi ennemiInInfoPanel;
 
     JScrollPane ennemiList;
@@ -150,14 +151,13 @@ public class EnnemiPresent extends JPanel {
         if (e.isBoss()) {
             name.setText("Nom: " + e.getName() + " (BOSS)");
         } else {
-
             name.setText("Nom: " + e.getName());
         }
         name.setFont(maker.getCustomFont().deriveFont(20f));
         name.setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
         name.setForeground(Color.WHITE);
 
-        JLabel pv = new JLabel();
+        pv = new JLabel();
         pv.setText("Vie: " + e.getPv() + "/" + e.getTotalPv());
         pv.setFont(maker.getCustomFont().deriveFont(17f));
         pv.setForeground(Color.WHITE);
@@ -265,9 +265,17 @@ public class EnnemiPresent extends JPanel {
                     break;
                 }
             }
+
+
         }
         container.revalidate();
         container.repaint();
+    }
+
+    public void updateSmallPanel(Ennemi ennemi) {
+        if (pv != null) {
+            pv.setText("Vie: " + ennemi.getPv() + "/" + ennemi.getTotalPv());
+        }
     }
 
     public ArrayList<Ennemi> getEnnemiGone() {
