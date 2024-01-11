@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Rozbouton extends Tower implements TowerLoader {
-    // TODO
     public Rozbouton() {
-        // FAST SHOOTER/ZONE
         super("Rozbouton", 30, 50, Types.PLANTE, Types.POISON, "ressources/sprite/budew/budew.gif",
                 State.LOCKED, 200, Tower.Rayon.SMALL, 300);
         primarySkill();
@@ -16,7 +14,7 @@ public class Rozbouton extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Rozbouton");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(30);
         setSpecial(50);
         setAtkCd(200);
@@ -42,7 +40,6 @@ public class Rozbouton extends Tower implements TowerLoader {
                 getTiles().replaceSprite(getSprite());
             }
         }
-
         if (getLevel() == 13) {
             setSprite("ressources/sprite/budew/roserade.gif");
             setName("Roserade");
@@ -82,6 +79,5 @@ public class Rozbouton extends Tower implements TowerLoader {
         if (getLevel() == 50) {
             learnSkill(new Skill("Lame de Roc", 0, 90, Types.ROCHE, Skill.Pattern.UNIQUE, "", 200));
         }
-
     }
 }

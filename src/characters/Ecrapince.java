@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Ecrapince extends Tower implements TowerLoader {
-
     public Ecrapince() {
-        // MELEE BURST UNIQUE
         super("Ecrapince", 80, 20, Types.EAU, Types.NONE, "ressources/sprite/corphish/corphish.gif",
                 State.LOCKED, 500, Tower.Rayon.SMALL, 200);
         primarySkill();
@@ -16,7 +14,7 @@ public class Ecrapince extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Ecrapince");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(80);
         setSpecial(20);
         setAtkCd(500);
@@ -27,7 +25,6 @@ public class Ecrapince extends Tower implements TowerLoader {
         setSprite("ressources/sprite/corphish/corphish.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {

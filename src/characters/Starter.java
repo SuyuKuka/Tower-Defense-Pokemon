@@ -8,7 +8,6 @@ import model.Types;
 public class Starter {
     public class Salameche extends Tower implements TowerLoader {
         public Salameche() {
-            // ROCKET WITHOUT AOE
             super("Salameche", 22, 38, Types.FEU, Types.NONE, "ressources/sprite/charmander/charmander.gif",
                     State.LOCKED, 50, Tower.Rayon.SMALL, 100);
             primarySkill();
@@ -60,7 +59,7 @@ public class Starter {
         }
 
         @Override
-        public void unlock() { // 9
+        public void unlock() {
             if (getLevel() == 7) {
                 learnSkill(new Skill("Flammeche", 0, 40, Types.FEU, Skill.Pattern.UNIQUE, "", 200));
             }
@@ -91,9 +90,8 @@ public class Starter {
         }
     }
 
-    public class Arcko extends Tower implements TowerLoader { // Treecko - Grovyle - Sceptile
+    public class Arcko extends Tower implements TowerLoader {
         public Arcko() {
-            // FAST MELEE AOE
             super("Arcko", 20, 40, Types.PLANTE, Types.NONE, "ressources/sprite/treecko/treecko.gif", State.LOCKED, 50,
                     Tower.Rayon.SMALL, 100);
             primarySkill();
@@ -101,7 +99,7 @@ public class Starter {
 
         public void reset() {
             setName("Arcko");
-            setLevel(1); // Mettez le niveau à 1 comme demandé
+            setLevel(1);
             setPhysical(20);
             setSpecial(40);
             setAtkCd(50);
@@ -112,7 +110,6 @@ public class Starter {
             setSprite("ressources/sprite/treecko/treecko.gif");
             setExp(0);
         }
-
 
         @Override
         public void evolution() {
@@ -125,7 +122,6 @@ public class Starter {
                 if (getTiles() != null) {
                     getTiles().replaceSprite(getSprite());
                 }
-
             }
             if (getLevel() == 36) {
                 setSprite("ressources/sprite/treecko/sceptile.gif");
@@ -177,7 +173,6 @@ public class Starter {
 
     public class Moustillon extends Tower implements TowerLoader {
         public Moustillon() {
-            // MID RANGE MID
             super("Moustillon", 25, 35, Types.EAU, Types.NONE, "ressources/sprite/oshawott/oshawott.gif", State.LOCKED,
                     50, Tower.Rayon.SMALL, 100);
             primarySkill();
@@ -185,7 +180,7 @@ public class Starter {
 
         public void reset() {
             setName("Moustillon");
-            setLevel(1); // Mettez le niveau à 1 comme demandé
+            setLevel(1);
             setPhysical(25);
             setSpecial(35);
             setAtkCd(50);
@@ -197,7 +192,6 @@ public class Starter {
             setExp(0);
         }
 
-
         @Override
         public void evolution() {
             if (getLevel() == 16) {
@@ -208,7 +202,6 @@ public class Starter {
                 if (getTiles() != null) {
                     getTiles().replaceSprite(getSprite());
                 }
-
             }
             if (getLevel() == 36) {
                 setSprite("ressources/sprite/oshawott/samurott.gif");
@@ -219,7 +212,6 @@ public class Starter {
                 if (getTiles() != null) {
                     getTiles().replaceSprite(getSprite());
                 }
-
             }
         }
 

@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Tarsal extends Tower implements TowerLoader {
-    // TODO
     public Tarsal() {
-        // DUAL PATH, BIG RANGE ZONING/ FAST MELEE
         super("Tarsal", 25, 45, Types.PSY, Types.FEE, "ressources/sprite/ralts/ralts.gif",
                 State.LOCKED, 200, Tower.Rayon.GLOBAL, 900);
         primarySkill();
@@ -16,7 +14,7 @@ public class Tarsal extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Tarsal");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(25);
         setSpecial(45);
         setAtkCd(200);
@@ -27,7 +25,6 @@ public class Tarsal extends Tower implements TowerLoader {
         setSprite("ressources/sprite/ralts/ralts.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -40,10 +37,9 @@ public class Tarsal extends Tower implements TowerLoader {
                 getTiles().replaceSprite(getSprite());
             }
         }
-
         if (getLevel() == 25) {
             boolean choix = true;
-            if (choix) { // CONTROLE DE CHOIX
+            if (choix) {
                 setSprite("ressources/sprite/ralts/gardevoir.gif");
                 setName("Gardevoir");
                 setPhysical(getPhysical() + -80);
@@ -61,7 +57,6 @@ public class Tarsal extends Tower implements TowerLoader {
                     getTiles().replaceSprite(getSprite());
                 }
             }
-
         }
 
     }
@@ -71,7 +66,7 @@ public class Tarsal extends Tower implements TowerLoader {
         learnSkill(new Skill("Cogne", 30, 0, Types.COMBAT, Skill.Pattern.AURA, "", 0));
     }
 
-    public void unlock() { // TODO CHANGER
+    public void unlock() {
         if (getLevel() == 10) {
             learnSkill(new Skill("Cyclone", 50, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }

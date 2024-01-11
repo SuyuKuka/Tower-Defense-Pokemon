@@ -7,7 +7,6 @@ import model.Types;
 
 public class Gringolem extends Tower implements TowerLoader {
     public Gringolem() {
-        // MAP NUKER
         super("Gringolem", 500, 200, Types.SPECTRE, Types.SOL, "ressources/sprite/golett/golett.gif",
                 State.LOCKED, 2000, Tower.Rayon.SMALL, 3000);
         primarySkill();
@@ -15,7 +14,7 @@ public class Gringolem extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Gringolem");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(500);
         setSpecial(200);
         setAtkCd(2000);
@@ -26,7 +25,6 @@ public class Gringolem extends Tower implements TowerLoader {
         setSprite("ressources/sprite/golett/golett.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -69,7 +67,5 @@ public class Gringolem extends Tower implements TowerLoader {
         if (getLevel() == 70) {
             learnSkill(new Skill("Téra Explosion", 300, 0, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
-
     }
-
 }

@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Tylton extends Tower implements TowerLoader {
-    // TODO
     public Tylton() {
-        // LASER
         super("Tylton", 1, 1, Types.VOL, Types.NORMAL, "ressources/sprite/swablu/swablu.gif",
                 State.LOCKED, 25, Tower.Rayon.MEDIUM, 1000);
         primarySkill();
@@ -16,7 +14,7 @@ public class Tylton extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Tylton");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(1);
         setSpecial(1);
         setAtkCd(25);
@@ -27,7 +25,6 @@ public class Tylton extends Tower implements TowerLoader {
         setSprite("ressources/sprite/swablu/swablu.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -51,7 +48,7 @@ public class Tylton extends Tower implements TowerLoader {
 
     public void unlock() {
         if (getLevel() == 10) {
-            learnSkill(new Skill("Météores", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
+            learnSkill(new Skill("Meteores", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
         }
         if (getLevel() == 16) {
             learnSkill(new Skill("Chant Canon", 0, 1, Types.NORMAL, Skill.Pattern.UNIQUE, "", 200));
@@ -74,6 +71,5 @@ public class Tylton extends Tower implements TowerLoader {
         if (getLevel() == 90) {
             learnSkill(new Skill("Requiem", 0, 10, Types.NORMAL, Skill.Pattern.AURA, "", 200));
         }
-
     }
 }

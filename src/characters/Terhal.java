@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Terhal extends Tower implements TowerLoader {
-
     public Terhal() {
-        // RAILGUN SNIPE BOSSKILLER WITH AOE LESS RANGE
         super("Terhal", 55, 35, Types.PSY, Types.ACIER, "ressources/sprite/beldum/beldum.gif",
                 State.LOCKED, 50, Tower.Rayon.SMALL, 400);
         primarySkill();
@@ -16,7 +14,7 @@ public class Terhal extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Terhal");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(55);
         setSpecial(35);
         setAtkCd(50);
@@ -27,7 +25,6 @@ public class Terhal extends Tower implements TowerLoader {
         setSprite("ressources/sprite/beldum/beldum.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
@@ -54,7 +51,7 @@ public class Terhal extends Tower implements TowerLoader {
     }
 
     @Override
-    public void primarySkill() { // TODO CHANGER
+    public void primarySkill() {
         learnSkill(new Skill("Eclair", 0, 20, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 0));
     }
 
@@ -80,7 +77,5 @@ public class Terhal extends Tower implements TowerLoader {
         if (getLevel() == 50) {
             learnSkill(new Skill("OverDrive", 0, 275, Types.ELECTRIQUE, Skill.Pattern.UNIQUE, "", 200));
         }
-
     }
-
 }

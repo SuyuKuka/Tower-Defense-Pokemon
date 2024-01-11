@@ -6,9 +6,7 @@ import model.TowerLoader;
 import model.Types;
 
 public class Escargaume extends Tower implements TowerLoader {
-
     public Escargaume() {
-        // MEDIUM MELEE
         super("Escargaume", 20, 20, Types.INSECTE, Types.NONE, "ressources/sprite/shelmet/shelmet.gif",
                 State.LOCKED, 500, Tower.Rayon.SMALL, 1000);
         primarySkill();
@@ -16,7 +14,7 @@ public class Escargaume extends Tower implements TowerLoader {
 
     public void reset() {
         setName("Escargaume");
-        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setLevel(1);
         setPhysical(20);
         setSpecial(20);
         setAtkCd(500);
@@ -27,7 +25,6 @@ public class Escargaume extends Tower implements TowerLoader {
         setSprite("ressources/sprite/shelmet/shelmet.gif");
         setExp(0);
     }
-
 
     @Override
     public void evolution() {
