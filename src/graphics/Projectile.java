@@ -19,9 +19,7 @@ public class Projectile extends JPanel {
     private Tower shooter;
     private String image;
     //
-
-
-
+    private Timer eraser;
     public Projectile(Ennemi target, Tower shooter, String image) {
         this.target = target;
         this.shooter = shooter;
@@ -32,39 +30,28 @@ public class Projectile extends JPanel {
             int mapWidth = map[0].length;
             int mapHeight = map.length;
         }
-
+        setVisible(false);
         setOpaque(false);
+         eraser= new Timer(500, event -> { // TIMEEEEEEEEEER
+                 eraseProj();
+                 eraser.stop();
+        });
 
-        JLabel img=new JLabel(new ImageIcon(image));
+
+        JLabel img = new JLabel(new ImageIcon(image));
         add(img);
-        setBounds(0, 0,  cellSize, cellSize);
-    }
-
-    public Projectile(ArrayList<Ennemi> listTarget, Tower shooter, String image) {
-       this.listTarget=listTarget;
-        this.shooter = shooter;
-        this.image = image;
-
-        for (Ennemi e : listTarget){
-            int[][] map = e.getMap().getConfig();
-            int mapWidth = map[0].length;
-            int mapHeight = map.length;
-        }
-
-        setOpaque(false);
-
-        JLabel img=new JLabel(new ImageIcon(image));
-        add(img);
-        setBounds(0, 0,  cellSize, cellSize);
+        setBounds(0, 0, cellSize, cellSize);
     }
 
 
     public void updateProj() {
+        if(isVisible()&&!eraser.isRunning()){
+            eraser.start();
+        }
         setLocation(new Point(target.getJLabelSprite().getX(), target.getJLabelSprite().getY()));
-        Timer timer = new Timer(1, e1 -> {
-            setVisible(false);
-        });
-        timer.setRepeats(false);
-        timer.start();
+    }
+
+    public void eraseProj(){
+        setVisible(false);
     }
 }

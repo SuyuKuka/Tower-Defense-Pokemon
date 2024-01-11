@@ -16,6 +16,8 @@ import model.Tower;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import static javax.swing.JLayeredPane.DRAG_LAYER;
+
 public class Tower extends Pokemon {
 
     public enum Rayon {
@@ -32,7 +34,6 @@ public class Tower extends Pokemon {
     private TowerGUI GUI = new TowerGUI(this);
     private JPanel rangePanel;
     private TowerManagement manager;
-    private Projectile projectile;
 
     //STATS
     private Rayon rayon;
@@ -239,7 +240,10 @@ public class Tower extends Pokemon {
         if (uniqueTarget == null) {
             // System.out.println("Pas de cible");
         } else {
-            projectile=new Projectile(uniqueTarget,this,"ressources/projectiles/fire.png");
+
+            uniqueTarget.setProjectile(new Projectile(uniqueTarget,this,"ressources/projectiles/"+getCurrentSkill(getSelect()).getType()+".gif"));
+            uniqueTarget.getProjectile().setVisible(true);
+
             if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                 if (Types.typeChart(skills[select], uniqueTarget) == 0) {
                     // System.out.println("Immunise");
@@ -292,7 +296,10 @@ public class Tower extends Pokemon {
     private void attackZone() {
         if (zoneTarget.size() != 0) {
             for (Ennemi e : zoneTarget) {
-                projectile=new Projectile(e,this,"ressources/projectiles/fire.png");
+
+                e.setProjectile(new Projectile(e,this,"ressources/projectiles/"+getCurrentSkill(getSelect()).getType()+".gif"));
+                e.getProjectile().setVisible(true);
+
                 if (skills[select].getPhysicalDamage() != 0 && skills[select].getSpecialDamage() == 0) {
                     if (Types.typeChart(skills[select], e) == 0) {
                         // System.out.println("Immunise");
@@ -440,7 +447,7 @@ public class Tower extends Pokemon {
         if (rayon == Rayon.NONE) {
             return 0;
         } else if (rayon == Rayon.SMALL) {
-            return 3;
+            return 4;
         } else if (rayon == Rayon.MEDIUM) {
             return 7;
         } else if (rayon == Rayon.LARGE) {
@@ -462,7 +469,7 @@ public class Tower extends Pokemon {
 
         tower.uniqueTarget = null;
         for (Ennemi e : ennemiInMap) {
-            if (tower.isInRayon(tower, e)) {
+            if (tower.isInRayon( e)) {
                 tower.uniqueTarget = e;
                 break;
             }
@@ -473,7 +480,7 @@ public class Tower extends Pokemon {
 
     public void getZoneTarget(Tower tower, ArrayList<Ennemi> ennemiInMap) {
         for (Ennemi e : ennemiInMap) {
-            if (tower.isInRayon(tower, e)) {
+            if (tower.isInRayon(e)) {
                 if (!tower.zoneTarget.contains(e)) {
                     tower.zoneTarget.add(e);
                 }
@@ -562,13 +569,13 @@ public class Tower extends Pokemon {
         }
     }
 
-    private boolean isInRayon(Tower tower, Ennemi ennemi) {
+    public boolean isInRayon(Ennemi ennemi) {
 
-        double deltaX = Math.abs(ennemi.getJLabelSprite().getLocation().getX()/32 - tower.getPos()[1]);
-        double deltaY = Math.abs(ennemi.getJLabelSprite().getLocation().getY()/32 - tower.getPos()[0]);
+        double deltaX = Math.abs(ennemi.getJLabelSprite().getLocation().getX()/32 - getPos()[1]);
+        double deltaY = Math.abs(ennemi.getJLabelSprite().getLocation().getY()/32 - getPos()[0]);
 
         double distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
-        double towerRayon = getDiametreValue(rayon)/2;
+        double towerRayon = (double) getDiametreValue(rayon) /2;
 
         return distance < towerRayon ;
     }
@@ -691,9 +698,6 @@ public class Tower extends Pokemon {
         return rangePanel;
     }
 
-    public Projectile getProjectile() {
-        return projectile;
-    }
 
     public void setSlot(Slot slot) {
         this.slot = slot;
