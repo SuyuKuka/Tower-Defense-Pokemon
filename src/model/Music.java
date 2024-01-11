@@ -12,6 +12,7 @@ import javax.sound.sampled.LineListener;
 public class Music {
     private Clip clip;
     private boolean isPlayed = true;
+    private boolean startBattle = false;
 
     public void playMusic(String songName) {
         try {
@@ -57,5 +58,13 @@ public class Music {
 
     public void setPlayed(boolean isPlayed) {
         this.isPlayed = isPlayed;
+    }
+
+    public boolean isStartBattle() {
+        return startBattle;
+    }
+
+    public void setStartBattle(boolean startBattle) {
+        this.startBattle = startBattle;
     }
 }
