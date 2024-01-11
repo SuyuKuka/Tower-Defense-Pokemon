@@ -130,7 +130,6 @@ public class MainMenu extends JPanel {
         teamPanel.setBackground(new Color(40, 40, 40));
         JLabel pcLabel = maker.resizeJLabel("ressources/template/pc_sprite.png", 32);
         pcLabel.setOpaque(false);
-        pcLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         if (user.getTeam()[0] == null) {
             JLabel pokeicon = new JLabel("Vous n'avez aucun Pokemon dans votre equipe.");
