@@ -1,0 +1,47 @@
+package model;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.util.*;
+
+public class Music {
+    public Music() {
+    }
+
+    public void playMusic(String songName) {
+        try {
+            File audioFile = new File("ressources/music/" + songName + ".wav");
+            System.out.println("EXISTE?");
+            if (audioFile.exists()) {
+                System.out.println("OUI");
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+                if(songName.substring(0, songName.length()-1).contains("main")){
+                    clip.addLineListener(new LineListener() {
+                        @Override
+                        public void update(LineEvent event) {
+                            if (event.getType() == LineEvent.Type.STOP) {
+                                clip.close();
+                                try {
+                                    audioInputStream.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                Random rand = new Random();
+                                int i = rand.nextInt(5);
+                                playMusic(songName.substring(0, songName.length()-1) + i);
+                            }
+                        }
+                    });
+                }
+            } else {
+                System.out.println("Le fichier audio n'existe pas : " + audioFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

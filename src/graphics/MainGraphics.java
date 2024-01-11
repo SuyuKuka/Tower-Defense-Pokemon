@@ -1,7 +1,7 @@
 package graphics;
 
 import main.Game;
-
+import model.Music;
 import model.Player;
 
 import java.awt.CardLayout;
@@ -28,6 +28,7 @@ public class MainGraphics extends JFrame {
     private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     private MainMenu menu;
+    private Music musicPlayer = new Music();
 
     public MainGraphics(Player p, Game main) {
 
@@ -40,6 +41,9 @@ public class MainGraphics extends JFrame {
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Random rdm = new Random();
+        int musicRandom = rdm.nextInt(5);
+        musicPlayer.playMusic("main" + musicRandom);
 
         // Background
         if (backgroundImage == null) {
