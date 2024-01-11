@@ -16,11 +16,8 @@ public class Music {
     public void playMusic(String songName) {
         try {
             File audioFile = new File("ressources/music/" + songName + ".wav");
-            System.out.println("EXISTE?");
             if (audioFile.exists()) {
-                System.out.println("OUI");
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
                 clip.start();
@@ -42,8 +39,6 @@ public class Music {
                         }
                     });
                 }
-            } else {
-                System.out.println("Le fichier audio n'existe pas : " + audioFile.getAbsolutePath());
             }
         } catch (Exception e) {
             e.printStackTrace();

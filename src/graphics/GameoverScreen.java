@@ -57,7 +57,7 @@ public class GameoverScreen extends JPanel {
         heading.add(headText);
         heading.setOpaque(false);
 
-        JPanel tmp = screen.getContainer();
+        JPanel tmp = screen.getContainerScreen();
         JPanel stats = middleScreen(win, tmp);
         JPanel bottom = maker.imagePanel("ressources/background/banner.png");
         bottom.setPreferredSize(new Dimension(0, 60));
@@ -87,7 +87,7 @@ public class GameoverScreen extends JPanel {
         add(bottom, BorderLayout.SOUTH);
         add(team, BorderLayout.EAST);
 
-        screen.remove(screen.getContainer());
+        screen.remove(screen.getContainerScreen());
         screen.setOpaque(false);
         screen.add(this);
         screen.revalidate();

@@ -46,12 +46,9 @@ public class Player {
             loadData();
         }
         //Initialisation de la team
-        team[1] = new Chartor();
-        team[0] = new Anchwatt();
-        team[2] = new Tylton();
-        team[3] = new Gringolem();
-        //team[4] = new Lilia();
-        team[5] = new Starter().new Arcko();
+        team[0] = new Starter().new Arcko();
+        team[1] = new Starter().new Salameche();
+        team[2] = new Starter().new Moustillon();
 
         for (int i = 0; i < team.length; i = i + 1) {
             if (team[i] != null) {

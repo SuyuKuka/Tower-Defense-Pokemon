@@ -183,7 +183,6 @@ public class MapState {
 
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
-            System.out.println(expWin);
             // ENDLESS
             if (endless && allEnnemis.size() == 3) {
                 allEnnemis.add(w.initEndless(inc++));
@@ -221,14 +220,13 @@ public class MapState {
                 ennemiPresent.clear();
                 wave.clear();
                 if (pv == 0) {
-                    System.out.println("VOUS AVEZ PERDU");
+                    // System.out.println("VOUS AVEZ PERDU");
                     gameOverScreen(false);
                 } else {
-                    System.out.println("VOUS AVEZ GAGNEE");
+                    // System.out.println("VOUS AVEZ GAGNEE");
                     gameOverScreen(true);
                 }
                 timer.stop();
-                System.out.println("EXP " + expWin / 150);
                 Player.INSTANCE.setExp(expWin / 150);
                 while (Player.INSTANCE.getExp() >= Player.INSTANCE.expCap()) {
                     Player.INSTANCE.levelUp();
@@ -367,9 +365,11 @@ public class MapState {
         if (e.isBoss()) {
             money = money + 100;
             countMoney = countMoney + 100;
+            expWin += 3;
         } else {
             money = money + 10;
             countMoney = countMoney + 10;
+            expWin += 0.1;
         }
         ennemiPresent.remove(e);
         if (screen != null) {

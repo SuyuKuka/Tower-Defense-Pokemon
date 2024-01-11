@@ -3,8 +3,22 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import characters.Starter;
-import characters.Starter.Salameche;
+import characters.Anchwatt;
+import characters.Chartor;
+import characters.Ecrapince;
+import characters.Escargaume;
+import characters.Gringolem;
+import characters.Lilia;
+import characters.Makuhita;
+import characters.MotismaFroid;
+import characters.Mysdibule;
+import characters.Ningale;
+import characters.Nodulithe;
+import characters.Obalie;
+import characters.Rozbouton;
+import characters.Tarsal;
+import characters.Terhal;
+import characters.Tylton;
 import graphics.InGamePc;
 import graphics.MainMenu;
 import model.Tower.Rayon;
@@ -27,13 +41,42 @@ public class Pc {
 
     public Pc() {
         for (int i = 0; i < height * width; i = i + 1) {
-            if (i == 6) {
-                Salameche sala = new Starter().new Salameche();
-                sala.setState(State.PC);
-                pc.add(sala);
-            } else {
+            if (i == 0) {
+                pc.add(new Anchwatt());
+            } else if (i == 1) {
+                pc.add(new Chartor());
+            } else if (i == 2) {
+                pc.add(new Ecrapince());
+            } else if (i == 3) {
+                pc.add(new Escargaume());
+            } else if (i == 4) {
+                pc.add(new Gringolem());
+            } else if (i == 5) {
+                pc.add(new Lilia());
+            } else if (i == 6) {
+                pc.add(new Makuhita());
+            } else if (i == 7) {
+                pc.add(new MotismaFroid());
+            } else if (i == 8) {
+                pc.add(new Mysdibule());
+            } else if (i == 9) {
+                pc.add(new Ningale());
+            } else if (i == 10) {
+                pc.add(new Nodulithe());
+            } else if (i == 11) {
+                pc.add(new Obalie());
+            } else if (i == 12) {
+                pc.add(new Rozbouton());
+            } else if (i == 13) {
+                pc.add(new Tarsal());
+            } else if (i == 14) {
+                pc.add(new Terhal());
+            } else if (i == 15) {
+                pc.add(new Tylton());
+            }else {
                 pc.add(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1));
             }
+            pc.get(i).setState(State.PC);
         }
     }
 

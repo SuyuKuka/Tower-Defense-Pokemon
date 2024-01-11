@@ -73,7 +73,6 @@ public class Control {
     }
 
     public void changePanel(String buttonName, MainGraphics main) {
-        System.out.println(buttonName);
         Timer timer = new Timer(1, e1 -> {
             if (buttonName.startsWith("gameScreen")) {
                 startGame(buttonName, main);

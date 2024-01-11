@@ -80,7 +80,7 @@ public class GameScreen extends JPanel {
         return main;
     }
 
-    public JPanel getContainer() {
+    public JPanel getContainerScreen() {
         return container;
     }
 
