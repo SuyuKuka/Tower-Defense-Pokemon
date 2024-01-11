@@ -64,7 +64,7 @@ public class InitWaves {
         }
         // debug();
 
-        //test(wave);
+        test(wave);
 
     }
 

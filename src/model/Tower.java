@@ -345,22 +345,25 @@ public class Tower extends Pokemon {
     }
 
     private void levelUp() {
-        Random r = new Random();
-        if (exp > 5 * level) {
-            level++;
-            // System.out.println("levelUp " + level);
-            int addPhysical = r.nextInt(5);
-            int addSpecial = r.nextInt(5);// fois un multiplicateur?
-            setPhysical(getPhysical() + addPhysical);
-            setSpecial(getSpecial() + addSpecial);
-            exp = 0;
-            updatePokemon();
+        if(level<100){
+            Random r = new Random();
+            if (exp > 5 * level) {
+                level++;
+                // System.out.println("levelUp " + level);
+                int addPhysical = r.nextInt(5);
+                int addSpecial = r.nextInt(5);// fois un multiplicateur?
+                setPhysical(getPhysical() + addPhysical);
+                setSpecial(getSpecial() + addSpecial);
+                exp = 0;
+                updatePokemon();
 
-            if(manager!=null){
-                manager.updateManager(this);
+                if(manager!=null){
+                    manager.updateManager(this);
+                }
             }
+        }else{
+            level=100;
         }
-
     }
 
     public int getTotalSkill() {

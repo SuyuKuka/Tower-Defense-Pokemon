@@ -3,7 +3,6 @@ package model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import characters.*;
@@ -13,15 +12,10 @@ import model.Tower.State;
 public class Player {
     public static final Player INSTANCE = new Player();
     private String pseudo;
-    private int money;
     private int lvl;
     private double exp;
     private double expLvlUp;
 
-    private ArrayList<Tower> obtainedPokemon; // utilite?
-
-    private ArrayList<Hero> heroContract = new ArrayList<>();
-    private Hero[] hero = new Hero[2];
     private Tower[] team = new Tower[6];
     private Pc pc = Pc.INSTANCE;
     int count = 0;
@@ -29,42 +23,30 @@ public class Player {
     private File file = new File("ressources/config/data.csv");
 
     private Player() {
-        if (true) {
+        if (createData()) {
             this.pseudo = "Joueur";
-            money = 1000;
             exp = 0;
-            lvl = 1;
-            obtainedPokemon = new ArrayList<>();
-
-            hero[0] = null;
-            hero[1] = null;
-
-            //Initialisation de la team
-            team[1] = new Chartor();
-            team[0] = new Anchwatt();
-            team[2] = new Tylton();
-            team[3] = new Gringolem();
-            //team[4] = new Lilia();
-            //team[4] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
-            team[5] = new Starter().new Arcko();
-
-            for(int i =0; i<team.length; i=i+1){
-                if(team[i]!=null){
-                    team[i].setState(State.TEAM);
-                }else{
-                    team[i] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
-                }
-            }
-
-           resetTeam();
-
-            //Initialisation du pc
-            // for(int i=0; i<25; i=i+1){
-            //     pc.getPc().add(new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.PC, -1, Rayon.NONE, -1));
-            // }
+            lvl = 1;   
         } else {
             loadData();
         }
+        //Initialisation de la team
+        team[1] = new Chartor();
+        team[0] = new Anchwatt();
+        team[2] = new Tylton();
+        team[3] = new Gringolem();
+        //team[4] = new Lilia();
+        team[5] = new Starter().new Arcko();
+
+        for(int i =0; i<team.length; i=i+1){
+            if(team[i]!=null){
+                team[i].setState(State.TEAM);
+            }else{
+                team[i] = new Tower("nothing", -1, -1, Types.NONE, Types.NONE, "ressources/sprite/nothing.png", State.TEAM, -1, Rayon.NONE, -1);
+            }
+        }
+
+        resetTeam();
         pc.setTeam(team);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -78,7 +60,7 @@ public class Player {
             if (result) {
                 // Nouveau Joueur
                 FileWriter writer = new FileWriter(file, true);
-                writer.append("Pseudo,Money,Level,Exp,Contrat_Hero,Team,Pc");
+                writer.append("Pseudo,Level,Exp");
                 writer.append("\n");
                 writer.close();
             }
@@ -91,28 +73,15 @@ public class Player {
 
     public void saveData() {
         try (FileWriter writer = new FileWriter(file, false)) {
-            writer.append("Pseudo,Money,Level,Exp,Contrat_Hero,Pokemon,Pc");
+            writer.append("Pseudo,Level,Exp");
             writer.append("\n");
 
             // Ecris les donnees
-            String data = pseudo + "," + money + "," + lvl + "," + exp + "," + heroContract.toString() + "," +
-                    arrayToString(team) + "," + pc.toString() + "\n";
+            String data = pseudo + "," + lvl + "," + exp + "\n";
             writer.append(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String arrayToString(Tower[] array) {
-        StringBuilder result = new StringBuilder();
-        for (Tower tower : array) {
-            if (tower != null) {
-                result.append(tower.toString()).append(";");
-            } else {
-                result.append(" ;1;0.0;-1.0;-1.0;NONE;NONE;null#null#null#null#;ressources/sprite/nothing.png;");
-            }
-        }
-        return result.toString();
     }
 
     private void loadData() {
@@ -126,154 +95,13 @@ public class Player {
                 String[] fields = line.split("[,]");
 
                 pseudo = fields[0];
-                money = Integer.parseInt(fields[1]);
-                lvl = Integer.parseInt(fields[2]);
-                exp = Double.parseDouble(fields[3]);
-                // parseHeroContract (fields[4]);
-                hero[0] = null;
-                hero[1] = null;
-                // parseTeam(fields[5]);
-                // parsePc(fields[6]);
+                lvl = Integer.parseInt(fields[1]);
+                exp = Double.parseDouble(fields[2]);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    /*
-     * 
-     * 
-     * private void parseTeam(String teamData) {
-     * String[] teamArrayData = teamData.split(";");
-     * int teamLimit = team.length;
-     * int towerArg = 9;
-     * int i = 0;
-     * 
-     * for (int j = 0; j < teamLimit; j = j + 1) {
-     * if (i < teamLimit) {
-     * if (teamArrayData[j * towerArg +
-     * 8].contains("ressources/sprite/nothing.png")) {
-     * team[i] = new Tower(" ", -1, -1, Types.NONE, Types.NONE,
-     * "ressources/sprite/nothing.png",
-     * State.TEAM);
-     * } else {
-     * String nameTower = teamArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 -
-     * 45
-     * int levelTower = Integer.parseInt(teamArrayData[j * towerArg + 1]); // 1 - 10
-     * - 19 - 28 - 37 - 46
-     * double expTower = Double.parseDouble(teamArrayData[j * towerArg + 2]); // 2 -
-     * 11 - 20 - 29 - 38 - 47
-     * double physicalTower = Double.parseDouble(teamArrayData[j * towerArg + 3]);
-     * // 3 - 12 - 21 - 30 - 39
-     * // - 48
-     * double specialTower = Double.parseDouble(teamArrayData[j * towerArg + 4]); //
-     * 4 - 13 - 22 - 31 - 40
-     * // - 49
-     * Types firstTypeTower = Types.stringToType(teamArrayData[j * towerArg + 5]);
-     * // 5 - 14 - 23 - 32 - 41
-     * // - 50
-     * Types secondTypeTower = Types.stringToType(teamArrayData[j * towerArg + 6]);
-     * // 6 - 15 - 24 - 33 -
-     * // 42 - 51
-     * String spriteTower = teamArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 -
-     * 44 - 53
-     * 
-     * team[i] = new Tower(nameTower, physicalTower, specialTower, firstTypeTower,
-     * secondTypeTower,
-     * spriteTower, State.TEAM);
-     * team[i].setLevel(levelTower);
-     * team[i].setExp(expTower);
-     * parseSkill(teamArrayData[j * towerArg + 7], team[i]); // 7 - 16 - 25 - 34 -
-     * 43 - 52
-     * }
-     * i++;
-     * }
-     * }
-     * }
-     */
-    /*
-     * 
-     * 
-     * private void parsePc(String pcData) {
-     * String[] pcArrayData = pcData.split(";");
-     * int towerArg = 9;
-     * 
-     * if (pcArrayData.length > 1) {
-     * for (int j = 0; j < pc.size(); j = j + 1) {
-     * if (pcArrayData[j * towerArg + 8].contains("ressources/sprite/nothing.png"))
-     * {
-     * pc.add(new Tower(" ", -1, -1, Types.NONE, Types.NONE,
-     * "ressources/sprite/nothing.png", State.TEAM));
-     * } else {
-     * String nameTower = pcArrayData[j * towerArg + 0]; // 0 - 9 - 18 - 27 - 36 -
-     * 45
-     * int levelTower = Integer.parseInt(pcArrayData[j * towerArg + 1]); // 1 - 10 -
-     * 19 - 28 - 37 - 46
-     * double expTower = Double.parseDouble(pcArrayData[j * towerArg + 2]); // 2 -
-     * 11 - 20 - 29 - 38 - 47
-     * double physicalTower = Double.parseDouble(pcArrayData[j * towerArg + 3]); //
-     * 3 - 12 - 21 - 30 - 39 -
-     * // 48
-     * double specialTower = Double.parseDouble(pcArrayData[j * towerArg + 4]); // 4
-     * - 13 - 22 - 31 - 40 -
-     * // 49
-     * Types firstTypeTower = Types.stringToType(pcArrayData[j * towerArg + 5]); //
-     * 5 - 14 - 23 - 32 - 41 -
-     * // 50
-     * Types secondTypeTower = Types.stringToType(pcArrayData[j * towerArg + 6]); //
-     * 6 - 15 - 24 - 33 - 42
-     * // - 51
-     * String spriteTower = pcArrayData[j * towerArg + 8]; // 8 - 17 - 26 - 35 - 44
-     * - 53
-     * 
-     * Tower tmp = new Tower(nameTower, physicalTower, specialTower, firstTypeTower,
-     * secondTypeTower,
-     * spriteTower, State.TEAM);
-     * tmp.setLevel(levelTower);
-     * tmp.setExp(expTower);
-     * parseSkill(pcArrayData[j * towerArg + 7], tmp); // 7 - 16 - 25 - 34 - 43 - 52
-     * pc.add(tmp);
-     * }
-     * }
-     * }
-     * }
-     * private void parseSkill(String skillData, Tower tower) {
-     * String[] skillArrayData = skillData.split("#");
-     * int skillLimit = tower.getSkills().length;
-     * int skillArg = 7;
-     * int i = 0;
-     * 
-     * for (int j = 0; j < skillArg; j = j + 1) {
-     * if (i < skillLimit) {
-     * if (skillArrayData[i] == null) {
-     * tower.learnSkill(new Skill(" ", -1, -1, Types.NONE, -1, false, " "));
-     * } else {
-     * String skillName = skillArrayData[j * skillArg + 0]; // 0 - 7 - 14 - 21
-     * int skillPhysicalDamage = Integer.parseInt(skillArrayData[j * skillArg + 1]);
-     * // 1 - 8 - 15 - 22
-     * int skillSpecialDamage = Integer.parseInt(skillArrayData[j * skillArg + 2]);
-     * // 2 - 9 - 16 - 23
-     * Types skillType = Types.stringToType(skillArrayData[j * skillArg + 3]); // 3
-     * - 10 - 17 - 24
-     * double skillSpeedAtk = Double.parseDouble(skillArrayData[j * skillArg + 4]);
-     * // 4 - 11 - 18 - 25
-     * boolean skillUnique;
-     * if (skillArrayData[j * skillArg + 5].contains("true")) { // 5 - 12 - 19 - 26
-     * skillUnique = true;
-     * } else {
-     * skillUnique = false;
-     * }
-     * String skillDescription = skillArrayData[j * skillArg + 6]; // 6 - 13 - 19 -
-     * 27
-     * tower.learnSkill(new Skill(skillName, skillPhysicalDamage,
-     * skillSpecialDamage, skillType,
-     * skillSpeedAtk, skillUnique, skillDescription));
-     * }
-     * i++;
-     * }
-     * }
-     * }
-     */
 
     public double expCap(){
         expLvlUp = lvl * 100;
@@ -292,10 +120,6 @@ public class Player {
         return pseudo;
     }
 
-    public int getMoney() {
-        return money;
-    }
-
     public int getLvl() {
         return lvl;
     }
@@ -306,10 +130,6 @@ public class Player {
 
     public Tower[] getTeam() {
         return team;
-    }
-
-    public ArrayList<Tower> getObtainedPokemon() {
-        return obtainedPokemon;
     }
 
     public Pc getPc() {
@@ -341,76 +161,6 @@ public class Player {
         }
     }
 
-  
-
-    // TODO
-    public void setPseudo(String pseudo) throws Exception {
-
-    }
-//    public void resetTeam() {
-//        for (Tower t : team) {
-//            removeTeam(t);
-//            if (t instanceof Starter.Salameche) {
-//                addteam(((Starter.Salameche) t).reset());
-//            }
-//            if (t instanceof Starter.Arcko) {
-//                addteam(((Starter.Arcko) t).reset());
-//            }
-//            if (t instanceof Starter.Moustillon) {
-//                addteam(((Starter.Moustillon) t).reset());
-//            }
-//            if (t instanceof Anchwatt) {
-//                addteam(((Anchwatt) t).reset());
-//            }
-//            if (t instanceof Obalie) {
-//                addteam(((Obalie) t).reset());
-//            }
-//            if (t instanceof Tylton) {
-//                addteam(((Tylton) t).reset());
-//            }
-//            if (t instanceof Terhal) {
-//                addteam(((Terhal) t).reset());
-//            }
-//            if (t instanceof Tarsal) {
-//                addteam(((Tarsal) t).reset());
-//            }
-//            if (t instanceof Rozbouton) {
-//                addteam(((Rozbouton) t).reset());
-//            }
-//            if (t instanceof Ningale) {
-//                addteam(((Ningale) t).reset());
-//            }
-//            if (t instanceof Nodulithe) {
-//                addteam(((Nodulithe) t).reset());
-//            }
-//            if (t instanceof Mysdibule) {
-//                addteam(((Mysdibule) t).reset());
-//            }
-//            if (t instanceof MotismaFroid) {
-//                addteam(((MotismaFroid) t).reset());
-//            }
-//            if (t instanceof Makuhita) {
-//                addteam(((Makuhita) t).reset());
-//            }
-//            if (t instanceof Lilia) {
-//                addteam(((Lilia) t).reset());
-//            }
-//            if (t instanceof Gringolem) {
-//                addteam(((Gringolem) t).reset());
-//            }
-//            if (t instanceof Escargaume) {
-//                addteam(((Escargaume) t).reset());
-//            }
-//            if (t instanceof Ecrapince) {
-//                addteam(((Ecrapince) t).reset());
-//            }
-//            if (t instanceof Chartor) {
-//                addteam(((Chartor) t).reset());
-//            }
-//        }
-//    }
-
-
     public void resetTeam() {
         for (Tower t : team) {
             if (t instanceof Starter.Salameche) {
@@ -420,19 +170,15 @@ public class Player {
                 ((Starter.Arcko) t).reset();
             }
             if (t instanceof Starter.Moustillon) {
-
                 ((Starter.Moustillon) t).reset();
             }
             if (t instanceof Anchwatt) {
-
                 ((Anchwatt) t).reset();
             }
             if (t instanceof Obalie) {
-
                 ((Obalie) t).reset();
             }
             if (t instanceof Tylton) {
-
                 ((Tylton) t).reset();
             }
             if (t instanceof Terhal) {
@@ -448,43 +194,33 @@ public class Player {
                 ((Rozbouton) t).reset();
             }
             if (t instanceof Ningale) {
-
                 ((Ningale) t).reset();
             }
             if (t instanceof Nodulithe) {
-
                 ((Nodulithe) t).reset();
             }
             if (t instanceof Mysdibule) {
-
                 ((Mysdibule) t).reset();
             }
             if (t instanceof MotismaFroid) {
-
                 ((MotismaFroid) t).reset();
             }
             if (t instanceof Makuhita) {
-
                 ((Makuhita) t).reset();
             }
             if (t instanceof Lilia) {
-
                 ((Lilia) t).reset();
             }
             if (t instanceof Gringolem) {
-
                 ((Gringolem) t).reset();
             }
             if (t instanceof Escargaume) {
-
                 ((Escargaume) t).reset();
             }
             if (t instanceof Ecrapince) {
-
                 ((Ecrapince) t).reset();
             }
             if (t instanceof Chartor) {
-
                 ((Chartor) t).reset();
             }
 

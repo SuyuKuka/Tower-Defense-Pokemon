@@ -88,7 +88,6 @@ public class TowerPresent extends JPanel {
     }
 
     public void setHero(Hero hero) {
-
         JLabel name=maker.oneLineTextMaker();
         name.setText(hero.getName());
 
@@ -107,9 +106,6 @@ public class TowerPresent extends JPanel {
         heroPanel.setBorder(new LineBorder(Color.CYAN));
         heroPanel.add(heroInfoPanel,BorderLayout.CENTER);
 
-
-
-
         bg.add(heroPanel);
         this.hero = hero;
     }
@@ -119,7 +115,6 @@ public class TowerPresent extends JPanel {
     }
 
     public TowerManagement getSelectedPokemon() {
-
         return selectedPokemon;
     }
 }

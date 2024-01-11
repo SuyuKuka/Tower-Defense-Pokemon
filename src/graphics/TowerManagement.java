@@ -12,6 +12,7 @@ import javax.swing.border.MatteBorder;
 import model.Tower;
 
 public class TowerManagement extends JPanel {
+    private JPanel towerManagement = this;
     private Tower pokemon;
     private int numero;
     private boolean isSelected;
@@ -53,6 +54,9 @@ public class TowerManagement extends JPanel {
                    setCursor(new Cursor(Cursor.HAND_CURSOR));
                    setBorder(new LineBorder(Color.WHITE));
                }
+               if(isPlaced){
+                    towerManagement.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+               }
            }
            @Override
            public void mouseExited(MouseEvent e) {
@@ -67,7 +71,6 @@ public class TowerManagement extends JPanel {
                         setSelected(false);
                         towerPresent.setSelectedPokemon(null);
                         setBorder(new EmptyBorder(1, 1, 1, 1));
-
                     } else {
                         if (towerPresent.getSelectedPokemon() != null) {
                             towerPresent.getSelectedPokemon().setSelected(false);
@@ -95,14 +98,7 @@ public class TowerManagement extends JPanel {
         infoPanel.setOpaque(false);
 
         infoPanel.add(addNameLabel(), BorderLayout.NORTH);
-
-        // Ajoutez une verification pour afficher le niveau ou le prix
-        if (isPlaced) {
-            infoPanel.add(addLevelLabel(), BorderLayout.SOUTH);
-        } else {
-            infoPanel.add(addPriceLabel(), BorderLayout.SOUTH);
-        }
-
+        infoPanel.add(addPriceLabel(), BorderLayout.SOUTH);
         return infoPanel;
     }
 
@@ -200,9 +196,14 @@ public class TowerManagement extends JPanel {
     public void updateManager(Tower tower) {
         spriteLabel.setIcon(new ImageIcon(tower.getSprite()));
         nameLabel.setText(tower.getName());
-        priceLabel.setText("Prix : " + pokemon.getPrice() + "$");
+        if(isPlaced){
+            priceLabel.setText("Nv : " + String.valueOf(pokemon.getLevel()));
+        }
         revalidate();
         repaint();
     }
 
+    public JLabel getPriceLabel() {
+        return priceLabel;
+    }
 }

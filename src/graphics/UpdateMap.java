@@ -230,6 +230,7 @@ public class UpdateMap extends JLayeredPane {
                             if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
                                 tPresent.getSelectedPokemon().setPlaced(true);
                                 tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
+                                tPresent.getSelectedPokemon().getPriceLabel().setText("Nv : " + String.valueOf(tPresent.getSelectedPokemon().getPokemon().getLevel()));
                             }
 
                         }
