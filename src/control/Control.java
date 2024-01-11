@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import graphics.GameScreen;
 import graphics.MainGraphics;
+import graphics.Tiles;
 import graphics.UpdateMap;
 import graphics.TowerGUI.SkillButton;
 import model.Hero;
@@ -193,7 +194,7 @@ public class Control {
         }
     }
 
-    public void giveTiles(Tower pkm, UpdateMap.Tiles tile) {
+    public void giveTiles(Tower pkm, Tiles tile) {
         pkm.setTiles(tile);
     }
 

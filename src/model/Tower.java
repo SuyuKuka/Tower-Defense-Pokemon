@@ -23,11 +23,7 @@ import characters.Tarsal;
 import characters.Terhal;
 import characters.Tylton;
 
-import graphics.Projectile;
-import graphics.Slot;
-import graphics.TowerGUI;
-import graphics.TowerManagement;
-import graphics.UpdateMap;
+import graphics.*;
 
 public class Tower extends Pokemon {
     public enum Rayon {
@@ -39,7 +35,7 @@ public class Tower extends Pokemon {
     }
 
     //GRAPHICS
-    private UpdateMap.Tiles tiles;
+    private Tiles tiles;
     private Slot slot;
     private TowerGUI gui = new TowerGUI(this);
     private JPanel rangePanel;
@@ -539,11 +535,11 @@ public class Tower extends Pokemon {
         this.exp = exp;
     }
 
-    public void setTiles(UpdateMap.Tiles tiles) {
+    public void setTiles(Tiles tiles) {
         this.tiles = tiles;
     }
 
-    public UpdateMap.Tiles getTiles() {
+    public Tiles getTiles() {
         return tiles;
     }
 

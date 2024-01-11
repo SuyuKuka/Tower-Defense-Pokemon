@@ -29,7 +29,7 @@ import control.Control;
 
 import java.util.ArrayList;
 
-public class UpdateMap extends JLayeredPane {
+public  class UpdateMap extends JLayeredPane {
     private MapState state;
     private TowerPresent tPresent;
     private GraphicsMaker maker = new GraphicsMaker();
@@ -43,6 +43,8 @@ public class UpdateMap extends JLayeredPane {
     private int mapHeight;
 
     public UpdateMap(MapState state, TowerPresent tPresent) {
+
+
         this.state = state;
         this.tPresent = tPresent;
         int[][] map = state.getMap().getConfig();
@@ -88,6 +90,10 @@ public class UpdateMap extends JLayeredPane {
                     tiles.setOpaque(false);
                 }
 
+                tiles.settPresent(tPresent);
+                tiles.setState(state);
+                tiles.setuMap(this);
+
                 constraints.gridx = j;
                 constraints.gridy = i;
                 constraints.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -116,7 +122,7 @@ public class UpdateMap extends JLayeredPane {
     }
 
     public Tiles getTiles(int[] pos) {
-        for (Tiles tiles : Tiles.tilesList) {
+        for (Tiles tiles : Tiles.getTilesList()) {
             if (tiles.getPos()[0] == pos[0] && tiles.getPos()[1] == pos[1]) {
                 return tiles;
             }
@@ -163,151 +169,6 @@ public class UpdateMap extends JLayeredPane {
         return cellSize;
     }
 
-    public class Tiles extends JPanel {
-        private int[] pos;
-        private static ArrayList<Tiles> tilesList = new ArrayList<>();
-        private JLabel spriteOnIt;
-        private JLabel empty = new JLabel(new ImageIcon("ressources/sprite/nothing.png"));
-        private boolean occupied = false;
-        private GridBagConstraints constraints = new GridBagConstraints();
-
-        private MouseAdapter listener;
-
-        public Tiles(int[] pos) {
-
-            this.pos = pos;
-            tilesList.add(this);
-            spriteOnIt = empty;
-
-            setLayout(new GridBagLayout());
-            setMinimumSize(new Dimension(cellSize, cellSize));
-            setBorder(new EmptyBorder(1, 1, 1, 1));
-
-            add(empty, constraints);
-
-            addMouseListener(new MouseAdapter() {
-
-                @Override
-                public void mouseEntered(MouseEvent evt) {
-                    setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-                    if (!occupied) {
-                        setBorder(new LineBorder(Color.RED, 1));
-                    }
-
-                }
-
-                @Override
-                public void mouseExited(MouseEvent evt) {
-                    setBorder(new EmptyBorder(1, 1, 1, 1));
-                }
-
-                @Override
-                public void mouseClicked(MouseEvent evt) {
-                    Tower[] team = Player.INSTANCE.getTeam();
-
-                    int row = pos[0];
-                    int col = pos[1];
-
-                    if (tPresent.getSelectedPokemon() != null) {
-                        Tower pkm = team[tPresent.getSelectedPokemon().getNumero() - 1];
-                        if (!state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon()) && pkm.getPrice() < state.getMoney()) {
-                            int[] towerOnMapPos = new int[] {row, col};
-                            control.setTowerOnMap(towerOnMapPos, pkm, state);
-
-                            JLabel sprite = new JLabel(new ImageIcon(pkm.getSprite()));
-                            addSpriteOnTiles(sprite, constraints);
-
-                            tPresent.getSelectedPokemon().updateManager(pkm);
-
-                            JPanel towerRange = makeTowerRange(pkm, row, col);
-                            towerRange.setVisible(false);
-                            uMap.add(towerRange, MODAL_LAYER);
-
-                            giveTiles(pkm); // CONTROL
-                            control.giveRangePanel(pkm, towerRange);
-                        }
-                        if (state.getTowerPresent().contains(tPresent.getSelectedPokemon().getPokemon())) {
-                            tPresent.getSelectedPokemon().setBorder(BorderFactory.createEmptyBorder());
-                            tPresent.getSelectedPokemon().getPriceLabel().setText("Nv : " + String.valueOf(tPresent.getSelectedPokemon().getPokemon().getLevel()));
-                        }
-                    }
-
-                }
-            });
-        }
-
-        public boolean addSpriteOnTiles(JLabel jlabel, GridBagConstraints gridBagConstraints) {
-            if (spriteOnIt == empty) {
-                remove(spriteOnIt);
-                spriteOnIt = jlabel;
-                this.add(jlabel, gridBagConstraints);
-                jlabel.getParent().revalidate();
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        private void giveTiles(Tower pkm) {
-            listener=new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent evt) { // FRAGILE
-                    if (SwingUtilities.isLeftMouseButton(evt)) {
-                        if (tPresent.getComponentCount() < 2 && !occupied) {
-
-                            tPresent.getComponent(0).setVisible(false);
-                            tPresent.add(pkm.getGUI(), BorderLayout.SOUTH);
-
-                            pkm.getGUI().setVisible(true);
-                            pkm.getRangePanel().setVisible(true);
-
-                            setBackground(Color.BLUE);
-                            setOpaque(true);
-                        }
-                    }
-                    if (SwingUtilities.isRightMouseButton(evt)) {
-
-                        tPresent.remove(pkm.getGUI());
-                        tPresent.getComponent(0).setVisible(true);
-
-                        pkm.getGUI().setVisible(false);
-                        pkm.getRangePanel().setVisible(false);
-
-                        setOpaque(false);
-                    }
-                }
-            };
-
-            this.addMouseListener(listener);
-            control.giveTiles(pkm, this);
-        }
-
-        public void setOccupied(boolean occupied) {
-            this.occupied = occupied;
-        }
-
-        public void resetTile() {
-            this.removeAll();
-            spriteOnIt = empty;
-            this.removeMouseListener(listener);
-        }
-
-        public void replaceSprite(String spritePath) {
-            JLabel jlabel = new JLabel(new ImageIcon(spritePath));
-            remove(spriteOnIt);
-            spriteOnIt = jlabel;
-            this.add(jlabel, new GridBagConstraints());
-            jlabel.getParent().revalidate();
-        }
-
-        public int[] getPos() {
-            return pos;
-        }
-
-        public JLabel getSpriteOnIt() {
-            return spriteOnIt;
-        }
-    }
 
     public JPanel getGameMap() {
         return gameMap;
