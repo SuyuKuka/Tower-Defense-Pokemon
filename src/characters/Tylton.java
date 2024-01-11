@@ -14,9 +14,20 @@ public class Tylton extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Tylton reset() {
-        return new Tylton();
+    public void reset() {
+        setName("Tylton");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(1);
+        setSpecial(1);
+        setAtkCd(25);
+        setRayon(Tower.Rayon.MEDIUM);
+        setPrice(1000);
+        setFirstType(Types.VOL);
+        setSecondType(Types.NORMAL);
+        setSprite("ressources/sprite/swablu/swablu.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

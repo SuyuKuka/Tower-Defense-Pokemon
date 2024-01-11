@@ -13,9 +13,20 @@ public class Lilia extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Lilia reset() {
-        return new Lilia();
+    public void reset() {
+        setName("Lilia");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(80);
+        setSpecial(80);
+        setAtkCd(75);
+        setRayon(Tower.Rayon.MEDIUM);
+        setPrice(300);
+        setFirstType(Types.PLANTE);
+        setSecondType(Types.ROCHE);
+        setSprite("ressources/sprite/lileep/lileep.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

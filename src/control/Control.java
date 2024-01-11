@@ -149,7 +149,14 @@ public class Control {
         screen.getePresent().reset();
         Player.INSTANCE.resetTeam();
 
+        Player.INSTANCE.setExp(300);
+        while (Player.INSTANCE.getExp()>=Player.INSTANCE.expCap()){
+            Player.INSTANCE.levelUp();
+        }
+
+
         screen.getMain().getCardLayout().show(screen.getMain().getMainPanel(), "menu");
+        screen.getMain().updateMenu();
 
         screen.revalidate();
         screen.repaint();
@@ -201,10 +208,6 @@ public class Control {
         state.setTower(pos, pkm);
         state.setMoney(state.getMoney() - pkm.getPrice());
         pkm.setPrice(pkm.getPrice() + pkm.getPrice() / 10);
-    }
-
-    public void openPC() {
-        // TODO OPEN THE PC
     }
 
     public void chooseSkill(SkillButton skill, Tower pkm) {

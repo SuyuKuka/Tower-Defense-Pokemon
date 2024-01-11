@@ -14,9 +14,20 @@ public class Rozbouton extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Rozbouton reset() {
-        return new Rozbouton();
+    public void reset() {
+        setName("Rozbouton");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(30);
+        setSpecial(50);
+        setAtkCd(200);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(300);
+        setFirstType(Types.PLANTE);
+        setSecondType(Types.POISON);
+        setSprite("ressources/sprite/budew/budew.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

@@ -14,9 +14,20 @@ public class Escargaume extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Escargaume reset() {
-        return new Escargaume();
+    public void reset() {
+        setName("Escargaume");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(20);
+        setSpecial(20);
+        setAtkCd(500);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(1000);
+        setFirstType(Types.INSECTE);
+        setSecondType(Types.NONE);
+        setSprite("ressources/sprite/shelmet/shelmet.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

@@ -13,9 +13,20 @@ public class Mysdibule extends Tower implements TowerLoader {
         primarySkill();
     }
 
-    public Mysdibule reset() {
-        return new Mysdibule();
+    public void reset() {
+        setName("Mysdibule");
+        setLevel(1); // Mettez le niveau à 1 comme demandé
+        setPhysical(85);
+        setSpecial(55);
+        setAtkCd(50);
+        setRayon(Tower.Rayon.SMALL);
+        setPrice(200);
+        setFirstType(Types.ACIER);
+        setSecondType(Types.FEE);
+        setSprite("ressources/sprite/mawile/mawile.gif");
+        setExp(0);
     }
+
 
     @Override
     public void evolution() {

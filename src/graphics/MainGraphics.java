@@ -24,11 +24,12 @@ public class MainGraphics extends JFrame {
     private JPanel mainPanel;
     private BufferedImage backgroundImage;
 
-    public MainGraphics(Player p, Game main) {
+    private int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-        // setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new
-        // ImageIcon("ressources/icon.png").getImage(),new Point(0, 0),
-        // "POKEMONGOOOOO"));
+    private MainMenu menu;
+
+    public MainGraphics(Player p, Game main) {
 
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -39,9 +40,6 @@ public class MainGraphics extends JFrame {
         setTitle("PokeRevolute");
         setIconImage(new ImageIcon("ressources/icon.png").getImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // setResizable(false);
-        // setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // setUndecorated(true);
 
         // Background
         if (backgroundImage == null) {
@@ -66,7 +64,7 @@ public class MainGraphics extends JFrame {
         };
         mainPanel.setOpaque(false);
 
-        MainMenu menu = new MainMenu(this, p);
+         menu = new MainMenu(this, p);
         Classique classique = new Classique(this);
         Marathon marathon = new Marathon(this);
         Options options = new Options(this);
@@ -78,6 +76,11 @@ public class MainGraphics extends JFrame {
 
         add(mainPanel);
         setVisible(true);
+    }
+
+    public void updateMenu(){
+        menu.updateProfile();
+        menu.placeTeam();
     }
 
     public BufferedImage getBackgroundImage() {

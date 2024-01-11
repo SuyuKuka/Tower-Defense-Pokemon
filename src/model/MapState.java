@@ -168,7 +168,7 @@ private Hero selectedHero;
     }
 
     public void startGraphic(GameScreen screen) throws FileNotFoundException {
-
+        Pc.INSTANCE.setState(this);
         this.screen = screen;
 
         // MODE ENDLESS
@@ -196,6 +196,7 @@ private Hero selectedHero;
         nbTotalWave = allEnnemis.size();
 
         timer = new Timer(gameSpeed, event -> { // TIMEEEEEEEEEER
+
             // ENDLESS
             if (endless && allEnnemis.size() == 3) {
                 allEnnemis.add(w.initEndless(inc++));
@@ -218,7 +219,7 @@ private Hero selectedHero;
             step = ennemiComing(step);
             step++;
             nextWaveIn++;
-
+            //m.affiche(ennemiPresent);
             for (Tower t : towerPresent) {
                 t.attack2(ennemiPresent, this);
 
@@ -253,6 +254,16 @@ private Hero selectedHero;
             return true;
         }
         return pv == 0;
+    }
+
+    public void removeFromMap(Tower pkm){
+        towerPresent.remove(pkm);
+        m.remove(pkm);
+        if(pkm.getTiles()!=null){
+            screen.getuMap().getTiles(pkm.getPos()).resetTile();
+            screen.getuMap().getGameMap().revalidate();
+        }
+
     }
 
     private void gameOverScreen(boolean win) {
@@ -390,6 +401,7 @@ private Hero selectedHero;
         screen.getePresent().setEnnemiPresent(ennemiPresent);
         screen.getInGameInfo().UpdateInfo();
         screen.getInGameButton().updateButton(pas, limiteDeTemps, count, lose);
+
         for (Ennemi e : ennemiPresent) {
             EnnemiPresent.updateEnnemiHealth(e);
         }
